@@ -5,15 +5,7 @@
 使用 `npm` 安装（推荐）：
 
 ```bash
-$ npm install @ucloud/ucloud-sdk-js
-```
-
-> 注意：内测阶段，未注册到官方仓库，只能采用源码安装，npm registry 方式暂时不可用。
-
-```bash
-git clone https://git.ucloudadmin.com/ucloud-sdk/ucloud-sdk-nodejs.git
-cd ucloud-sdk-nodejs && npm install
-cd examples/uhost && node index.js
+$ npm install @ucloud-sdks/ucloud-sdk-js
 ```
 
 ## 初次使用
@@ -25,7 +17,7 @@ cd examples/uhost && node index.js
 下面提供一个简单的示例：
 
 ```javascript
-const {Client} = require("ucloud-sdk-js/lib/services");
+const {Client} = require("@ucloud-sdks/ucloud-sdk-js");
 
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms))
