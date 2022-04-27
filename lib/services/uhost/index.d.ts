@@ -333,7 +333,7 @@ export interface CreateUHostInstanceRequest {
          */
         Size: number;
         /**
-         * 磁盘备份方案。枚举值：\\ > NONE，无备份 \\ > DATAARK，数据方舟 \\ > SNAPSHOT（SNAPSHOT模式目前仅在上海C支持），快照 \\当前磁盘支持的备份模式参考 [[api:uhost-api:disk_type|磁盘类型]],默认值:NONE
+         * 磁盘备份方案。枚举值：\\ > NONE，无备份 \\ > DATAARK，数据方舟 \\ > SNAPSHOT，快照 \\当前磁盘支持的备份模式参考 [[api:uhost-api:disk_type|磁盘类型]],默认值:NONE
          */
         BackupType?: string;
         /**
@@ -348,10 +348,6 @@ export interface CreateUHostInstanceRequest {
          * 云盘代金券id。不适用于系统盘/本地盘。请通过DescribeCoupon接口查询，或登录用户中心查看
          */
         CouponId?: string;
-        /**
-         * 磁盘id，只有云盘系统盘可以有此参数，且该系统盘id必须已经存在
-         */
-        Id?: string;
     }[];
     /**
      * 主机登陆模式。密码（默认选项）: Password，密钥：KeyPair。
@@ -370,7 +366,7 @@ export interface CreateUHostInstanceRequest {
      */
     Tag?: string;
     /**
-     * 计费模式。枚举值为： \\ > Year，按年付费； \\ > Month，按月付费；\\ > Dynamic，按小时预付费 \\ > Postpay，按小时后付费（支持关机不收费，目前仅部分可用区支持，请联系您的客户经理） \\Preemptive计费为抢占式实例 \\ 默认为月付
+     * 计费模式。枚举值为： \\ > Year，按年付费； \\ > Month，按月付费；\\ > Dynamic，按小时预付费 \\ > Postpay，按小时后付费（支持关机不收费，目前仅部分可用区支持，请联系您的客户经理） \\Preemptive计费为抢占式实例(内测阶段) \\ 默认为月付
      */
     ChargeType?: string;
     /**
@@ -390,26 +386,13 @@ export interface CreateUHostInstanceRequest {
      */
     Memory?: number;
     /**
-     * GPU类型，枚举值["K80", "P40", "V100", "T4", "T4S","2080Ti","2080Ti-4C","1080Ti"]，MachineType为G时必填
+     * GPU类型，枚举值["K80", "P40", "V100", "T4", "T4S","2080Ti","2080Ti-4C","1080Ti", "T4/4", "MI100", "V100S"]，MachineType为G时必填
      */
     GpuType?: string;
     /**
      * GPU卡核心数。仅GPU机型支持此字段（可选范围与MachineType+GpuType相关）
      */
     GPU?: number;
-    /**
-     *
-     */
-    VirtualGpu?: {
-        /**
-         * 虚拟 GPU 类型，枚举值["vGPU_T4","vGPU_P40","vGPU_V100"]
-         */
-        GpuType?: string;
-        /**
-         * 虚拟 GPU 核数，默认 1。注：当前暂时只支持1颗。
-         */
-        GPU?: number;
-    };
     /**
      * 网络增强特性。枚举值：Normal（默认），不开启;  Super，开启网络增强1.0； Ultra，开启网络增强2.0（仅支持部分可用区，请参考控制台）
      */
@@ -443,11 +426,11 @@ export interface CreateUHostInstanceRequest {
      */
     AlarmTemplateId?: number;
     /**
-     * 云主机机型（V2.0），在本字段和字段UHostType中，仅需要其中1个字段即可。枚举值["N", "C", "G", "O", "OS", "OPRO", "OMAX", "O.BM"]。参考[[api:uhost-api:uhost_type|云主机机型说明]]。
+     * 云主机机型（V2.0），在本字段和字段UHostType中，仅需要其中1个字段即可。枚举值["N", "C", "G", "O", "OS", "OM", "OPRO", "OMAX", "O.BM", "O.EPC"]。参考[[api:uhost-api:uhost_type|云主机机型说明]]。
      */
     MachineType?: string;
     /**
-     * 最低cpu平台，枚举值["Intel/Auto", "Intel/IvyBridge", "Intel/Haswell", "Intel/Broadwell", "Intel/Skylake", "Intel/Cascadelake"；"Intel/CascadelakeR"; “Amd/Epyc2”,"Amd/Auto"],默认值是"Intel/Auto"。
+     * 最低cpu平台，枚举值["Intel/Auto", "Intel/IvyBridge", "Intel/Haswell", "Intel/Broadwell", "Intel/Skylake", "Intel/Cascadelake", "Intel/CascadelakeR", "Intel/IceLake", "Amd/Epyc2", "Amd/Auto"],默认值是"Intel/Auto"。
      */
     MinimalCpuPlatform?: string;
     /**
@@ -475,23 +458,6 @@ export interface CreateUHostInstanceRequest {
              */
             ShareBandwidthId?: string;
             /**
-             *
-             */
-            GlobalSSH?: {
-                /**
-                 * 填写支持SSH访问IP的地区名称，如“洛杉矶”，“新加坡”，“香港”，“东京”，“华盛顿”，“法兰克福”。Area和AreaCode两者必填其中之一。
-                 */
-                Area?: string;
-                /**
-                 * SSH端口，1-65535且不能使用80，443端口
-                 */
-                Port?: number;
-                /**
-                 * GlobalSSH的地区编码，格式为区域航空港国际通用代码。Area和AreaCode两者必填其中之一。
-                 */
-                AreaCode?: string;
-            };
-            /**
              * 【若绑定EIP，此参数必填】弹性IP的线路。枚举值: 国际: International BGP: Bgp 各地域允许的线路参数如下: cn-sh1: Bgp cn-sh2: Bgp cn-gd: Bgp cn-bj1: Bgp cn-bj2: Bgp hk: International us-ca: International th-bkk: International kr-seoul:International us-ws:International ge-fra:International sg:International tw-kh:International.其他海外线路均为 International
              */
             OperatorName?: string;
@@ -503,16 +469,7 @@ export interface CreateUHostInstanceRequest {
         /**
          *
          */
-        IPv6?: {
-            /**
-             * 第N块网卡中IPv6对应的共享带宽id，默认不带外网
-             */
-            ShareBandwidthId?: string;
-            /**
-             * 第N个网卡对应的IPv6地址，默认不分配IPv6，“Auto”自动分配，不为空的其他字符串为实际要分配的IPv6地址
-             */
-            Address?: string;
-        };
+        IPv6?: object;
         /**
          * 申请并绑定一个教育网EIP。True为申请并绑定，False为不会申请绑定，默认False。当前只支持具有HPC特性的机型。
          */
@@ -529,32 +486,20 @@ export interface CreateUHostInstanceRequest {
     /**
      *
      */
-    Volumes?: {
-        /**
-         * 存储文件卷类型，当前仅支持[CLOUD_FSX]。
-         */
-        Type?: string;
-        /**
-         * 存储文件卷，当前只用于数据卷，且限于 Windows，默认为 fase。
-         */
-        IsBoot?: string;
-        /**
-         * 存储文件卷大小，单位GB，必须是10GB的整数倍，至少 100GB。
-         */
-        Size?: number;
-        /**
-         * 已有存储文件卷ID，设置了，对应的 Size 可以为 0 GB。
-         */
-        VolumeId?: string;
-        /**
-         * 存储文件卷代金券id。不适用于系统盘/本地盘。请通过DescribeCoupon接口查询，或登录用户中心查看
-         */
-        CouponId?: string;
-    }[];
+    Volumes?: object[];
     /**
      * KeypairId 密钥对ID，LoginMode为KeyPair时此项必须
      */
     KeyPairId?: string;
+    /**
+     *
+     */
+    Features?: {
+        /**
+         * 弹性网卡特性。开启了弹性网卡权限位，此特性才生效，默认 false 未开启，true 开启，仅与 NetCapability Normal 兼容。
+         */
+        UNI?: boolean;
+    };
     /**
      * 主机代金券ID。请通过DescribeCoupon接口查询，或登录用户中心查看
      */
@@ -1179,10 +1124,6 @@ export interface DescribeUHostKeyPairsResponse {
          */
         KeyPairFingerPrint?: string;
         /**
-         * 密钥对的私钥内容。只有创建接口才会返回。
-         */
-        PrivateKeyBody?: string;
-        /**
          * 密钥对的创建时间，格式为Unix Timestamp。
          */
         CreateTime?: number;
@@ -1341,33 +1282,11 @@ export interface GetUHostInstancePriceRequest {
     /**
      *
      */
-    Volumes?: {
-        /**
-         * 存储文件卷类型，当前仅支持[CLOUD_FSX]。请参考[[api:uhost-api:volume_type|卷类型]]。
-         */
-        Type?: string;
-        /**
-         * 存储文件卷大小，单位GB，必须是10GB的整数倍，至少 100GB。
-         */
-        Size?: number;
-        /**
-         * 存储文件卷，当前只用于数据卷，且限于 Windows，默认为 fase。
-         */
-        IsBoot?: string;
-    }[];
+    Volumes?: object[];
     /**
      *
      */
-    VirtualGpu?: {
-        /**
-         * 虚拟 GPU 类型，枚举值["vGPU_T4","vGPU_P40","vGPU_V100"]
-         */
-        GpuType?: string;
-        /**
-         * 虚拟 GPU 核数，默认 1。注：当前暂时只支持1颗。
-         */
-        GPU?: number;
-    };
+    VirtualGpu?: object;
 }
 /**
  * GetUHostInstancePrice - 根据UHost实例配置，获取UHost实例的价格。

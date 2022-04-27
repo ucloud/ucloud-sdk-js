@@ -88,6 +88,12 @@ export default class VPCClient extends Client {
      */
     createRouteTable(request?: CreateRouteTableRequest): Promise<CreateRouteTableResponse>;
     /**
+     * CreateSnatDnatRule - 调用接口后会自动创建内外网IP之间的SNAT和DNAT规则，支持TCP、UDP协议全端口
+     *
+     * See also: https://docs.ucloud.cn/api/vpc2.0-api/create_snat_dnat_rule
+     */
+    createSnatDnatRule(request?: CreateSnatDnatRuleRequest): Promise<CreateSnatDnatRuleResponse>;
+    /**
      * CreateSubnet - 创建子网
      *
      * See also: https://docs.ucloud.cn/api/vpc2.0-api/create_subnet
@@ -148,6 +154,12 @@ export default class VPCClient extends Client {
      */
     deleteSecondaryIp(request?: DeleteSecondaryIpRequest): Promise<DeleteSecondaryIpResponse>;
     /**
+     * DeleteSnatDnatRule - 删除NAT创建内外网IP映射规则
+     *
+     * See also: https://docs.ucloud.cn/api/vpc2.0-api/delete_snat_dnat_rule
+     */
+    deleteSnatDnatRule(request?: DeleteSnatDnatRuleRequest): Promise<DeleteSnatDnatRuleResponse>;
+    /**
      * DeleteSnatRule - 删除指定的出口规则（SNAT规则）
      *
      * See also: https://docs.ucloud.cn/api/vpc2.0-api/delete_snat_rule
@@ -177,6 +189,12 @@ export default class VPCClient extends Client {
      * See also: https://docs.ucloud.cn/api/vpc2.0-api/delete_white_list_resource
      */
     deleteWhiteListResource(request?: DeleteWhiteListResourceRequest): Promise<DeleteWhiteListResourceResponse>;
+    /**
+     * DescribeInstanceNetworkInterface - 展示云主机绑定的网卡信息
+     *
+     * See also: https://docs.ucloud.cn/api/vpc2.0-api/describe_instance_network_interface
+     */
+    describeInstanceNetworkInterface(request?: DescribeInstanceNetworkInterfaceRequest): Promise<DescribeInstanceNetworkInterfaceResponse>;
     /**
      * DescribeNATGW - 获取NAT网关信息
      *
@@ -214,6 +232,12 @@ export default class VPCClient extends Client {
      */
     describeNetworkAclEntry(request?: DescribeNetworkAclEntryRequest): Promise<DescribeNetworkAclEntryResponse>;
     /**
+     * DescribeNetworkInterface - 展示虚拟网卡信息
+     *
+     * See also: https://docs.ucloud.cn/api/vpc2.0-api/describe_network_interface
+     */
+    describeNetworkInterface(request?: DescribeNetworkInterfaceRequest): Promise<DescribeNetworkInterfaceResponse>;
+    /**
      * DescribeRouteTable - 获取路由表详细信息(包括路由策略)
      *
      * See also: https://docs.ucloud.cn/api/vpc2.0-api/describe_route_table
@@ -225,6 +249,12 @@ export default class VPCClient extends Client {
      * See also: https://docs.ucloud.cn/api/vpc2.0-api/describe_secondary_ip
      */
     describeSecondaryIp(request?: DescribeSecondaryIpRequest): Promise<DescribeSecondaryIpResponse>;
+    /**
+     * DescribeSnatDnatRule - 获取基于NAT创建的内外网IP映射规则信息
+     *
+     * See also: https://docs.ucloud.cn/api/vpc2.0-api/describe_snat_dnat_rule
+     */
+    describeSnatDnatRule(request?: DescribeSnatDnatRuleRequest): Promise<DescribeSnatDnatRuleResponse>;
     /**
      * DescribeSnatRule - 获取Nat网关的出口规则（SNAT规则）
      *
@@ -309,6 +339,12 @@ export default class VPCClient extends Client {
      * See also: https://docs.ucloud.cn/api/vpc2.0-api/modify_route_rule
      */
     modifyRouteRule(request?: ModifyRouteRuleRequest): Promise<ModifyRouteRuleResponse>;
+    /**
+     * MoveSecondaryIPMac - 把 Secondary IP 从旧 MAC 迁移到新 MAC
+     *
+     * See also: https://docs.ucloud.cn/api/vpc2.0-api/move_secondary_ip_mac
+     */
+    moveSecondaryIPMac(request?: MoveSecondaryIPMacRequest): Promise<MoveSecondaryIPMacResponse>;
     /**
      * ReleaseVIP - 释放VIP资源
      *
@@ -613,10 +649,6 @@ export interface CreateNATGWRequest {
      */
     NATGWName: string;
     /**
-     * NAT网关绑定的子网Id
-     */
-    SubnetworkIds: string[];
-    /**
      * NAT网关绑定的EIPId
      */
     EIPIds: string[];
@@ -624,6 +656,10 @@ export interface CreateNATGWRequest {
      * NAT网关绑定的防火墙Id
      */
     FirewallId: string;
+    /**
+     * NAT网关绑定的子网Id，默认为空。
+     */
+    SubnetworkIds?: string[];
     /**
      * NAT网关所属的VPC Id。默认为Default VPC Id
      */
@@ -844,6 +880,28 @@ export interface CreateRouteTableResponse {
      * 路由表ID
      */
     RouteTableId?: string;
+}
+/**
+ * CreateSnatDnatRule - 调用接口后会自动创建内外网IP之间的SNAT和DNAT规则，支持TCP、UDP协议全端口
+ */
+export interface CreateSnatDnatRuleRequest {
+    /**
+     * 内网P地址
+     */
+    PrivateIp: string[];
+    /**
+     * EIP的IP地址。按入参顺序，PrivateIp与EIP一一对应建立映射关系。
+     */
+    EIP: string[];
+    /**
+     * 映射所使用的NAT网关资源ID
+     */
+    NATGWId: string;
+}
+/**
+ * CreateSnatDnatRule - 调用接口后会自动创建内外网IP之间的SNAT和DNAT规则，支持TCP、UDP协议全端口
+ */
+export interface CreateSnatDnatRuleResponse {
 }
 /**
  * CreateSubnet - 创建子网
@@ -1074,6 +1132,28 @@ export interface DeleteSecondaryIpRequest {
 export interface DeleteSecondaryIpResponse {
 }
 /**
+ * DeleteSnatDnatRule - 删除NAT创建内外网IP映射规则
+ */
+export interface DeleteSnatDnatRuleRequest {
+    /**
+     * EIP的IP地址,PrivateIp与EIP需一一对应
+     */
+    EIP: string[];
+    /**
+     * 内网P地址
+     */
+    PrivateIp: string[];
+    /**
+     * 映射所使用的NAT网关资源ID
+     */
+    NATGWId: string;
+}
+/**
+ * DeleteSnatDnatRule - 删除NAT创建内外网IP映射规则
+ */
+export interface DeleteSnatDnatRuleResponse {
+}
+/**
  * DeleteSnatRule - 删除指定的出口规则（SNAT规则）
  */
 export interface DeleteSnatRuleRequest {
@@ -1164,6 +1244,105 @@ export interface DeleteWhiteListResourceRequest {
 export interface DeleteWhiteListResourceResponse {
 }
 /**
+ * DescribeInstanceNetworkInterface - 展示云主机绑定的网卡信息
+ */
+export interface DescribeInstanceNetworkInterfaceRequest {
+    /**
+     * 云主机ID
+     */
+    InstanceId: string;
+    /**
+     * 默认为0
+     */
+    Offset?: number;
+    /**
+     * 默认为20
+     */
+    Limit?: number;
+}
+/**
+ * DescribeInstanceNetworkInterface - 展示云主机绑定的网卡信息
+ */
+export interface DescribeInstanceNetworkInterfaceResponse {
+    /**
+     * 虚拟网卡信息
+     */
+    NetworkInterfaceSet: {
+        /**
+         * 虚拟网卡资源ID
+         */
+        InterfaceId: string;
+        /**
+         * 所属VPC
+         */
+        VPCId: string;
+        /**
+         * 所属子网
+         */
+        SubnetId: string;
+        /**
+         * 关联内网IP。当前一个网卡仅支持绑定一个内网IP
+         */
+        PrivateIpSet: string[];
+        /**
+         * 关联Mac
+         */
+        MacAddress: string;
+        /**
+         * 绑定状态
+         */
+        Status: number;
+        /**
+         * 网卡的内网IP信息
+         */
+        PrivateIp: string[];
+        /**
+         * 虚拟网卡名称
+         */
+        Name?: string;
+        /**
+         * 内网IP掩码
+         */
+        Netmask?: string;
+        /**
+         * 默认网关
+         */
+        Gateway?: string;
+        /**
+         * 绑定实例资源ID
+         */
+        AttachInstanceId?: string;
+        /**
+         * 是否是绑定实例的默认网卡 false:不是 true:是
+         */
+        Default?: boolean;
+        /**
+         * 创建时间
+         */
+        CreateTime?: number;
+        /**
+         * 备注
+         */
+        Remark?: string;
+        /**
+         * 业务组
+         */
+        Tag?: string;
+        /**
+         * 虚拟网卡绑定的EIP ID信息
+         */
+        EIPIdSet?: string[];
+        /**
+         * 虚拟网卡绑定的防火墙ID信息
+         */
+        FirewallIdSet?: string[];
+        /**
+         * 网卡的内网IP配额信息
+         */
+        PrivateIplimit?: string[];
+    }[];
+}
+/**
  * DescribeNATGW - 获取NAT网关信息
  */
 export interface DescribeNATGWRequest {
@@ -1191,39 +1370,39 @@ export interface DescribeNATGWResponse {
     /**
      * 查到的NATGW信息列表
      */
-    DataSet: {
+    DataSet?: {
         /**
          * natgw id
          */
-        NATGWId: string;
+        NATGWId?: string;
         /**
          * natgw名称
          */
-        NATGWName: string;
-        /**
-         * natgw创建时间
-         */
-        CreateTime: number;
+        NATGWName?: string;
         /**
          * 业务组
          */
-        Tag: string;
+        Tag?: string;
         /**
          * 备注
          */
-        Remark: string;
+        Remark?: string;
+        /**
+         * natgw创建时间
+         */
+        CreateTime?: number;
         /**
          * 绑定的防火墙Id
          */
-        FirewallId: string;
+        FirewallId?: string;
         /**
          * 所属VPC Id
          */
-        VPCId: string;
+        VPCId?: string;
         /**
          * 子网 Id
          */
-        SubnetSet: {
+        SubnetSet?: {
             /**
              * 子网id
              */
@@ -1240,7 +1419,7 @@ export interface DescribeNATGWResponse {
         /**
          * 绑定的EIP 信息
          */
-        IPSet: {
+        IPSet?: {
             /**
              * 外网IP的 EIPId
              */
@@ -1271,6 +1450,14 @@ export interface DescribeNATGWResponse {
                 EIP: string;
             }[];
         }[];
+        /**
+         * VPC名称
+         */
+        VPCName?: string;
+        /**
+         * 枚举值，“enable”，默认出口规则使用了负载均衡；“disable”，默认出口规则未使用负载均衡。
+         */
+        IsSnatpoolEnabled?: string;
         /**
          * 转发策略Id
          */
@@ -1681,6 +1868,129 @@ export interface DescribeNetworkAclEntryResponse {
     }[];
 }
 /**
+ * DescribeNetworkInterface - 展示虚拟网卡信息
+ */
+export interface DescribeNetworkInterfaceRequest {
+    /**
+     * 所属VPC
+     */
+    VPCId?: string;
+    /**
+     * 所属子网
+     */
+    SubnetId?: string;
+    /**
+     * 虚拟网卡ID,可指定 0~n
+     */
+    InterfaceId?: string[];
+    /**
+     * 若为true 只返回默认网卡默认为false
+     */
+    OnlyDefault?: boolean;
+    /**
+     * 若为true 过滤绑定在回收站主机中的网卡。默认为false。
+     */
+    NoRecycled?: boolean;
+    /**
+     * 业务组
+     */
+    Tag?: string;
+    /**
+     * 默认为20
+     */
+    Limit?: number;
+    /**
+     * 默认为0
+     */
+    Offset?: number;
+}
+/**
+ * DescribeNetworkInterface - 展示虚拟网卡信息
+ */
+export interface DescribeNetworkInterfaceResponse {
+    /**
+     * 虚拟网卡信息
+     */
+    NetworkInterfaceSet: {
+        /**
+         * 虚拟网卡资源ID
+         */
+        InterfaceId: string;
+        /**
+         * 所属VPC
+         */
+        VPCId: string;
+        /**
+         * 所属子网
+         */
+        SubnetId: string;
+        /**
+         * 关联内网IP。当前一个网卡仅支持绑定一个内网IP
+         */
+        PrivateIpSet: string[];
+        /**
+         * 关联Mac
+         */
+        MacAddress: string;
+        /**
+         * 绑定状态
+         */
+        Status: number;
+        /**
+         * 网卡的内网IP信息
+         */
+        PrivateIp: string[];
+        /**
+         * 虚拟网卡名称
+         */
+        Name?: string;
+        /**
+         * 内网IP掩码
+         */
+        Netmask?: string;
+        /**
+         * 默认网关
+         */
+        Gateway?: string;
+        /**
+         * 绑定实例资源ID
+         */
+        AttachInstanceId?: string;
+        /**
+         * 是否是绑定实例的默认网卡 false:不是 true:是
+         */
+        Default?: boolean;
+        /**
+         * 创建时间
+         */
+        CreateTime?: number;
+        /**
+         * 备注
+         */
+        Remark?: string;
+        /**
+         * 业务组
+         */
+        Tag?: string;
+        /**
+         * 虚拟网卡绑定的EIP ID信息
+         */
+        EIPIdSet?: string[];
+        /**
+         * 虚拟网卡绑定的防火墙ID信息
+         */
+        FirewallIdSet?: string[];
+        /**
+         * 网卡的内网IP配额信息
+         */
+        PrivateIplimit?: string[];
+    }[];
+    /**
+     * 虚拟网卡总数
+     */
+    TotalCount?: number;
+}
+/**
  * DescribeRouteTable - 获取路由表详细信息(包括路由策略)
  */
 export interface DescribeRouteTableRequest {
@@ -1865,6 +2175,41 @@ export interface DescribeSecondaryIpResponse {
          *
          */
         VPCId?: string;
+    }[];
+}
+/**
+ * DescribeSnatDnatRule - 获取基于NAT创建的内外网IP映射规则信息
+ */
+export interface DescribeSnatDnatRuleRequest {
+    /**
+     * 获取NAT上添加的所有SnatDnatRule信息
+     */
+    NATGWId?: string[];
+    /**
+     * 获取EIP对应的SnatDnatRule信息
+     */
+    EIP?: string[];
+}
+/**
+ * DescribeSnatDnatRule - 获取基于NAT创建的内外网IP映射规则信息
+ */
+export interface DescribeSnatDnatRuleResponse {
+    /**
+     * 规则信息
+     */
+    DataSet?: {
+        /**
+         * 内网IP地址
+         */
+        PrivateIp?: string;
+        /**
+         * 映射所使用的NAT网关资源ID
+         */
+        NATGWId?: string;
+        /**
+         * EIP的IP地址
+         */
+        EIP?: string;
     }[];
 }
 /**
@@ -2686,6 +3031,32 @@ export interface ModifyRouteRuleRequest {
 export interface ModifyRouteRuleResponse {
 }
 /**
+ * MoveSecondaryIPMac - 把 Secondary IP 从旧 MAC 迁移到新 MAC
+ */
+export interface MoveSecondaryIPMacRequest {
+    /**
+     * Secondary IP
+     */
+    Ip: string;
+    /**
+     * 旧 Mac。Secondary IP 当前所绑定的 Mac
+     */
+    OldMac: string;
+    /**
+     * 新 Mac。Secondary IP 迁移的目的 Mac
+     */
+    NewMac: string;
+    /**
+     * 子网 ID。IP/OldMac/NewMac 三者必须在同一子网
+     */
+    SubnetId: string;
+}
+/**
+ * MoveSecondaryIPMac - 把 Secondary IP 从旧 MAC 迁移到新 MAC
+ */
+export interface MoveSecondaryIPMacResponse {
+}
+/**
  * ReleaseVIP - 释放VIP资源
  */
 export interface ReleaseVIPRequest {
@@ -2750,7 +3121,7 @@ export interface UpdateNATGWPolicyRequest {
      */
     SrcPort: string;
     /**
-     * 目标IP。填写对饮的目标IP地址
+     * 目标IP。填写对应的目标IP地址
      */
     DstIP: string;
     /**
@@ -2778,7 +3149,7 @@ export interface UpdateNATGWSubnetRequest {
     /**
      * NAT网关绑定的子网Id
      */
-    SubnetworkIds: string[];
+    SubnetworkIds?: string[];
 }
 /**
  * UpdateNATGWSubnet - 更新NAT网关绑定的子网

@@ -221,6 +221,10 @@ export interface CloneUDiskRequest {
      */
     RdmaClusterId?: string;
     /**
+     * Host实例ID。克隆出的云盘可直接挂载到该主机上。
+     */
+    HostId?: string;
+    /**
      * 使用的代金券id
      */
     CouponId?: string;
@@ -282,6 +286,10 @@ export interface CloneUDiskSnapshotRequest {
      * RDMA集群id。指定RSSD云盘克隆到对应的RDMA集群。
      */
     RdmaClusterId?: string;
+    /**
+     * Host实例ID。克隆出的云盘可直接挂载到该主机上。
+     */
+    HostId?: string;
     /**
      * 使用的代金券id
      */
@@ -348,6 +356,10 @@ export interface CloneUDiskUDataArkRequest {
      * RDMA集群id。指定RSSD云盘克隆到对应的RDMA集群。
      */
     RdmaClusterId?: string;
+    /**
+     * Host实例ID。克隆出的云盘可直接挂载到该主机上。
+     */
+    HostId?: string;
     /**
      * 使用的代金券id
      */
@@ -660,7 +672,7 @@ export interface DescribeRecycleUDiskResponse {
  */
 export interface DescribeUDiskRequest {
     /**
-     * 可用区。参见 [可用区列表](../summary/regionlist.html)
+     * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
      */
     Zone?: string;
     /**
@@ -676,7 +688,7 @@ export interface DescribeUDiskRequest {
      */
     Limit?: number;
     /**
-     * ProtocolVersion字段为1时，需结合IsBoot确定具体磁盘类型:普通数据盘：DiskType:"CLOUD_NORMAL",IsBoot:"False"；普通系统盘：DiskType:"CLOUD_NORMAL",IsBoot:"True"；SSD数据盘：DiskType:"CLOUD_SSD",IsBoot:"False"；SSD系统盘：DiskType:"CLOUD_SSD",IsBoot:"True"；RSSD数据盘：DiskType:"CLOUD_RSSD",IsBoot:"False"；为空拉取所有。ProtocolVersion字段为0或没有该字段时，可设为以下几个值:普通数据盘：DataDisk；普通系统盘：SystemDisk；SSD数据盘：SSDDataDisk；SSD系统盘：SSDSystemDisk；RSSD数据盘：RSSDDataDisk；为空拉取所有。
+     * ProtocolVersion字段为1时，需结合IsBoot确定具体磁盘类型:普通数据盘：DiskType:"CLOUD_NORMAL",IsBoot:"False"；普通系统盘：DiskType:"CLOUD_NORMAL",IsBoot:"True"；SSD数据盘：DiskType:"CLOUD_SSD",IsBoot:"False"；SSD系统盘：DiskType:"CLOUD_SSD",IsBoot:"True"；RSSD数据盘：DiskType:"CLOUD_RSSD",IsBoot:"False"；RSSD系统盘：DiskType:"CLOUD_RSSD",IsBoot:"True"；高效数据盘：DiskType:"CLOUD_EFFICIENCY",IsBoot:"False"；高效系统盘：DiskType:"CLOUD_EFFICIENCY",IsBoot:"True"；为空拉取所有。ProtocolVersion字段为0或没有该字段时，可设为以下几个值:普通数据盘：DataDisk；普通系统盘：SystemDisk；SSD数据盘：SSDDataDisk；SSD系统盘：SSDSystemDisk；RSSD数据盘：RSSDDataDisk；RSSD系统盘：RSSDSystemDisk：高效数据盘：EfficiencyDataDisk；高效系统盘：EfficiencySystemDisk；为空拉取所有。
      */
     DiskType?: string;
     /**
@@ -692,13 +704,25 @@ export interface DescribeUDiskRequest {
      */
     IgnoreUBillInfo?: string;
     /**
-     * 根据传入的UHostIdForAttachment，筛选出虚机在同一PodId下的云盘【本字段即将废弃，建议使用HostIdForAttachment】
+     * 是否忽略快照服务信息。Yes：忽略，No：不忽略，默认值（No）。（如不关心快照服务信息，建议选填“Yes”，可降低请求延时）
+     */
+    IgnoreBackupMode?: string;
+    /**
+     * 是否只返回云盘基础信息（只包含云盘及关联主机的资源信息）。Yes：是，No：否，默认值（No）。（如仅需要基础信息，建议选填“Yes”，可降低请求延时）
+     */
+    UDiskBasicInfo?: string;
+    /**
+     * 根据传入的UHostIdForAttachment，筛选出能被挂载在该主机上的云盘【本字段即将废弃，建议使用HostIdForAttachment】
      */
     UHostIdForAttachment?: string;
     /**
-     * 根据传入的HostIdForAttachment，筛选出虚机在同一PodId下的云盘
+     * 根据传入的HostIdForAttachment，筛选出能被挂载在该主机上的云盘。目前主要针对RSSD云盘。
      */
     HostIdForAttachment?: string;
+    /**
+     * 根据传入的HostId，返回与该主机关联的云盘信息。
+     */
+    HostId?: string;
     /**
      * 宿主产品类型，可筛选挂载在该类型宿主上的云盘。可选值：uhost, uphost。为空拉取所有。（当HostIdForAttachment字段不为空时，该字段可以不填，若HostIdForAttachment与该字段宿主类型冲突，则以HostIdForAttachment字段为准。）
      */
@@ -797,7 +821,7 @@ export interface DescribeUDiskResponse {
          */
         SnapshotLimit?: number;
         /**
-         * 请求中的ProtocolVersion字段为1时，需结合IsBoot确定具体磁盘类型:普通数据盘：DiskType:"CLOUD_NORMAL",IsBoot:"False"； 普通系统盘：DiskType:"CLOUD_NORMAL",IsBoot:"True"；SSD数据盘：DiskType:"CLOUD_SSD",IsBoot:"False"；SSD系统盘：DiskType:"CLOUD_SSD",IsBoot:"True"；RSSD数据盘：DiskType:"CLOUD_RSSD",IsBoot:"False"。请求中的ProtocolVersion字段为0或没有该字段时，云硬盘类型参照如下:普通数据盘：DataDisk；普通系统盘：SystemDisk；SSD数据盘：SSDDataDisk；SSD系统盘：SSDSystemDisk；RSSD数据盘：RSSDDataDisk。
+         * 请求中的ProtocolVersion字段为1时，需结合IsBoot确定具体磁盘类型:普通数据盘：DiskType:"CLOUD_NORMAL",IsBoot:"False"； 普通系统盘：DiskType:"CLOUD_NORMAL",IsBoot:"True"；SSD数据盘：DiskType:"CLOUD_SSD",IsBoot:"False"；SSD系统盘：DiskType:"CLOUD_SSD",IsBoot:"True"；RSSD数据盘：DiskType:"CLOUD_RSSD",IsBoot:"False"；RSSD系统盘：DiskType:"CLOUD_RSSD",IsBoot:"True"；高效数据盘：DiskType:"CLOUD_EFFICIENCY",IsBoot:"False"；高效系统盘：DiskType:"CLOUD_EFFICIENCY",IsBoot:"True"。请求中的ProtocolVersion字段为0或没有该字段时，云硬盘类型参照如下:普通数据盘：DataDisk；普通系统盘：SystemDisk；SSD数据盘：SSDDataDisk；SSD系统盘：SSDSystemDisk；RSSD数据盘：RSSDDataDisk；RSSD系统盘：RSSDSystemDisk；高效数据盘：EfficiencyDataDisk；高效系统盘：EfficiencySystemDisk。
          */
         DiskType?: string;
         /**
@@ -926,7 +950,7 @@ export interface DescribeUDiskPriceResponse {
  */
 export interface DescribeUDiskSnapshotRequest {
     /**
-     * 可用区。参见 [可用区列表](../summary/regionlist.html)
+     * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
      */
     Zone?: string;
     /**
@@ -987,7 +1011,7 @@ export interface DescribeUDiskSnapshotResponse {
          */
         Status: string;
         /**
-         * 磁盘类型，0:数据盘，1:系统盘
+         * 磁盘类型，0：普通数据盘；1：普通系统盘；2：SSD数据盘；3：SSD系统盘；4：RSSD数据盘；5：RSSD系统盘。
          */
         DiskType: number;
         /**
@@ -1057,7 +1081,7 @@ export interface DescribeUDiskUpgradePriceRequest {
      */
     UDataArkMode?: string;
     /**
-     * 是否开启快照服务（开启快照服务，可免费开启数据方舟）。Yes：开启，No：不开启，默认值：No
+     * 是否开启快照服务（开启快照服务，可免费开启数据方舟）。Yes：开启，No：不开启，默认值：No。仅支持查询开启快照服务的价格。
      */
     SnapshotService?: string;
     /**

@@ -118,6 +118,12 @@ export default class ULBClient extends Client {
      */
     updatePolicy(request?: UpdatePolicyRequest): Promise<UpdatePolicyResponse>;
     /**
+     * UpdateSSLAttribute - 更新修改SSL的属性，如：修改SSLName
+     *
+     * See also: https://docs.ucloud.cn/api/ulb-api/update_ssl_attribute
+     */
+    updateSSLAttribute(request?: UpdateSSLAttributeRequest): Promise<UpdateSSLAttributeResponse>;
+    /**
      * UpdateULBAttribute - 更新ULB名字业务组备注等属性字段
      *
      * See also: https://docs.ucloud.cn/api/ulb-api/update_ulb_attribute
@@ -143,7 +149,7 @@ export interface AllocateBackendRequest {
      */
     VServerId: string;
     /**
-     * 所添加的后端资源的类型，枚举值：UHost -> 云主机；UNI -> 虚拟网卡；UPM -> 物理云主机； UDHost -> 私有专区主机；UDocker -> 容器；UHybrid->混合云主机；CUBE->Cube；默认值为UHost。报文转发模式不支持UDocker、UHybrid、CUBE
+     * 所添加的后端资源的类型，枚举值：UHost -> 云主机；UNI -> 虚拟网卡；UPM -> 物理云主机； UDHost -> 私有专区主机；UDocker -> 容器；UHybrid->混合云主机；CUBE->Cube，USDP->智能大数据平台；默认值为UHost。报文转发模式不支持UDocker、UHybrid、CUBE
      */
     ResourceType: string;
     /**
@@ -167,7 +173,7 @@ export interface AllocateBackendRequest {
      */
     Port?: number;
     /**
-     * 所添加的后端RS权重（在加权轮询算法下有效），取值范围[0-100]，默认为1
+     * 所添加的后端RS权重（在加权轮询算法下有效），取值范围[1-100]，默认为1
      */
     Weight?: number;
     /**
@@ -319,7 +325,7 @@ export interface CreateULBRequest {
      */
     VPCId?: string;
     /**
-     * 内网ULB 所属的子网ID，如果不传则使用默认的子网
+     * ULB 所属的子网ID，如果不传则随机选择一个。
      */
     SubnetId?: string;
     /**
@@ -331,7 +337,7 @@ export interface CreateULBRequest {
      */
     FirewallId?: string;
     /**
-     * ULB 监听器类型，枚举值：RequestProxy，请求代理； PacketsTransmit ，报文转发。默认为RequestProxy
+     * ULB 监听器类型，外网ULB默认RequestProxy，内网ULB默认PacketsTransmit。枚举值：RequestProxy，请求代理； PacketsTransmit ，报文转发。
      */
     ListenType?: string;
 }
@@ -665,6 +671,10 @@ export interface DescribeULBResponse {
              */
             MonitorType: string;
             /**
+             * 负载均衡实例的Id
+             */
+            ULBId?: string;
+            /**
              * 根据MonitorType确认； 当MonitorType为Port时，此字段无意义。当MonitorType为Path时，代表HTTP检查域名
              */
             Domain?: string;
@@ -831,6 +841,10 @@ export interface DescribeULBResponse {
              * 内容转发信息列表，具体结构见下方 ULBPolicySet
              */
             PolicySet?: {
+                /**
+                 * 内容转发规则中域名的匹配方式。枚举值：Regular，正则；Wildcard，泛域名
+                 */
+                DomainMatchMode?: string;
                 /**
                  * 内容转发Id，默认内容转发类型下为空。
                  */
@@ -1135,7 +1149,7 @@ export interface DescribeVServerRequest {
     /**
      * 负载均衡实例的Id
      */
-    ULBId: string;
+    ULBId?: string;
     /**
      * VServer实例的Id；若指定则返回指定的VServer实例的信息； 若不指定则返回当前负载均衡实例下所有VServer的信息
      */
@@ -1165,6 +1179,10 @@ export interface DescribeVServerResponse {
          * 健康检查类型，枚举值：Port -> 端口检查；Path -> 路径检查；Ping -> Ping探测， Customize -> UDP检查请求代理型默认值为Port，其中TCP协议仅支持Port，其他协议支持Port和Path; 报文转发型TCP协议仅支持Port，UDP协议支持Ping、Port和Customize
          */
         MonitorType: string;
+        /**
+         * 负载均衡实例的Id
+         */
+        ULBId?: string;
         /**
          * 根据MonitorType确认； 当MonitorType为Port时，此字段无意义。当MonitorType为Path时，代表HTTP检查域名
          */
@@ -1332,6 +1350,10 @@ export interface DescribeVServerResponse {
          * 内容转发信息列表，具体结构见下方 ULBPolicySet
          */
         PolicySet?: {
+            /**
+             * 内容转发规则中域名的匹配方式。枚举值：Regular，正则；Wildcard，泛域名
+             */
+            DomainMatchMode?: string;
             /**
              * 内容转发Id，默认内容转发类型下为空。
              */
@@ -1511,6 +1533,24 @@ export interface UpdatePolicyRequest {
  * UpdatePolicy - 更新内容转发规则，包括转发规则后的服务节点
  */
 export interface UpdatePolicyResponse {
+}
+/**
+ * UpdateSSLAttribute - 更新修改SSL的属性，如：修改SSLName
+ */
+export interface UpdateSSLAttributeRequest {
+    /**
+     * SSL的资源id
+     */
+    SSLId: string;
+    /**
+     * SSL实例名称，不允许传空
+     */
+    SSLName: string;
+}
+/**
+ * UpdateSSLAttribute - 更新修改SSL的属性，如：修改SSLName
+ */
+export interface UpdateSSLAttributeResponse {
 }
 /**
  * UpdateULBAttribute - 更新ULB名字业务组备注等属性字段
