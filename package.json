@@ -6,12 +6,12 @@
   "license": "MIT",
   "private": false,
   "main": "./lib",
-	"files": [
-	  "package.json",
-		"README",
-		"LICENSE",
-		"lib"
-	],
+  "files": [
+    "package.json",
+    "README",
+    "LICENSE",
+    "lib"
+  ],
   "scripts": {
     "start": "node lib/index.js",
     "start:example": "node --no-warnings example/index.js",
@@ -31,7 +31,7 @@
     "husky": "^1.0.0-rc.13",
     "jest": "^26.6.3",
     "jest-junit": "^5.1.0",
-    "prettier": "^2.3.0",
+    "prettier": "^2.6.2",
     "ts-jest": "^23.1.4",
     "tslint": "^5.11.0",
     "tslint-config-prettier": "^1.15.0",

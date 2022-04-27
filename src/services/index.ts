@@ -24,7 +24,7 @@ const UPHostClient = require('./uphost').default;
 const USMSClient = require('./usms').default;
 const VPCClient = require('./vpc').default;
 
-export class Client extends BaseClient {
+class Client extends BaseClient {
   constructor({
     config,
     credential,
@@ -143,3 +143,7 @@ export class Client extends BaseClient {
     return new VPCClient({ config: this.config, credential: this.credential });
   }
 }
+
+module.exports = {
+  Client: Client,
+};

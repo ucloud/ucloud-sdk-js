@@ -313,6 +313,10 @@ export interface CreateVPNTunnelRequest {
    */
   VPCId: string;
   /**
+   * ike版本，枚举值： "IKE V1"，"IKE V2"，默认v1
+   */
+  IKEVersion: string;
+  /**
    * 指定VPN连接的本地子网的资源ID，最多可填写10个。
    */
   IPSecLocalSubnetIds: string[];
@@ -320,10 +324,6 @@ export interface CreateVPNTunnelRequest {
    * 指定VPN连接的客户网段，最多可填写20个。
    */
   IPSecRemoteSubnets: string[];
-  /**
-   * ike版本，枚举值： "IKE V1"，"IKE V2"，默认v1
-   */
-  IKEVersion: string;
   /**
    * 业务组，默认为“Default”
    */
@@ -369,7 +369,7 @@ export interface CreateVPNTunnelRequest {
    */
   IPSecEncryptionAlgorithm?: string;
   /**
-   * IPSec隧道中使用的认证算法，枚举值，"md5", "sha1"。默认值为“sha1”
+   * IPSec隧道中使用的认证算法，枚举值，"md5", "sha1","sha2-256"。默认值为“sha1”
    */
   IPSecAuthenticationAlgorithm?: string;
   /**
@@ -384,6 +384,10 @@ export interface CreateVPNTunnelRequest {
    * IPSec的PFS是否开启，枚举值，，不开启，"disable"；数字表示DH组, "1", "2", "5", "14", "15", "16"。默认为“disable”。
    */
   IPSecPFSDhGroup?: string;
+  /**
+   * IPSec隧道关闭后的处理动作，枚举值：“none”，流量触发；“restart”，自动重联，默认为none
+   */
+  IPSecCloseAction?: string;
 }
 
 /**
@@ -926,6 +930,10 @@ export interface UpdateVPNTunnelAttributeRequest {
    * 枚举值："IKE V1","IKE V2"
    */
   IKEVersion?: string;
+  /**
+   * IPSec隧道关闭后的处理动作，默认与原本一致，若原本为空，必传。枚举值：“none”,不处理（推荐为none，流量会自动触发隧道重建）；“restart”重建
+   */
+  IPSecCloseAction?: string;
 }
 
 /**

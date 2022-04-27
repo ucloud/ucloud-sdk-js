@@ -43,4 +43,4 @@ gen:
     	--only "UEC" \
 		--public \
 		-s https://git.ucloudadmin.com/apispec/apispec.git \
-		/Users/user/code/oas/plugins/template-opensdk-js .
+		/Users/wenqian/.oas/vcs/git.ucloudadmin.com/apispec/template-opensdk-js .
