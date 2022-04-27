@@ -1,20 +1,27 @@
 help:
 	@echo "help"
 
+.PHONY: install
+install:
+	npm install
+
 .PHONY: test
 test:
 	npm run test
 
+.PHONY: test-cov
 test-cov:
 	npm run coverage
 
+.PHONY: lint
 lint:
-	npm run tslint
 	npm run prettier:check
 
-fmt:
+.PHONY: fmt
+fmt: install
 	npm run prettier:write
 
+.PHONY: build
 build:
 	npm run publish	
 
