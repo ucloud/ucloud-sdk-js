@@ -16,12 +16,6 @@ export default class UAccountClient extends Client {
      */
     addMemberToProject(request?: AddMemberToProjectRequest): Promise<AddMemberToProjectResponse>;
     /**
-     * CreateProject - 创建项目
-     *
-     * See also: https://docs.ucloud.cn/api/uaccount-api/create_project
-     */
-    createProject(request?: CreateProjectRequest): Promise<CreateProjectResponse>;
-    /**
      * FreezeMember - 冻结成员
      *
      * See also: https://docs.ucloud.cn/api/uaccount-api/freeze_member
@@ -81,24 +75,6 @@ export interface AddMemberToProjectRequest {
  * AddMemberToProject - 添加成员到项目
  */
 export interface AddMemberToProjectResponse {
-}
-/**
- * CreateProject - 创建项目
- */
-export interface CreateProjectRequest {
-    /**
-     * 项目名称，不得与现有项目重名
-     */
-    ProjectName: string;
-}
-/**
- * CreateProject - 创建项目
- */
-export interface CreateProjectResponse {
-    /**
-     * 所创建项目的Id
-     */
-    ProjectId: string;
 }
 /**
  * FreezeMember - 冻结成员

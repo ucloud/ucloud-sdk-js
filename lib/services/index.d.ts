@@ -26,6 +26,7 @@ export declare class Client extends BaseClient {
     unet(): any;
     uphost(): any;
     usms(): any;
+    uvms(): any;
     vpc(): any;
 }
 export {};

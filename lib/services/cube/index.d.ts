@@ -40,6 +40,12 @@ export default class CubeClient extends Client {
      */
     getCubeDeployment(request?: GetCubeDeploymentRequest): Promise<GetCubeDeploymentResponse>;
     /**
+     * GetCubeExecToken - 获取登录容器的token
+     *
+     * See also: https://docs.ucloud.cn/api/cube-api/get_cube_exec_token
+     */
+    getCubeExecToken(request?: GetCubeExecTokenRequest): Promise<GetCubeExecTokenResponse>;
+    /**
      * GetCubeExtendInfo - 获取Cube的额外信息
      *
      * See also: https://docs.ucloud.cn/api/cube-api/get_cube_extend_info
@@ -64,6 +70,18 @@ export default class CubeClient extends Client {
      */
     getCubePrice(request?: GetCubePriceRequest): Promise<GetCubePriceResponse>;
     /**
+     * GetCubeToken - 获取Cube的token，可用于terminal登录、log获取
+     *
+     * See also: https://docs.ucloud.cn/api/cube-api/get_cube_token
+     */
+    getCubeToken(request?: GetCubeTokenRequest): Promise<GetCubeTokenResponse>;
+    /**
+     * ListCubeDeployment - 获取Cube的Deployment列表
+     *
+     * See also: https://docs.ucloud.cn/api/cube-api/list_cube_deployment
+     */
+    listCubeDeployment(request?: ListCubeDeploymentRequest): Promise<ListCubeDeploymentResponse>;
+    /**
      * ListCubePod - 获取Pods列表
      *
      * See also: https://docs.ucloud.cn/api/cube-api/list_cube_pod
@@ -81,6 +99,12 @@ export default class CubeClient extends Client {
      * See also: https://docs.ucloud.cn/api/cube-api/modify_cube_tag
      */
     modifyCubeTag(request?: ModifyCubeTagRequest): Promise<ModifyCubeTagResponse>;
+    /**
+     * RebootCubePod - 重启Cube Pod
+     *
+     * See also: https://docs.ucloud.cn/api/cube-api/reboot_cube_pod
+     */
+    rebootCubePod(request?: RebootCubePodRequest): Promise<RebootCubePodResponse>;
     /**
      * RenewCubePod - 更新Pod
      *
@@ -283,6 +307,40 @@ export interface GetCubeDeploymentResponse {
      * 经过base64编码的Deployment的yaml
      */
     Deployment: string;
+}
+/**
+ * GetCubeExecToken - 获取登录容器的token
+ */
+export interface GetCubeExecTokenRequest {
+    /**
+     * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
+     */
+    Zone?: string;
+    /**
+     * 容器名称
+     */
+    ContainerName: string;
+    /**
+     * CubeId 和 Uid 中必须填写任意一个。CubeId 是所有 Cube 资源的唯一 ID，如非在 UK8S 通过 Virtual Kubelet 插件创建的 Cube， 则必填 CubeId
+     */
+    CubeId?: string;
+    /**
+     * CubeId 和 Uid 中必须填写任意一个。Uid 是在 UK8S 中通过 Virtual Kubelet 插件创建出的 Cube 的唯一标识
+     */
+    Uid?: string;
+}
+/**
+ * GetCubeExecToken - 获取登录容器的token
+ */
+export interface GetCubeExecTokenResponse {
+    /**
+     * 有效时间5min
+     */
+    Token: string;
+    /**
+     * terminal的登录连接地址，限单点登录，有效时间5min
+     */
+    TerminalUrl?: string;
 }
 /**
  * GetCubeExtendInfo - 获取Cube的额外信息
@@ -498,11 +556,71 @@ export interface GetCubePriceResponse {
     OriginalPrice: number;
 }
 /**
+ * GetCubeToken - 获取Cube的token，可用于terminal登录、log获取
+ */
+export interface GetCubeTokenRequest {
+    /**
+     * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
+     */
+    Zone?: string;
+    /**
+     * 容器名称
+     */
+    ContainerName: string;
+    /**
+     * CubeId 和 Uid 中必须填写任意一个。CubeId 是所有 Cube 资源的唯一 ID，如非在 UK8S 通过 Virtual Kubelet 插件创建的 Cube， 则必填 CubeId
+     */
+    CubeId?: string;
+    /**
+     * CubeId 和 Uid 中必须填写任意一个。Uid 是在 UK8S 中通过 Virtual Kubelet 插件创建出的 Cube 的唯一标识
+     */
+    Uid?: string;
+}
+/**
+ * GetCubeToken - 获取Cube的token，可用于terminal登录、log获取
+ */
+export interface GetCubeTokenResponse {
+    /**
+     * 有效时间5min
+     */
+    Token: string;
+}
+/**
+ * ListCubeDeployment - 获取Cube的Deployment列表
+ */
+export interface ListCubeDeploymentRequest {
+    /**
+     * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
+     */
+    Zone?: string;
+    /**
+     * 默认0
+     */
+    Offset: number;
+    /**
+     * 默认20
+     */
+    Limit: number;
+}
+/**
+ * ListCubeDeployment - 获取Cube的Deployment列表
+ */
+export interface ListCubeDeploymentResponse {
+    /**
+     *
+     */
+    TotalCount: number;
+    /**
+     * DeploymentInfo
+     */
+    Deployments: string[];
+}
+/**
  * ListCubePod - 获取Pods列表
  */
 export interface ListCubePodRequest {
     /**
-     * 可用区。参见 [可用区列表](../summary/regionlist.html)
+     * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
      */
     Zone?: string;
     /**
@@ -525,6 +643,10 @@ export interface ListCubePodRequest {
      * 默认20
      */
     Limit?: number;
+    /**
+     * Deployment的Id
+     */
+    DeploymentId?: string;
 }
 /**
  * ListCubePod - 获取Pods列表
@@ -586,6 +708,24 @@ export interface ModifyCubeTagResponse {
      * CubeId
      */
     CubeId: string;
+}
+/**
+ * RebootCubePod - 重启Cube Pod
+ */
+export interface RebootCubePodRequest {
+    /**
+     * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
+     */
+    Zone?: string;
+    /**
+     * cube资源id（cube-xxxxxx）
+     */
+    CubeId: string;
+}
+/**
+ * RebootCubePod - 重启Cube Pod
+ */
+export interface RebootCubePodResponse {
 }
 /**
  * RenewCubePod - 更新Pod

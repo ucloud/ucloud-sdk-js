@@ -22,6 +22,7 @@ const UMemClient = require('./umem').default;
 const UNetClient = require('./unet').default;
 const UPHostClient = require('./uphost').default;
 const USMSClient = require('./usms').default;
+const UVMSClient = require('./uvms').default;
 const VPCClient = require('./vpc').default;
 
 export class Client extends BaseClient {
@@ -139,7 +140,15 @@ export class Client extends BaseClient {
     return new USMSClient({ config: this.config, credential: this.credential });
   }
 
+  uvms() {
+    return new UVMSClient({ config: this.config, credential: this.credential });
+  }
+
   vpc() {
     return new VPCClient({ config: this.config, credential: this.credential });
   }
 }
+
+module.exports = {
+  Client: Client,
+};

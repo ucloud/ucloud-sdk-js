@@ -250,6 +250,12 @@ export default class UDBClient extends Client {
      */
     fetchUDBInstanceEarliestRecoverTime(request?: FetchUDBInstanceEarliestRecoverTimeRequest): Promise<FetchUDBInstanceEarliestRecoverTimeResponse>;
     /**
+     * GetUDBClientConnNum - 输入一个DBID，能够获取客户端来源IP以及对应的连接数
+     *
+     * See also: https://docs.ucloud.cn/api/udb-api/get_udb_client_conn_num
+     */
+    getUDBClientConnNum(request?: GetUDBClientConnNumRequest): Promise<GetUDBClientConnNumResponse>;
+    /**
      * ModifyUDBInstanceName - 重命名UDB实例
      *
      * See also: https://docs.ucloud.cn/api/udb-api/modify_udb_instance_name
@@ -262,7 +268,7 @@ export default class UDBClient extends Client {
      */
     modifyUDBInstancePassword(request?: ModifyUDBInstancePasswordRequest): Promise<ModifyUDBInstancePasswordResponse>;
     /**
-     * PromoteUDBInstanceToHA - 普通db升级为高可用(只针对mysql5.5及以上版本)
+     * PromoteUDBInstanceToHA - 普通db升级为高可用(只针对mysql5.5及以上版本SSD机型的实例)  ，对于NVMe机型的单点升级高可用，虽然也能使用该操作再加上SwitchUDBInstanceToHA，但是更建议直接调用新的API接口（UpgradeUDBInstanceToHA）
      *
      * See also: https://docs.ucloud.cn/api/udb-api/promote_udb_instance_to_ha
      */
@@ -310,13 +316,13 @@ export default class UDBClient extends Client {
      */
     stopUDBInstance(request?: StopUDBInstanceRequest): Promise<StopUDBInstanceResponse>;
     /**
-     * SwitchUDBHAToSentinel - UDB高可用实例从HAProxy版本升级为Sentinel版本（不带HAProxy）升级耗时30-70秒
+     * SwitchUDBHAToSentinel - UDB高可用实例从HAProxy版本升级为Sentinel版本（不带HAProxy）升级耗时5-10秒
      *
      * See also: https://docs.ucloud.cn/api/udb-api/switch_udb_ha_to_sentinel
      */
     switchUDBHAToSentinel(request?: SwitchUDBHAToSentinelRequest): Promise<SwitchUDBHAToSentinelResponse>;
     /**
-     * SwitchUDBInstanceToHA - 普通UDB切换为高可用，原db状态为WaitForSwitch时，调用改api
+     * SwitchUDBInstanceToHA - 普通UDB切换为高可用(只针对mysql5.5及以上版本SSD机型的实例) ，原db状态为WaitForSwitch时，调用该api； 对于NVMe机型的单点升级高可用，虽然也能使用PromoteUDBInstanceToHA再加上该操作，但是更建议直接调用新的API接口（UpgradeUDBInstanceToHA）
      *
      * See also: https://docs.ucloud.cn/api/udb-api/switch_udb_instance_to_ha
      */
@@ -339,6 +345,12 @@ export default class UDBClient extends Client {
      * See also: https://docs.ucloud.cn/api/udb-api/update_udb_param_group
      */
     updateUDBParamGroup(request?: UpdateUDBParamGroupRequest): Promise<UpdateUDBParamGroupResponse>;
+    /**
+     * UpgradeUDBInstanceToHA - 快杰普通db升级为高可用(只针对mysql5.5及以上版本Nvme机型的实例)
+     *
+     * See also: https://docs.ucloud.cn/api/udb-api/upgrade_udb_instance_to_ha
+     */
+    upgradeUDBInstanceToHA(request?: UpgradeUDBInstanceToHARequest): Promise<UpgradeUDBInstanceToHAResponse>;
     /**
      * UploadUDBParamGroup - 导入UDB配置
      *
@@ -1776,7 +1788,7 @@ export interface DescribeUDBInstanceBinlogBackupStateResponse {
  */
 export interface DescribeUDBInstanceLogRequest {
     /**
-     * 可用区。参见 [可用区列表](../summary/regionlist.html)
+     * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
      */
     Zone?: string;
     /**
@@ -1792,7 +1804,7 @@ export interface DescribeUDBInstanceLogRequest {
      */
     EndTime: number;
     /**
-     * 查询日志的类型
+     * 查询日志的类型error：错误日志；slow：慢日志
      */
     LogType: string;
 }
@@ -2390,6 +2402,37 @@ export interface FetchUDBInstanceEarliestRecoverTimeResponse {
     EarliestTime?: number;
 }
 /**
+ * GetUDBClientConnNum - 输入一个DBID，能够获取客户端来源IP以及对应的连接数
+ */
+export interface GetUDBClientConnNumRequest {
+    /**
+     * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
+     */
+    Zone: string;
+    /**
+     * DB实例id
+     */
+    DBId: string;
+}
+/**
+ * GetUDBClientConnNum - 输入一个DBID，能够获取客户端来源IP以及对应的连接数
+ */
+export interface GetUDBClientConnNumResponse {
+    /**
+     * db实例ip和连接数信息
+     */
+    DataSet: {
+        /**
+         * 客户端IP
+         */
+        Ip?: string;
+        /**
+         * 该Ip连接数
+         */
+        Num?: number;
+    }[];
+}
+/**
  * ModifyUDBInstanceName - 重命名UDB实例
  */
 export interface ModifyUDBInstanceNameRequest {
@@ -2438,7 +2481,7 @@ export interface ModifyUDBInstancePasswordRequest {
 export interface ModifyUDBInstancePasswordResponse {
 }
 /**
- * PromoteUDBInstanceToHA - 普通db升级为高可用(只针对mysql5.5及以上版本)
+ * PromoteUDBInstanceToHA - 普通db升级为高可用(只针对mysql5.5及以上版本SSD机型的实例)  ，对于NVMe机型的单点升级高可用，虽然也能使用该操作再加上SwitchUDBInstanceToHA，但是更建议直接调用新的API接口（UpgradeUDBInstanceToHA）
  */
 export interface PromoteUDBInstanceToHARequest {
     /**
@@ -2447,7 +2490,7 @@ export interface PromoteUDBInstanceToHARequest {
     DBId: string;
 }
 /**
- * PromoteUDBInstanceToHA - 普通db升级为高可用(只针对mysql5.5及以上版本)
+ * PromoteUDBInstanceToHA - 普通db升级为高可用(只针对mysql5.5及以上版本SSD机型的实例)  ，对于NVMe机型的单点升级高可用，虽然也能使用该操作再加上SwitchUDBInstanceToHA，但是更建议直接调用新的API接口（UpgradeUDBInstanceToHA）
  */
 export interface PromoteUDBInstanceToHAResponse {
 }
@@ -2638,34 +2681,50 @@ export interface StopUDBInstanceRequest {
 export interface StopUDBInstanceResponse {
 }
 /**
- * SwitchUDBHAToSentinel - UDB高可用实例从HAProxy版本升级为Sentinel版本（不带HAProxy）升级耗时30-70秒
+ * SwitchUDBHAToSentinel - UDB高可用实例从HAProxy版本升级为Sentinel版本（不带HAProxy）升级耗时5-10秒
  */
 export interface SwitchUDBHAToSentinelRequest {
     /**
-     * 可用区。参见 [可用区列表](../summary/regionlist.html)
+     * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
      */
     Zone: string;
     /**
      * UDB的实例ID
      */
     DBId: string;
+    /**
+     * 是否跳过预检查强制升级。
+     */
+    ForceSwitch?: boolean;
 }
 /**
- * SwitchUDBHAToSentinel - UDB高可用实例从HAProxy版本升级为Sentinel版本（不带HAProxy）升级耗时30-70秒
+ * SwitchUDBHAToSentinel - UDB高可用实例从HAProxy版本升级为Sentinel版本（不带HAProxy）升级耗时5-10秒
  */
 export interface SwitchUDBHAToSentinelResponse {
 }
 /**
- * SwitchUDBInstanceToHA - 普通UDB切换为高可用，原db状态为WaitForSwitch时，调用改api
+ * SwitchUDBInstanceToHA - 普通UDB切换为高可用(只针对mysql5.5及以上版本SSD机型的实例) ，原db状态为WaitForSwitch时，调用该api； 对于NVMe机型的单点升级高可用，虽然也能使用PromoteUDBInstanceToHA再加上该操作，但是更建议直接调用新的API接口（UpgradeUDBInstanceToHA）
  */
 export interface SwitchUDBInstanceToHARequest {
     /**
      * 实例的Id,该值可以通过DescribeUDBInstance获取
      */
     DBId: string;
+    /**
+     * Year， Month， Dynamic，Trial，不填则按现在单点计费执行
+     */
+    ChargeType?: string;
+    /**
+     * 购买时长，需要和 ChargeType 搭配使用，否则使用单点计费策略的值
+     */
+    Quantity?: string;
+    /**
+     * 业务组
+     */
+    Tag?: string;
 }
 /**
- * SwitchUDBInstanceToHA - 普通UDB切换为高可用，原db状态为WaitForSwitch时，调用改api
+ * SwitchUDBInstanceToHA - 普通UDB切换为高可用(只针对mysql5.5及以上版本SSD机型的实例) ，原db状态为WaitForSwitch时，调用该api； 对于NVMe机型的单点升级高可用，虽然也能使用PromoteUDBInstanceToHA再加上该操作，但是更建议直接调用新的API接口（UpgradeUDBInstanceToHA）
  */
 export interface SwitchUDBInstanceToHAResponse {
     /**
@@ -2770,6 +2829,24 @@ export interface UpdateUDBParamGroupRequest {
  * UpdateUDBParamGroup - 更新UDB配置参数项
  */
 export interface UpdateUDBParamGroupResponse {
+}
+/**
+ * UpgradeUDBInstanceToHA - 快杰普通db升级为高可用(只针对mysql5.5及以上版本Nvme机型的实例)
+ */
+export interface UpgradeUDBInstanceToHARequest {
+    /**
+     * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
+     */
+    Zone: string;
+    /**
+     * 实例的Id,该值可以通过DescribeUDBInstance获取
+     */
+    DBId: string;
+}
+/**
+ * UpgradeUDBInstanceToHA - 快杰普通db升级为高可用(只针对mysql5.5及以上版本Nvme机型的实例)
+ */
+export interface UpgradeUDBInstanceToHAResponse {
 }
 /**
  * UploadUDBParamGroup - 导入UDB配置
