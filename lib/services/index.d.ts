@@ -24,6 +24,7 @@ export declare class Client extends BaseClient {
     ulb(): any;
     umem(): any;
     unet(): any;
+    uphone(): any;
     uphost(): any;
     usms(): any;
     uvms(): any;

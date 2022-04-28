@@ -42,6 +42,7 @@ gen:
     	--only "USMS" \
     	--only "UEC" \
     	--only "UVMS" \
+    	--only "UPhone" \
 		--public \
 		-s $(HOME)/.oas/vcs/git.ucloudadmin.com/apispec/apispec/specification \
 		$(HOME)/.oas/vcs/git.ucloudadmin.com/apispec/template-opensdk-js .
