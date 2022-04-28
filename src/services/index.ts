@@ -20,6 +20,7 @@ const UK8SClient = require('./uk8s').default;
 const ULBClient = require('./ulb').default;
 const UMemClient = require('./umem').default;
 const UNetClient = require('./unet').default;
+const UPhoneClient = require('./uphone').default;
 const UPHostClient = require('./uphost').default;
 const USMSClient = require('./usms').default;
 const UVMSClient = require('./uvms').default;
@@ -127,6 +128,13 @@ export class Client extends BaseClient {
 
   unet() {
     return new UNetClient({ config: this.config, credential: this.credential });
+  }
+
+  uphone() {
+    return new UPhoneClient({
+      config: this.config,
+      credential: this.credential,
+    });
   }
 
   uphost() {
