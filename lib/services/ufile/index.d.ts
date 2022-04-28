@@ -16,6 +16,12 @@ export default class UFileClient extends Client {
      */
     createBucket(request?: CreateBucketRequest): Promise<CreateBucketResponse>;
     /**
+     * CreateUFileLifeCycle - 创建生命周期管理
+     *
+     * See also: https://docs.ucloud.cn/api/ufile-api/create_ufile_life_cycle
+     */
+    createUFileLifeCycle(request?: CreateUFileLifeCycleRequest): Promise<CreateUFileLifeCycleResponse>;
+    /**
      * CreateUFileToken - 创建US3令牌
      *
      * See also: https://docs.ucloud.cn/api/ufile-api/create_ufile_token
@@ -27,6 +33,12 @@ export default class UFileClient extends Client {
      * See also: https://docs.ucloud.cn/api/ufile-api/delete_bucket
      */
     deleteBucket(request?: DeleteBucketRequest): Promise<DeleteBucketResponse>;
+    /**
+     * DeleteUFileLifeCycle - 删除生命周期管理
+     *
+     * See also: https://docs.ucloud.cn/api/ufile-api/delete_ufile_life_cycle
+     */
+    deleteUFileLifeCycle(request?: DeleteUFileLifeCycleRequest): Promise<DeleteUFileLifeCycleResponse>;
     /**
      * DeleteUFileToken - 删除令牌
      *
@@ -40,11 +52,23 @@ export default class UFileClient extends Client {
      */
     describeBucket(request?: DescribeBucketRequest): Promise<DescribeBucketResponse>;
     /**
+     * DescribeUFileLifeCycle - 获取生命周期信息
+     *
+     * See also: https://docs.ucloud.cn/api/ufile-api/describe_ufile_life_cycle
+     */
+    describeUFileLifeCycle(request?: DescribeUFileLifeCycleRequest): Promise<DescribeUFileLifeCycleResponse>;
+    /**
      * DescribeUFileToken - 获取令牌信息
      *
      * See also: https://docs.ucloud.cn/api/ufile-api/describe_ufile_token
      */
     describeUFileToken(request?: DescribeUFileTokenRequest): Promise<DescribeUFileTokenResponse>;
+    /**
+     * GetUFileDailyReport - 查看日消费报表
+     *
+     * See also: https://docs.ucloud.cn/api/ufile-api/get_ufile_daily_report
+     */
+    getUFileDailyReport(request?: GetUFileDailyReportRequest): Promise<GetUFileDailyReportResponse>;
     /**
      * GetUFileQuota - 查看配额状态
      *
@@ -82,6 +106,12 @@ export default class UFileClient extends Client {
      */
     updateBucket(request?: UpdateBucketRequest): Promise<UpdateBucketResponse>;
     /**
+     * UpdateUFileLifeCycle - 更新生命周期管理
+     *
+     * See also: https://docs.ucloud.cn/api/ufile-api/update_ufile_life_cycle
+     */
+    updateUFileLifeCycle(request?: UpdateUFileLifeCycleRequest): Promise<UpdateUFileLifeCycleResponse>;
+    /**
      * UpdateUFileToken - 更新令牌的操作权限，可操作key的前缀，可操作bucket和令牌超时时间点
      *
      * See also: https://docs.ucloud.cn/api/ufile-api/update_ufile_token
@@ -113,6 +143,48 @@ export interface CreateBucketResponse {
      * 已创建Bucket的ID
      */
     BucketId?: string;
+}
+/**
+ * CreateUFileLifeCycle - 创建生命周期管理
+ */
+export interface CreateUFileLifeCycleRequest {
+    /**
+     * 生命周期名称
+     */
+    LifeCycleName: string;
+    /**
+     * 生命周期所适用的前缀；*为整个存储空间文件；一条规则只支持一个文件前缀；
+     */
+    Prefix: string;
+    /**
+     * Enabled -- 启用，Disabled -- 不启用
+     */
+    Status: string;
+    /**
+     * 存储空间名称
+     */
+    BucketName: string;
+    /**
+     * 指定一个过期天数N，文件会在其最近更新时间点的N天后过期，自动删除；参数范围：[7,36500]，0代表不启用
+     */
+    Days?: number;
+    /**
+     * 指定一个过期天数N，文件会在其最近更新时间点的N天后，自动变为归档存储类型；参数范围：[7,36500]，0代表不启用
+     */
+    ArchivalDays?: number;
+    /**
+     * 指定一个过期天数N，文件会在其最近更新时间点的N天后，自动变为低频存储类型；参数范围：[7,36500]，0代表不启用
+     */
+    IADays?: number;
+}
+/**
+ * CreateUFileLifeCycle - 创建生命周期管理
+ */
+export interface CreateUFileLifeCycleResponse {
+    /**
+     * 生命周期Id
+     */
+    LifeCycleId: string;
 }
 /**
  * CreateUFileToken - 创建US3令牌
@@ -169,6 +241,24 @@ export interface DeleteBucketResponse {
      * Bucket的ID
      */
     BucketId?: string;
+}
+/**
+ * DeleteUFileLifeCycle - 删除生命周期管理
+ */
+export interface DeleteUFileLifeCycleRequest {
+    /**
+     * 生命周期Id
+     */
+    LifeCycleId: string;
+    /**
+     * 存储空间名称
+     */
+    BucketName: string;
+}
+/**
+ * DeleteUFileLifeCycle - 删除生命周期管理
+ */
+export interface DeleteUFileLifeCycleResponse {
 }
 /**
  * DeleteUFileToken - 删除令牌
@@ -273,6 +363,61 @@ export interface DescribeBucketResponse {
     }[];
 }
 /**
+ * DescribeUFileLifeCycle - 获取生命周期信息
+ */
+export interface DescribeUFileLifeCycleRequest {
+    /**
+     * 存储空间名称
+     */
+    BucketName: string;
+    /**
+     * 生命周期Id；不传递此参数拉取存储空间下面的所有生命周期信息
+     */
+    LifeCycleId?: string;
+}
+/**
+ * DescribeUFileLifeCycle - 获取生命周期信息
+ */
+export interface DescribeUFileLifeCycleResponse {
+    /**
+     * 生命周期信息
+     */
+    DateSet: {
+        /**
+         * 生命周期Id
+         */
+        LifeCycleId?: string;
+        /**
+         * 生命周期名称
+         */
+        LifeCycleName?: string;
+        /**
+         * 生命周期所适用的前缀；*为整个存储空间文件；
+         */
+        Prefix?: string;
+        /**
+         * 指定一个过期天数N，文件会在其最近更新时间点的N天后过期，自动删除，0代表不启用；
+         */
+        Days?: number;
+        /**
+         * Enabled -- 启用，Disabled -- 不启用
+         */
+        Status?: string;
+        /**
+         * 存储空间名称
+         */
+        BucketName?: string;
+        /**
+         * 指定一个过期天数N，文件会在其最近更新时间点的N天后过期，自动转换为归档存储类型，0代表不启用；
+         */
+        ArchivalDays?: number;
+        /**
+         * 指定一个过期天数N，文件会在其最近更新时间点的N天后过期，自动转换为低频存储类型，0代表不启用；
+         */
+        IADays?: number;
+    }[];
+}
+/**
  * DescribeUFileToken - 获取令牌信息
  */
 export interface DescribeUFileTokenRequest {
@@ -341,6 +486,107 @@ export interface DescribeUFileTokenResponse {
          * 所属地区
          */
         Region: string;
+    }[];
+}
+/**
+ * GetUFileDailyReport - 查看日消费报表
+ */
+export interface GetUFileDailyReportRequest {
+    /**
+     * 查询开始时间;unix时间戳，单位s
+     */
+    StartTime: number;
+    /**
+     * 查询结束时间;unix时间戳,单位s
+     */
+    EndTime: number;
+    /**
+     * 空间名称。此字段不为空，返回此Bucket日使用量；否则，返回这个项目的日使用量
+     */
+    BucketName?: string;
+}
+/**
+ * GetUFileDailyReport - 查看日消费报表
+ */
+export interface GetUFileDailyReportResponse {
+    /**
+     * 消费情况
+     */
+    DataSet: {
+        /**
+         * 总消费情况
+         */
+        Total?: {
+            /**
+             * 下载流量：单位byte；国内无此字段
+             */
+            Flow?: number;
+            /**
+             * 闲时流量；单位byte；海外无此字段
+             */
+            IdleFlow?: number;
+            /**
+             * 忙时流量；单位byte；海外无此字段
+             */
+            BusyFlow?: number;
+            /**
+             * cdn回源流量;单位byte
+             */
+            CdnFlow?: number;
+            /**
+             * API请求次数（万次）
+             */
+            ApiTimes?: number;
+        }[];
+        /**
+         * 日消费情况
+         */
+        Daily?: {
+            /**
+             * 标准存储量；单位byte
+             */
+            Storage?: number;
+            /**
+             * 低频存储量；单位byte
+             */
+            IaStorage?: number;
+            /**
+             * 冷存（归档）存储量；单位byte
+             */
+            AcStorage?: number;
+            /**
+             * 低频数据取回量；单位byte
+             */
+            IaGetSize?: number;
+            /**
+             * 冷存激活量，即归档数据取回量；单位byte
+             */
+            AcRestore?: number;
+            /**
+             * 忙时流量；单位byte；海外无此字段
+             */
+            BusyFlow?: number;
+            /**
+             * 闲时流量；单位byte；海外无此字段
+             */
+            IdleFlow?: number;
+            /**
+             * cdn回源流量;单位byte
+             */
+            CdnFlow?: number;
+            /**
+             * 下载流量：单位byte；国内无此字段
+             */
+            Flow?: number;
+            /**
+             * 配额消费时间，unix时间戳（单位s），精确到日期
+             */
+            Date?: number;
+            /**
+             * API请求次数（万次）
+             */
+            ApiTimes?: number;
+        }[];
     }[];
 }
 /**
@@ -535,6 +781,48 @@ export interface UpdateBucketResponse {
      * Bucket的ID
      */
     BucketId?: string;
+}
+/**
+ * UpdateUFileLifeCycle - 更新生命周期管理
+ */
+export interface UpdateUFileLifeCycleRequest {
+    /**
+     * 生命周期Id
+     */
+    LifeCycleId: string;
+    /**
+     * 生命周期名称
+     */
+    LifeCycleName: string;
+    /**
+     * 生命周期所适用的前缀；*为整个存储空间文件；一条规则只支持一个文件前缀；
+     */
+    Prefix: string;
+    /**
+     * Enabled -- 启用，Disabled -- 不启用
+     */
+    Status: string;
+    /**
+     * 存储空间名称
+     */
+    BucketName: string;
+    /**
+     * 指定一个过期天数N，文件会在其最近更新时间点的N天后过期,自动删除；范围： [7,36500]
+     */
+    Days?: number;
+    /**
+     * 指定一个过期天数N，文件会在其最近更新时间点的N天后过期，自动转换为归档存储类型；范围： [7,36500]，0代表不启用
+     */
+    ArchivalDays?: number;
+    /**
+     * 指定一个过期天数N，文件会在其最近更新时间点的N天后过期，自动转换为低频存储类型；范围： [7,36500]，0代表不启用
+     */
+    IADays?: number;
+}
+/**
+ * UpdateUFileLifeCycle - 更新生命周期管理
+ */
+export interface UpdateUFileLifeCycleResponse {
 }
 /**
  * UpdateUFileToken - 更新令牌的操作权限，可操作key的前缀，可操作bucket和令牌超时时间点

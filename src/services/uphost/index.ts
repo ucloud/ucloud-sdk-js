@@ -30,6 +30,20 @@ export default class UPHostClient extends Client {
   }
 
   /**
+   * CreatePHostImage - 创建裸金属2.0用户自定义镜像
+   *
+   * See also: https://docs.ucloud.cn/api/uphost-api/create_phost_image
+   */
+  createPHostImage(
+    request?: CreatePHostImageRequest
+  ): Promise<CreatePHostImageResponse> {
+    const args = { Action: 'CreatePHostImage', ...(request || {}) };
+    return this.invoke(new Request(args)).then(
+      (resp) => resp.toObject() as CreatePHostImageResponse
+    );
+  }
+
+  /**
    * DescribeBaremetalMachineType - 获取裸金属机型的详细描述信息
    *
    * See also: https://docs.ucloud.cn/api/uphost-api/describe_baremetal_machine_type
@@ -128,6 +142,20 @@ export default class UPHostClient extends Client {
   }
 
   /**
+   * ModifyPHostImageInfo - 修改自定义镜像名称和备注
+   *
+   * See also: https://docs.ucloud.cn/api/uphost-api/modify_phost_image_info
+   */
+  modifyPHostImageInfo(
+    request?: ModifyPHostImageInfoRequest
+  ): Promise<ModifyPHostImageInfoResponse> {
+    const args = { Action: 'ModifyPHostImageInfo', ...(request || {}) };
+    return this.invoke(new Request(args)).then(
+      (resp) => resp.toObject() as ModifyPHostImageInfoResponse
+    );
+  }
+
+  /**
    * ModifyPHostInfo - 更改物理机信息
    *
    * See also: https://docs.ucloud.cn/api/uphost-api/modify_phost_info
@@ -222,6 +250,18 @@ export default class UPHostClient extends Client {
   }
 
   /**
+   * StopPHost - 关闭物理机
+   *
+   * See also: https://docs.ucloud.cn/api/uphost-api/stop_phost
+   */
+  stopPHost(request?: StopPHostRequest): Promise<StopPHostResponse> {
+    const args = { Action: 'StopPHost', ...(request || {}) };
+    return this.invoke(new Request(args)).then(
+      (resp) => resp.toObject() as StopPHostResponse
+    );
+  }
+
+  /**
    * TerminatePHost - 删除物理云主机
    *
    * See also: https://docs.ucloud.cn/api/uphost-api/terminate_phost
@@ -232,6 +272,20 @@ export default class UPHostClient extends Client {
     const args = { Action: 'TerminatePHost', ...(request || {}) };
     return this.invoke(new Request(args)).then(
       (resp) => resp.toObject() as TerminatePHostResponse
+    );
+  }
+
+  /**
+   * TerminatePHostImage - 删除裸金属2.0用户自定义镜像
+   *
+   * See also: https://docs.ucloud.cn/api/uphost-api/terminate_phost_image
+   */
+  terminatePHostImage(
+    request?: TerminatePHostImageRequest
+  ): Promise<TerminatePHostImageResponse> {
+    const args = { Action: 'TerminatePHostImage', ...(request || {}) };
+    return this.invoke(new Request(args)).then(
+      (resp) => resp.toObject() as TerminatePHostImageResponse
     );
   }
 }
@@ -338,11 +392,43 @@ export interface CreatePHostResponse {
 }
 
 /**
+ * CreatePHostImage - 创建裸金属2.0用户自定义镜像
+ */
+export interface CreatePHostImageRequest {
+  /**
+   * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
+   */
+  Zone: string;
+  /**
+   * UPHost实例ID
+   */
+  PHostId: string;
+  /**
+   * 镜像名称
+   */
+  ImageName: string;
+  /**
+   * 镜像描述
+   */
+  ImageDescription?: string;
+}
+
+/**
+ * CreatePHostImage - 创建裸金属2.0用户自定义镜像
+ */
+export interface CreatePHostImageResponse {
+  /**
+   * 镜像ID
+   */
+  ImageId: string;
+}
+
+/**
  * DescribeBaremetalMachineType - 获取裸金属机型的详细描述信息
  */
 export interface DescribeBaremetalMachineTypeRequest {
   /**
-   * 可用区。参见 [可用区列表](../summary/regionlist.html)
+   * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
    */
   Zone: string;
   /**
@@ -356,9 +442,65 @@ export interface DescribeBaremetalMachineTypeRequest {
  */
 export interface DescribeBaremetalMachineTypeResponse {
   /**
-   * 机型列表，模型：PHostMachineTypeSet
+   * 机型列表，模型：PHostCloudMachineTypeSet
    */
-  MachineTypes?: string;
+  MachineTypes?: {
+    /**
+     * 物理云主机机型别名，全网唯一。
+     */
+    Type: string;
+    /**
+     * CPU信息
+     */
+    CPU?: {
+      /**
+       * CPU型号
+       */
+      Model?: string;
+      /**
+       * CPU主频
+       */
+      Frequence?: number;
+      /**
+       * CPU个数
+       */
+      Count?: number;
+      /**
+       * CPU核数
+       */
+      CoreCount?: number;
+    };
+    /**
+     * 内存大小，单位MB
+     */
+    Memory?: number;
+    /**
+     * 其他组件信息
+     */
+    Components?: {
+      /**
+       * 组件名称
+       */
+      Name?: string;
+      /**
+       * 组件数量
+       */
+      Count?: number;
+    };
+    /**
+     * 集群库存信息
+     */
+    Clusters?: {
+      /**
+       * 集群名。枚举值：千兆网络集群：1G；万兆网络集群：10G；智能网卡网络：25G；
+       */
+      Name?: string;
+      /**
+       * 库存状态。枚举值：有库存：Available；无库存：SoldOut
+       */
+      StockStatus?: string;
+    }[];
+  }[];
 }
 
 /**
@@ -366,7 +508,7 @@ export interface DescribeBaremetalMachineTypeResponse {
  */
 export interface DescribePHostRequest {
   /**
-   * 可用区。参见 [可用区列表](../summary/regionlist.html)
+   * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
    */
   Zone?: string;
   /**
@@ -385,6 +527,10 @@ export interface DescribePHostRequest {
    * 要挂载的云盘id，过滤返回能被UDiskId挂载的云主机。目前主要针对rssd云盘使用
    */
   UDiskIdForAttachment?: string;
+  /**
+   * ULB使用参数，获取同VPC下机器信息。
+   */
+  VPCId?: string;
 }
 
 /**
@@ -412,7 +558,7 @@ export interface DescribePHostResponse {
      */
     SN?: string;
     /**
-     * 物理云主机状态。枚举值：\\ > 初始化:Initializing; \\ > 启动中：Starting； \\ > 运行中：Running；\\ > 关机中：Stopping； \\ > 安装失败：InstallFailed； \\ > 重启中：Rebooting；\\ > 关机：Stopped；
+     * 物理云主机状态。枚举值：\\ > 初始化:Initializing; \\ > 启动中：Starting； \\ > 运行中：Running；\\ > 关机中：Stopping； \\ > 安装失败：InstallFailed； \\ > 重启中：Rebooting；\\ > 关机：Stopped； \\ > 迁移中(裸金属云盘)：Migrating
      */
     PMStatus?: string;
     /**
@@ -481,7 +627,7 @@ export interface DescribePHostResponse {
       CoreCount?: number;
     };
     /**
-     * 磁盘信息，见 PHostDiskSet
+     * 磁盘信息，见 PHostDescDiskSet
      */
     DiskSet?: {
       /**
@@ -586,11 +732,11 @@ export interface DescribePHostResponse {
  */
 export interface DescribePHostImageRequest {
   /**
-   * 可用区。参见 [可用区列表](../summary/regionlist.html)
+   * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
    */
   Zone: string;
   /**
-   * 镜像类别，枚举值，Base是基础镜像；
+   * 镜像类别，枚举值，Base是基础镜像；Custom是自制镜像。
    */
   ImageType?: string;
   /**
@@ -647,6 +793,26 @@ export interface DescribePHostImageResponse {
      * 当前版本
      */
     Version?: string;
+    /**
+     * 枚举值：Base=>基础镜像，Custom=>自制镜像。
+     */
+    ImageType?: string;
+    /**
+     * 裸金属2.0参数。镜像创建时间。
+     */
+    CreateTime?: number;
+    /**
+     * 裸金属2.0参数。镜像当前状态。
+     */
+    State?: string;
+    /**
+     * 裸金属2.0参数。镜像大小。
+     */
+    ImageSize?: number;
+    /**
+     * 镜像描述
+     */
+    ImageDescription?: string;
   }[];
 }
 
@@ -655,7 +821,7 @@ export interface DescribePHostImageResponse {
  */
 export interface DescribePHostMachineTypeRequest {
   /**
-   * 可用区。参见 [可用区列表](../summary/regionlist.html)
+   * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
    */
   Zone: string;
   /**
@@ -725,18 +891,6 @@ export interface DescribePHostMachineTypeResponse {
        * 磁盘IO性能，单位MB/s（待废弃）
        */
       IOCap?: number;
-      /**
-       * 裸金属机型参数：磁盘盘符
-       */
-      Drive?: string;
-      /**
-       * 裸金属机型参数：磁盘ID
-       */
-      DiskId?: string;
-      /**
-       * 裸金属机型参数：是否是启动盘。True/False
-       */
-      IsBoot?: string;
     }[];
     /**
      * 其他组件信息
@@ -749,7 +903,7 @@ export interface DescribePHostMachineTypeResponse {
       /**
        * 组件数量
        */
-      Count?: string;
+      Count?: number;
     };
     /**
      * 集群库存信息
@@ -849,7 +1003,7 @@ export interface GetPHostDiskUpgradePriceResponse {
  */
 export interface GetPHostPriceRequest {
   /**
-   * 可用区。参见 [可用区列表](../summary/regionlist.html)
+   * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
    */
   Zone?: string;
   /**
@@ -916,6 +1070,38 @@ export interface GetPHostPriceResponse {
      */
     OriginalPrice?: number;
   }[];
+}
+
+/**
+ * ModifyPHostImageInfo - 修改自定义镜像名称和备注
+ */
+export interface ModifyPHostImageInfoRequest {
+  /**
+   * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
+   */
+  Zone: string;
+  /**
+   * 镜像ID
+   */
+  ImageId: string;
+  /**
+   * 镜像名称
+   */
+  Name?: string;
+  /**
+   * 备注
+   */
+  Remark?: string;
+}
+
+/**
+ * ModifyPHostImageInfo - 修改自定义镜像名称和备注
+ */
+export interface ModifyPHostImageInfoResponse {
+  /**
+   * 镜像ID
+   */
+  ImageId?: string;
 }
 
 /**
@@ -1091,7 +1277,7 @@ export interface ResetPHostPasswordResponse {
  */
 export interface ResizePHostAttachedDiskRequest {
   /**
-   * 可用区。参见 [可用区列表](../summary/regionlist.html)
+   * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
    */
   Zone: string;
   /**
@@ -1115,7 +1301,7 @@ export interface ResizePHostAttachedDiskResponse {
   /**
    * 改配成功的磁盘id
    */
-  DiskId?: string;
+  UDiskId?: string;
 }
 
 /**
@@ -1140,6 +1326,30 @@ export interface StartPHostResponse {
    * PHost 的资源ID
    */
   PHostId?: string;
+}
+
+/**
+ * StopPHost - 关闭物理机
+ */
+export interface StopPHostRequest {
+  /**
+   * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
+   */
+  Zone?: string;
+  /**
+   * PHost资源ID
+   */
+  PHostId: string;
+}
+
+/**
+ * StopPHost - 关闭物理机
+ */
+export interface StopPHostResponse {
+  /**
+   * PHost 的资源ID
+   */
+  PHostId: string;
 }
 
 /**
@@ -1172,4 +1382,28 @@ export interface TerminatePHostResponse {
    * PHost 的资源ID
    */
   PHostId?: string;
+}
+
+/**
+ * TerminatePHostImage - 删除裸金属2.0用户自定义镜像
+ */
+export interface TerminatePHostImageRequest {
+  /**
+   * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
+   */
+  Zone: string;
+  /**
+   * 自制镜像ID
+   */
+  ImageId: string;
+}
+
+/**
+ * TerminatePHostImage - 删除裸金属2.0用户自定义镜像
+ */
+export interface TerminatePHostImageResponse {
+  /**
+   * 自制镜像ID
+   */
+  ImageId: string;
 }

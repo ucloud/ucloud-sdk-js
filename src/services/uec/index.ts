@@ -32,6 +32,20 @@ export default class UECClient extends Client {
   }
 
   /**
+   * CreateUEcCustomImage - 从指定虚拟机，生成自定义镜像。
+   *
+   * See also: https://docs.ucloud.cn/api/uec-api/create_u_ec_custom_image
+   */
+  createUEcCustomImage(
+    request?: CreateUEcCustomImageRequest
+  ): Promise<CreateUEcCustomImageResponse> {
+    const args = { Action: 'CreateUEcCustomImage', ...(request || {}) };
+    return this.invoke(new Request(args)).then(
+      (resp) => resp.toObject() as CreateUEcCustomImageResponse
+    );
+  }
+
+  /**
    * CreateUEcFirewall - 创建外网防火墙
    *
    * See also: https://docs.ucloud.cn/api/uec-api/create_u_ec_firewall
@@ -608,6 +622,34 @@ export interface BindUEcFirewallRequest {
 export interface BindUEcFirewallResponse {}
 
 /**
+ * CreateUEcCustomImage - 从指定虚拟机，生成自定义镜像。
+ */
+export interface CreateUEcCustomImageRequest {
+  /**
+   * 虚拟机实例ID
+   */
+  NodeId: string;
+  /**
+   * 镜像名称
+   */
+  ImageName: string;
+  /**
+   * 镜像描述
+   */
+  ImageDescription?: string;
+}
+
+/**
+ * CreateUEcCustomImage - 从指定虚拟机，生成自定义镜像。
+ */
+export interface CreateUEcCustomImageResponse {
+  /**
+   * 镜像ID
+   */
+  ImageId: string;
+}
+
+/**
  * CreateUEcFirewall - 创建外网防火墙
  */
 export interface CreateUEcFirewallRequest {
@@ -685,7 +727,7 @@ export interface CreateUEcHolderRequest {
    */
   Name?: string;
   /**
-   * 机型（normal-标准型，hf-高性能型，默认normal）
+   * 机型（normal-经济型，hf-标准型，默认normal）
    */
   ProductType?: string;
   /**
@@ -884,7 +926,7 @@ export interface CreateUEcVHostRequest {
    */
   SubnetId?: string;
   /**
-   * 产品类型：normal（标准型），hf（高频型）
+   * 产品类型：normal（经济型），hf（标准型）,g(Gpu型)
    */
   ProductType?: string;
   /**
@@ -896,9 +938,17 @@ export interface CreateUEcVHostRequest {
    */
   Isp?: number[];
   /**
-   * （已废弃）是否需要外网ip（yes-是，no-否）
+   * 是否需要外网ip（no-否）
    */
   IsNeedOuterIp?: string;
+  /**
+   * Gpu卡核心数。仅Gpu机型支持此字段
+   */
+  Gpu?: number;
+  /**
+   * Gpu类型，枚举值["T4S"],ProductType为G时必填
+   */
+  GpuType?: string;
 }
 
 /**
@@ -1283,7 +1333,7 @@ export interface DescribeUEcHolderResponse {
       }[];
     }[];
     /**
-     * 机器类型（normal通用型，hf高性能型）
+     * 机器类型（normal经济型，hf标准型）
      */
     ProductType?: string;
     /**
@@ -1429,9 +1479,13 @@ export interface DescribeUEcIDCRequest {
    */
   Type?: number;
   /**
-   * 产品类型：normal（通用型），hf（高主频型）
+   * 产品类型：normal（经济型），hf（标准型）,g(GPU型)
    */
   ProductType?: string;
+  /**
+   * Gpu卡核心数
+   */
+  Gpu?: number;
 }
 
 /**
@@ -1654,9 +1708,13 @@ export interface DescribeUEcVHostResponse {
      */
     FirewallId?: string;
     /**
-     * 机器类型
+     * 机器类型(normal-经济型,hf-标准型,g-GPU型)
      */
     ProductType?: string;
+    /**
+     * 内网ip列表
+     */
+    InnerIps?: string[];
   }[];
 }
 
@@ -2115,7 +2173,7 @@ export interface GetUEcImageResponse {
      */
     ImageDesc?: string;
     /**
-     * 镜像状态：镜像状态 1可用，2不可用
+     * 镜像状态：镜像状态 1可用，2不可用，3制作中
      */
     State?: number;
     /**
@@ -2139,6 +2197,10 @@ export interface GetUEcImageResponse {
        */
       State?: number;
     }[];
+    /**
+     * 是否支持Gpu(1-支持,0-不支持)
+     */
+    Gpu?: number;
   }[];
   /**
    * 镜像总数
@@ -2442,13 +2504,21 @@ export interface GetUEcVHostPriceRequest {
    */
   ChargeQuantity?: number;
   /**
-   * 产品类型：normal（标准型），hf（高频型），默认normal
+   * 产品类型：normal（经济型），hf（标准型），g(Gpu型),默认normal
    */
   ProductType?: string;
   /**
    * 外网IP的数量，默认1
    */
   IpCount?: number;
+  /**
+   * Gpu卡核心数。仅Gpu机型支持此字段
+   */
+  Gpu?: number;
+  /**
+   * Gpu类型，枚举值["T4"],ProductType为g时必填
+   */
+  GpuType?: string;
 }
 
 /**

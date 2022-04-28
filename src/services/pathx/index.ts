@@ -58,6 +58,34 @@ export default class PathXClient extends Client {
   }
 
   /**
+   * CreateUGA3Instance - 创建全球统一接入加速配置项
+   *
+   * See also: https://docs.ucloud.cn/api/pathx-api/create_uga3_instance
+   */
+  createUGA3Instance(
+    request?: CreateUGA3InstanceRequest
+  ): Promise<CreateUGA3InstanceResponse> {
+    const args = { Action: 'CreateUGA3Instance', ...(request || {}) };
+    return this.invoke(new Request(args)).then(
+      (resp) => resp.toObject() as CreateUGA3InstanceResponse
+    );
+  }
+
+  /**
+   * CreateUGA3Port - 创建统一接入加速实例端口，目前仅支持四层TCP端口
+   *
+   * See also: https://docs.ucloud.cn/api/pathx-api/create_uga3_port
+   */
+  createUGA3Port(
+    request?: CreateUGA3PortRequest
+  ): Promise<CreateUGA3PortResponse> {
+    const args = { Action: 'CreateUGA3Port', ...(request || {}) };
+    return this.invoke(new Request(args)).then(
+      (resp) => resp.toObject() as CreateUGA3PortResponse
+    );
+  }
+
+  /**
    * CreateUGAForwarder - 创建加速实例转发器，支持HTTPS接入HTTPS回源、HTTPS接入HTTP回源、HTTP接入HTTP回源、TCP接入TCP回源、UDP接入UDP回源、 支持WSS接入WSS回源、WSS接入WS回源、WS接入WS回源
    *
    * See also: https://docs.ucloud.cn/api/pathx-api/create_uga_forwarder
@@ -122,6 +150,34 @@ export default class PathXClient extends Client {
     const args = { Action: 'DeletePathXSSL', ...(request || {}) };
     return this.invoke(new Request(args)).then(
       (resp) => resp.toObject() as DeletePathXSSLResponse
+    );
+  }
+
+  /**
+   * DeleteUGA3Instance - 删除全球统一接入转发实例
+   *
+   * See also: https://docs.ucloud.cn/api/pathx-api/delete_uga3_instance
+   */
+  deleteUGA3Instance(
+    request?: DeleteUGA3InstanceRequest
+  ): Promise<DeleteUGA3InstanceResponse> {
+    const args = { Action: 'DeleteUGA3Instance', ...(request || {}) };
+    return this.invoke(new Request(args)).then(
+      (resp) => resp.toObject() as DeleteUGA3InstanceResponse
+    );
+  }
+
+  /**
+   * DeleteUGA3Port - 删除统一接入加速实例转发器 按接入端口删除
+   *
+   * See also: https://docs.ucloud.cn/api/pathx-api/delete_uga3_port
+   */
+  deleteUGA3Port(
+    request?: DeleteUGA3PortRequest
+  ): Promise<DeleteUGA3PortResponse> {
+    const args = { Action: 'DeleteUGA3Port', ...(request || {}) };
+    return this.invoke(new Request(args)).then(
+      (resp) => resp.toObject() as DeleteUGA3PortResponse
     );
   }
 
@@ -204,6 +260,48 @@ export default class PathXClient extends Client {
     const args = { Action: 'DescribePathXSSL', ...(request || {}) };
     return this.invoke(new Request(args)).then(
       (resp) => resp.toObject() as DescribePathXSSLResponse
+    );
+  }
+
+  /**
+   * DescribeUGA3Area - 获取全球接入源站可选列表
+   *
+   * See also: https://docs.ucloud.cn/api/pathx-api/describe_uga3_area
+   */
+  describeUGA3Area(
+    request?: DescribeUGA3AreaRequest
+  ): Promise<DescribeUGA3AreaResponse> {
+    const args = { Action: 'DescribeUGA3Area', ...(request || {}) };
+    return this.invoke(new Request(args)).then(
+      (resp) => resp.toObject() as DescribeUGA3AreaResponse
+    );
+  }
+
+  /**
+   * DescribeUGA3Instance - 获取全球统一接入加速服务加速配置信息，指定实例ID返回单个实例。未指定实例ID时 指定分页参数 则按创建时间降序 返回记录
+   *
+   * See also: https://docs.ucloud.cn/api/pathx-api/describe_uga3_instance
+   */
+  describeUGA3Instance(
+    request?: DescribeUGA3InstanceRequest
+  ): Promise<DescribeUGA3InstanceResponse> {
+    const args = { Action: 'DescribeUGA3Instance', ...(request || {}) };
+    return this.invoke(new Request(args)).then(
+      (resp) => resp.toObject() as DescribeUGA3InstanceResponse
+    );
+  }
+
+  /**
+   * DescribeUGA3Optimization - 获取全球接入UGA3线路加速化情况
+   *
+   * See also: https://docs.ucloud.cn/api/pathx-api/describe_uga3_optimization
+   */
+  describeUGA3Optimization(
+    request?: DescribeUGA3OptimizationRequest
+  ): Promise<DescribeUGA3OptimizationResponse> {
+    const args = { Action: 'DescribeUGA3Optimization', ...(request || {}) };
+    return this.invoke(new Request(args)).then(
+      (resp) => resp.toObject() as DescribeUGA3OptimizationResponse
     );
   }
 
@@ -292,6 +390,46 @@ export default class PathXClient extends Client {
   }
 
   /**
+   * GetUGA3Metric - 获取全地域加速监控信息
+   *
+   * See also: https://docs.ucloud.cn/api/pathx-api/get_uga3_metric
+   */
+  getUGA3Metric(
+    request?: GetUGA3MetricRequest
+  ): Promise<GetUGA3MetricResponse> {
+    const args = { Action: 'GetUGA3Metric', ...(request || {}) };
+    return this.invoke(new Request(args)).then(
+      (resp) => resp.toObject() as GetUGA3MetricResponse
+    );
+  }
+
+  /**
+   * GetUGA3Price - 获取全球统一接入转发实例价格
+   *
+   * See also: https://docs.ucloud.cn/api/pathx-api/get_uga3_price
+   */
+  getUGA3Price(request?: GetUGA3PriceRequest): Promise<GetUGA3PriceResponse> {
+    const args = { Action: 'GetUGA3Price', ...(request || {}) };
+    return this.invoke(new Request(args)).then(
+      (resp) => resp.toObject() as GetUGA3PriceResponse
+    );
+  }
+
+  /**
+   * GetUGA3UpdatePrice - 全球统一接入获取实例更新价格（增加、删退）
+   *
+   * See also: https://docs.ucloud.cn/api/pathx-api/get_uga3_update_price
+   */
+  getUGA3UpdatePrice(
+    request?: GetUGA3UpdatePriceRequest
+  ): Promise<GetUGA3UpdatePriceResponse> {
+    const args = { Action: 'GetUGA3UpdatePrice', ...(request || {}) };
+    return this.invoke(new Request(args)).then(
+      (resp) => resp.toObject() as GetUGA3UpdatePriceResponse
+    );
+  }
+
+  /**
    * ModifyGlobalSSHPort - 修改GlobalSSH端口
    *
    * See also: https://docs.ucloud.cn/api/pathx-api/modify_global_ssh_port
@@ -306,6 +444,20 @@ export default class PathXClient extends Client {
   }
 
   /**
+   * ModifyGlobalSSHRemark - 修改GlobalSSH备注
+   *
+   * See also: https://docs.ucloud.cn/api/pathx-api/modify_global_ssh_remark
+   */
+  modifyGlobalSSHRemark(
+    request?: ModifyGlobalSSHRemarkRequest
+  ): Promise<ModifyGlobalSSHRemarkResponse> {
+    const args = { Action: 'ModifyGlobalSSHRemark', ...(request || {}) };
+    return this.invoke(new Request(args)).then(
+      (resp) => resp.toObject() as ModifyGlobalSSHRemarkResponse
+    );
+  }
+
+  /**
    * ModifyGlobalSSHType - 修改GlobalSSH实例类型，仅支持低版本升级到高版本，不支持高版本降级到低版本
    *
    * See also: https://docs.ucloud.cn/api/pathx-api/modify_global_ssh_type
@@ -316,6 +468,62 @@ export default class PathXClient extends Client {
     const args = { Action: 'ModifyGlobalSSHType', ...(request || {}) };
     return this.invoke(new Request(args)).then(
       (resp) => resp.toObject() as ModifyGlobalSSHTypeResponse
+    );
+  }
+
+  /**
+   * ModifyUGA3Bandwidth - 修改统一接入加速配置带宽
+   *
+   * See also: https://docs.ucloud.cn/api/pathx-api/modify_uga3_bandwidth
+   */
+  modifyUGA3Bandwidth(
+    request?: ModifyUGA3BandwidthRequest
+  ): Promise<ModifyUGA3BandwidthResponse> {
+    const args = { Action: 'ModifyUGA3Bandwidth', ...(request || {}) };
+    return this.invoke(new Request(args)).then(
+      (resp) => resp.toObject() as ModifyUGA3BandwidthResponse
+    );
+  }
+
+  /**
+   * ModifyUGA3Instance - 修改统一接入加速配置属性，如Name，ReMark
+   *
+   * See also: https://docs.ucloud.cn/api/pathx-api/modify_uga3_instance
+   */
+  modifyUGA3Instance(
+    request?: ModifyUGA3InstanceRequest
+  ): Promise<ModifyUGA3InstanceResponse> {
+    const args = { Action: 'ModifyUGA3Instance', ...(request || {}) };
+    return this.invoke(new Request(args)).then(
+      (resp) => resp.toObject() as ModifyUGA3InstanceResponse
+    );
+  }
+
+  /**
+   * ModifyUGA3OriginInfo - Domain， IPList注意：修改Domain或IPList时， 请确保源站服务端口已经开启且外网防火墙允许pathx出口ip访问。
+   *
+   * See also: https://docs.ucloud.cn/api/pathx-api/modify_uga3_origin_info
+   */
+  modifyUGA3OriginInfo(
+    request?: ModifyUGA3OriginInfoRequest
+  ): Promise<ModifyUGA3OriginInfoResponse> {
+    const args = { Action: 'ModifyUGA3OriginInfo', ...(request || {}) };
+    return this.invoke(new Request(args)).then(
+      (resp) => resp.toObject() as ModifyUGA3OriginInfoResponse
+    );
+  }
+
+  /**
+   * ModifyUGA3Port - 修改统一接入加速实例端口,目前仅支持四层TCP端口
+   *
+   * See also: https://docs.ucloud.cn/api/pathx-api/modify_uga3_port
+   */
+  modifyUGA3Port(
+    request?: ModifyUGA3PortRequest
+  ): Promise<ModifyUGA3PortResponse> {
+    const args = { Action: 'ModifyUGA3Port', ...(request || {}) };
+    return this.invoke(new Request(args)).then(
+      (resp) => resp.toObject() as ModifyUGA3PortResponse
     );
   }
 
@@ -386,6 +594,20 @@ export default class PathXClient extends Client {
       (resp) => resp.toObject() as UnBindPathXSSLResponse
     );
   }
+
+  /**
+   * UpdatePathXWhitelist - 更新入口白名单,仅限GlobalSSH 实例使用。其他uga-实例不生效
+   *
+   * See also: https://docs.ucloud.cn/api/pathx-api/update_path_x_whitelist
+   */
+  updatePathXWhitelist(
+    request?: UpdatePathXWhitelistRequest
+  ): Promise<UpdatePathXWhitelistResponse> {
+    const args = { Action: 'UpdatePathXWhitelist', ...(request || {}) };
+    return this.invoke(new Request(args)).then(
+      (resp) => resp.toObject() as UpdatePathXWhitelistResponse
+    );
+  }
 }
 
 /**
@@ -416,7 +638,7 @@ export interface BindPathXSSLResponse {}
  */
 export interface CreateGlobalSSHInstanceRequest {
   /**
-   * 填写支持SSH访问IP的地区名称，如“洛杉矶”，“新加坡”，“香港”，“东京”，“华盛顿”，“法兰克福”。Area和AreaCode两者必填一个
+   * 填写支持SSH访问IP的地区名称，如“洛杉矶”，“新加坡”，“香港”，“东京”，“华盛顿”，“法兰克福”，“首尔”。Area和AreaCode两者必填一个
    */
   Area: string;
   /**
@@ -436,15 +658,15 @@ export interface CreateGlobalSSHInstanceRequest {
    */
   Remark?: string;
   /**
-   * 支付方式，如按月、按年、按时
+   * 支付方式，如按月：Month、 按年：Year、按时：Dynamic
    */
   ChargeType?: string;
   /**
-   * 购买数量
+   * 购买数量按月购买至月底请传0
    */
   Quantity?: number;
   /**
-   * 枚举值：["Enterprise","Basic","Free"], 分别代表企业版，基础版，免费版
+   * 枚举值：["Ultimate","Enterprise","Basic","Primary"], 分别代表旗舰版，企业版，基础版，入门版
    */
   InstanceType?: string;
   /**
@@ -452,7 +674,7 @@ export interface CreateGlobalSSHInstanceRequest {
    */
   BandwidthPackage?: number;
   /**
-   * InstanceType等于Basic时可以在["cn-bj2","cn-sh2","cn-gd"]中选择1个作为转发机房，Free版本固定为cn-bj2,其他付费版默认配置三个转发机房
+   * InstanceType等于Basic时可以在["cn-bj2","cn-sh2","cn-gd"]中选择1个作为转发机房，其他付费版默认配置三个转发机房
    */
   ForwardRegion?: string;
   /**
@@ -516,6 +738,89 @@ export interface CreatePathXSSLResponse {
 }
 
 /**
+ * CreateUGA3Instance - 创建全球统一接入加速配置项
+ */
+export interface CreateUGA3InstanceRequest {
+  /**
+   * 实例的共享带宽大小，单位Mbps
+   */
+  Bandwidth: number;
+  /**
+   * 加速配置实例名称,默认PathX
+   */
+  Name?: string;
+  /**
+   * 非必填,如果不填，会根据Domain 和IPList 去选一个最近的源站区域BKK表示AreaCode;曼谷表示Area["BKK":"曼谷","DXB":"迪拜","FRA":"法兰克福","SGN":"胡志明市","HKG":"香港",CGK":"雅加达","LOS":"拉各斯","LHR":"伦敦","LAX":"洛杉矶","MNL":"马尼拉","DME":"莫斯科","BOM":"孟买","MSP":"圣保罗","ICN":"首尔","PVG":"上海","SIN":"新加坡","NRT":"东京","IAD":"华盛顿","TPE": "台北"]
+   */
+  AreaCode?: string;
+  /**
+   * 备注项
+   */
+  Remark?: string;
+  /**
+   * 支付方式，如按月、按年、按时[Year,Month,Dynamic]
+   */
+  ChargeType?: string;
+  /**
+   * 购买周期
+   */
+  Quantity?: number;
+  /**
+   * 加速大区,默认Global,[    "Global":"全球",    "AP":"亚太",    "EU":"欧洲",    "ME":"中东",    "OA":"大洋洲",    "AF":"非洲",    "NA":"北美洲",    "SA":"南美洲"]
+   */
+  AccelerationArea?: string;
+  /**
+   * 加速源IP，多个IP用英文半角逗号(,)隔开；IPList和Domain二选一必填
+   */
+  OriginIPList?: string;
+  /**
+   * 加速源域名，IPList和Domain二选一必填
+   */
+  OriginDomain?: string;
+  /**
+   * 使用代金券可冲抵部分费用，仅全地域可用的代金券
+   */
+  CouponId?: string;
+}
+
+/**
+ * CreateUGA3Instance - 创建全球统一接入加速配置项
+ */
+export interface CreateUGA3InstanceResponse {
+  /**
+   * 加速配置ID
+   */
+  InstanceId: string;
+  /**
+   * 加速域名 用户可把业务域名CName到此域名上
+   */
+  CName?: string;
+}
+
+/**
+ * CreateUGA3Port - 创建统一接入加速实例端口，目前仅支持四层TCP端口
+ */
+export interface CreateUGA3PortRequest {
+  /**
+   * 加速配置实例ID
+   */
+  InstanceId: string;
+  /**
+   * TCP接入端口，禁用65123端口
+   */
+  TCP?: number[];
+  /**
+   * TCP回源端口
+   */
+  TCPRS?: number[];
+}
+
+/**
+ * CreateUGA3Port - 创建统一接入加速实例端口，目前仅支持四层TCP端口
+ */
+export interface CreateUGA3PortResponse {}
+
+/**
  * CreateUGAForwarder - 创建加速实例转发器，支持HTTPS接入HTTPS回源、HTTPS接入HTTP回源、HTTP接入HTTP回源、TCP接入TCP回源、UDP接入UDP回源、 支持WSS接入WSS回源、WSS接入WS回源、WS接入WS回源
  */
 export interface CreateUGAForwarderRequest {
@@ -548,7 +853,7 @@ export interface CreateUGAForwarderRequest {
    */
   HTTPSHTTPSRS?: number[];
   /**
-   * TCP接入端口
+   * TCP接入端口，禁用65123端口
    */
   TCP?: number[];
   /**
@@ -556,13 +861,37 @@ export interface CreateUGAForwarderRequest {
    */
   TCPRS?: number[];
   /**
-   * UDP接入端口
+   * UDP接入端口，禁用65123端口
    */
   UDP?: number[];
   /**
    * UDP回源端口
    */
   UDPRS?: number[];
+  /**
+   * WebSocket接入WebSocket回源转发，接入端口。禁用65123。
+   */
+  WSWS?: number[];
+  /**
+   * WebSocket接入WebSocket回源转发，源站监听端口
+   */
+  WSWSRS?: number[];
+  /**
+   * WebSocketS接入WebSocketS回源转发，接入端口。禁用65123。
+   */
+  WSSWSS?: number[];
+  /**
+   * WebSocketS接入WebSocketS回源转发，源站监听端口。
+   */
+  WSSWSSRS?: number[];
+  /**
+   * WebSocketS接入WebSocket回源转发，接入端口。禁用65123。
+   */
+  WSSWS?: number[];
+  /**
+   * WebSocketS接入WebSocket回源转发，源站监听端口。
+   */
+  WSSWSRS?: number[];
 }
 
 /**
@@ -615,15 +944,15 @@ export interface CreateUGAInstanceResponse {
  */
 export interface CreateUPathRequest {
   /**
-   * UPath名字
+   * 名字，便于记忆区分
    */
   Name: string;
   /**
-   * 选择的线路
+   * 选择的线路，由DescribePathXLineConfig接口提供
    */
   LineId: string;
   /**
-   * 线路带宽，最小1Mbps,最大带宽由 DescribePathXLineConfig 接口获得。如需更大带宽，请联系产品团队。
+   * 当PostPaid为false时，该值为预付费固定带宽；当PostPaid为true时，该值为后付费保底带宽，保底带宽越大可用的上限带宽越大。最小1Mbps,最大带宽由 DescribePathXLineConfig 接口获得。可联系产品团队咨询最大带宽。
    */
   Bandwidth: number;
   /**
@@ -635,9 +964,13 @@ export interface CreateUPathRequest {
    */
   Quantity?: number;
   /**
-   * 是否开启后付费, 默认为false
+   * 是否开启后付费, 默认为false ，不开启后付费。当ChargeType为Dynamic时不能开启后付费。
    */
   PostPaid?: boolean;
+  /**
+   * private:专线线路；public:海外SD-WAN。默认为private。
+   */
+  PathType?: string;
   /**
    * 代金券Id
    */
@@ -651,7 +984,7 @@ export interface CreateUPathResponse {
   /**
    * 加速线路实例Id
    */
-  UPathId: string;
+  PathId: string;
 }
 
 /**
@@ -685,6 +1018,40 @@ export interface DeletePathXSSLRequest {
 export interface DeletePathXSSLResponse {}
 
 /**
+ * DeleteUGA3Instance - 删除全球统一接入转发实例
+ */
+export interface DeleteUGA3InstanceRequest {
+  /**
+   * 实例Id,资源的唯一标识
+   */
+  InstanceId: string;
+}
+
+/**
+ * DeleteUGA3Instance - 删除全球统一接入转发实例
+ */
+export interface DeleteUGA3InstanceResponse {}
+
+/**
+ * DeleteUGA3Port - 删除统一接入加速实例转发器 按接入端口删除
+ */
+export interface DeleteUGA3PortRequest {
+  /**
+   * 加速配置实例ID
+   */
+  InstanceId: string;
+  /**
+   * TCP接入端口
+   */
+  TCP?: number[];
+}
+
+/**
+ * DeleteUGA3Port - 删除统一接入加速实例转发器 按接入端口删除
+ */
+export interface DeleteUGA3PortResponse {}
+
+/**
  * DeleteUGAForwarder - 删除加速实例转发器 按接入端口删除
  */
 export interface DeleteUGAForwarderRequest {
@@ -704,6 +1071,18 @@ export interface DeleteUGAForwarderRequest {
    * HTTPS接入HTTPS回源， 接入端口。禁用65123端口
    */
   HTTPSHTTPS?: number[];
+  /**
+   * WebSocketS接入WebSocketS回源， 接入端口。禁用65123端口
+   */
+  WSSWSS?: number[];
+  /**
+   * WebSocket接入WebSocket回源， 接入端口。禁用65123端口
+   */
+  WSWS?: number[];
+  /**
+   * WebSocketS接入WebSocket回源， 接入端口。禁用65123端口。
+   */
+  WSSWS?: number[];
   /**
    * TCP接入端口
    */
@@ -974,6 +1353,290 @@ export interface DescribePathXSSLResponse {
 }
 
 /**
+ * DescribeUGA3Area - 获取全球接入源站可选列表
+ */
+export interface DescribeUGA3AreaRequest {
+  /**
+   * IP集合，非必填。如果填IP或者域名，会推荐一个地域在返回列表的第一个，源站IP集合，以逗号分隔[127.0.0.1,127.0.0.2]
+   */
+  IPList?: string;
+  /**
+   * 域名，非必填。如果填IP或者域名，会推荐一个地域在返回列表的第一个
+   */
+  Domain?: string;
+}
+
+/**
+ * DescribeUGA3Area - 获取全球接入源站可选列表
+ */
+export interface DescribeUGA3AreaResponse {
+  /**
+   * 支持源站的地区,比如：AreaSet[{            "Area": "首尔",            "AreaCode": "ICN",            "CountryCode": "CN",            "ContinentCode": "CN"        }]ContinentCode:["CN","NA","OT"];"CN":表示国内，"NA":表示美洲，“OT"：表示欧洲等其他地区
+   */
+  AreaSet?: {
+    /**
+     * 源站区域代码
+     */
+    AreaCode: string;
+    /**
+     * 源站区域中文
+     */
+    Area: string;
+    /**
+     * 国家代码
+     */
+    CountryCode: string;
+    /**
+     * 国旗unicode
+     */
+    FlagUnicode: string;
+    /**
+     * 国旗 emoji
+     */
+    FlagEmoji: string;
+    /**
+     * 大陆代码
+     */
+    ContinentCode: string;
+  }[];
+}
+
+/**
+ * DescribeUGA3Instance - 获取全球统一接入加速服务加速配置信息，指定实例ID返回单个实例。未指定实例ID时 指定分页参数 则按创建时间降序 返回记录
+ */
+export interface DescribeUGA3InstanceRequest {
+  /**
+   * 加速配置实例ID，如果传了实例ID 则返回匹配实例ID的记录；如果没传则返回 ProjectId 下全部实例且符合分页要求
+   */
+  InstanceId?: string;
+  /**
+   * 返回的最大条数，默认为100，最大值400
+   */
+  Limit?: number;
+  /**
+   * 偏移量，默认为0
+   */
+  Offset?: number;
+}
+
+/**
+ * DescribeUGA3Instance - 获取全球统一接入加速服务加速配置信息，指定实例ID返回单个实例。未指定实例ID时 指定分页参数 则按创建时间降序 返回记录
+ */
+export interface DescribeUGA3InstanceResponse {
+  /**
+   * 全球加速实例信息列表
+   */
+  ForwardInstanceInfos?: {
+    /**
+     * 加速配置ID
+     */
+    InstanceId: string;
+    /**
+     * 加速域名
+     */
+    CName: string;
+    /**
+     * 加速实例名称
+     */
+    Name: string;
+    /**
+     * 加速大区代码
+     */
+    AccelerationArea: string;
+    /**
+     * 加速大区名称
+     */
+    AccelerationAreaName: string;
+    /**
+     * 加速节点列表
+     */
+    AccelerationAreaInfos: {
+      /**
+       * 加速区code
+       */
+      AccelerationArea: string;
+      /**
+       * 加速节点信息
+       */
+      AccelerationNodes: {
+        /**
+         * AreaCode ,城市机场代码
+         */
+        AreaCode: string;
+        /**
+         * AreaCode对应城市名
+         */
+        Area: string;
+        /**
+         * 国旗Emoji
+         */
+        FlagEmoji: string;
+        /**
+         * 国旗Unicode
+         */
+        FlagUnicode: string;
+      }[];
+    }[];
+    /**
+     * 回源出口IP地址
+     */
+    EgressIpList: {
+      /**
+       *  线路回源节点EIP
+       */
+      IP?: string;
+      /**
+       * 线路回源节点机房代号
+       */
+      Area?: string;
+    }[];
+    /**
+     * 购买的带宽值
+     */
+    Bandwidth: number;
+    /**
+     * 源站中文名
+     */
+    OriginArea: string;
+    /**
+     * 源站AreaCode
+     */
+    OriginAreaCode: string;
+    /**
+     * 资源创建时间
+     */
+    CreateTime: number;
+    /**
+     * 资源过期时间
+     */
+    ExpireTime: number;
+    /**
+     * 计费方式
+     */
+    ChargeType: string;
+    /**
+     * 备注
+     */
+    Remark?: string;
+    /**
+     * 端口列表
+     */
+    PortSets?: {
+      /**
+       * 转发协议，枚举值["TCP"，"UDP"，"HTTPHTTP"，"HTTPSHTTP"，"HTTPSHTTPS"，"WSWS"，"WSSWS"，"WSSWSS"]。TCP和UDP代表四层转发，其余为七层转发。
+       */
+      Protocol: string;
+      /**
+       * 源站服务器监听的端口号
+       */
+      RSPort: number;
+      /**
+       * 加速端口
+       */
+      Port: number;
+    }[];
+    /**
+     * 源站IP列表，多个值由半角英文逗号相隔
+     */
+    IPList?: string[];
+    /**
+     * 源站域名
+     */
+    Domain?: string;
+  }[];
+  /**
+   * 符合条件的总数
+   */
+  TotalCount?: number;
+}
+
+/**
+ * DescribeUGA3Optimization - 获取全球接入UGA3线路加速化情况
+ */
+export interface DescribeUGA3OptimizationRequest {
+  /**
+   * 源站AreaCode
+   */
+  AreaCode: string;
+  /**
+   * 默认一天 ，枚举类型["Hour","Day","Week"]
+   */
+  TimeRange?: string;
+  /**
+   * 加速大区,默认Global,[    "Global":"全球",    "AP":"亚太",    "EU":"欧洲",    "ME":"中东",    "OA":"大洋洲",    "AF":"非洲",    "NA":"北美洲",    "SA":"南美洲"]
+   */
+  AccelerationArea?: string;
+}
+
+/**
+ * DescribeUGA3Optimization - 获取全球接入UGA3线路加速化情况
+ */
+export interface DescribeUGA3OptimizationResponse {
+  /**
+   * 加速详情
+   */
+  AccelerationInfos?: {
+    /**
+     * 加速大区代码
+     */
+    AccelerationArea: string;
+    /**
+     * 加速大区名称
+     */
+    AccelerationName: string;
+    /**
+     * 加速提升情况
+     */
+    NodeInfo: {
+      /**
+       * 加速区域
+       */
+      Area: string;
+      /**
+       * 加速区域Code
+       */
+      AreaCode: string;
+      /**
+       * 国家代码
+       */
+      CountryCode: string;
+      /**
+       * 国旗Code
+       */
+      FlagUnicode: string;
+      /**
+       * 国旗Emoji
+       */
+      FlagEmoji: string;
+      /**
+       * 加速延迟
+       */
+      Latency: number;
+      /**
+       * 公网延迟
+       */
+      LatencyInternet: number;
+      /**
+       * 加速提升比例
+       */
+      LatencyOptimization: number;
+      /**
+       * 加速后丢包率
+       */
+      Loss: number;
+      /**
+       * 原始丢包率
+       */
+      LossInternet: number;
+      /**
+       * 丢包下降比例
+       */
+      LossOptimization: number;
+    }[];
+  }[];
+}
+
+/**
  * DescribeUGAInstance - 获取全球加速服务加速配置信息，指定实例ID返回单个实例。未指定实例ID时 指定分页参数 则按创建时间降序 返回记录
  */
 export interface DescribeUGAInstanceRequest {
@@ -1120,11 +1783,11 @@ export interface DescribeUGAInstanceResponse {
      */
     OutPublicIpList?: {
       /**
-       *  线路出口EIP
+       *  线路回源节点EIP
        */
       IP?: string;
       /**
-       * 线路出口机房代号
+       * 线路回源节点机房代号
        */
       Area?: string;
     }[];
@@ -1215,11 +1878,11 @@ export interface DescribeUPathResponse {
      */
     OutPublicIpList?: {
       /**
-       *  线路出口EIP
+       *  线路回源节点EIP
        */
       IP?: string;
       /**
-       * 线路出口机房代号
+       * 线路回源节点机房代号
        */
       Area?: string;
     }[];
@@ -1437,6 +2100,288 @@ export interface GetPathXMetricResponse {
 }
 
 /**
+ * GetUGA3Metric - 获取全地域加速监控信息
+ */
+export interface GetUGA3MetricRequest {
+  /**
+   * 资源ID
+   */
+  InstanceId: string;
+  /**
+   * 查询起始时间，10位长度时间戳
+   */
+  BeginTime: number;
+  /**
+   * 查询结束时间，10位长度时间戳
+   */
+  EndTime: number;
+  /**
+   * 查询监控的指标项。可不传	NetworkOut:出口总带宽	NetworkIn：入口总带宽	NetworkOutUsage：出口带宽使用率	NetworkInUsage：入口总带宽使用率	NetworkOutSubline ：子线路出口带宽	NetworkInSubline：子线路入口带宽	Delay：线路平均延迟	DelaySubline：子线路延迟	ConnectCount：当前连接数	ConnectCountSubline：子线路当前连接数	DelayPromote：延迟提升	DelayPromoteSubline：子线路延迟提升
+   */
+  MetricName?: string[];
+  /**
+   * 是否为子线路。为了简化查询,true 会返回所有子线路监控项可以，false:返回所有汇总的监控数据
+   */
+  IsSubline?: boolean;
+  /**
+   * 子线路AreaCode ,子线路的时候传，不是子线路可以不传
+   */
+  AreaCode?: string;
+}
+
+/**
+ * GetUGA3Metric - 获取全地域加速监控信息
+ */
+export interface GetUGA3MetricResponse {
+  /**
+   * 监控数据结果集
+   */
+  DataSet?: {
+    /**
+     * 出向带宽
+     */
+    NetworkOut?: {
+      /**
+       * 时间戳
+       */
+      Timestamp?: number;
+      /**
+       * 监控点数值
+       */
+      Value?: number;
+    }[];
+    /**
+     * 入向带宽
+     */
+    NetworkIn?: {
+      /**
+       * 时间戳
+       */
+      Timestamp?: number;
+      /**
+       * 监控点数值
+       */
+      Value?: number;
+    }[];
+    /**
+     * 出向带宽使用率
+     */
+    NetworkOutUsage?: {
+      /**
+       * 时间戳
+       */
+      Timestamp?: number;
+      /**
+       * 监控点数值
+       */
+      Value?: number;
+    }[];
+    /**
+     * 入向带宽使用率
+     */
+    NetworkInUsage?: {
+      /**
+       * 时间戳
+       */
+      Timestamp?: number;
+      /**
+       * 监控点数值
+       */
+      Value?: number;
+    }[];
+    /**
+     * 子线路出口带宽
+     */
+    NetworkOutSubline?: {
+      /**
+       * 时间戳
+       */
+      Timestamp?: number;
+      /**
+       * 监控点数值
+       */
+      Value?: number;
+    }[];
+    /**
+     * 子线路入口带宽
+     */
+    NetworkInSubline?: {
+      /**
+       * 时间戳
+       */
+      Timestamp?: number;
+      /**
+       * 监控点数值
+       */
+      Value?: number;
+    }[];
+    /**
+     * 线路平均延迟
+     */
+    Delay?: {
+      /**
+       * 时间戳
+       */
+      Timestamp?: number;
+      /**
+       * 监控点数值
+       */
+      Value?: number;
+    }[];
+    /**
+     * 子线路延迟
+     */
+    DelaySubline?: {
+      /**
+       * 时间戳
+       */
+      Timestamp?: number;
+      /**
+       * 监控点数值
+       */
+      Value?: number;
+    }[];
+    /**
+     * 延迟提升
+     */
+    DelayPromote?: {
+      /**
+       * 时间戳
+       */
+      Timestamp?: number;
+      /**
+       * 监控点数值
+       */
+      Value?: number;
+    }[];
+    /**
+     * 子线路延迟提升
+     */
+    DelayPromoteSubline?: {
+      /**
+       * 时间戳
+       */
+      Timestamp?: number;
+      /**
+       * 监控点数值
+       */
+      Value?: number;
+    }[];
+    /**
+     * 当前连接数
+     */
+    ConnectCount?: {
+      /**
+       * 时间戳
+       */
+      Timestamp?: number;
+      /**
+       * 监控点数值
+       */
+      Value?: number;
+    }[];
+    /**
+     * 子线路当前连接数
+     */
+    ConnectCountSubline?: {
+      /**
+       * 时间戳
+       */
+      Timestamp?: number;
+      /**
+       * 监控点数值
+       */
+      Value?: number;
+    }[];
+  };
+}
+
+/**
+ * GetUGA3Price - 获取全球统一接入转发实例价格
+ */
+export interface GetUGA3PriceRequest {
+  /**
+   * 共享带宽大小
+   */
+  Bandwidth: number;
+  /**
+   * 源站区域
+   */
+  AreaCode: string;
+  /**
+   * 购买时间数量，当ChargeType为Month时 Quantity默认为0，代表购买至月底。按年按小时必须为大于0
+   */
+  Quantity?: number;
+  /**
+   * 计费方式，默认按月支付。Month: 按月; Year: 按年; Dynamic: 按小时收
+   */
+  ChargeType?: string;
+  /**
+   * 加速大区,默认返回所有加速大区价格
+   */
+  AccelerationArea?: string;
+}
+
+/**
+ * GetUGA3Price - 获取全球统一接入转发实例价格
+ */
+export interface GetUGA3PriceResponse {
+  /**
+   * 加速大区对应价格
+   */
+  UGA3Price: {
+    /**
+     * 加速大区代码
+     */
+    AccelerationArea: string;
+    /**
+     * 加速大区名称
+     */
+    AccelerationAreaName: string;
+    /**
+     * 转发配置价格
+     */
+    AccelerationForwarderPrice: number;
+    /**
+     * 加速配置带宽价格
+     */
+    AccelerationBandwidthPrice: number;
+  }[];
+}
+
+/**
+ * GetUGA3UpdatePrice - 全球统一接入获取实例更新价格（增加、删退）
+ */
+export interface GetUGA3UpdatePriceRequest {
+  /**
+   * 资源ID
+   */
+  InstanceId: string;
+  /**
+   * 只有升级带宽的时候有价格变化
+   */
+  Bandwidth?: number;
+  /**
+   * 暂未支持，加速大区，在更换加速大区的时候使用
+   */
+  AccelerationArea?: string;
+  /**
+   * 暂未支持，源站区域
+   */
+  AreaCode?: string;
+}
+
+/**
+ * GetUGA3UpdatePrice - 全球统一接入获取实例更新价格（增加、删退）
+ */
+export interface GetUGA3UpdatePriceResponse {
+  /**
+   * 价格 元。大于0需付费，小于0则退费。
+   */
+  Price: number;
+}
+
+/**
  * ModifyGlobalSSHPort - 修改GlobalSSH端口
  */
 export interface ModifyGlobalSSHPortRequest {
@@ -1454,6 +2399,25 @@ export interface ModifyGlobalSSHPortRequest {
  * ModifyGlobalSSHPort - 修改GlobalSSH端口
  */
 export interface ModifyGlobalSSHPortResponse {}
+
+/**
+ * ModifyGlobalSSHRemark - 修改GlobalSSH备注
+ */
+export interface ModifyGlobalSSHRemarkRequest {
+  /**
+   * 实例ID,资源唯一标识
+   */
+  InstanceId: string;
+  /**
+   * 备注信息，不填默认为空字符串
+   */
+  Remark?: string;
+}
+
+/**
+ * ModifyGlobalSSHRemark - 修改GlobalSSH备注
+ */
+export interface ModifyGlobalSSHRemarkResponse {}
 
 /**
  * ModifyGlobalSSHType - 修改GlobalSSH实例类型，仅支持低版本升级到高版本，不支持高版本降级到低版本
@@ -1485,6 +2449,98 @@ export interface ModifyGlobalSSHTypeRequest {
  * ModifyGlobalSSHType - 修改GlobalSSH实例类型，仅支持低版本升级到高版本，不支持高版本降级到低版本
  */
 export interface ModifyGlobalSSHTypeResponse {}
+
+/**
+ * ModifyUGA3Bandwidth - 修改统一接入加速配置带宽
+ */
+export interface ModifyUGA3BandwidthRequest {
+  /**
+   * 加速配置实例ID，格式uga3-xxxx
+   */
+  InstanceId: string;
+  /**
+   * 带宽大小，范围[1,100]，不传则不更新
+   */
+  Bandwidth?: number;
+  /**
+   * 需要全地域可用的代金券
+   */
+  CouponId?: string;
+}
+
+/**
+ * ModifyUGA3Bandwidth - 修改统一接入加速配置带宽
+ */
+export interface ModifyUGA3BandwidthResponse {}
+
+/**
+ * ModifyUGA3Instance - 修改统一接入加速配置属性，如Name，ReMark
+ */
+export interface ModifyUGA3InstanceRequest {
+  /**
+   * 加速配置实例ID，格式uga-xxxx。不支持GlobalSSH实例。
+   */
+  InstanceId: string;
+  /**
+   * 加速配置实例名称，不填或空字符串则不更新
+   */
+  Name?: string;
+  /**
+   * 备注信息，暂时前端为使用
+   */
+  Remark?: string;
+}
+
+/**
+ * ModifyUGA3Instance - 修改统一接入加速配置属性，如Name，ReMark
+ */
+export interface ModifyUGA3InstanceResponse {}
+
+/**
+ * ModifyUGA3OriginInfo - Domain， IPList注意：修改Domain或IPList时， 请确保源站服务端口已经开启且外网防火墙允许pathx出口ip访问。
+ */
+export interface ModifyUGA3OriginInfoRequest {
+  /**
+   * 加速配置实例ID，格式uga3-xxxx。
+   */
+  InstanceId: string;
+  /**
+   * 加速源域名，仅支持1个域名。修改源站时 OriginIPList和OriginDomain至少填一个。OriginIPList和OriginDomain都填时 以Domain为准,如果两个都不填，不修改
+   */
+  OriginDomain: string;
+  /**
+   * ，加速源IP，多个IP用英文半角逗号(,)隔开。修改源站时 ，OriginIPList和OriginDomain至少填一个。OriginIPList和OriginDomain都填时 以OriginDomain为准。如果两个都不填，不修改
+   */
+  OriginIPList: string;
+}
+
+/**
+ * ModifyUGA3OriginInfo - Domain， IPList注意：修改Domain或IPList时， 请确保源站服务端口已经开启且外网防火墙允许pathx出口ip访问。
+ */
+export interface ModifyUGA3OriginInfoResponse {}
+
+/**
+ * ModifyUGA3Port - 修改统一接入加速实例端口,目前仅支持四层TCP端口
+ */
+export interface ModifyUGA3PortRequest {
+  /**
+   * 加速配置实例ID
+   */
+  InstanceId: string;
+  /**
+   * TCP接入端口，禁用65123端口
+   */
+  TCP?: number[];
+  /**
+   * TCP回源端口
+   */
+  TCPRS?: number[];
+}
+
+/**
+ * ModifyUGA3Port - 修改统一接入加速实例端口,目前仅支持四层TCP端口
+ */
+export interface ModifyUGA3PortResponse {}
 
 /**
  * ModifyUPathBandwidth - 修改加速线路带宽
@@ -1612,3 +2668,22 @@ export interface UnBindPathXSSLRequest {
  * UnBindPathXSSL - 解绑PathX SSL 证书
  */
 export interface UnBindPathXSSLResponse {}
+
+/**
+ * UpdatePathXWhitelist - 更新入口白名单,仅限GlobalSSH 实例使用。其他uga-实例不生效
+ */
+export interface UpdatePathXWhitelistRequest {
+  /**
+   * GlobalSSH实例ID，资源唯一标识
+   */
+  InstanceId: string;
+  /**
+   * 白名单规则,例如 "Whitelist.0": "192.168.1.1/24|tcp|22"，"Whitelist.1": "192.168.1.2|tcp|8080:8090"，第一个参数为ip或ip段，第二个参数代表协议（tcp/udp），第三个参数代表端口号或端口范围（使用 ':' 隔开）；可以添加多条规则（递增Whitelist.n字段内的n值）；此接口需要列出全部规则，例如不填则为清空白名单规则，如若需要增量添加，使用InsertPathXWhitelist接口,globalssh 没有端口范围：端口设置成加速端口，协议设置成tcp:ip|tcp|加速端口
+   */
+  Whitelist?: string[];
+}
+
+/**
+ * UpdatePathXWhitelist - 更新入口白名单,仅限GlobalSSH 实例使用。其他uga-实例不生效
+ */
+export interface UpdatePathXWhitelistResponse {}

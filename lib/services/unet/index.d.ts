@@ -94,11 +94,29 @@ export default class UNetClient extends Client {
      */
     describeShareBandwidth(request?: DescribeShareBandwidthRequest): Promise<DescribeShareBandwidthResponse>;
     /**
+     * DescribeShareBandwidthPrice - 获取共享带宽价格
+     *
+     * See also: https://docs.ucloud.cn/api/unet-api/describe_share_bandwidth_price
+     */
+    describeShareBandwidthPrice(request?: DescribeShareBandwidthPriceRequest): Promise<DescribeShareBandwidthPriceResponse>;
+    /**
+     * DescribeShareBandwidthUpdatePrice - 获取共享带宽升级价格
+     *
+     * See also: https://docs.ucloud.cn/api/unet-api/describe_share_bandwidth_update_price
+     */
+    describeShareBandwidthUpdatePrice(request?: DescribeShareBandwidthUpdatePriceRequest): Promise<DescribeShareBandwidthUpdatePriceResponse>;
+    /**
      * DisassociateEIPWithShareBandwidth - 将EIP移出共享带宽
      *
      * See also: https://docs.ucloud.cn/api/unet-api/disassociate_eip_with_share_bandwidth
      */
     disassociateEIPWithShareBandwidth(request?: DisassociateEIPWithShareBandwidthRequest): Promise<DisassociateEIPWithShareBandwidthResponse>;
+    /**
+     * DisassociateFirewall - 解绑资源上的防火墙
+     *
+     * See also: https://docs.ucloud.cn/api/unet-api/disassociate_firewall
+     */
+    disassociateFirewall(request?: DisassociateFirewallRequest): Promise<DisassociateFirewallResponse>;
     /**
      * GetEIPPayMode - 获取弹性IP计费模式
      *
@@ -117,6 +135,12 @@ export default class UNetClient extends Client {
      * See also: https://docs.ucloud.cn/api/unet-api/get_eip_upgrade_price
      */
     getEIPUpgradePrice(request?: GetEIPUpgradePriceRequest): Promise<GetEIPUpgradePriceResponse>;
+    /**
+     * GetThroughputDailyBillingInfo - 获取流量计费EIP每日流量计费信息
+     *
+     * See also: https://docs.ucloud.cn/api/unet-api/get_throughput_daily_billing_info
+     */
+    getThroughputDailyBillingInfo(request?: GetThroughputDailyBillingInfoRequest): Promise<GetThroughputDailyBillingInfoResponse>;
     /**
      * GrantFirewall - 将防火墙应用到资源上
      *
@@ -189,7 +213,7 @@ export default class UNetClient extends Client {
  */
 export interface AllocateEIPRequest {
     /**
-     * 弹性IP线路，枚举值：国际线路， International；BGP线路：Bgp。使用BGP线路的地域：北京二、上海金融云、上海二、广州等，其他地域均使用国际线路。
+     * 弹性IP线路，枚举值：国际线路， International；BGP线路：Bgp；精品BGP：BGPPro。使用BGP线路的地域：北京二、上海金融云、上海二、广州等，其他地域均使用国际线路。使用BGPPro线路的地域：香港
      */
     OperatorName: string;
     /**
@@ -201,7 +225,7 @@ export interface AllocateEIPRequest {
      */
     Tag?: string;
     /**
-     * 付费方式, 枚举值为: Year, 按年付费; Month, 按月付费; Dynamic, 按需付费(需开启权限); Trial, 试用(需开启权限) 默认为按月付费
+     * 付费方式, 枚举值为: Year, 按年付费; Month, 按月付费; Dynamic, 按时付费，默认为按月付费。
      */
     ChargeType?: string;
     /**
@@ -220,6 +244,10 @@ export interface AllocateEIPRequest {
      * 弹性IP的名称, 默认为 "EIP"
      */
     Name?: string;
+    /**
+     * 购买EIP数量，默认值为1
+     */
+    Count?: number;
     /**
      * 弹性IP的备注, 默认为空
      */
@@ -696,7 +724,7 @@ export interface DescribeFirewallRequest {
      */
     FWId?: string;
     /**
-     * 绑定防火墙组的资源类型，默认为全部资源类型。枚举值为："unatgw"，NAT网关； "uhost"，云主机； "upm"，物理云主机； "hadoophost"，hadoop节点； "fortresshost"，堡垒机； "udhost"，私有专区主机；"udockhost"，容器；"dbaudit"，数据库审计.
+     * 绑定防火墙组的资源类型，默认为全部资源类型。枚举值为："unatgw"，NAT网关； "uhost"，云主机；“uni”，虚拟网卡； "upm"，物理云主机； "hadoophost"，hadoop节点； "fortresshost"，堡垒机； "udhost"，私有专区主机；"udockhost"，容器；"dbaudit"，数据库审计.
      */
     ResourceType?: string;
     /**
@@ -782,6 +810,10 @@ export interface DescribeFirewallResponse {
             Remark?: string;
         }[];
     }[];
+    /**
+     * 防火墙资源数量
+     */
+    TotalCount?: number;
 }
 /**
  * DescribeFirewallResource - 获取防火墙组所绑定资源的外网IP
@@ -792,7 +824,7 @@ export interface DescribeFirewallResourceRequest {
      */
     FWId: string;
     /**
-     * 返回数据长度，默认为20，最大10000000
+     * 返回数据长度，默认为20，最大1000
      */
     Limit?: number;
     /**
@@ -813,6 +845,18 @@ export interface DescribeFirewallResourceResponse {
          */
         Zone?: number;
         /**
+         * 资源绑定的虚拟网卡的名称
+         */
+        SubResourceName: string;
+        /**
+         * 资源绑定的虚拟网卡的ID
+         */
+        SubResourceId: string;
+        /**
+         * 资源绑定的虚拟网卡的类型，“uni”，虚拟网卡。
+         */
+        SubResourceType: string;
+        /**
          * 名称
          */
         Name?: string;
@@ -829,7 +873,7 @@ export interface DescribeFirewallResourceResponse {
          */
         ResourceID?: string;
         /**
-         * 绑定防火墙组的资源类型。"unatgw"，NAT网关； "uhost"，云主机； "upm"，物理云主机； "hadoophost"，hadoop节点； "fortresshost"，堡垒机； "udhost"，私有专区主机；"udockhost"，容器；"dbaudit"，数据库审计.
+         * 绑定防火墙组的资源类型。"unatgw"，NAT网关； "uhost"，云主机； "upm"，物理云主机； "hadoophost"，hadoop节点； "fortresshost"，堡垒机； "udhost"，私有专区主机；"udockhost"，容器；"dbaudit"，数据库审计，“uni”，虚拟网卡。
          */
         ResourceType?: string;
         /**
@@ -924,6 +968,58 @@ export interface DescribeShareBandwidthResponse {
     TotalCount?: number;
 }
 /**
+ * DescribeShareBandwidthPrice - 获取共享带宽价格
+ */
+export interface DescribeShareBandwidthPriceRequest {
+    /**
+     * 付费方式, 预付费:Year 按年,Month 按月,Dynamic 按需;
+     */
+    ChargeType: string;
+    /**
+     * 共享带宽值
+     */
+    ShareBandwidth: number;
+    /**
+     * 购买数量
+     */
+    Quantity?: number;
+    /**
+     * 香港地域支持：BGPPro和International。其他地域无需填写该字段
+     */
+    OperatorName?: string;
+}
+/**
+ * DescribeShareBandwidthPrice - 获取共享带宽价格
+ */
+export interface DescribeShareBandwidthPriceResponse {
+    /**
+     * 共享带宽总价格
+     */
+    TotalPrice?: number;
+}
+/**
+ * DescribeShareBandwidthUpdatePrice - 获取共享带宽升级价格
+ */
+export interface DescribeShareBandwidthUpdatePriceRequest {
+    /**
+     * 共享带宽Id
+     */
+    ShareBandwidthId: string;
+    /**
+     * 共享带宽值
+     */
+    ShareBandwidth: number;
+}
+/**
+ * DescribeShareBandwidthUpdatePrice - 获取共享带宽升级价格
+ */
+export interface DescribeShareBandwidthUpdatePriceResponse {
+    /**
+     * 共享带宽升降级价格
+     */
+    Price: number;
+}
+/**
  * DisassociateEIPWithShareBandwidth - 将EIP移出共享带宽
  */
 export interface DisassociateEIPWithShareBandwidthRequest {
@@ -952,6 +1048,28 @@ export interface DisassociateEIPWithShareBandwidthRequest {
  * DisassociateEIPWithShareBandwidth - 将EIP移出共享带宽
  */
 export interface DisassociateEIPWithShareBandwidthResponse {
+}
+/**
+ * DisassociateFirewall - 解绑资源上的防火墙
+ */
+export interface DisassociateFirewallRequest {
+    /**
+     * 防火墙ID
+     */
+    FWId: string;
+    /**
+     * 需要解绑的资源ID
+     */
+    ResourceId: string;
+    /**
+     * 资源类型：ULB 表示负载均衡
+     */
+    ResourceType: string;
+}
+/**
+ * DisassociateFirewall - 解绑资源上的防火墙
+ */
+export interface DisassociateFirewallResponse {
 }
 /**
  * GetEIPPayMode - 获取弹性IP计费模式
@@ -1054,6 +1172,57 @@ export interface GetEIPUpgradePriceResponse {
     Price?: number;
 }
 /**
+ * GetThroughputDailyBillingInfo - 获取流量计费EIP每日流量计费信息
+ */
+export interface GetThroughputDailyBillingInfoRequest {
+    /**
+     * EIP的资源ID
+     */
+    EIPId: string;
+    /**
+     * 查询开始时间时间戳
+     */
+    StartTime: number;
+    /**
+     * 查询结束时间时间戳
+     */
+    EndTime: number;
+}
+/**
+ * GetThroughputDailyBillingInfo - 获取流量计费EIP每日流量计费信息
+ */
+export interface GetThroughputDailyBillingInfoResponse {
+    /**
+     * EIP流量计费信息，详见模型ThroughputDailyBillingInfo
+     */
+    Stats?: {
+        /**
+         * 计费开始时间
+         */
+        StartTime?: number;
+        /**
+         * 计费结束时间
+         */
+        EndTime?: number;
+        /**
+         * 计费流量，单位“GB”
+         */
+        QuantityOut?: number;
+        /**
+         * 是否已计费，“Yes”或者“No”
+         */
+        BillingState?: string;
+    }[];
+    /**
+     * 计费总流量
+     */
+    TotalOut?: number;
+    /**
+     * 资源ID
+     */
+    EIPId?: string;
+}
+/**
  * GrantFirewall - 将防火墙应用到资源上
  */
 export interface GrantFirewallRequest {
@@ -1062,7 +1231,7 @@ export interface GrantFirewallRequest {
      */
     FWId: string;
     /**
-     * 绑定防火墙组的资源类型，默认为全部资源类型。枚举值为："unatgw"，NAT网关； "uhost"，云主机； "upm"，物理云主机； "hadoophost"，hadoop节点； "fortresshost"，堡垒机； "udhost"，私有专区主机；"udockhost"，容器；"dbaudit"，数据库审计.
+     * 绑定防火墙组的资源类型，默认为全部资源类型。枚举值为："unatgw"，NAT网关； "uhost"，云主机； "upm"，物理云主机； "hadoophost"，hadoop节点； "fortresshost"，堡垒机； "udhost"，私有专区主机；"udockhost"，容器；"dbaudit"，数据库审计，”uni“，虚拟网卡，“cube”，Cube容器实例。
      */
     ResourceType: string;
     /**

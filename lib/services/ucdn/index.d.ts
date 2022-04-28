@@ -10,6 +10,24 @@ export default class UCDNClient extends Client {
         credential: CredentialOptions;
     });
     /**
+     * AddCertificate - 添加证书
+     *
+     * See also: https://docs.ucloud.cn/api/ucdn-api/add_certificate
+     */
+    addCertificate(request?: AddCertificateRequest): Promise<AddCertificateResponse>;
+    /**
+     * ControlUcdnDomainCacheAccess - 封禁解封缓存访问
+     *
+     * See also: https://docs.ucloud.cn/api/ucdn-api/control_ucdn_domain_cache_access
+     */
+    controlUcdnDomainCacheAccess(request?: ControlUcdnDomainCacheAccessRequest): Promise<ControlUcdnDomainCacheAccessResponse>;
+    /**
+     * DeleteCertificate - 删除证书
+     *
+     * See also: https://docs.ucloud.cn/api/ucdn-api/delete_certificate
+     */
+    deleteCertificate(request?: DeleteCertificateRequest): Promise<DeleteCertificateResponse>;
+    /**
      * DescribeNewUcdnPrefetchCacheTask - 获取预取任务状态
      *
      * See also: https://docs.ucloud.cn/api/ucdn-api/describe_new_ucdn_prefetch_cache_task
@@ -22,11 +40,11 @@ export default class UCDNClient extends Client {
      */
     describeNewUcdnRefreshCacheTask(request?: DescribeNewUcdnRefreshCacheTaskRequest): Promise<DescribeNewUcdnRefreshCacheTaskResponse>;
     /**
-     * GetNewUcdnDomainBandwidth - 获取域名带宽数据
+     * GetCertificateV2 - 获取证书列表(新)
      *
-     * See also: https://docs.ucloud.cn/api/ucdn-api/get_new_ucdn_domain_bandwidth
+     * See also: https://docs.ucloud.cn/api/ucdn-api/get_certificate_v2
      */
-    getNewUcdnDomainBandwidth(request?: GetNewUcdnDomainBandwidthRequest): Promise<GetNewUcdnDomainBandwidthResponse>;
+    getCertificateV2(request?: GetCertificateV2Request): Promise<GetCertificateV2Response>;
     /**
      * GetNewUcdnDomainHitRate - 获取域名命中率
      *
@@ -34,17 +52,17 @@ export default class UCDNClient extends Client {
      */
     getNewUcdnDomainHitRate(request?: GetNewUcdnDomainHitRateRequest): Promise<GetNewUcdnDomainHitRateResponse>;
     /**
-     * GetNewUcdnDomainHttpCode - 获取域名状态码监控
+     * GetNewUcdnLogRefererStatistics - 获取热点referer统计
      *
-     * See also: https://docs.ucloud.cn/api/ucdn-api/get_new_ucdn_domain_http_code
+     * See also: https://docs.ucloud.cn/api/ucdn-api/get_new_ucdn_log_referer_statistics
      */
-    getNewUcdnDomainHttpCode(request?: GetNewUcdnDomainHttpCodeRequest): Promise<GetNewUcdnDomainHttpCodeResponse>;
+    getNewUcdnLogRefererStatistics(request?: GetNewUcdnLogRefererStatisticsRequest): Promise<GetNewUcdnLogRefererStatisticsResponse>;
     /**
-     * GetNewUcdnDomainHttpCodeV2 - 获取域名详细状态码监控
+     * GetNewUcdnLogUrlStatistics - 获取日志url统计
      *
-     * See also: https://docs.ucloud.cn/api/ucdn-api/get_new_ucdn_domain_http_code_v2
+     * See also: https://docs.ucloud.cn/api/ucdn-api/get_new_ucdn_log_url_statistics
      */
-    getNewUcdnDomainHttpCodeV2(request?: GetNewUcdnDomainHttpCodeV2Request): Promise<GetNewUcdnDomainHttpCodeV2Response>;
+    getNewUcdnLogUrlStatistics(request?: GetNewUcdnLogUrlStatisticsRequest): Promise<GetNewUcdnLogUrlStatisticsResponse>;
     /**
      * GetUcdnDomain95BandwidthV2 - 获取域名九五峰值带宽数据
      *
@@ -88,6 +106,24 @@ export default class UCDNClient extends Client {
      */
     getUcdnDomainLog(request?: GetUcdnDomainLogRequest): Promise<GetUcdnDomainLogResponse>;
     /**
+     * GetUcdnDomainLogV2 - 获取域名5分钟日志
+     *
+     * See also: https://docs.ucloud.cn/api/ucdn-api/get_ucdn_domain_log_v2
+     */
+    getUcdnDomainLogV2(request?: GetUcdnDomainLogV2Request): Promise<GetUcdnDomainLogV2Response>;
+    /**
+     * GetUcdnDomainOriginHttpCode - 获取域名源站状态码监控
+     *
+     * See also: https://docs.ucloud.cn/api/ucdn-api/get_ucdn_domain_origin_http_code
+     */
+    getUcdnDomainOriginHttpCode(request?: GetUcdnDomainOriginHttpCodeRequest): Promise<GetUcdnDomainOriginHttpCodeResponse>;
+    /**
+     * GetUcdnDomainOriginHttpCodeDetail - 获取域名源站详细状态码监控
+     *
+     * See also: https://docs.ucloud.cn/api/ucdn-api/get_ucdn_domain_origin_http_code_detail
+     */
+    getUcdnDomainOriginHttpCodeDetail(request?: GetUcdnDomainOriginHttpCodeDetailRequest): Promise<GetUcdnDomainOriginHttpCodeDetailResponse>;
+    /**
      * GetUcdnDomainOriginRequestNum - 获取域名回源请求数
      *
      * See also: https://docs.ucloud.cn/api/ucdn-api/get_ucdn_domain_origin_request_num
@@ -100,29 +136,11 @@ export default class UCDNClient extends Client {
      */
     getUcdnDomainPrefetchEnable(request?: GetUcdnDomainPrefetchEnableRequest): Promise<GetUcdnDomainPrefetchEnableResponse>;
     /**
-     * GetUcdnDomainRequestNumV2 - 获取域名请求数
-     *
-     * See also: https://docs.ucloud.cn/api/ucdn-api/get_ucdn_domain_request_num_v2
-     */
-    getUcdnDomainRequestNumV2(request?: GetUcdnDomainRequestNumV2Request): Promise<GetUcdnDomainRequestNumV2Response>;
-    /**
      * GetUcdnDomainRequestNumV3 - 获取域名请求数
      *
      * See also: https://docs.ucloud.cn/api/ucdn-api/get_ucdn_domain_request_num_v3
      */
     getUcdnDomainRequestNumV3(request?: GetUcdnDomainRequestNumV3Request): Promise<GetUcdnDomainRequestNumV3Response>;
-    /**
-     * GetUcdnDomainTraffic - 获取加速域名流量使用信息
-     *
-     * See also: https://docs.ucloud.cn/api/ucdn-api/get_ucdn_domain_traffic
-     */
-    getUcdnDomainTraffic(request?: GetUcdnDomainTrafficRequest): Promise<GetUcdnDomainTrafficResponse>;
-    /**
-     * GetUcdnPassBandwidth - 获取回源带宽数据（cdn回客户源站部分）
-     *
-     * See also: https://docs.ucloud.cn/api/ucdn-api/get_ucdn_pass_bandwidth
-     */
-    getUcdnPassBandwidth(request?: GetUcdnPassBandwidthRequest): Promise<GetUcdnPassBandwidthResponse>;
     /**
      * GetUcdnPassBandwidthV2 - 获取回源带宽数据（cdn回客户源站部分）
      *
@@ -142,12 +160,6 @@ export default class UCDNClient extends Client {
      */
     getUcdnProIspRequestNumV2(request?: GetUcdnProIspRequestNumV2Request): Promise<GetUcdnProIspRequestNumV2Response>;
     /**
-     * GetUcdnTraffic - 获取流量信息
-     *
-     * See also: https://docs.ucloud.cn/api/ucdn-api/get_ucdn_traffic
-     */
-    getUcdnTraffic(request?: GetUcdnTrafficRequest): Promise<GetUcdnTrafficResponse>;
-    /**
      * GetUcdnTrafficV2 - 获取流量信息
      *
      * See also: https://docs.ucloud.cn/api/ucdn-api/get_ucdn_traffic_v2
@@ -160,6 +172,12 @@ export default class UCDNClient extends Client {
      */
     prefetchNewUcdnDomainCache(request?: PrefetchNewUcdnDomainCacheRequest): Promise<PrefetchNewUcdnDomainCacheResponse>;
     /**
+     * QueryIpLocation - 查询IP信息
+     *
+     * See also: https://docs.ucloud.cn/api/ucdn-api/query_ip_location
+     */
+    queryIpLocation(request?: QueryIpLocationRequest): Promise<QueryIpLocationResponse>;
+    /**
      * RefreshNewUcdnDomainCache - 刷新缓存
      *
      * See also: https://docs.ucloud.cn/api/ucdn-api/refresh_new_ucdn_domain_cache
@@ -171,6 +189,64 @@ export default class UCDNClient extends Client {
      * See also: https://docs.ucloud.cn/api/ucdn-api/switch_ucdn_charge_type
      */
     switchUcdnChargeType(request?: SwitchUcdnChargeTypeRequest): Promise<SwitchUcdnChargeTypeResponse>;
+}
+/**
+ * AddCertificate - 添加证书
+ */
+export interface AddCertificateRequest {
+    /**
+     * 证书名称
+     */
+    CertName: string;
+    /**
+     * 用户证书
+     */
+    UserCert: string;
+    /**
+     * 用户私钥
+     */
+    PrivateKey: string;
+    /**
+     * Ca证书，默认为空
+     */
+    CaCert?: string;
+}
+/**
+ * AddCertificate - 添加证书
+ */
+export interface AddCertificateResponse {
+}
+/**
+ * ControlUcdnDomainCacheAccess - 封禁解封缓存访问
+ */
+export interface ControlUcdnDomainCacheAccessRequest {
+    /**
+     * 待封禁的Url，一次封禁多个Url时最多一次30条，只能对表示文件的Url进行操作
+     */
+    UrlList: string[];
+    /**
+     * forbid=封禁   unforbid=解封  其他值非法
+     */
+    Type: string;
+}
+/**
+ * ControlUcdnDomainCacheAccess - 封禁解封缓存访问
+ */
+export interface ControlUcdnDomainCacheAccessResponse {
+}
+/**
+ * DeleteCertificate - 删除证书
+ */
+export interface DeleteCertificateRequest {
+    /**
+     * 证书名称
+     */
+    CertName: string;
+}
+/**
+ * DeleteCertificate - 删除证书
+ */
+export interface DeleteCertificateResponse {
 }
 /**
  * DescribeNewUcdnPrefetchCacheTask - 获取预取任务状态
@@ -333,51 +409,67 @@ export interface DescribeNewUcdnRefreshCacheTaskResponse {
     }[];
 }
 /**
- * GetNewUcdnDomainBandwidth - 获取域名带宽数据
+ * GetCertificateV2 - 获取证书列表(新)
  */
-export interface GetNewUcdnDomainBandwidthRequest {
+export interface GetCertificateV2Request {
     /**
-     * 时间粒度（0表示按照5分钟粒度，1表示按照1小时粒度，2表示按照一天的粒度）
+     * 偏移，默认为0，非负整数
      */
-    Type: number;
+    Offset?: number;
     /**
-     * 域名id，创建域名时生成的id。默认全部域名
+     * 长度，默认为全部，非负整数
      */
-    DomainId?: string[];
-    /**
-     * 查询带宽区域 cn代表国内 abroad代表海外 不填默认为全部区域
-     */
-    Areacode?: string;
-    /**
-     * 查询的起始时间，格式为Unix Timestamp。如果有EndTime，BeginTime必须赋值。如没有赋值，则返回缺少参 数错误，如果没有EndTime，BeginTime也可以不赋值，EndTime默认当前时间，BeginTime 默认前一天的当前时间。
-     */
-    BeginTime?: number;
-    /**
-     * 查询的结束时间，格式为Unix Timestamp。EndTime默认为当前时间，BeginTime默认为当前时间前一天时间。
-     */
-    EndTime?: number;
+    Limit?: number;
 }
 /**
- * GetNewUcdnDomainBandwidth - 获取域名带宽数据
+ * GetCertificateV2 - 获取证书列表(新)
  */
-export interface GetNewUcdnDomainBandwidthResponse {
+export interface GetCertificateV2Response {
     /**
-     * 带宽信息列表，参见BandwidthInfo
+     * 证书数量
      */
-    BandwidthList?: {
+    TotalCount: number;
+    /**
+     * 证书信息列表
+     */
+    CertList: {
         /**
-         * 带宽获取的时间点。格式：时间戳
+         * 证书名
          */
-        Time?: number;
+        CertName: string;
         /**
-         * 返回值返回指定时间区间内CDN的带宽峰值，单位Mbps（如果请求参数Type为0，则Value是五分钟粒度的带宽值，如果Type为1，则Value是1小时的带宽峰值，如果Type为2，则Value是一天内的带宽峰值）
+         * 通用名
          */
-        CdnBandwidth?: number;
+        CommonName: string;
+        /**
+         * dns名称
+         */
+        DnsName: string;
+        /**
+         * 证书开始时间
+         */
+        BeginTime: number;
+        /**
+         * 证书获取时间
+         */
+        EndTime: number;
+        /**
+         * 已配置域名个数
+         */
+        DomainCount: number;
+        /**
+         * 证书内容
+         */
+        UserCert: string;
+        /**
+         * ca证内容
+         */
+        CaCert: string;
+        /**
+         * 已配置的域名列表
+         */
+        Domains?: string[];
     }[];
-    /**
-     * 从起始时间到结束时间内的所使用的CDN总流量，单位GB
-     */
-    Traffic?: number;
 }
 /**
  * GetNewUcdnDomainHitRate - 获取域名命中率
@@ -417,7 +509,7 @@ export interface GetNewUcdnDomainHitRateResponse {
          */
         Time?: number;
         /**
-         * 流量命中率，单位%
+         * 总流量命中率，单位%
          */
         FlowHitRate?: number;
         /**
@@ -427,329 +519,127 @@ export interface GetNewUcdnDomainHitRateResponse {
     }[];
 }
 /**
- * GetNewUcdnDomainHttpCode - 获取域名状态码监控
+ * GetNewUcdnLogRefererStatistics - 获取热点referer统计
  */
-export interface GetNewUcdnDomainHttpCodeRequest {
+export interface GetNewUcdnLogRefererStatisticsRequest {
     /**
-     * 时间粒度（0表示按照5分钟粒度，1表示按照1小时粒度，2表示按照一天的粒度）
+     * 域名id，创建域名时生成的id
      */
-    Type: number;
+    DomainId?: string;
     /**
-     * 域名id，创建域名时生成的id。默认全部域名
-     */
-    DomainId?: string[];
-    /**
-     * 查询带宽区域 cn代表国内 abroad代表海外，只支持国内
+     * 查询带宽区域 cn代表国内 abroad代表海外 ；目前只支持国内
      */
     Areacode?: string;
     /**
-     * 查询的起始时间，格式为Unix Timestamp。如果有EndTime，BeginTime必须赋值。如没有赋值，则返回缺少参 数错误，如果没有EndTime，BeginTime也可以不赋值，EndTime默认当前时间，BeginTime 默认前一天的当前时间。
+     * 查询带宽的起始时间，格式：时间戳
      */
     BeginTime?: number;
     /**
-     * 查询的结束时间，格式为Unix Timestamp。EndTime默认为当前时间，BeginTime默认为当前时间前一天时间。
+     * 查询统计日志的结束时间，格式：时间戳。最大时间间隔30天
      */
     EndTime?: number;
+    /**
+     * 0表示按流量降序排列，1表示按照下载次数降序排列，默认为0
+     */
+    OrderBy?: number;
+    /**
+     * 返回的结果数量限制，默认1000
+     */
+    Limit?: number;
 }
 /**
- * GetNewUcdnDomainHttpCode - 获取域名状态码监控
+ * GetNewUcdnLogRefererStatistics - 获取热点referer统计
  */
-export interface GetNewUcdnDomainHttpCodeResponse {
+export interface GetNewUcdnLogRefererStatisticsResponse {
     /**
-     * 状态码实例表。详细见HttpCodeInfo
+     * 按天统计实例
      */
-    HttpCodeDetail?: {
+    RefererStatistics?: {
         /**
-         * 带宽获取的时间点。格式：时间戳
+         * 日期
          */
-        Time?: number;
+        Date?: string;
         /**
-         * 1xx数量
+         * Referer实例表
          */
-        HttpOneXX?: number;
-        /**
-         * 2xx数量
-         */
-        HttpTwoXX?: number;
-        /**
-         * 3xx数量
-         */
-        HttpThreeXX?: number;
-        /**
-         * 4xx数量
-         */
-        HttpFourXX?: number;
-        /**
-         * 5xx数量
-         */
-        HttpFiveXX?: number;
+        RefererList?: {
+            /**
+             * 客户端请求的referer
+             */
+            Referer?: string;
+            /**
+             * 次数
+             */
+            RequestTimes?: number;
+            /**
+             * 次数占比，单位%
+             */
+            Percent?: number;
+        }[];
     }[];
 }
 /**
- * GetNewUcdnDomainHttpCodeV2 - 获取域名详细状态码监控
+ * GetNewUcdnLogUrlStatistics - 获取日志url统计
  */
-export interface GetNewUcdnDomainHttpCodeV2Request {
+export interface GetNewUcdnLogUrlStatisticsRequest {
     /**
-     * 时间粒度（0表示按照5分钟粒度，1表示按照1小时粒度，2表示按照一天粒度，3表示按照一分钟粒度）
+     * 域名Id
      */
-    Type: number;
+    DomainId: string;
     /**
-     * 查询的起始时间，格式为Unix Timestamp。
-     */
-    BeginTime: number;
-    /**
-     * 查询的结束时间，格式为Unix Timestamp。
-     */
-    EndTime: number;
-    /**
-     * 域名id，创建域名时生成的id。默认全部域名
-     */
-    DomainId?: string[];
-    /**
-     * 查询带宽区域 cn代表国内 abroad代表海外，只支持国内
+     * 查询带宽区域 cn代表国内 abroad代表海外 只支持国内
      */
     Areacode?: string;
+    /**
+     * 查询带宽的起始时间，格式：时间戳。BeginTime和EndTime必须同时赋值
+     */
+    BeginTime?: number;
+    /**
+     * 查询统计日志的结束时间，格式：时间戳,最多可拉取30天
+     */
+    EndTime?: number;
+    /**
+     * 0表示按流量降序排列，1表示按照下载次数降序排列，默认为0
+     */
+    OrderBy?: number;
+    /**
+     * 返回的结果数量限制，默认1000
+     */
+    Limit?: number;
 }
 /**
- * GetNewUcdnDomainHttpCodeV2 - 获取域名详细状态码监控
+ * GetNewUcdnLogUrlStatistics - 获取日志url统计
  */
-export interface GetNewUcdnDomainHttpCodeV2Response {
+export interface GetNewUcdnLogUrlStatisticsResponse {
     /**
-     * 状态码详情
+     * 按天统计实例。
      */
-    HttpCodeV2Detail?: {
+    UrlStatisticsList?: {
         /**
-         * 时间
+         *
          */
-        Time?: number;
+        UrlList?: {
+            /**
+             * 下载链接的url
+             */
+            Url?: string;
+            /**
+             * 流量（单位为G）
+             */
+            Traffic?: number;
+            /**
+             * 下载次数
+             */
+            DownloadTimes?: number;
+            /**
+             * 流量占比，单位%
+             */
+            Percent?: number;
+        }[];
         /**
-         * 当前分组的总状态码数
+         * 日期
          */
-        Total?: number;
-        /**
-         * http100数量
-         */
-        Http100?: number;
-        /**
-         * http101数量
-         */
-        Http101?: number;
-        /**
-         * http102数量
-         */
-        Http102?: number;
-        /**
-         * http200数量
-         */
-        Http200?: number;
-        /**
-         * http201数量
-         */
-        Http201?: number;
-        /**
-         * http202数量
-         */
-        Http202?: number;
-        /**
-         * http203数量
-         */
-        Http203?: number;
-        /**
-         * http204数量
-         */
-        Http204?: number;
-        /**
-         * http205数量
-         */
-        Http205?: number;
-        /**
-         * http206数量
-         */
-        Http206?: number;
-        /**
-         * http207数量
-         */
-        Http207?: number;
-        /**
-         * http300数量
-         */
-        Http300?: number;
-        /**
-         * http301数量
-         */
-        Http301?: number;
-        /**
-         * http302数量
-         */
-        Http302?: number;
-        /**
-         * http303数量
-         */
-        Http303?: number;
-        /**
-         * http304数量
-         */
-        Http304?: number;
-        /**
-         * http305数量
-         */
-        Http305?: number;
-        /**
-         * http306数量
-         */
-        Http306?: number;
-        /**
-         * http307数量
-         */
-        Http307?: number;
-        /**
-         * http400数量
-         */
-        Http400?: number;
-        /**
-         * http401数量
-         */
-        Http401?: number;
-        /**
-         * http402数量
-         */
-        Http402?: number;
-        /**
-         * http403数量
-         */
-        Http403?: number;
-        /**
-         * http404数量
-         */
-        Http404?: number;
-        /**
-         * http405数量
-         */
-        Http405?: number;
-        /**
-         * http406数量
-         */
-        Http406?: number;
-        /**
-         * http407数量
-         */
-        Http407?: number;
-        /**
-         * http408数量
-         */
-        Http408?: number;
-        /**
-         * http409数量
-         */
-        Http409?: number;
-        /**
-         * http410数量
-         */
-        Http410?: number;
-        /**
-         * http411数量
-         */
-        Http411?: number;
-        /**
-         * http412数量
-         */
-        Http412?: number;
-        /**
-         * http413数量
-         */
-        Http413?: number;
-        /**
-         * http414数量
-         */
-        Http414?: number;
-        /**
-         * http415数量
-         */
-        Http415?: number;
-        /**
-         * http416数量
-         */
-        Http416?: number;
-        /**
-         * http417数量
-         */
-        Http417?: number;
-        /**
-         * http418数量
-         */
-        Http418?: number;
-        /**
-         * http421数量
-         */
-        Http421?: number;
-        /**
-         * http422数量
-         */
-        Http422?: number;
-        /**
-         * http423数量
-         */
-        Http423?: number;
-        /**
-         * http424数量
-         */
-        Http424?: number;
-        /**
-         * http425数量
-         */
-        Http425?: number;
-        /**
-         * http426数量
-         */
-        Http426?: number;
-        /**
-         * http449数量
-         */
-        Http449?: number;
-        /**
-         * http451数量
-         */
-        Http451?: number;
-        /**
-         * http500数量
-         */
-        Http500?: number;
-        /**
-         * http501数量
-         */
-        Http501?: number;
-        /**
-         * http502数量
-         */
-        Http502?: number;
-        /**
-         * http503数量
-         */
-        Http503?: number;
-        /**
-         * http504数量
-         */
-        Http504?: number;
-        /**
-         * http505数量
-         */
-        Http505?: number;
-        /**
-         * http506数量
-         */
-        Http506?: number;
-        /**
-         * http507数量
-         */
-        Http507?: number;
-        /**
-         * http509数量
-         */
-        Http509?: number;
-        /**
-         * http510数量
-         */
-        Http510?: number;
+        Date?: string;
     }[];
 }
 /**
@@ -793,7 +683,7 @@ export interface GetUcdnDomainBandwidthV2Request {
     /**
      * 时间粒度（0表示按照5分钟粒度，1表示按照1小时粒度，2表示按照一天的粒度，3表示按照1分钟粒度）
      */
-    Type: number;
+    Type?: number;
     /**
      * 域名id，创建域名时生成的id。默认全部域名
      */
@@ -814,6 +704,10 @@ export interface GetUcdnDomainBandwidthV2Request {
      * 协议，http、https  不传则查所有协议的带宽
      */
     Protocol?: string;
+    /**
+     * 原始带宽，不为0则获取原始带宽，默认为0
+     */
+    Primeval?: number;
 }
 /**
  * GetUcdnDomainBandwidthV2 - 获取域名带宽数据(新)
@@ -1002,29 +896,29 @@ export interface GetUcdnDomainConfigResponse {
              */
             CacheList?: {
                 /**
+                 * 路径模式，支持正则
+                 */
+                PathPattern: string;
+                /**
+                 * 缓存时间
+                 */
+                CacheTTL: number;
+                /**
+                 * 缓存时间的单位。sec（秒），min（分钟），hour（小时），day（天）。上限1年。
+                 */
+                CacheUnit: string;
+                /**
+                 * 是否缓存，true为缓存，flase为不缓存。为flase的情况下，CacheTTL和CacheUnit强制不生效
+                 */
+                CacheBehavior: boolean;
+                /**
                  * 状态码模式，非200，206状态码，多个状态码用竖线(|)分隔，该属性仅仅在状态码缓存配置列表中返回
                  */
                 HttpCodePattern?: string;
                 /**
-                 * 路径模式，支持正则
-                 */
-                PathPattern?: string;
-                /**
                  * 缓存规则描述
                  */
                 Description?: string;
-                /**
-                 * 缓存时间
-                 */
-                CacheTTL?: number;
-                /**
-                 * 缓存时间的单位。sec（秒），min（分钟），hour（小时），day（天）。上限1年。
-                 */
-                CacheUnit?: string;
-                /**
-                 * 是否缓存，true为缓存，flase为不缓存。为flase的情况下，CacheTTL和CacheUnit强制不生效
-                 */
-                CacheBehavior?: boolean;
                 /**
                  * 是否优先遵循源站头部缓存策略，false为不优先遵循源站，true为优先遵循源站缓存头部。默认为0
                  */
@@ -1035,29 +929,29 @@ export interface GetUcdnDomainConfigResponse {
              */
             HttpCodeCacheList?: {
                 /**
+                 * 路径模式，支持正则
+                 */
+                PathPattern: string;
+                /**
+                 * 缓存时间
+                 */
+                CacheTTL: number;
+                /**
+                 * 缓存时间的单位。sec（秒），min（分钟），hour（小时），day（天）。上限1年。
+                 */
+                CacheUnit: string;
+                /**
+                 * 是否缓存，true为缓存，flase为不缓存。为flase的情况下，CacheTTL和CacheUnit强制不生效
+                 */
+                CacheBehavior: boolean;
+                /**
                  * 状态码模式，非200，206状态码，多个状态码用竖线(|)分隔，该属性仅仅在状态码缓存配置列表中返回
                  */
                 HttpCodePattern?: string;
                 /**
-                 * 路径模式，支持正则
-                 */
-                PathPattern?: string;
-                /**
                  * 缓存规则描述
                  */
                 Description?: string;
-                /**
-                 * 缓存时间
-                 */
-                CacheTTL?: number;
-                /**
-                 * 缓存时间的单位。sec（秒），min（分钟），hour（小时），day（天）。上限1年。
-                 */
-                CacheUnit?: string;
-                /**
-                 * 是否缓存，true为缓存，flase为不缓存。为flase的情况下，CacheTTL和CacheUnit强制不生效
-                 */
-                CacheBehavior?: boolean;
                 /**
                  * 是否优先遵循源站头部缓存策略，false为不优先遵循源站，true为优先遵循源站缓存头部。默认为0
                  */
@@ -2704,6 +2598,376 @@ export interface GetUcdnDomainLogResponse {
     }[];
 }
 /**
+ * GetUcdnDomainLogV2 - 获取域名5分钟日志
+ */
+export interface GetUcdnDomainLogV2Request {
+    /**
+     * 查询的起始时间，格式为Unix Timestamp
+     */
+    BeginTime: number;
+    /**
+     * 查询的结束时间，格式为Unix Timestamp
+     */
+    EndTime: number;
+    /**
+     * 域名id，创建域名时生成的id。默认全部域名
+     */
+    DomainId?: string[];
+}
+/**
+ * GetUcdnDomainLogV2 - 获取域名5分钟日志
+ */
+export interface GetUcdnDomainLogV2Response {
+    /**
+     *
+     */
+    DomainLogSet: {
+        /**
+         * 域名
+         */
+        Domain?: string;
+        /**
+         * 日志信息列表
+         */
+        LogList?: {
+            /**
+             * Unix时间戳
+             */
+            LogTime: number;
+            /**
+             * 日志url地址
+             */
+            LogUrl: string;
+        }[];
+    }[];
+}
+/**
+ * GetUcdnDomainOriginHttpCode - 获取域名源站状态码监控
+ */
+export interface GetUcdnDomainOriginHttpCodeRequest {
+    /**
+     * 时间粒度（0表示按照5分钟粒度，1表示按照1小时粒度，2表示按照一天的粒度，3表示按照1分钟粒度）
+     */
+    Type: number;
+    /**
+     * 域名id，创建域名时生成的id。默认全部域名
+     */
+    DomainId?: string[];
+    /**
+     * 查询带宽区域 cn代表国内 abroad代表海外，只支持国内
+     */
+    Areacode?: string;
+    /**
+     * 查询的起始时间，格式为Unix Timestamp。如果有EndTime，BeginTime必须赋值。如没有赋值，则返回缺少参 数错误，如果没有EndTime，BeginTime也可以不赋值，EndTime默认当前时间，BeginTime 默认前一天的当前时间。
+     */
+    BeginTime?: number;
+    /**
+     * 查询的结束时间，格式为Unix Timestamp。EndTime默认为当前时间，BeginTime默认为当前时间前一天时间。
+     */
+    EndTime?: number;
+}
+/**
+ * GetUcdnDomainOriginHttpCode - 获取域名源站状态码监控
+ */
+export interface GetUcdnDomainOriginHttpCodeResponse {
+    /**
+     * 状态码实例表。详细见HttpCodeInfo
+     */
+    HttpCodeDetail?: {
+        /**
+         * 带宽获取的时间点。格式：时间戳
+         */
+        Time?: number;
+        /**
+         * 1xx数量
+         */
+        HttpOneXX?: number;
+        /**
+         * 2xx数量
+         */
+        HttpTwoXX?: number;
+        /**
+         * 3xx数量
+         */
+        HttpThreeXX?: number;
+        /**
+         * 4xx数量
+         */
+        HttpFourXX?: number;
+        /**
+         * 5xx数量
+         */
+        HttpFiveXX?: number;
+    }[];
+}
+/**
+ * GetUcdnDomainOriginHttpCodeDetail - 获取域名源站详细状态码监控
+ */
+export interface GetUcdnDomainOriginHttpCodeDetailRequest {
+    /**
+     * 时间粒度（0表示按照5分钟粒度，1表示按照1小时粒度，2表示按照一天粒度，3表示按照一分钟粒度）
+     */
+    Type: number;
+    /**
+     * 查询的起始时间，格式为Unix Timestamp。
+     */
+    BeginTime: number;
+    /**
+     * 查询的结束时间，格式为Unix Timestamp。
+     */
+    EndTime: number;
+    /**
+     * 域名id，创建域名时生成的id。默认全部域名
+     */
+    DomainId?: string[];
+    /**
+     * 查询带宽区域 cn代表国内 abroad代表海外，只支持国内
+     */
+    Areacode?: string;
+}
+/**
+ * GetUcdnDomainOriginHttpCodeDetail - 获取域名源站详细状态码监控
+ */
+export interface GetUcdnDomainOriginHttpCodeDetailResponse {
+    /**
+     * 状态码详情
+     */
+    HttpCodeV2Detail?: {
+        /**
+         * 时间
+         */
+        Time?: number;
+        /**
+         * 当前分组的总状态码数
+         */
+        Total?: number;
+        /**
+         * http100数量
+         */
+        Http100?: number;
+        /**
+         * http101数量
+         */
+        Http101?: number;
+        /**
+         * http102数量
+         */
+        Http102?: number;
+        /**
+         * http200数量
+         */
+        Http200?: number;
+        /**
+         * http201数量
+         */
+        Http201?: number;
+        /**
+         * http202数量
+         */
+        Http202?: number;
+        /**
+         * http203数量
+         */
+        Http203?: number;
+        /**
+         * http204数量
+         */
+        Http204?: number;
+        /**
+         * http205数量
+         */
+        Http205?: number;
+        /**
+         * http206数量
+         */
+        Http206?: number;
+        /**
+         * http207数量
+         */
+        Http207?: number;
+        /**
+         * http300数量
+         */
+        Http300?: number;
+        /**
+         * http301数量
+         */
+        Http301?: number;
+        /**
+         * http302数量
+         */
+        Http302?: number;
+        /**
+         * http303数量
+         */
+        Http303?: number;
+        /**
+         * http304数量
+         */
+        Http304?: number;
+        /**
+         * http305数量
+         */
+        Http305?: number;
+        /**
+         * http306数量
+         */
+        Http306?: number;
+        /**
+         * http307数量
+         */
+        Http307?: number;
+        /**
+         * http400数量
+         */
+        Http400?: number;
+        /**
+         * http401数量
+         */
+        Http401?: number;
+        /**
+         * http402数量
+         */
+        Http402?: number;
+        /**
+         * http403数量
+         */
+        Http403?: number;
+        /**
+         * http404数量
+         */
+        Http404?: number;
+        /**
+         * http405数量
+         */
+        Http405?: number;
+        /**
+         * http406数量
+         */
+        Http406?: number;
+        /**
+         * http407数量
+         */
+        Http407?: number;
+        /**
+         * http408数量
+         */
+        Http408?: number;
+        /**
+         * http409数量
+         */
+        Http409?: number;
+        /**
+         * http410数量
+         */
+        Http410?: number;
+        /**
+         * http411数量
+         */
+        Http411?: number;
+        /**
+         * http412数量
+         */
+        Http412?: number;
+        /**
+         * http413数量
+         */
+        Http413?: number;
+        /**
+         * http414数量
+         */
+        Http414?: number;
+        /**
+         * http415数量
+         */
+        Http415?: number;
+        /**
+         * http416数量
+         */
+        Http416?: number;
+        /**
+         * http417数量
+         */
+        Http417?: number;
+        /**
+         * http418数量
+         */
+        Http418?: number;
+        /**
+         * http421数量
+         */
+        Http421?: number;
+        /**
+         * http422数量
+         */
+        Http422?: number;
+        /**
+         * http423数量
+         */
+        Http423?: number;
+        /**
+         * http424数量
+         */
+        Http424?: number;
+        /**
+         * http425数量
+         */
+        Http425?: number;
+        /**
+         * http426数量
+         */
+        Http426?: number;
+        /**
+         * http449数量
+         */
+        Http449?: number;
+        /**
+         * http451数量
+         */
+        Http451?: number;
+        /**
+         * http500数量
+         */
+        Http500?: number;
+        /**
+         * http501数量
+         */
+        Http501?: number;
+        /**
+         * http502数量
+         */
+        Http502?: number;
+        /**
+         * http503数量
+         */
+        Http503?: number;
+        /**
+         * http504数量
+         */
+        Http504?: number;
+        /**
+         * http505数量
+         */
+        Http505?: number;
+        /**
+         * http506数量
+         */
+        Http506?: number;
+        /**
+         * http507数量
+         */
+        Http507?: number;
+        /**
+         * http509数量
+         */
+        Http509?: number;
+        /**
+         * http510数量
+         */
+        Http510?: number;
+    }[];
+}
+/**
  * GetUcdnDomainOriginRequestNum - 获取域名回源请求数
  */
 export interface GetUcdnDomainOriginRequestNumRequest {
@@ -2765,53 +3029,6 @@ export interface GetUcdnDomainPrefetchEnableResponse {
     Enable?: number;
 }
 /**
- * GetUcdnDomainRequestNumV2 - 获取域名请求数
- */
-export interface GetUcdnDomainRequestNumV2Request {
-    /**
-     * 时间粒度（0表示按照5分钟粒度，1表示按照1小时粒度，2表示按照一天的粒度, 3=按1分钟）
-     */
-    Type: number;
-    /**
-     * 查询的起始时间，格式为Unix Timestamp
-     */
-    BeginTime: number;
-    /**
-     * 查询的结束时间，格式为Unix Timestamp
-     */
-    EndTime: number;
-    /**
-     * 域名id，创建域名时生成的id。默认全部域名
-     */
-    DomainId?: string[];
-    /**
-     * 查询区域 cn代表国内 abroad代表海外，只支持国内
-     */
-    Areacode?: string;
-}
-/**
- * GetUcdnDomainRequestNumV2 - 获取域名请求数
- */
-export interface GetUcdnDomainRequestNumV2Response {
-    /**
-     * 请求数实例表。
-     */
-    RequestList?: {
-        /**
-         * 带宽获取的时间点。格式：时间戳
-         */
-        Time?: number;
-        /**
-         * 返回值返回指定时间区间内的cdn收到的请求次数之和
-         */
-        CdnRequest?: number;
-        /**
-         * 返回值返回指定时间区间内的cdn回源的请求次数之和
-         */
-        OriginRequest?: number;
-    }[];
-}
-/**
  * GetUcdnDomainRequestNumV3 - 获取域名请求数
  */
 export interface GetUcdnDomainRequestNumV3Request {
@@ -2856,92 +3073,6 @@ export interface GetUcdnDomainRequestNumV3Response {
          * 返回值返回指定时间区间内的cdn收到的请求次数之和
          */
         CdnRequest?: number;
-    }[];
-}
-/**
- * GetUcdnDomainTraffic - 获取加速域名流量使用信息
- */
-export interface GetUcdnDomainTrafficRequest {
-    /**
-     * 指定按项目查询，还是按整个账户查询  取值 top 表示按整个账户查询，取值org表示按项目查询
-     */
-    AccountType?: string;
-    /**
-     * 域名ID，创建加速域名时生成，n从自然数0开始。默认全部域名
-     */
-    DomainId?: string[];
-    /**
-     * 查询流量区域 cn代表国内 abroad代表海外，默认全部区域
-     */
-    Areacode?: string;
-    /**
-     * 查询的起始日期，格式为Unix Timestamp。如果有EndTime，BeginTime必须赋值
-     */
-    BeginTime?: number;
-    /**
-     * 查询的结束日期，格式为Unix Timestamp。EndTime默认为当前时间，BeginTime默认为当前时间前一天
-     */
-    EndTime?: number;
-}
-/**
- * GetUcdnDomainTraffic - 获取加速域名流量使用信息
- */
-export interface GetUcdnDomainTrafficResponse {
-    /**
-     * 流量实例表，具体结构见 UcdnDomainTrafficSet
-     */
-    TrafficSet?: {
-        /**
-         * 流量获取的时间点，格式为Unix Timestamp
-         */
-        Time?: number;
-        /**
-         * 查询每日流量总值，单位：GB
-         */
-        Value?: number;
-    }[];
-}
-/**
- * GetUcdnPassBandwidth - 获取回源带宽数据（cdn回客户源站部分）
- */
-export interface GetUcdnPassBandwidthRequest {
-    /**
-     * 时间粒度（0表示按照5分钟粒度，1表示按照1小时粒度，2表示按照一天的粒度）
-     */
-    Type: number;
-    /**
-     * 域名id，创建域名时生成的id。默认全部域名
-     */
-    DomainId?: string[];
-    /**
-     * 查询带宽区域 cn代表国内 abroad代表海外，只支持国内
-     */
-    Areacode?: string;
-    /**
-     * 查询的起始时间，格式为Unix Timestamp。如果有EndTime，BeginTime必须赋值。如没有赋值，则返回缺少参 数错误，如果没有EndTime，BeginTime也可以不赋值，EndTime默认当前时间，BeginTime 默认前一天的当前时间。
-     */
-    BeginTime?: number;
-    /**
-     * 查询的结束时间，格式为Unix Timestamp。EndTime默认为当前时间，BeginTime默认为当前时间前一天时间。
-     */
-    EndTime?: number;
-}
-/**
- * GetUcdnPassBandwidth - 获取回源带宽数据（cdn回客户源站部分）
- */
-export interface GetUcdnPassBandwidthResponse {
-    /**
-     * 回源带宽数据
-     */
-    BandwidthDetail?: {
-        /**
-         * 宽获取的时间点。格式：时间戳
-         */
-        Time: number;
-        /**
-         * 返回值带宽值数据。
-         */
-        Bandwidth: number;
     }[];
 }
 /**
@@ -3008,11 +3139,11 @@ export interface GetUcdnProIspBandwidthV2Request {
      */
     DomainId?: string[];
     /**
-     * 省份代码，可以传多个，不传则查询所有省份
+     * 省份代码（省份拼音），可以传多个，不传则查询所有省份
      */
     Province?: string[];
     /**
-     * 运营商代码，一次只能查询一个运营商，不传递默认取所有运营商
+     * 运营商代码（运营商拼音），一次只能查询一个运营商，不传递默认取所有运营商
      */
     Isp?: string;
 }
@@ -3104,37 +3235,6 @@ export interface GetUcdnProIspRequestNumV2Response {
     }[];
 }
 /**
- * GetUcdnTraffic - 获取流量信息
- */
-export interface GetUcdnTrafficRequest {
-}
-/**
- * GetUcdnTraffic - 获取流量信息
- */
-export interface GetUcdnTrafficResponse {
-    /**
-     * 用户不同区域的流量信息, 具体结构参见TrafficSet部分
-     */
-    TrafficSet?: {
-        /**
-         * 购买流量的区域, cn: 国内; abroad: 国外
-         */
-        Areacode?: string;
-        /**
-         * Areacode区域内总购买流量, 单位GB
-         */
-        TrafficTotal?: number;
-        /**
-         * Areacode区域内总剩余流量, 单位GB
-         */
-        TrafficLeft?: number;
-        /**
-         * Areacode区域内总使用流量, 单位GB
-         */
-        TrafficUsed?: number;
-    }[];
-}
-/**
  * GetUcdnTrafficV2 - 获取流量信息
  */
 export interface GetUcdnTrafficV2Request {
@@ -3184,15 +3284,54 @@ export interface PrefetchNewUcdnDomainCacheResponse {
     TaskId?: string;
 }
 /**
+ * QueryIpLocation - 查询IP信息
+ */
+export interface QueryIpLocationRequest {
+    /**
+     * ip列表
+     */
+    Ip: string[];
+}
+/**
+ * QueryIpLocation - 查询IP信息
+ */
+export interface QueryIpLocationResponse {
+    /**
+     * IP信息列表
+     */
+    Data: {
+        /**
+         * 客户端请求的ip
+         */
+        Ip?: string;
+        /**
+         * 地区
+         */
+        Area?: string;
+        /**
+         * 运营商
+         */
+        Isp?: string;
+        /**
+         * 城市
+         */
+        City?: string;
+        /**
+         * ip是否存在
+         */
+        Exist?: boolean;
+    }[];
+}
+/**
  * RefreshNewUcdnDomainCache - 刷新缓存
  */
 export interface RefreshNewUcdnDomainCacheRequest {
     /**
-     * 刷新类型，file代表文件刷新，dir 代表路径刷新
+     * 刷新类型，file代表文件刷新，dir 代表路径刷新，m3u8带表m3u8刷新
      */
     Type: string;
     /**
-     * 刷新多个URL列表时，一次最多提交30个。必须以”http://域名/”开始。目录要以”/”结尾， 如刷新目录a下所有文件，格式为：http://abc.ucloud.cn/a/；如刷新文件目录a下面img.png文件， 格式为http://abc.ucloud.cn/a/img.png。请正确提交需要刷新的域名
+     * 需要刷新的URL，n 从自然数0开始，刷新多个URL列表时，一次最多提交30个。必须以”http://域名/”开始。目录要以”/”结尾， 如刷新目录a下所有文件，格式为：http://abc.ucloud.cn/a/；如刷新文件目录a下面img.png文件， 格式为http://abc.ucloud.cn/a/img.png。请正确提交需要刷新的域名
      */
     UrlList: string[];
 }

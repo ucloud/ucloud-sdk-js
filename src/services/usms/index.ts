@@ -177,6 +177,10 @@ export default class USMSClient extends Client {
  */
 export interface CreateUSMSSignatureRequest {
   /**
+   * 签名内容
+   */
+  SigContent: string;
+  /**
    * 签名类型，说明如下：0-公司或企业的全称或简称；1-App应用的全称或简称；2-工信部备案网站的全称或简称；3-公众号或小程序的全称或简称；4-商标名的全称或简称；5-政府/机关事业单位/其他单位的全称或简称；
    */
   SigType: number;
@@ -240,6 +244,14 @@ export interface CreateUSMSTemplateRequest {
    * 短信模板申请原因说明，字数不超过128，每个中文、符号、英文、数字等都计为1个字。
    */
   Remark?: string;
+  /**
+   * 当Purpose为3时，也即会员推广类短信模板，该项必填。枚举值：TD退订、回T退订、回N退订、回TD退订、退订回T、退订回D、退订回TD、退订回复T、退订回复D、退订回复N、退订回复TD、拒收回T
+   */
+  UnsubscribeInfo?: string;
+  /**
+   * 模板变量属性说明
+   */
+  Instruction?: string;
 }
 
 /**
@@ -291,7 +303,7 @@ export interface GetUSMSSendReceiptRequest {
    */
   Zone?: string;
   /**
-   * 发送短信时返回的SessionNo集合，SessionNoSet.0,SessionNoSet.1....格式
+   * 发送短信时返回的SessionNo集合，SessionNoSet.0,SessionNoSet.1....格式，单次调用集合数需控制在100个以内
    */
   SessionNoSet: string[];
 }
@@ -439,6 +451,10 @@ export interface QueryUSMSTemplateResponse {
      * 创建时间
      */
     CreateTime: number;
+    /**
+     * 模板变量属性说明
+     */
+    Instruction?: string;
   };
 }
 
@@ -529,7 +545,7 @@ export interface SendUSMSMessageRequest {
    */
   TemplateId: string;
   /**
-   * 模板可变参数，以数组的方式填写，举例，TempalteParams.0，TempalteParams.1，... 若模板中无可变参数，则该项可不填写；若模板中有可变参数，则该项为必填项，参数个数需与变量个数保持一致，否则无法发送；
+   * 模板可变参数，以数组的方式填写，举例，TemplateParams.0，TemplateParams.1，... 若模板中无可变参数，则该项可不填写；若模板中有可变参数，则该项为必填项，参数个数需与变量个数保持一致，否则无法发送；
    */
   TemplateParams?: string[];
   /**
@@ -537,7 +553,7 @@ export interface SendUSMSMessageRequest {
    */
   ExtendCode?: string;
   /**
-   * 自定义的业务标识ID，字符串（ 长度不能超过32 位）
+   * 自定义的业务标识ID，字符串（ 长度不能超过32 位），不支持 单引号、表情包符号等特殊字符
    */
   UserId?: string;
 }
@@ -623,6 +639,10 @@ export interface UpdateUSMSTemplateRequest {
    * 短信模板申请原因说明，字数不超过128，每个中文、符号、英文、数字等都计为1个字。
    */
   Remark?: string;
+  /**
+   * 模板变量属性说明
+   */
+  Instruction?: string;
 }
 
 /**

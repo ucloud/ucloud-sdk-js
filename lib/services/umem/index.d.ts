@@ -70,11 +70,23 @@ export default class UMemClient extends Client {
      */
     deleteURedisGroup(request?: DeleteURedisGroupRequest): Promise<DeleteURedisGroupResponse>;
     /**
+     * DescribeUDRedisProxyInfo - 拉取udredis所有的代理信息
+     *
+     * See also: https://docs.ucloud.cn/api/umem-api/describe_ud_redis_proxy_info
+     */
+    describeUDRedisProxyInfo(request?: DescribeUDRedisProxyInfoRequest): Promise<DescribeUDRedisProxyInfoResponse>;
+    /**
      * DescribeUDRedisSlowlog - 查询UDRedis慢日志
      *
      * See also: https://docs.ucloud.cn/api/umem-api/describe_ud_redis_slowlog
      */
     describeUDRedisSlowlog(request?: DescribeUDRedisSlowlogRequest): Promise<DescribeUDRedisSlowlogResponse>;
+    /**
+     * DescribeUMem - 获取UMem列表
+     *
+     * See also: https://docs.ucloud.cn/api/umem-api/describe_umem
+     */
+    describeUMem(request?: DescribeUMemRequest): Promise<DescribeUMemResponse>;
     /**
      * DescribeUMemBackup - 查询分布式redis备份
      *
@@ -189,6 +201,12 @@ export default class UMemClient extends Client {
      * See also: https://docs.ucloud.cn/api/umem-api/get_umem_space_state
      */
     getUMemSpaceState(request?: GetUMemSpaceStateRequest): Promise<GetUMemSpaceStateResponse>;
+    /**
+     * ISolationURedisGroup - 打开/关闭URedis
+     *
+     * See also: https://docs.ucloud.cn/api/umem-api/i_solation_uredis_group
+     */
+    iSolationURedisGroup(request?: ISolationURedisGroupRequest): Promise<ISolationURedisGroupResponse>;
     /**
      * ModifyUMemSpaceName - 修改UMem内存空间名称
      *
@@ -609,6 +627,45 @@ export interface DeleteURedisGroupRequest {
 export interface DeleteURedisGroupResponse {
 }
 /**
+ * DescribeUDRedisProxyInfo - 拉取udredis所有的代理信息
+ */
+export interface DescribeUDRedisProxyInfoRequest {
+    /**
+     * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
+     */
+    Zone: string;
+    /**
+     * udredis实例id
+     */
+    SpaceId: string;
+}
+/**
+ * DescribeUDRedisProxyInfo - 拉取udredis所有的代理信息
+ */
+export interface DescribeUDRedisProxyInfoResponse {
+    /**
+     * 代理数据集
+     */
+    DataSet: {
+        /**
+         * 代理资源id
+         */
+        ResourceId: string;
+        /**
+         * 代理id
+         */
+        ProxyId: string;
+        /**
+         * 代理ip
+         */
+        Vip: string;
+        /**
+         * 代理状态
+         */
+        State: string;
+    }[];
+}
+/**
  * DescribeUDRedisSlowlog - 查询UDRedis慢日志
  */
 export interface DescribeUDRedisSlowlogRequest {
@@ -653,6 +710,251 @@ export interface DescribeUDRedisSlowlogResponse {
          * 分片id
          */
         BlockId?: string;
+    }[];
+}
+/**
+ * DescribeUMem - 获取UMem列表
+ */
+export interface DescribeUMemRequest {
+    /**
+     * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
+     */
+    Zone?: string;
+    /**
+     * 协议类型: memcache, redis
+     */
+    Protocol: string;
+    /**
+     * 分页显示的起始偏移, 默认值为0
+     */
+    Offset?: number;
+    /**
+     * 分页显示的条目数, 默认值为20
+     */
+    Limit?: number;
+    /**
+     * 资源ID
+     */
+    ResourceId?: string;
+}
+/**
+ * DescribeUMem - 获取UMem列表
+ */
+export interface DescribeUMemResponse {
+    /**
+     * 根据过滤条件得到的总数
+     */
+    TotalCount?: number;
+    /**
+     * UMem实例列表, 详细参见UMemDataSet
+     */
+    DataSet?: {
+        /**
+         * 实例所在可用区，或者master redis所在可用区，参见 [可用区列表](../summary/regionlist.html)
+         */
+        Zone?: string;
+        /**
+         * 是否拥有只读Slave“Yes” 包含“No” 不包含
+         */
+        OwnSlave: string;
+        /**
+         * UMEM实例列表 UMemSlaveDataSet 如果没有slave，则没有该字段
+         */
+        DataSet?: {
+            /**
+             * 实例所在可用区，或者master redis所在可用区，参见 [可用区列表](../summary/regionlist.html)
+             */
+            Zone?: string;
+            /**
+             * 子网
+             */
+            SubnetId: string;
+            /**
+             * vpc
+             */
+            VPCId: string;
+            /**
+             *
+             */
+            VirtualIP: string;
+            /**
+             * 主备Redis返回运维时间 0//0点 1 //1点 以此类推
+             */
+            RewriteTime?: number;
+            /**
+             * 主实例id
+             */
+            MasterGroupId?: string;
+            /**
+             * 资源id
+             */
+            GroupId?: string;
+            /**
+             * 端口
+             */
+            Port?: number;
+            /**
+             * 实力大小
+             */
+            MemorySize?: number;
+            /**
+             * 资源名称
+             */
+            GroupName?: string;
+            /**
+             * 表示实例是主库还是从库,master,slave
+             */
+            Role?: string;
+            /**
+             * 修改时间
+             */
+            ModifyTime?: number;
+            /**
+             * 资源名称
+             */
+            Name?: string;
+            /**
+             * 创建时间
+             */
+            CreateTime?: number;
+            /**
+             * 到期时间
+             */
+            ExpireTime?: number;
+            /**
+             * 容量单位GB
+             */
+            Size?: number;
+            /**
+             * 使用量单位MB
+             */
+            UsedSize?: number;
+            /**
+             * 实例状态                                  Starting                  // 创建中       Creating                  // 初始化中     CreateFail                // 创建失败     Fail                      // 创建失败     Deleting                  // 删除中       DeleteFail                // 删除失败     Running                   // 运行         Resizing                  // 容量调整中   ResizeFail                // 容量调整失败 Configing                 // 配置中       ConfigFail                // 配置失败Restarting                // 重启中SetPasswordFail  //设置密码失败
+             */
+            State?: string;
+            /**
+             * 计费模式，Year, Month, Dynamic, Trial
+             */
+            ChargeType?: string;
+            /**
+             * 业务组名称
+             */
+            Tag?: string;
+            /**
+             * distributed: 分布式版Redis,或者分布式Memcache；single：主备版Redis,或者单机Memcache；performance：高性能版
+             */
+            ResourceType?: string;
+            /**
+             * 节点的配置ID
+             */
+            ConfigId?: string;
+            /**
+             * Redis版本信息
+             */
+            Version?: string;
+        }[];
+        /**
+         * 表示实例是主库还是从库,master,slave仅主备redis返回该项参数
+         */
+        Role?: string;
+        /**
+         * 主备redis和分布式redis运维时间0  //0点1  //1点以此类推单机版memcache不返回该项
+         */
+        RewriteTime?: number;
+        /**
+         * vpc
+         */
+        VPCId?: string;
+        /**
+         * 子网
+         */
+        SubnetId?: string;
+        /**
+         * 资源ID
+         */
+        ResourceId?: string;
+        /**
+         * 资源名称
+         */
+        Name?: string;
+        /**
+         * 创建时间
+         */
+        CreateTime?: number;
+        /**
+         * 到期时间
+         */
+        ExpireTime?: number;
+        /**
+         * 空间类型:single(无热备),double(热备)
+         */
+        Type?: string;
+        /**
+         * 协议类型: memcache, redis
+         */
+        Protocol?: string;
+        /**
+         * 容量单位GB
+         */
+        Size?: number;
+        /**
+         * 使用量单位MB
+         */
+        UsedSize?: number;
+        /**
+         * 实例状态                                  Starting                  // 创建中       Creating                  // 初始化中     CreateFail                // 创建失败     Fail                      // 创建失败     Deleting                  // 删除中       DeleteFail                // 删除失败     Running                   // 运行         Resizing                  // 容量调整中   ResizeFail                // 容量调整失败 Configing                 // 配置中       ConfigFail                // 配置失败Restarting                // 重启中SetPasswordFail    //设置密码失败
+         */
+        State?: string;
+        /**
+         * 计费模式，Year, Month, Dynamic, Trial
+         */
+        ChargeType?: string;
+        /**
+         * IP端口信息请，参见UMemSpaceAddressSet
+         */
+        Address?: {
+            /**
+             * UMem实例访问IP
+             */
+            IP?: string;
+            /**
+             * UMem实例访问Port
+             */
+            Port?: number;
+        }[];
+        /**
+         * 业务组名称
+         */
+        Tag?: string;
+        /**
+         * distributed: 分布式版Redis,或者分布式Memcache；single：主备版Redis,或者单机Memcache；performance：高性能版
+         */
+        ResourceType?: string;
+        /**
+         * 节点的配置ID
+         */
+        ConfigId?: string;
+        /**
+         * 是否需要自动备份,enable,disable
+         */
+        AutoBackup?: string;
+        /**
+         * 自动备份开始时间,单位小时计,范围[0-23]
+         */
+        BackupTime?: number;
+        /**
+         * 是否开启高可用,enable,disable
+         */
+        HighAvailability?: string;
+        /**
+         * Redis版本信息
+         */
+        Version?: string;
+        /**
+         * 跨机房URedis，slave redis所在可用区，参见 [可用区列表](../summary/regionlist.html)
+         */
+        SlaveZone?: string;
     }[];
 }
 /**
@@ -745,7 +1047,7 @@ export interface DescribeUMemBackupURLResponse {
  */
 export interface DescribeUMemBlockInfoRequest {
     /**
-     * 可用区。参见 [可用区列表](../summary/regionlist.html)
+     * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
      */
     Zone: string;
     /**
@@ -774,10 +1076,6 @@ export interface DescribeUMemBlockInfoResponse {
          */
         BlockId: string;
         /**
-         * 分片ip
-         */
-        BlockVip: string;
-        /**
          * 分片端口
          */
         BlockPort: number;
@@ -785,10 +1083,6 @@ export interface DescribeUMemBlockInfoResponse {
          * 容量单位GB
          */
         BlockSize: number;
-        /**
-         * 使用量单位MB
-         */
-        BlockUsedSize: number;
         /**
          * 实例状态 Starting // 创建中 Creating // 初始化中 CreateFail // 创建失败 Fail // 创建失败 Deleting // 删除中 DeleteFail // 删除失败 Running // 运行 Resizing // 容量调整中 ResizeFail // 容量调整失败 Configing // 配置中 ConfigFail // 配置失败Restarting // 重启中 SetPasswordFail //设置密码失败
          */
@@ -801,6 +1095,14 @@ export interface DescribeUMemBlockInfoResponse {
          * 分片维护的键槽结束值
          */
         BlockSlotEnd: number;
+        /**
+         * 分片ip
+         */
+        BlockVip?: string;
+        /**
+         * 使用量单位MB
+         */
+        BlockUsedSize?: number;
     }[];
 }
 /**
@@ -1701,6 +2003,32 @@ export interface GetUMemSpaceStateResponse {
      * Starting:创建中 Running:运行中 Fail:失败
      */
     State?: string;
+}
+/**
+ * ISolationURedisGroup - 打开/关闭URedis
+ */
+export interface ISolationURedisGroupRequest {
+    /**
+     * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
+     */
+    Zone: string;
+    /**
+     * 组的ID
+     */
+    GroupId: string;
+    /**
+     * UNBind(关闭)或Bind(打开)
+     */
+    TransformType: string;
+    /**
+     * 跨机房URedis，slave所在可用区（必须和Zone在同一Region，且不可相同）
+     */
+    SlaveZone?: string;
+}
+/**
+ * ISolationURedisGroup - 打开/关闭URedis
+ */
+export interface ISolationURedisGroupResponse {
 }
 /**
  * ModifyUMemSpaceName - 修改UMem内存空间名称

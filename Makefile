@@ -41,6 +41,8 @@ gen:
     	--only "UFile" \
     	--only "USMS" \
     	--only "UEC" \
+    	--only "UVMS" \
 		--public \
-		-s https://git.ucloudadmin.com/apispec/apispec.git \
-		/Users/user/code/oas/plugins/template-opensdk-js .
+		-s $(HOME)/.oas/vcs/git.ucloudadmin.com/apispec/apispec/specification \
+		$(HOME)/.oas/vcs/git.ucloudadmin.com/apispec/template-opensdk-js .
+
