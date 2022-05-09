@@ -52,6 +52,12 @@ export default class UHostClient extends Client {
      */
     deleteUHostKeyPairs(request?: DeleteUHostKeyPairsRequest): Promise<DeleteUHostKeyPairsResponse>;
     /**
+     * DescribeAvailableInstanceTypes - DescribeAvailableInstanceTypes
+     *
+     * See also: https://docs.ucloud.cn/api/uhost-api/describe_available_instance_types
+     */
+    describeAvailableInstanceTypes(request?: DescribeAvailableInstanceTypesRequest): Promise<DescribeAvailableInstanceTypesResponse>;
+    /**
      * DescribeImage - 获取指定数据中心镜像列表，用户可通过指定操作系统类型，镜像Id进行过滤。
      *
      * See also: https://docs.ucloud.cn/api/uhost-api/describe_image
@@ -600,6 +606,183 @@ export interface DeleteUHostKeyPairsRequest {
  * DeleteUHostKeyPairs - 删除一对或者多对密钥对。
  */
 export interface DeleteUHostKeyPairsResponse {
+}
+/**
+ * DescribeAvailableInstanceTypes - DescribeAvailableInstanceTypes
+ */
+export interface DescribeAvailableInstanceTypesRequest {
+    /**
+     * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
+     */
+    Zone: string;
+}
+/**
+ * DescribeAvailableInstanceTypes - DescribeAvailableInstanceTypes
+ */
+export interface DescribeAvailableInstanceTypesResponse {
+    /**
+     * AvailableInstanceTypes
+     */
+    AvailableInstanceTypes: {
+        /**
+         * 机型名称：快杰O型|O 、快杰共享型|OM 、快杰内存型|OMEM 、 快杰PRO型|OPRO、通用N型|N、高主频C型|C和GPU G型|G等
+         */
+        Name?: string;
+        /**
+         * 机型状态：可售|Normal 、 公测|Beta、售罄|Soldout、隐藏|Hidden
+         */
+        Status?: string;
+        /**
+         * 支持的CPU平台，并且按照Intel、AMD和Ampere分类返回
+         */
+        CpuPlatforms?: {
+            /**
+             * 返回Intel的CPU平台信息，例如：Intel: ['Intel/CascadeLake','Intel/CascadelakeR','Intel/IceLake']
+             */
+            Intel?: string[];
+            /**
+             * 返回AMD的CPU平台信息，例如：AMD: ['Amd/Epyc2']
+             */
+            Amd?: string[];
+            /**
+             * 返回Arm的CPU平台信息，例如：Ampere: ['Ampere/Altra']
+             */
+            Ampere?: string[];
+        }[];
+        /**
+         * 磁盘信息。磁盘主要分类如下：云盘|cloudDisk、普通本地盘|normalLocalDisk和SSD本地盘|ssdLocalDisk。其中云盘主要包含普通云盘|CLOUD_NORMAL、SSD云盘|CLOUD_SSD和RSSD云盘|CLOUD_RSSD。普通本地盘只包含普通本地盘|LOCAL_NORMAL一种。SSD本地盘只包含SSD本地盘|LOCAL_SSD一种。MinimalSize为磁盘最小值，如果没有该字段，最小值取基础镜像Size值即可（linux为20G，windows为40G）。MaximalSize为磁盘最大值。InstantResize表示系统盘是否允许扩容，如果是本地盘，则不允许扩容，InstantResize为false。Features为磁盘可支持的服务：数据方舟|DATAARK，快照服务|SNAPSHOT，加密盘|Encrypted。
+         */
+        Disks?: {
+            /**
+             * 磁盘介质类别信息，磁盘主要分类如下：云盘|cloudDisk、普通本地盘|normalLocalDisk和SSD本地盘|ssdLocalDisk。
+             */
+            Name?: string;
+            /**
+             * 系统盘信息
+             */
+            BootDisk?: {
+                /**
+                 * 系统盘类别，包含普通云盘|CLOUD_NORMAL、SSD云盘|CLOUD_SSD和RSSD云盘|CLOUD_RSSD。普通本地盘只包含普通本地盘|LOCAL_NORMAL一种。SSD本地盘只包含SSD本地盘|LOCAL_SSD一种。
+                 */
+                Name?: string;
+                /**
+                 * 系统盘是否允许扩容，如果是本地盘，则不允许扩容，InstantResize为false。
+                 */
+                InstantResize?: boolean;
+                /**
+                 * MaximalSize为磁盘最大值
+                 */
+                MaximalSize?: number;
+                /**
+                 * 磁盘可支持的服务
+                 */
+                Features?: string[];
+            }[];
+            /**
+             * 数据盘信息
+             */
+            DataDisk?: {
+                /**
+                 * 磁盘最小值，如果没有该字段，最小值取基础镜像Size值即可（linux为20G，windows为40G）。
+                 */
+                MinimalSize?: number;
+                /**
+                 * 数据盘类别，包含普通云盘|CLOUD_NORMAL、SSD云盘|CLOUD_SSD和RSSD云盘|CLOUD_RSSD。普通本地盘只包含普通本地盘|LOCAL_NORMAL一种。SSD本地盘只包含SSD本地盘|LOCAL_SSD一种。
+                 */
+                Name?: string;
+                /**
+                 * MaximalSize为磁盘最大值
+                 */
+                MaximalSize?: number;
+                /**
+                 * 数据盘可支持的服务
+                 */
+                Features?: string[];
+            }[];
+        }[];
+        /**
+         * GPU、CPU和内存信息。Gpu为GPU可支持的规格，Cpu和Memory分别为CPU和内存可支持的规格。如果非GPU机型，GPU为0。MinimalCpuPlatform代表含义这个CPU和内存规格只能在列出来的CPU平台支持。
+         */
+        MachineSizes?: {
+            /**
+             * Gpu为GPU可支持的规格即GPU颗数，非GPU机型，Gpu为0
+             */
+            Gpu?: number;
+            /**
+             * CPU和内存可支持的规格
+             */
+            Collection?: {
+                /**
+                 * CPU规格
+                 */
+                Cpu?: number;
+                /**
+                 * 内存规格
+                 */
+                Memory?: number[];
+                /**
+                 * CPU和内存规格只能在列出来的CPU平台支持
+                 */
+                MinimalCpuPlatform?: string[];
+            }[];
+        }[];
+        /**
+         * 	虚机可支持的特性。目前支持的特性网络增强|NetCapability、热升级|Hotplug。网络增强分为关闭|Normal、网络增强1.0|Super和网络增强2.0|Ultra。Name为可支持的特性名称，Modes为可以提供的模式类别等，RelatedToImageFeature为镜像上支持这个特性的标签。例如DescribeImage返回的字段Features包含HotPlug，说明该镜像支持热升级。MinimalCpuPlatform表示这个特性必须是列出来的CPU平台及以上的CPU才支持。
+         */
+        Features?: {
+            /**
+             * 可支持的特性名称。目前支持的特性网络增强|NetCapability、热升级|Hotplug
+             */
+            Name?: string;
+            /**
+             * 可以提供的模式类别
+             */
+            Modes?: {
+                /**
+                 * 模式|特性名称
+                 */
+                Name?: string;
+                /**
+                 * 为镜像上支持这个特性的标签。例如DescribeImage返回的字段Features包含HotPlug，说明该镜像支持热升级。
+                 */
+                RelatedToImageFeature?: string[];
+                /**
+                 * 这个特性必须是列出来的CPU平台及以上的CPU才支持
+                 */
+                MinimalCpuPlatform?: string[];
+            }[];
+        }[];
+        /**
+         * 区分是否是GPU机型：GPU机型|GPU，非GPU机型|Normal。
+         */
+        MachineClass?: string;
+        /**
+         * GPU的显存指标，value为值，单位是GB。
+         */
+        GraphicsMemory?: {
+            /**
+             * 值，单位是GB
+             */
+            Value?: number;
+            /**
+             * 交互展示参数，可忽略
+             */
+            Rate?: number;
+        };
+        /**
+         * GPU的性能指标，value为值，单位是TFlops。
+         */
+        Performance?: {
+            /**
+             * 值，单位是TFlops
+             */
+            Value?: number;
+            /**
+             * 交互展示参数，可忽略
+             */
+            Rate?: number;
+        };
+    }[];
 }
 /**
  * DescribeImage - 获取指定数据中心镜像列表，用户可通过指定操作系统类型，镜像Id进行过滤。

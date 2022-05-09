@@ -1,17 +1,17 @@
 {
   "name": "@ucloud-sdks/ucloud-sdk-js",
   "description": "ucloud-sdk-js",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "author": "oas@ucloud.cn",
   "license": "MIT",
   "private": false,
   "main": "./lib",
-	"files": [
-	  "package.json",
-		"README",
-		"LICENSE",
-		"lib"
-	],
+  "files": [
+    "package.json",
+    "README",
+    "LICENSE",
+    "lib"
+  ],
   "scripts": {
     "start": "node lib/index.js",
     "start:example": "node --no-warnings example/index.js",

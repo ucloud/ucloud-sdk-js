@@ -450,7 +450,7 @@ export interface DescribeUPhoneRequest {
      */
     Offset?: number;
     /**
-     * 返回数据长度，默认为20，最大100
+     * 返回数据长度，默认为200，最大200
      */
     Limit?: number;
     /**
