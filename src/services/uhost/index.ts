@@ -632,7 +632,7 @@ export interface CreateUHostInstanceRequest {
      */
     Type: string;
     /**
-     * 磁盘大小，单位GB，必须是10GB的整数倍。请参考[[api:uhost-api:disk_type|磁盘类型]]。
+     * 磁盘大小，单位GB。请参考[[api:uhost-api:disk_type|磁盘类型]]。
      */
     Size: number;
     /**
@@ -651,6 +651,10 @@ export interface CreateUHostInstanceRequest {
      * 云盘代金券id。不适用于系统盘/本地盘。请通过DescribeCoupon接口查询，或登录用户中心查看
      */
     CouponId?: string;
+    /**
+     *
+     */
+    CustomBackup?: object;
   }[];
   /**
    * 主机登陆模式。密码（默认选项）: Password，密钥：KeyPair。
@@ -697,7 +701,7 @@ export interface CreateUHostInstanceRequest {
    */
   GPU?: number;
   /**
-   * 网络增强特性。枚举值：Normal（默认），不开启;  Super，开启网络增强1.0； Ultra，开启网络增强2.0（仅支持部分可用区，请参考控制台）
+   * 网络增强特性。枚举值：Normal，不开启;  Super，开启网络增强1.0； Ultra，开启网络增强2.0（详情参考官网文档）
    */
   NetCapability?: string;
   /**
@@ -791,7 +795,7 @@ export interface CreateUHostInstanceRequest {
    */
   Volumes?: object[];
   /**
-   * KeypairId 密钥对ID，LoginMode为KeyPair时此项必须
+   * KeypairId 密钥对ID，LoginMode为KeyPair时此项必须。
    */
   KeyPairId?: string;
   /**
@@ -803,6 +807,10 @@ export interface CreateUHostInstanceRequest {
      */
     UNI?: boolean;
   };
+  /**
+   *
+   */
+  SecGroupId?: object[];
   /**
    * 主机代金券ID。请通过DescribeCoupon接口查询，或登录用户中心查看
    */
