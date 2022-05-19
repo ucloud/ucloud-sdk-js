@@ -1,7 +1,7 @@
 {
   "name": "@ucloud-sdks/ucloud-sdk-js",
   "description": "ucloud-sdk-js",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "author": "oas@ucloud.cn",
   "license": "MIT",
   "private": false,

@@ -505,6 +505,20 @@ export default class UPhoneClient extends Client {
   }
 
   /**
+   * SetUPhoneToken - 设置云手机RTC连接Token提高安全性
+   *
+   * See also: https://docs.ucloud.cn/api/uphone-api/set_u_phone_token
+   */
+  setUPhoneToken(
+    request?: SetUPhoneTokenRequest
+  ): Promise<SetUPhoneTokenResponse> {
+    const args = { Action: 'SetUPhoneToken', ...(request || {}) };
+    return this.invoke(new Request(args)).then(
+      (resp) => resp.toObject() as SetUPhoneTokenResponse
+    );
+  }
+
+  /**
    * UnInstallUPhoneAppVersion - 传入应用版本Id，在云手机中根据应用版本的PackageName卸载相关应用。一次只支持卸载一个应用。
    *
    * See also: https://docs.ucloud.cn/api/uphone-api/un_install_u_phone_app_version
@@ -632,19 +646,19 @@ export interface CreateUPhoneServerRequest {
    */
   Name: string;
   /**
-   * 云手机服务器规格名称，不超过64个字节。可通过[查询云手机服务器规格列表]()查询支持的云手机服务器规格。
+   * 云手机服务器规格名称，不超过64个字节。可通过[查询云手机服务器规格列表](https://docs.ucloud.cn/api/uphone-api/describe_u_phone_server_model)查询支持的云手机服务器规格。
    */
   ServerModelName: string;
   /**
-   * 云手机规格名称，不超过64个字节。可通过[查询云手机规格列表]()查询支持的云手机规格。
+   * 云手机规格名称，不超过64个字节。可通过[查询云手机规格列表](https://docs.ucloud.cn/api/uphone-api/describe_u_phone_model)查询支持的云手机规格。
    */
   UPhoneModelName: string;
   /**
-   * 云手机镜像ID，不超过32个字节。可通过[查询手机镜像]()查询云手机规格对应的镜像ID。
+   * 云手机镜像ID，不超过32个字节。可通过[查询手机镜像](https://docs.ucloud.cn/api/uphone-api/describe_u_phone_image)查询云手机规格对应的镜像ID。
    */
   ImageId: string;
   /**
-   * 城市Id，通过[获取城市列表](#DescribeUPhoneCities)获取
+   * 城市Id，通过[获取城市列表](https://docs.ucloud.cn/api/uphone-api/describe_u_phone_cities)获取
    */
   CityId: string;
   /**
@@ -2291,6 +2305,29 @@ export interface SetUPhoneSplashScreenRequest {
  * SetUPhoneSplashScreen - 设置云手机启动画面，通过DescribeUPhone接口可以查询该地址
  */
 export interface SetUPhoneSplashScreenResponse {}
+
+/**
+ * SetUPhoneToken - 设置云手机RTC连接Token提高安全性
+ */
+export interface SetUPhoneTokenRequest {
+  /**
+   * 云手机ID
+   */
+  UPhoneId: string;
+  /**
+   * 城市Id，通过[获取城市列表](#DescribeUPhoneCities)获取
+   */
+  CityId: string;
+  /**
+   * RTC连接Token，为空表示清空Token
+   */
+  Token?: string;
+}
+
+/**
+ * SetUPhoneToken - 设置云手机RTC连接Token提高安全性
+ */
+export interface SetUPhoneTokenResponse {}
 
 /**
  * UnInstallUPhoneAppVersion - 传入应用版本Id，在云手机中根据应用版本的PackageName卸载相关应用。一次只支持卸载一个应用。
