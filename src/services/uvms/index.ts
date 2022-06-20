@@ -37,10 +37,6 @@ export default class UVMSClient extends Client {
  */
 export interface SendUVMSMessageRequest {
   /**
-   * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
-   */
-  Zone: string;
-  /**
    * 被叫号码，采用 E.164 标准，格式为+[国家代码][用户号码]。例如：+8613512345678， 其中前面有一个+号 ，86为国家码，13512345678为手机号
    */
   CalledNumber: string;
