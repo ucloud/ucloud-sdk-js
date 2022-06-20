@@ -58,6 +58,20 @@ export default class VPCClient extends Client {
   }
 
   /**
+   * AllocateBatchSecondaryIp - 批量申请虚拟网卡辅助IP
+   *
+   * See also: https://docs.ucloud.cn/api/vpc2.0-api/allocate_batch_secondary_ip
+   */
+  allocateBatchSecondaryIp(
+    request?: AllocateBatchSecondaryIpRequest
+  ): Promise<AllocateBatchSecondaryIpResponse> {
+    const args = { Action: 'AllocateBatchSecondaryIp', ...(request || {}) };
+    return this.invoke(new Request(args)).then(
+      (resp) => resp.toObject() as AllocateBatchSecondaryIpResponse
+    );
+  }
+
+  /**
    * AllocateSecondaryIp - 分配ip（用于uk8s使用）
    *
    * See also: https://docs.ucloud.cn/api/vpc2.0-api/allocate_secondary_ip
@@ -176,6 +190,20 @@ export default class VPCClient extends Client {
     const args = { Action: 'CreateNetworkAclEntry', ...(request || {}) };
     return this.invoke(new Request(args)).then(
       (resp) => resp.toObject() as CreateNetworkAclEntryResponse
+    );
+  }
+
+  /**
+   * CreateNetworkInterface - 创建虚拟网卡
+   *
+   * See also: https://docs.ucloud.cn/api/vpc2.0-api/create_network_interface
+   */
+  createNetworkInterface(
+    request?: CreateNetworkInterfaceRequest
+  ): Promise<CreateNetworkInterfaceResponse> {
+    const args = { Action: 'CreateNetworkInterface', ...(request || {}) };
+    return this.invoke(new Request(args)).then(
+      (resp) => resp.toObject() as CreateNetworkInterfaceResponse
     );
   }
 
@@ -1018,6 +1046,88 @@ export interface AddWhiteListResourceRequest {
 export interface AddWhiteListResourceResponse {}
 
 /**
+ * AllocateBatchSecondaryIp - 批量申请虚拟网卡辅助IP
+ */
+export interface AllocateBatchSecondaryIpRequest {
+  /**
+   * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
+   */
+  Zone: string;
+  /**
+   * 节点mac
+   */
+  Mac: string;
+  /**
+   * 资源Id
+   */
+  ObjectId: string;
+  /**
+   * 子网Id（若未指定，则根据zone获取默认子网进行创建）
+   */
+  SubnetId?: string;
+  /**
+   * vpcId
+   */
+  VPCId?: string;
+  /**
+   * 【arry】支持按如下方式申请：①按网段：如192.168.1.32/27，掩码数字最小为27   ②指定IP地址，如192.168.1.3
+   */
+  Ip?: string[];
+  /**
+   * 申请的内网IP数量
+   */
+  Count?: number;
+}
+
+/**
+ * AllocateBatchSecondaryIp - 批量申请虚拟网卡辅助IP
+ */
+export interface AllocateBatchSecondaryIpResponse {
+  /**
+   * 详见IpsInfo
+   */
+  IpsInfo: {
+    /**
+     * 内网IP地址
+     */
+    Ip?: string;
+    /**
+     * 掩码
+     */
+    Mask?: string;
+    /**
+     * 网关
+     */
+    Gateway?: string;
+    /**
+     * MAC地址
+     */
+    Mac?: string;
+    /**
+     * 子网资源ID
+     */
+    SubnetId?: string;
+    /**
+     * VPC资源ID
+     */
+    VPCId?: string;
+    /**
+     * IP分配结果，详见StatusInfo
+     */
+    Status?: {
+      /**
+       * 枚举值：Succeeded，Failed
+       */
+      StatusCode?: string;
+      /**
+       * IP分配失败原因
+       */
+      Message?: string;
+    };
+  }[];
+}
+
+/**
  * AllocateSecondaryIp - 分配ip（用于uk8s使用）
  */
 export interface AllocateSecondaryIpRequest {
@@ -1409,6 +1519,107 @@ export interface CreateNetworkAclEntryResponse {
    * 创建的Entry的ID
    */
   EntryId: string;
+}
+
+/**
+ * CreateNetworkInterface - 创建虚拟网卡
+ */
+export interface CreateNetworkInterfaceRequest {
+  /**
+   * 所属VPCID
+   */
+  VPCId: string;
+  /**
+   * 所属子网ID
+   */
+  SubnetId: string;
+  /**
+   * 虚拟网卡名称，默认为 NetworkInterface
+   */
+  Name?: string;
+  /**
+   * 指定内网IP。当前一个网卡仅支持绑定一个内网IP
+   */
+  PrivateIp?: string[];
+  /**
+   * 防火墙GroupId，默认：Web推荐防火墙 可由DescribeSecurityGroupResponse中的GroupId取得
+   */
+  SecurityGroupId?: string;
+  /**
+   * 业务组
+   */
+  Tag?: string;
+  /**
+   * 备注
+   */
+  Remark?: string;
+}
+
+/**
+ * CreateNetworkInterface - 创建虚拟网卡
+ */
+export interface CreateNetworkInterfaceResponse {
+  /**
+   * 若创建成功，则返回虚拟网卡信息。创建失败，无此参数
+   */
+  NetworkInterface?: {
+    /**
+     * 虚拟网卡资源ID
+     */
+    InterfaceId: string;
+    /**
+     * 所属VPC
+     */
+    VPCId: string;
+    /**
+     * 所属子网
+     */
+    SubnetId: string;
+    /**
+     * 关联内网IP。当前一个网卡仅支持绑定一个内网IP
+     */
+    PrivateIpSet: string[];
+    /**
+     * 关联Mac
+     */
+    MacAddress: string;
+    /**
+     * 绑定状态
+     */
+    Status: number;
+    /**
+     * 虚拟网卡名称
+     */
+    Name?: string;
+    /**
+     * 内网IP掩码
+     */
+    Netmask?: string;
+    /**
+     * 默认网关
+     */
+    Gateway?: string;
+    /**
+     * 绑定实例资源ID
+     */
+    AttachInstanceId?: string;
+    /**
+     * 是否是绑定实例的默认网卡 false:不是 true:是
+     */
+    Default?: boolean;
+    /**
+     * 创建时间
+     */
+    CreateTime?: number;
+    /**
+     * 备注
+     */
+    Remark?: string;
+    /**
+     * 业务组
+     */
+    Tag?: string;
+  };
 }
 
 /**
@@ -1875,10 +2086,6 @@ export interface DescribeInstanceNetworkInterfaceResponse {
      */
     Status: number;
     /**
-     * 网卡的内网IP信息
-     */
-    PrivateIp: string[];
-    /**
      * 虚拟网卡名称
      */
     Name?: string;
@@ -1918,10 +2125,6 @@ export interface DescribeInstanceNetworkInterfaceResponse {
      * 虚拟网卡绑定的防火墙ID信息
      */
     FirewallIdSet?: string[];
-    /**
-     * 网卡的内网IP配额信息
-     */
-    PrivateIplimit?: string[];
   }[];
 }
 
@@ -1958,35 +2161,35 @@ export interface DescribeNATGWResponse {
     /**
      * natgw id
      */
-    NATGWId?: string;
+    NATGWId: string;
     /**
      * natgw名称
      */
-    NATGWName?: string;
+    NATGWName: string;
     /**
      * 业务组
      */
-    Tag?: string;
+    Tag: string;
     /**
      * 备注
      */
-    Remark?: string;
+    Remark: string;
     /**
      * natgw创建时间
      */
-    CreateTime?: number;
+    CreateTime: number;
     /**
      * 绑定的防火墙Id
      */
-    FirewallId?: string;
+    FirewallId: string;
     /**
      * 所属VPC Id
      */
-    VPCId?: string;
+    VPCId: string;
     /**
      * 子网 Id
      */
-    SubnetSet?: {
+    SubnetSet: {
       /**
        * 子网id
        */
@@ -2003,7 +2206,7 @@ export interface DescribeNATGWResponse {
     /**
      * 绑定的EIP 信息
      */
-    IPSet?: {
+    IPSet: {
       /**
        * 外网IP的 EIPId
        */
@@ -2037,15 +2240,15 @@ export interface DescribeNATGWResponse {
     /**
      * VPC名称
      */
-    VPCName?: string;
+    VPCName: string;
     /**
      * 枚举值，“enable”，默认出口规则使用了负载均衡；“disable”，默认出口规则未使用负载均衡。
      */
-    IsSnatpoolEnabled?: string;
+    IsSnatpoolEnabled: string;
     /**
      * 转发策略Id
      */
-    PolicyId?: string[];
+    PolicyId: string[];
   }[];
 }
 
@@ -2535,7 +2738,16 @@ export interface DescribeNetworkInterfaceResponse {
     /**
      * 网卡的内网IP信息
      */
-    PrivateIp: string[];
+    PrivateIp?: {
+      /**
+       * ip类型 SecondaryIp/PrimaryIp
+       */
+      IpType?: string;
+      /**
+       * ip 地址
+       */
+      IpAddr?: string[];
+    }[];
     /**
      * 虚拟网卡名称
      */
@@ -2579,7 +2791,16 @@ export interface DescribeNetworkInterfaceResponse {
     /**
      * 网卡的内网IP配额信息
      */
-    PrivateIplimit?: string[];
+    PrivateIpLimit?: {
+      /**
+       * 网卡拥有的内网IP数量
+       */
+      PrivateIpCount?: number;
+      /**
+       * 网卡内网IP配额
+       */
+      PrivateIpQuota?: number;
+    };
   }[];
   /**
    * 虚拟网卡总数
@@ -2611,6 +2832,14 @@ export interface DescribeRouteTableRequest {
    * 业务组ID
    */
   BusinessId?: string;
+  /**
+   * 默认为 false, 返回详细路由规则信息
+   */
+  Brief?: boolean;
+  /**
+   * 默认为 false, 表示路由表是短 ID
+   */
+  LongId?: string;
 }
 
 /**
@@ -2633,6 +2862,10 @@ export interface DescribeRouteTableResponse {
      * 绑定该路由表的子网数量
      */
     SubnetCount?: number;
+    /**
+     * 绑定该路由表的子网
+     */
+    SubnetIds?: string[];
     /**
      * 路由表所属的VPC资源ID
      */
@@ -2677,6 +2910,10 @@ export interface DescribeRouteTableResponse {
        * 路由表下一跳类型。LOCAL，本VPC内部通信路由；PUBLIC，公共服务路由；CNAT，外网路由；UDPN，跨域高速通道路由；HYBRIDGW，混合云路由；INSTANCE，实例路由；VNET，VPC联通路由；IPSEC VPN，指向VPN网关的路由。
        */
       NexthopType?: string;
+      /**
+       * 实例类型，枚举值：UHOST，云主机；UNI，虚拟网卡；PHOST，物理云主机
+       */
+      InstanceType?: string;
       /**
        * 保留字段，暂未使用
        */

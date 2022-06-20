@@ -18,6 +18,18 @@ export default class UPhoneClient extends Client {
   }
 
   /**
+   * CreateUPhone - 创建云手机
+   *
+   * See also: https://docs.ucloud.cn/api/uphone-api/create_u_phone
+   */
+  createUPhone(request?: CreateUPhoneRequest): Promise<CreateUPhoneResponse> {
+    const args = { Action: 'CreateUPhone', ...(request || {}) };
+    return this.invoke(new Request(args)).then(
+      (resp) => resp.toObject() as CreateUPhoneResponse
+    );
+  }
+
+  /**
    * CreateUPhoneApp - 一个 app 对应多个 app_version。
    *
    * See also: https://docs.ucloud.cn/api/uphone-api/create_u_phone_app
@@ -75,6 +87,18 @@ export default class UPhoneClient extends Client {
   }
 
   /**
+   * DeleteUPhone - 删除云手机
+   *
+   * See also: https://docs.ucloud.cn/api/uphone-api/delete_u_phone
+   */
+  deleteUPhone(request?: DeleteUPhoneRequest): Promise<DeleteUPhoneResponse> {
+    const args = { Action: 'DeleteUPhone', ...(request || {}) };
+    return this.invoke(new Request(args)).then(
+      (resp) => resp.toObject() as DeleteUPhoneResponse
+    );
+  }
+
+  /**
    * DeleteUPhoneImage - 删除自制云手机镜像。
    *
    * See also: https://docs.ucloud.cn/api/uphone-api/delete_u_phone_image
@@ -89,7 +113,7 @@ export default class UPhoneClient extends Client {
   }
 
   /**
-   * DeleteUPhoneServer - 删除云手机服务器。 注：关机状态下才能执行删除操作。
+   * DeleteUPhoneServer - 删除云手机服务器。
    *
    * See also: https://docs.ucloud.cn/api/uphone-api/delete_u_phone_server
    */
@@ -187,7 +211,7 @@ export default class UPhoneClient extends Client {
   }
 
   /**
-   * DescribeUPhoneIpRegions - 获取云手机支持绑定独立IP的城市列表
+   * DescribeUPhoneIpRegions - 获取云手机所在城市支持绑定独立IP的地域列表
    *
    * See also: https://docs.ucloud.cn/api/uphone-api/describe_u_phone_ip_regions
    */
@@ -215,7 +239,7 @@ export default class UPhoneClient extends Client {
   }
 
   /**
-   * DescribeUPhoneModel -
+   * DescribeUPhoneModel - 获取云手机规格列表。两种类型：uphone代表单云手机场景、uphone-server代表云手机服务器场景。
    *
    * See also: https://docs.ucloud.cn/api/uphone-api/describe_u_phone_model
    */
@@ -253,6 +277,48 @@ export default class UPhoneClient extends Client {
     const args = { Action: 'DescribeUPhoneServerModel', ...(request || {}) };
     return this.invoke(new Request(args)).then(
       (resp) => resp.toObject() as DescribeUPhoneServerModelResponse
+    );
+  }
+
+  /**
+   * GetUPhoneAllowance - 获取云手机创建余量
+   *
+   * See also: https://docs.ucloud.cn/api/uphone-api/get_u_phone_allowance
+   */
+  getUPhoneAllowance(
+    request?: GetUPhoneAllowanceRequest
+  ): Promise<GetUPhoneAllowanceResponse> {
+    const args = { Action: 'GetUPhoneAllowance', ...(request || {}) };
+    return this.invoke(new Request(args)).then(
+      (resp) => resp.toObject() as GetUPhoneAllowanceResponse
+    );
+  }
+
+  /**
+   * GetUPhonePrice - 根据云手机规格名称，获取UPhone实例的价格。
+   *
+   * See also: https://docs.ucloud.cn/api/uphone-api/get_u_phone_price
+   */
+  getUPhonePrice(
+    request?: GetUPhonePriceRequest
+  ): Promise<GetUPhonePriceResponse> {
+    const args = { Action: 'GetUPhonePrice', ...(request || {}) };
+    return this.invoke(new Request(args)).then(
+      (resp) => resp.toObject() as GetUPhonePriceResponse
+    );
+  }
+
+  /**
+   * GetUPhoneRenewPrice - 获取云手机续费价格，不包括独立ip价格。
+   *
+   * See also: https://docs.ucloud.cn/api/uphone-api/get_u_phone_renew_price
+   */
+  getUPhoneRenewPrice(
+    request?: GetUPhoneRenewPriceRequest
+  ): Promise<GetUPhoneRenewPriceResponse> {
+    const args = { Action: 'GetUPhoneRenewPrice', ...(request || {}) };
+    return this.invoke(new Request(args)).then(
+      (resp) => resp.toObject() as GetUPhoneRenewPriceResponse
     );
   }
 
@@ -411,6 +477,18 @@ export default class UPhoneClient extends Client {
   }
 
   /**
+   * RenewUPhone - 修改UPhone的device_id、imei、meid 以及其他相关配置，达到一键新机的效果
+   *
+   * See also: https://docs.ucloud.cn/api/uphone-api/renew_u_phone
+   */
+  renewUPhone(request?: RenewUPhoneRequest): Promise<RenewUPhoneResponse> {
+    const args = { Action: 'RenewUPhone', ...(request || {}) };
+    return this.invoke(new Request(args)).then(
+      (resp) => resp.toObject() as RenewUPhoneResponse
+    );
+  }
+
+  /**
    * ResetUPhone - 将云手机恢复为创建时的状态。
    *
    * See also: https://docs.ucloud.cn/api/uphone-api/reset_u_phone
@@ -451,6 +529,20 @@ export default class UPhoneClient extends Client {
   }
 
   /**
+   * SetUPhoneCallback - 设置云手机异步操作以及状态更新回调，支持云手机重置，安装应用，卸载应用，设备占用状态回调
+   *
+   * See also: https://docs.ucloud.cn/api/uphone-api/set_u_phone_callback
+   */
+  setUPhoneCallback(
+    request?: SetUPhoneCallbackRequest
+  ): Promise<SetUPhoneCallbackResponse> {
+    const args = { Action: 'SetUPhoneCallback', ...(request || {}) };
+    return this.invoke(new Request(args)).then(
+      (resp) => resp.toObject() as SetUPhoneCallbackResponse
+    );
+  }
+
+  /**
    * SetUPhoneConfig - 设置云手机画面参数（分辨率、DPI、帧率、码率）
    *
    * See also: https://docs.ucloud.cn/api/uphone-api/set_u_phone_config
@@ -487,6 +579,20 @@ export default class UPhoneClient extends Client {
     const args = { Action: 'SetUPhoneManagerMode', ...(request || {}) };
     return this.invoke(new Request(args)).then(
       (resp) => resp.toObject() as SetUPhoneManagerModeResponse
+    );
+  }
+
+  /**
+   * SetUPhoneRootMode - 设置云手机Root模式
+   *
+   * See also: https://docs.ucloud.cn/api/uphone-api/set_u_phone_root_mode
+   */
+  setUPhoneRootMode(
+    request?: SetUPhoneRootModeRequest
+  ): Promise<SetUPhoneRootModeResponse> {
+    const args = { Action: 'SetUPhoneRootMode', ...(request || {}) };
+    return this.invoke(new Request(args)).then(
+      (resp) => resp.toObject() as SetUPhoneRootModeResponse
     );
   }
 
@@ -548,6 +654,78 @@ export default class UPhoneClient extends Client {
 }
 
 /**
+ * CreateUPhone - 创建云手机
+ */
+export interface CreateUPhoneRequest {
+  /**
+   * 云手机实例名称，默认：UPhone。如果同时创建多个，则增加数字后缀，如UPhone-1
+   */
+  Name: string;
+  /**
+   * 云手机规格名称，不超过64个字节。可通过[查询云手机规格列表]()查询支持的云手机规格。
+   */
+  UPhoneModelName: string;
+  /**
+   * 云手机画面带宽，默认2M
+   */
+  MediaBandwidth: number;
+  /**
+   * 云手机镜像ID，不超过32个字节。可通过[查询手机镜像]()查询云手机规格对应的镜像ID。
+   */
+  ImageId: string;
+  /**
+   * 城市Id，通过[获取城市列表](#DescribeUPhoneCities)获取
+   */
+  CityId: string;
+  /**
+   * 创建云手机的个数
+   */
+  UPhoneCount: number;
+  /**
+   * 计费模式。枚举值为： > 年 Year，按年付费； > Month，按月付费； > Dynamic，按小时预付费; 默认为月付
+   */
+  ChargeType?: string;
+  /**
+   * 购买时长。默认值: 1。月付时，此参数传0，代表购买至月末。
+   */
+  Quantity?: string;
+  /**
+   * 购买独立IP必须有此参数。绑定的目的地域。参见 [地域和可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
+   */
+  IpDestRegion?: string;
+  /**
+   * 业务组。默认：Default（Default即为未分组）。请遵照[[api:uhost-api:specification|字段规范]]设定业务组。
+   */
+  Tag?: string;
+  /**
+   * 绑定独立IP
+   */
+  BindIp?: boolean;
+  /**
+   * 独立IP带宽
+   */
+  Bandwidth?: number;
+  /**
+   * 独立IP参数。需要独立IP的比例。eg: [4:1]->4， [3:1]->3。
+   */
+  IpProportion?: number;
+  /**
+   * 云手机代金券ID。请通过DescribeCoupon接口查询，或登录用户中心查看。注：代金券对带宽不适用，仅适用于云手机计费
+   */
+  CouponId?: string;
+}
+
+/**
+ * CreateUPhone - 创建云手机
+ */
+export interface CreateUPhoneResponse {
+  /**
+   * 任务ID，用来查询创建云手机任务状态
+   */
+  JobId: string;
+}
+
+/**
  * CreateUPhoneApp - 一个 app 对应多个 app_version。
  */
 export interface CreateUPhoneAppRequest {
@@ -559,6 +737,10 @@ export interface CreateUPhoneAppRequest {
    * 应用描述。
    */
   Description?: string;
+  /**
+   * 枚举值。当前操作的产品类型，1、uphone：云手机场景；2、uphone-server：云手机服务器场景。默认云手机服务器场景。
+   */
+  ProductType?: string;
 }
 
 /**
@@ -592,6 +774,10 @@ export interface CreateUPhoneAppVersionRequest {
    * 应用版本描述。
    */
   Description?: string;
+  /**
+   * 枚举值。当前操作的产品类型，1、uphone：云手机场景；2、uphone-server：云手机服务器场景。默认云手机服务器场景。
+   */
+  ProductType?: string;
 }
 
 /**
@@ -610,7 +796,7 @@ export interface CreateUPhoneAppVersionResponse {
  */
 export interface CreateUPhoneImageRequest {
   /**
-   * 城市Id，通过[获取城市列表](#DescribeUPhoneCities)获取
+   * 城市Id，通过[获取城市列表](https://cms-docs.ucloudadmin.com/api/uphone-api/describe_u_phone_cities)获取
    */
   CityId: string;
   /**
@@ -625,6 +811,10 @@ export interface CreateUPhoneImageRequest {
    * 镜像的描述信息。长度为2~256个英文或中文字符
    */
   Description?: string;
+  /**
+   * 枚举值。当前操作的产品类型，1、uphone：云手机场景；2、uphone-server：云手机服务器场景。默认云手机服务器场景。
+   */
+  ProductType?: string;
 }
 
 /**
@@ -635,6 +825,10 @@ export interface CreateUPhoneImageResponse {
    * 云手机自定义镜像资源 ID
    */
   ImageId?: string;
+  /**
+   * 请求的唯一标识Id，`RetCode`为0时返回，可根据此ID查询请求的执行状态
+   */
+  JobId?: string;
 }
 
 /**
@@ -706,6 +900,34 @@ export interface CreateUPhoneServerResponse {
 }
 
 /**
+ * DeleteUPhone - 删除云手机
+ */
+export interface DeleteUPhoneRequest {
+  /**
+   * 城市Id，通过[获取城市列表](#DescribeUPhoneCities)获取
+   */
+  CityId: string;
+  /**
+   * 【数组】云手机实例的资源 ID，调用方式举例：UPhoneIds.0=希望获取信息的云手机 1 的 UPhoneId，UPhoneIds.1=云手机实例 2 的 UPhoneId
+   */
+  UPhoneIds: string[];
+  /**
+   * 枚举值。当前操作的产品类型，1、uphone：云手机场景；2、uphone-server：云手机服务器场景。默认云手机服务器场景。
+   */
+  ProductType?: string;
+}
+
+/**
+ * DeleteUPhone - 删除云手机
+ */
+export interface DeleteUPhoneResponse {
+  /**
+   * 任务ID，用来查询删除云手机任务状态
+   */
+  JobId: string;
+}
+
+/**
  * DeleteUPhoneImage - 删除自制云手机镜像。
  */
 export interface DeleteUPhoneImageRequest {
@@ -726,7 +948,7 @@ export interface DeleteUPhoneImageResponse {
 }
 
 /**
- * DeleteUPhoneServer - 删除云手机服务器。 注：关机状态下才能执行删除操作。
+ * DeleteUPhoneServer - 删除云手机服务器。
  */
 export interface DeleteUPhoneServerRequest {
   /**
@@ -748,7 +970,7 @@ export interface DeleteUPhoneServerRequest {
 }
 
 /**
- * DeleteUPhoneServer - 删除云手机服务器。 注：关机状态下才能执行删除操作。
+ * DeleteUPhoneServer - 删除云手机服务器。
  */
 export interface DeleteUPhoneServerResponse {}
 
@@ -784,6 +1006,10 @@ export interface DescribeUPhoneRequest {
    * 是否返回全部。如果有此参数，分页不生效。
    */
   IsAll?: boolean;
+  /**
+   * 枚举值。当前操作的产品类型，1、uphone：云手机场景；2、uphone-server：云手机服务器场景。默认云手机服务器场景。
+   */
+  ProductType?: string;
 }
 
 /**
@@ -874,6 +1100,22 @@ export interface DescribeUPhoneResponse {
      * 备注
      */
     Remark?: string;
+    /**
+     * 计费模式。枚举值为： > 年 Year，按年付费； > Month，按月付费； > Dynamic，按小时预付费; 默认为月付
+     */
+    ChargeType?: string;
+    /**
+     * 到期时间；格式为Unix时间戳
+     */
+    ExpireTime?: number;
+    /**
+     * IP所属地域Id，eg: hk，th-bkk
+     */
+    IpRegion?: string;
+    /**
+     * 云手机IP地址
+     */
+    Ip?: string;
   }[];
 }
 
@@ -893,6 +1135,10 @@ export interface DescribeUPhoneAppRequest {
    * 返回数据长度，默认为20，最大100
    */
   Limit?: number;
+  /**
+   * 枚举值。当前操作的产品类型，1、uphone：云手机场景；2、uphone-server：云手机服务器场景。默认云手机服务器场景。
+   */
+  ProductType?: string;
 }
 
 /**
@@ -954,6 +1200,10 @@ export interface DescribeUPhoneAppVersionRequest {
    * 列表起始位置偏移量，默认为0
    */
   Offset?: number;
+  /**
+   * 枚举值。当前操作的产品类型，1、uphone：云手机场景；2、uphone-server：云手机服务器场景。默认云手机服务器场景。
+   */
+  ProductType?: string;
 }
 
 /**
@@ -1006,7 +1256,12 @@ export interface DescribeUPhoneAppVersionResponse {
 /**
  * DescribeUPhoneCities - 获取云手机提供服务的城市列表
  */
-export interface DescribeUPhoneCitiesRequest {}
+export interface DescribeUPhoneCitiesRequest {
+  /**
+   * 枚举值。当前操作的产品类型，1、uphone：云手机场景；2、uphone-server：云手机服务器场景。默认云手机服务器场景。
+   */
+  ProductType?: string;
+}
 
 /**
  * DescribeUPhoneCities - 获取云手机提供服务的城市列表
@@ -1059,6 +1314,10 @@ export interface DescribeUPhoneDetailByAppRequest {
    * 返回数据长度，默认为20，最大100
    */
   Limit?: number;
+  /**
+   * 枚举值。当前操作的产品类型，1、uphone：云手机场景；2、uphone-server：云手机服务器场景。默认云手机服务器场景。
+   */
+  ProductType?: string;
 }
 
 /**
@@ -1078,9 +1337,13 @@ export interface DescribeUPhoneDetailByAppResponse {
      */
     UPhoneName?: string;
     /**
-     * 云手机规格名称
+     * 云手机的唯一标识，不超过32个字节。
      */
     UPhoneId?: string;
+    /**
+     * 云手机规格名称
+     */
+    UPhoneModelName?: string;
     /**
      * 虚拟CPU核数。
      */
@@ -1193,6 +1456,10 @@ export interface DescribeUPhoneImageRequest {
    * 最大返回镜像数量，默认为20，最大100
    */
   Limit?: string;
+  /**
+   * 枚举值。当前操作的产品类型，1、uphone：云手机场景；2、uphone-server：云手机服务器场景。默认云手机服务器场景。
+   */
+  ProductType?: string;
 }
 
 /**
@@ -1284,17 +1551,21 @@ export interface DescribeUPhoneImageResponse {
 }
 
 /**
- * DescribeUPhoneIpRegions - 获取云手机支持绑定独立IP的城市列表
+ * DescribeUPhoneIpRegions - 获取云手机所在城市支持绑定独立IP的地域列表
  */
 export interface DescribeUPhoneIpRegionsRequest {
   /**
-   * 城市Id，eg: cn-shanghai, cn-hangzhou
+   * 城市Id，通过[获取城市列表](https://docs.ucloud.cn/api/uphone-api/describe_u_phone_cities)获取
    */
   CityId: string;
+  /**
+   * 枚举值。当前操作的产品类型，1、uphone：云手机场景；2、uphone-server：云手机服务器场景。默认云手机服务器场景。
+   */
+  ProductType?: string;
 }
 
 /**
- * DescribeUPhoneIpRegions - 获取云手机支持绑定独立IP的城市列表
+ * DescribeUPhoneIpRegions - 获取云手机所在城市支持绑定独立IP的地域列表
  */
 export interface DescribeUPhoneIpRegionsResponse {
   /**
@@ -1325,7 +1596,7 @@ export interface DescribeUPhoneJobRequest {
    */
   CityId: string;
   /**
-   * 【数组】Job 的唯一标识 Id，调用方式举例：ServerIds.0=希望查询状态的 Job1，ServerIds.1=Job2。 如果不传入，则返回当前 城市 所有符合条件的 Job 。
+   * 【数组】Job 的唯一标识 Id，调用方式举例：JobIds.0=希望查询状态的 Job1，JobIds.1=Job2。 如果不传入，则返回当前 城市 所有符合条件的 Job 。
    */
   JobIds?: string[];
   /**
@@ -1344,6 +1615,10 @@ export interface DescribeUPhoneJobRequest {
    * 【数组】Job 类型，调用方式举例：JobTypes.0=希望查询的 Job 类型 1，JobTypes.1=Job 类型 2。 如果不传入，则返回当前 城市 所有符合条件的 Job 类型。Job 类型仅支持 INSTALL_APP、UNINSTALL_APP、RUN_ASYNC_COMMAND、CREATE_SERVER_AND_UPHONE、SET_UPHONE_GPS、SET_UPHONE_CONFIG、UPLOAD_FILE、DELETE_UPHONE
    */
   Types?: string[];
+  /**
+   * 枚举值。当前操作的产品类型，1、uphone：云手机场景；2、uphone-server：云手机服务器场景。默认云手机服务器场景。
+   */
+  ProductType?: string;
 }
 
 /**
@@ -1431,7 +1706,7 @@ export interface DescribeUPhoneJobResponse {
 }
 
 /**
- * DescribeUPhoneModel -
+ * DescribeUPhoneModel - 获取云手机规格列表。两种类型：uphone代表单云手机场景、uphone-server代表云手机服务器场景。
  */
 export interface DescribeUPhoneModelRequest {
   /**
@@ -1446,10 +1721,14 @@ export interface DescribeUPhoneModelRequest {
    * 返回数据长度，默认为20，最大100
    */
   Limit?: number;
+  /**
+   * 枚举值。当前操作的产品类型，1、uphone：云手机场景；2、uphone-server：云手机服务器场景。默认云手机服务器场景。
+   */
+  ProductType?: string;
 }
 
 /**
- * DescribeUPhoneModel -
+ * DescribeUPhoneModel - 获取云手机规格列表。两种类型：uphone代表单云手机场景、uphone-server代表云手机服务器场景。
  */
 export interface DescribeUPhoneModelResponse {
   /**
@@ -1484,6 +1763,14 @@ export interface DescribeUPhoneModelResponse {
      * 刷新率
      */
     Refresh: number;
+    /**
+     * DPI
+     */
+    Dpi?: number;
+    /**
+     * 型号描述信息
+     */
+    Description?: string;
   }[];
 }
 
@@ -1683,9 +1970,22 @@ export interface DescribeUPhoneServerModelResponse {
    */
   TotalCount: number;
   /**
+   * 服务器model的库存
+   */
+  Stock?: {
+    /**
+     * ServerModel名称
+     */
+    ModelName?: string;
+    /**
+     * 资源余量
+     */
+    StockCount?: number;
+  }[];
+  /**
    * ServerModel实例列表，每项参数可见数据模型 ServerModelInstance
    */
-  ServerModels: {
+  ServerModels?: {
     /**
      * ServerModel名称
      */
@@ -1744,6 +2044,149 @@ export interface DescribeUPhoneServerModelResponse {
 }
 
 /**
+ * GetUPhoneAllowance - 获取云手机创建余量
+ */
+export interface GetUPhoneAllowanceRequest {
+  /**
+   * 城市Id，通过[获取城市列表](#DescribeUPhoneCities)获取
+   */
+  CityId: string;
+}
+
+/**
+ * GetUPhoneAllowance - 获取云手机创建余量
+ */
+export interface GetUPhoneAllowanceResponse {
+  /**
+   * 手机型号以及可创建数量
+   */
+  UPhoneAllowance: {
+    /**
+     * 枚举值，云手机型号名称，取值：UPhone X，UPhone Plus，UPhone Pro
+     */
+    ModelName: string;
+    /**
+     * 可创建云手机个数
+     */
+    Allowance: number;
+  }[];
+}
+
+/**
+ * GetUPhonePrice - 根据云手机规格名称，获取UPhone实例的价格。
+ */
+export interface GetUPhonePriceRequest {
+  /**
+   * 城市Id，通过[获取城市列表](#DescribeUPhoneCities)获取
+   */
+  CityId: string;
+  /**
+   * 云手机规格名称
+   */
+  UPhoneModelName?: number;
+  /**
+   * 云手机画面带宽值，画面带宽和手机强绑定关系，必须和手机数量对应。
+   */
+  MediaBandwidth?: number;
+  /**
+   * 云手机个数
+   */
+  UPhoneCount?: number;
+  /**
+   * 计费模式。枚举值为： > Year，按年付费； > Month，按月付费； > Dynamic，按小时预付费; 如果不传某个枚举值，默认返回年付、月付的价格组合集。
+   */
+  ChargeType?: string;
+  /**
+   * 购买时长。默认: 1。 月付时，此参数传0，代表了购买至月末。
+   */
+  Quantity?: number;
+  /**
+   * 购买独立IP必须此参数。绑定的目的地域。参见 [地域和可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
+   */
+  IpDestRegion?: string;
+  /**
+   * 购买独立IP需要此参数，其中一个ip的带宽值。
+   */
+  INetBandwidth?: number;
+  /**
+   * 购买独立IP需要此参数。需要的eip数量。
+   */
+  IpCount?: number;
+}
+
+/**
+ * GetUPhonePrice - 根据云手机规格名称，获取UPhone实例的价格。
+ */
+export interface GetUPhonePriceResponse {
+  /**
+   * 价格列表，每项参数见UPhonePriceSet
+   */
+  PriceSet: {
+    /**
+     * 计费类型，枚举值：Year，Month，Dynamic
+     */
+    ChargeType: string;
+    /**
+     * 价格，单位: 元，保留小数点后两位有效数字
+     */
+    Price: number;
+    /**
+     * 限时优惠的折前原价（即列表价乘以商务折扣后的单价）
+     */
+    OriginalPrice: number;
+    /**
+     * 产品列表价
+     */
+    ListPrice?: number;
+  }[];
+}
+
+/**
+ * GetUPhoneRenewPrice - 获取云手机续费价格，不包括独立ip价格。
+ */
+export interface GetUPhoneRenewPriceRequest {
+  /**
+   * 云手机的唯一标识，可通过[查询云手机列表]获取。
+   */
+  UPhoneId: string;
+  /**
+   * 城市Id，通过[获取城市列表](#DescribeUPhoneCities)获取
+   */
+  CityId: string;
+  /**
+   * 计费模式。枚举值为： > Year，按年付费； > Month，按月付费； > Dynamic，按小时预付费; 默认返回全部计费方式对应的价格
+   */
+  ChargeType?: string;
+}
+
+/**
+ * GetUPhoneRenewPrice - 获取云手机续费价格，不包括独立ip价格。
+ */
+export interface GetUPhoneRenewPriceResponse {
+  /**
+   * 价格列表,具体参数见UPhonePriceSet
+   */
+  PriceSet: {
+    /**
+     * 计费类型，枚举值：Year，Month，Dynamic
+     */
+    ChargeType: string;
+    /**
+     * 价格，单位: 元，保留小数点后两位有效数字
+     */
+    Price: number;
+    /**
+     * 限时优惠的折前原价（即列表价乘以商务折扣后的单价）
+     */
+    OriginalPrice: number;
+    /**
+     * 产品列表价
+     */
+    ListPrice?: number;
+  }[];
+}
+
+/**
  * GetUPhoneScreenCapture - 云手机截屏
  */
 export interface GetUPhoneScreenCaptureRequest {
@@ -1752,9 +2195,13 @@ export interface GetUPhoneScreenCaptureRequest {
    */
   UPhoneID: string;
   /**
-   * 城市Id，通过[获取城市列表](#DescribeUPhoneCities)获取
+   * 城市Id，通过[获取城市列表](https://docs.ucloud.cn/api/uphone-api/describe_u_phone_cities)获取
    */
   CityId: string;
+  /**
+   * 枚举值。当前操作的产品类型，1、uphone：云手机场景；2、uphone-server：云手机服务器场景。默认云手机服务器场景。
+   */
+  ProductType?: string;
 }
 
 /**
@@ -1810,7 +2257,7 @@ export interface GetUPhoneServerPriceResponse {
    */
   PriceSet: {
     /**
-     * 计费类型，枚举值：Year，Month
+     * 计费类型，枚举值：Year，Month, Dynamic
      */
     ChargeType: string;
     /**
@@ -1859,7 +2306,7 @@ export interface GetUPhoneServerRenewPriceResponse {
    */
   PriceSet: {
     /**
-     * 计费类型，枚举值：Year，Month
+     * 计费类型，枚举值：Year，Month, Dynamic
      */
     ChargeType: string;
     /**
@@ -1893,6 +2340,10 @@ export interface InstallUPhoneAppVersionRequest {
    * 【数组】云手机实例的资源 ID，调用方式举例：UPhoneIds.0=希望安装应用的云手机实例 1 的 UPhoneId，UPhoneIds.1=云手机实例 2 的 UPhoneId。
    */
   UPhoneIds: string[];
+  /**
+   * 枚举值。当前操作的产品类型，1、uphone：云手机场景；2、uphone-server：云手机服务器场景。默认云手机服务器场景。
+   */
+  ProductType?: string;
 }
 
 /**
@@ -2029,6 +2480,10 @@ export interface PoweroffUPhoneRequest {
    * 城市Id，通过[获取城市列表](#DescribeUPhoneCities)获取
    */
   CityId: string;
+  /**
+   * 枚举值。当前操作的产品类型，1、uphone：云手机场景；2、uphone-server：云手机服务器场景。默认云手机服务器场景。
+   */
+  ProductType?: string;
 }
 
 /**
@@ -2048,6 +2503,10 @@ export interface PoweronUPhoneRequest {
    * 【数组】云手机实例的资源ID，调用方式举例：UPhoneIds.0=希望开启的云手机实例1的UPhoneId，UPhoneIds.1=云手机实例2的UPhoneId。
    */
   UPhoneIds: string[];
+  /**
+   * 枚举值。当前操作的产品类型，1、uphone：云手机场景；2、uphone-server：云手机服务器场景。默认云手机服务器场景。
+   */
+  ProductType?: string;
 }
 
 /**
@@ -2067,12 +2526,144 @@ export interface RebootUPhoneRequest {
    * 城市Id，通过[获取城市列表](#DescribeUPhoneCities)获取
    */
   CityId: string;
+  /**
+   * 枚举值。当前操作的产品类型，1、uphone：云手机场景；2、uphone-server：云手机服务器场景。默认云手机服务器场景。
+   */
+  ProductType?: string;
 }
 
 /**
  * RebootUPhone - 重新启动云手机实例
  */
-export interface RebootUPhoneResponse {}
+export interface RebootUPhoneResponse {
+  /**
+   * 异步请求成功后返回JobId，用以查询Job状态
+   */
+  JobId?: string;
+}
+
+/**
+ * RenewUPhone - 修改UPhone的device_id、imei、meid 以及其他相关配置，达到一键新机的效果
+ */
+export interface RenewUPhoneRequest {
+  /**
+   * 城市Id，通过[获取城市列表](#DescribeUPhoneCities)获取
+   */
+  CityId: string;
+  /**
+   * 【数组】云手机实例的资源 ID，调用方式举例：UPhoneIds.0=希望重启的云手机实例 1 的 UPhoneId，UPhoneIds.1=云手机实例 2 的 UPhoneId。
+   */
+  UPhoneIds: string[];
+  /**
+   * 枚举值。当前操作的产品类型，1、uphone：云手机场景；2、uphone-server：云手机服务器场景。默认云手机服务器场景。
+   */
+  ProductType?: string;
+  /**
+   * 自定义设备参数设置的开关，true时会读取用户设置的下列设备参数信息；false时随机读取ucloud内置设备参数。默认false
+   */
+  Customize?: boolean;
+  /**
+   * 品牌
+   */
+  Brand?: string;
+  /**
+   * 设备型号
+   */
+  Model?: string;
+  /**
+   * 厂商
+   */
+  Manufacture?: string;
+  /**
+   * 序列号
+   */
+  SerialNumber?: string;
+  /**
+   * 基带版本
+   */
+  BaseBand?: string;
+  /**
+   * 主板名
+   */
+  Board?: string;
+  /**
+   * 显示的版本号
+   */
+  DisplayID?: string;
+  /**
+   * 设备名
+   */
+  Device?: string;
+  /**
+   * 系统指纹
+   */
+  FingerPrint?: string;
+  /**
+   * 产品名称
+   */
+  ProductName?: string;
+  /**
+   * build的版本号
+   */
+  BuildID?: string;
+  /**
+   * 固件编译主机
+   */
+  BuildHost?: string;
+  /**
+   * bootloader版本号
+   */
+  BootLoader?: string;
+  /**
+   * 系统标记
+   */
+  BuildTags?: string;
+  /**
+   * 版本增加说明
+   */
+  BuildVersionInc?: string;
+  /**
+   * 串号
+   */
+  IMEI?: string;
+  /**
+   * 手机号码
+   */
+  PhoneNumber?: string;
+  /**
+   * SIM卡唯一标识
+   */
+  ICCID?: string;
+  /**
+   * 移动识别码
+   */
+  IMSI?: string;
+  /**
+   * 移动设备标识码软件
+   */
+  IMEISV?: string;
+  /**
+   * 移动网络mac地址
+   */
+  RadioMac?: string;
+  /**
+   * 当前连接Wi-Fi名称
+   */
+  WiFiName?: string;
+  /**
+   * Wi-Fi 物理地址
+   */
+  BSSID?: string;
+  /**
+   * AOSP唯一标识
+   */
+  AndroidID?: string;
+}
+
+/**
+ * RenewUPhone - 修改UPhone的device_id、imei、meid 以及其他相关配置，达到一键新机的效果
+ */
+export interface RenewUPhoneResponse {}
 
 /**
  * ResetUPhone - 将云手机恢复为创建时的状态。
@@ -2086,12 +2677,21 @@ export interface ResetUPhoneRequest {
    * 【数组】云手机实例的资源 ID，调用方式举例：UPhoneIds.0=希望重置的云手机实例 1 的 UPhoneId，UPhoneIds.1=云手机实例 2 的 UPhoneId。
    */
   UPhoneIds: string[];
+  /**
+   * 枚举值。当前操作的产品类型，1、uphone：云手机场景；2、uphone-server：云手机服务器场景。默认云手机服务器场景。
+   */
+  ProductType?: string;
 }
 
 /**
  * ResetUPhone - 将云手机恢复为创建时的状态。
  */
-export interface ResetUPhoneResponse {}
+export interface ResetUPhoneResponse {
+  /**
+   * 异步请求成功后返回JobId，用以查询Job状态
+   */
+  JobId?: string;
+}
 
 /**
  * RunAsyncCommand - 在云手机中执行异步shell命令。
@@ -2109,6 +2709,10 @@ export interface RunAsyncCommandRequest {
    * 【数组】云手机实例的资源 ID，调用方式举例：UPhoneIds.0=希望执行命令的云手机实例 1 的 UPhoneId，UPhoneIds.1=云手机实例 2 的 UPhoneId。
    */
   UPhoneIds: string[];
+  /**
+   * 枚举值。当前操作的产品类型，1、uphone：云手机场景；2、uphone-server：云手机服务器场景。默认云手机服务器场景。
+   */
+  ProductType?: string;
 }
 
 /**
@@ -2137,6 +2741,10 @@ export interface RunSyncCommandRequest {
    * 【数组】云手机实例的资源 ID，调用方式举例：UPhoneIds.0=希望执行命令的云手机实例 1 的 UPhoneId，UPhoneIds.1=云手机实例 2 的 UPhoneId。
    */
   UPhoneIds: string[];
+  /**
+   * 枚举值。当前操作的产品类型，1、uphone：云手机场景；2、uphone-server：云手机服务器场景。默认云手机服务器场景。
+   */
+  ProductType?: string;
 }
 
 /**
@@ -2159,6 +2767,33 @@ export interface RunSyncCommandResponse {
 }
 
 /**
+ * SetUPhoneCallback - 设置云手机异步操作以及状态更新回调，支持云手机重置，安装应用，卸载应用，设备占用状态回调
+ */
+export interface SetUPhoneCallbackRequest {
+  /**
+   * 城市ID
+   */
+  CityId: string;
+  /**
+   * 云手机ID。
+   */
+  UPhoneId: string;
+  /**
+   * 接收POST请求的http接口。Content-Type：application/json; charset=UTF-8，Accept：application/json。
+   */
+  URL: string;
+  /**
+   * 枚举值。当前操作的产品类型，1、uphone：云手机场景；2、uphone-server：云手机服务器场景。默认云手机服务器场景。
+   */
+  ProductType?: string;
+}
+
+/**
+ * SetUPhoneCallback - 设置云手机异步操作以及状态更新回调，支持云手机重置，安装应用，卸载应用，设备占用状态回调
+ */
+export interface SetUPhoneCallbackResponse {}
+
+/**
  * SetUPhoneConfig - 设置云手机画面参数（分辨率、DPI、帧率、码率）
  */
 export interface SetUPhoneConfigRequest {
@@ -2167,7 +2802,7 @@ export interface SetUPhoneConfigRequest {
    */
   CityId: string;
   /**
-   * 【数组】云手机实例的资源 ID，调用方式举例：UPhoneIds.0=希望重启的云手机实例 1 的 UPhoneId，UPhoneIds.1=云手机实例 2 的 UPhoneId。
+   * 【数组】云手机实例的资源 ID，调用方式举例：UPhoneIds.0=云手机实例 1 的 UPhoneId，UPhoneIds.1=云手机实例 2 的 UPhoneId。
    */
   UPhoneIds: string[];
   /**
@@ -2179,7 +2814,7 @@ export interface SetUPhoneConfigRequest {
    */
   Refresh?: string;
   /**
-   * 云手机画面传输码率（例，8000）取值范围[100,5000]
+   * 云手机画面传输码率（例，8000）取值范围[100,50000]
    */
   Bitrate?: string;
   /**
@@ -2190,6 +2825,10 @@ export interface SetUPhoneConfigRequest {
    * 云手机dpi，取值范围[100,1000]
    */
   Dpi?: string;
+  /**
+   * 枚举值。当前操作的产品类型，1、uphone：云手机场景；2、uphone-server：云手机服务器场景。默认云手机服务器场景。
+   */
+  ProductType?: string;
 }
 
 /**
@@ -2248,6 +2887,10 @@ export interface SetUPhoneGPSRequest {
      */
     Altitude?: number;
   }[];
+  /**
+   * 枚举值。当前操作的产品类型，1、uphone：云手机场景；2、uphone-server：云手机服务器场景。默认云手机服务器场景。
+   */
+  ProductType?: string;
 }
 
 /**
@@ -2276,12 +2919,48 @@ export interface SetUPhoneManagerModeRequest {
    * 城市Id，通过[获取城市列表](#DescribeUPhoneCities)获取
    */
   CityId: string;
+  /**
+   * 枚举值。当前操作的产品类型，1、uphone：云手机场景；2、uphone-server：云手机服务器场景。默认云手机服务器场景。
+   */
+  ProductType?: string;
 }
 
 /**
  * SetUPhoneManagerMode - 管理员模式支持所有按键，普通用户模式禁用返回桌面
  */
 export interface SetUPhoneManagerModeResponse {}
+
+/**
+ * SetUPhoneRootMode - 设置云手机Root模式
+ */
+export interface SetUPhoneRootModeRequest {
+  /**
+   * 城市Id，通过[获取城市列表](#DescribeUPhoneCities)获取
+   */
+  CityId: string;
+  /**
+   * 【数组】云手机实例的资源 ID，调用方式举例：UPhoneIds.0=希望重启的云手机实例 1 的 UPhoneId，UPhoneIds.1=云手机实例 2 的 UPhoneId。
+   */
+  UPhoneIds: string[];
+  /**
+   * true则打开Root权限；false则关闭Root权限
+   */
+  Root: boolean;
+  /**
+   * 枚举值。当前操作的产品类型，1、uphone：云手机场景；2、uphone-server：云手机服务器场景。默认云手机服务器场景。
+   */
+  ProductType?: string;
+}
+
+/**
+ * SetUPhoneRootMode - 设置云手机Root模式
+ */
+export interface SetUPhoneRootModeResponse {
+  /**
+   * 异步请求成功后返回JobId，用以查询Job状态
+   */
+  JobId: string;
+}
 
 /**
  * SetUPhoneSplashScreen - 设置云手机启动画面，通过DescribeUPhone接口可以查询该地址
@@ -2299,6 +2978,10 @@ export interface SetUPhoneSplashScreenRequest {
    * 城市Id，通过[获取城市列表](#DescribeUPhoneCities)获取
    */
   CityId: string;
+  /**
+   * 枚举值。当前操作的产品类型，1、uphone：云手机场景；2、uphone-server：云手机服务器场景。默认云手机服务器场景。
+   */
+  ProductType?: string;
 }
 
 /**
@@ -2315,13 +2998,17 @@ export interface SetUPhoneTokenRequest {
    */
   UPhoneId: string;
   /**
-   * 城市Id，通过[获取城市列表](#DescribeUPhoneCities)获取
+   * 城市Id，通过[获取城市列表](https://docs.ucloud.cn/api/uphone-api/describe_u_phone_cities)获取
    */
   CityId: string;
   /**
    * RTC连接Token，为空表示清空Token
    */
   Token?: string;
+  /**
+   * 枚举值。当前操作的产品类型，1、uphone：云手机场景；2、uphone-server：云手机服务器场景。默认云手机服务器场景。
+   */
+  ProductType?: string;
 }
 
 /**
@@ -2345,6 +3032,10 @@ export interface UnInstallUPhoneAppVersionRequest {
    * 【数组】云手机实例的资源 ID，调用方式举例：UPhoneIds.0=希望卸载应用的云手机实例 1 的 UPhoneId，UPhoneIds.1=云手机实例 2 的 UPhoneId。
    */
   UPhoneIds: string[];
+  /**
+   * 枚举值。当前操作的产品类型，1、uphone：云手机场景；2、uphone-server：云手机服务器场景。默认云手机服务器场景。
+   */
+  ProductType?: string;
 }
 
 /**
@@ -2373,6 +3064,10 @@ export interface UpdateUPhoneImageRequest {
    * 镜像的描述信息。长度为2~256个英文或中文字符
    */
   Description?: string;
+  /**
+   * 枚举值。当前操作的产品类型，1、uphone：云手机场景；2、uphone-server：云手机服务器场景。默认云手机服务器场景。
+   */
+  ProductType?: string;
 }
 
 /**
