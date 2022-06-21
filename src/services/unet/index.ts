@@ -547,7 +547,7 @@ export interface AllocateEIPResponse {
      */
     EIPAddr?: {
       /**
-       * 运营商信息如: 国际: International, BGP: BGP
+       * 运营商信息如: 电信: Telecom, 联通: Unicom, 国际: International, Duplet: 双线IP（电信+联通), BGP: Bgp
        */
       OperatorName?: string;
       /**
@@ -633,6 +633,10 @@ export interface BindEIPRequest {
    * 弹性IP请求绑定的资源ID
    */
   ResourceId: string;
+  /**
+   * EIP与内网IP进行绑定时需要传入UNI下未绑定过EIP的内网IP
+   */
+  PrivateIP?: string;
 }
 
 /**
@@ -957,7 +961,7 @@ export interface DescribeEIPResponse {
      */
     EIPAddr?: {
       /**
-       * 运营商信息如: 国际: International, BGP: BGP
+       * 运营商信息如: 电信: Telecom, 联通: Unicom, 国际: International, Duplet: 双线IP（电信+联通), BGP: Bgp
        */
       OperatorName?: string;
       /**

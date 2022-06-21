@@ -259,7 +259,7 @@ export interface CreatePolicyResponse {
  */
 export interface CreateSSLRequest {
     /**
-     * SSL证书的名字，默认值为空
+     * SSL证书的名字，默认值不为空
      */
     SSLName: string;
     /**
@@ -1483,7 +1483,7 @@ export interface UpdateBackendAttributeRequest {
      */
     Port?: number;
     /**
-     * 所添加的后端RS权重（在加权轮询算法下有效），取值范围[0-100]，默认为1
+     * 所添加的后端RS权重（在加权轮询算法下有效），取值范围[1-100]，默认为1
      */
     Weight?: number;
     /**
