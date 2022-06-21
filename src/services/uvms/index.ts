@@ -37,10 +37,6 @@ export default class UVMSClient extends Client {
  */
 export interface SendUVMSMessageRequest {
   /**
-   * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
-   */
-  Zone: string;
-  /**
    * 被叫号码，采用 E.164 标准，格式为+[国家代码][用户号码]。例如：+8613512345678， 其中前面有一个+号 ，86为国家码，13512345678为手机号
    */
   CalledNumber: string;
@@ -60,6 +56,14 @@ export interface SendUVMSMessageRequest {
    * 自定义的业务标识ID，字符串（ 长度不能超过32 位），不支持 单引号、表情包符号等特殊字符
    */
   UserId?: string;
+  /**
+   * 号码组类型，1-随机组，2-专属组。如不填写则根据主叫号码判断，若主叫号码为空，则为随机组，若不为空，则为专属组。
+   */
+  GroupType?: number;
+  /**
+   * 调度规则，0-默认（归属地优先），1-随机。当不指定外显号码（主叫号码为空）时生效。如不填写，默认为归属地优先。
+   */
+  DispatchRule?: number;
 }
 
 /**
