@@ -34,8 +34,8 @@ export default class UCDNClient extends Client {
   /**
    * GetCertificateBaseInfoList - 配置CDN获取证书列表
    */
-  getCertificateBaseInfoList(): Promise<GetCertificateBaseInfoListRequest> {
-    const args = { Action: 'GetCertificateBaseInfoList' };
+  getCertificateBaseInfoList(request: GetCertificateBaseInfoListRequest): Promise<GetCertificateBaseInfoListResponse> {
+    const args = { Action: 'GetCertificateBaseInfoList', ...(request || {}) };
     return this.invoke(new Request(args)).then(
       (resp) => resp.toObject() as GetCertificateBaseInfoListResponse
     );
@@ -505,7 +505,9 @@ export interface AddCertificateResponse {}
 /**
  * 配置CDN证书获取证书清单
  */
-export interface GetCertificateBaseInfoListRequest {}
+export interface GetCertificateBaseInfoListRequest {
+  Domain?: string;
+}
 
 export interface GetCertificateBaseInfoListResponse {
   CertList: Array<{

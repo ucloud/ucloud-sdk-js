@@ -18,7 +18,7 @@ export default class UCDNClient extends Client {
     /**
      * GetCertificateBaseInfoList - 配置CDN获取证书列表
      */
-    getCertificateBaseInfoList(): Promise<GetCertificateBaseInfoListRequest>;
+    getCertificateBaseInfoList(request: GetCertificateBaseInfoListRequest): Promise<GetCertificateBaseInfoListResponse>;
     /**
      * UpdateUcdnDomainHttpsConfig - 配置CDN域名HTTPS
      */
@@ -228,6 +228,7 @@ export interface AddCertificateResponse {
  * 配置CDN证书获取证书清单
  */
 export interface GetCertificateBaseInfoListRequest {
+    Domain?: string;
 }
 export interface GetCertificateBaseInfoListResponse {
     CertList: Array<{
