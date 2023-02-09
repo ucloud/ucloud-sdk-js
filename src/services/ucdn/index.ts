@@ -32,6 +32,28 @@ export default class UCDNClient extends Client {
   }
 
   /**
+   * GetCertificateBaseInfoList - 配置CDN获取证书列表
+   */
+  getCertificateBaseInfoList(request: GetCertificateBaseInfoListRequest): Promise<GetCertificateBaseInfoListResponse> {
+    const args = { Action: 'GetCertificateBaseInfoList', ...(request || {}) };
+    return this.invoke(new Request(args)).then(
+      (resp) => resp.toObject() as GetCertificateBaseInfoListResponse
+    );
+  }
+
+  /**
+   * UpdateUcdnDomainHttpsConfig - 配置CDN域名HTTPS
+   */
+  updateUcdnDomainHttpsConfig(
+    request?: UpdateUcdnDomainHttpsConfigRequest
+  ): Promise<UpdateUcdnDomainHttpsConfigResponse> {
+    const args = { Action: 'UpdateUcdnDomainHttpsConfig', ...(request || {}) };
+    return this.invoke(new Request(args)).then(
+      (resp) => resp.toObject() as UpdateUcdnDomainHttpsConfigResponse
+    );
+  }
+
+  /**
    * ControlUcdnDomainCacheAccess - 封禁解封缓存访问
    *
    * See also: https://docs.ucloud.cn/api/ucdn-api/control_ucdn_domain_cache_access
@@ -479,6 +501,36 @@ export interface AddCertificateRequest {
  * AddCertificate - 添加证书
  */
 export interface AddCertificateResponse {}
+
+/**
+ * 配置CDN证书获取证书清单
+ */
+export interface GetCertificateBaseInfoListRequest {
+  Domain?: string;
+}
+
+export interface GetCertificateBaseInfoListResponse {
+  CertList: Array<{
+    CertId: number;
+    CertName: string;
+    CertType: 'ucdn';
+  }>
+}
+
+/**
+ * 配置CDN的HTTPS
+ */
+export interface UpdateUcdnDomainHttpsConfigRequest {
+  ProjectId: string;
+  Areacode: 'cn' | 'oversea';
+  DomainId: string;
+  HttpsStatus: 'enable' | 'disable';
+  CertName?: string;
+  CertId: number;
+  CertType: 'ucdn';
+}
+
+export interface UpdateUcdnDomainHttpsConfigResponse {}
 
 /**
  * ControlUcdnDomainCacheAccess - 封禁解封缓存访问
