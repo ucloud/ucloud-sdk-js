@@ -18,6 +18,7 @@ const UFSClient = require('./ufs').default;
 const UHostClient = require('./uhost').default;
 const UK8SClient = require('./uk8s').default;
 const ULBClient = require('./ulb').default;
+const ULightHostClient = require('./ulight_host').default;
 const UMemClient = require('./umem').default;
 const UNetClient = require('./unet').default;
 const UPhoneClient = require('./uphone').default;
@@ -38,7 +39,10 @@ export class Client extends BaseClient {
   }
 
   cube() {
-    return new CubeClient({ config: this.config, credential: this.credential });
+    return new CubeClient({
+      config: this.config,
+      credential: this.credential,
+    });
   }
 
   ipsecvpn() {
@@ -70,15 +74,24 @@ export class Client extends BaseClient {
   }
 
   ucdn() {
-    return new UCDNClient({ config: this.config, credential: this.credential });
+    return new UCDNClient({
+      config: this.config,
+      credential: this.credential,
+    });
   }
 
   udb() {
-    return new UDBClient({ config: this.config, credential: this.credential });
+    return new UDBClient({
+      config: this.config,
+      credential: this.credential,
+    });
   }
 
   uddb() {
-    return new UDDBClient({ config: this.config, credential: this.credential });
+    return new UDDBClient({
+      config: this.config,
+      credential: this.credential,
+    });
   }
 
   udisk() {
@@ -89,11 +102,17 @@ export class Client extends BaseClient {
   }
 
   udpn() {
-    return new UDPNClient({ config: this.config, credential: this.credential });
+    return new UDPNClient({
+      config: this.config,
+      credential: this.credential,
+    });
   }
 
   uec() {
-    return new UECClient({ config: this.config, credential: this.credential });
+    return new UECClient({
+      config: this.config,
+      credential: this.credential,
+    });
   }
 
   ufile() {
@@ -104,7 +123,10 @@ export class Client extends BaseClient {
   }
 
   ufs() {
-    return new UFSClient({ config: this.config, credential: this.credential });
+    return new UFSClient({
+      config: this.config,
+      credential: this.credential,
+    });
   }
 
   uhost() {
@@ -115,19 +137,38 @@ export class Client extends BaseClient {
   }
 
   uk8s() {
-    return new UK8SClient({ config: this.config, credential: this.credential });
+    return new UK8SClient({
+      config: this.config,
+      credential: this.credential,
+    });
   }
 
   ulb() {
-    return new ULBClient({ config: this.config, credential: this.credential });
+    return new ULBClient({
+      config: this.config,
+      credential: this.credential,
+    });
+  }
+
+  ulight_host() {
+    return new ULightHostClient({
+      config: this.config,
+      credential: this.credential,
+    });
   }
 
   umem() {
-    return new UMemClient({ config: this.config, credential: this.credential });
+    return new UMemClient({
+      config: this.config,
+      credential: this.credential,
+    });
   }
 
   unet() {
-    return new UNetClient({ config: this.config, credential: this.credential });
+    return new UNetClient({
+      config: this.config,
+      credential: this.credential,
+    });
   }
 
   uphone() {
@@ -145,15 +186,24 @@ export class Client extends BaseClient {
   }
 
   usms() {
-    return new USMSClient({ config: this.config, credential: this.credential });
+    return new USMSClient({
+      config: this.config,
+      credential: this.credential,
+    });
   }
 
   uvms() {
-    return new UVMSClient({ config: this.config, credential: this.credential });
+    return new UVMSClient({
+      config: this.config,
+      credential: this.credential,
+    });
   }
 
   vpc() {
-    return new VPCClient({ config: this.config, credential: this.credential });
+    return new VPCClient({
+      config: this.config,
+      credential: this.credential,
+    });
   }
 }
 
