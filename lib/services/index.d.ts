@@ -15,6 +15,7 @@ export declare class Client extends BaseClient {
     udb(): any;
     uddb(): any;
     udisk(): any;
+    udns(): any;
     udpn(): any;
     uec(): any;
     ufile(): any;
