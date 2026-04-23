@@ -12,6 +12,7 @@ export declare class Client extends BaseClient {
     uaccount(): any;
     ubill(): any;
     ucdn(): any;
+    uclickhouse(): any;
     udb(): any;
     uddb(): any;
     udisk(): any;
