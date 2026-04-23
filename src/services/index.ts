@@ -8,14 +8,17 @@ const PathXClient = require('./pathx').default;
 const UAccountClient = require('./uaccount').default;
 const UBillClient = require('./ubill').default;
 const UCDNClient = require('./ucdn').default;
+const UClickhouseClient = require('./uclickhouse').default;
 const UDBClient = require('./udb').default;
 const UDDBClient = require('./uddb').default;
 const UDiskClient = require('./udisk').default;
 const UDNSClient = require('./udns').default;
 const UDPNClient = require('./udpn').default;
 const UECClient = require('./uec').default;
+const UESClient = require('./ues').default;
 const UFileClient = require('./ufile').default;
 const UFSClient = require('./ufs').default;
+const UHadoopClient = require('./uhadoop').default;
 const UHostClient = require('./uhost').default;
 const UK8SClient = require('./uk8s').default;
 const ULBClient = require('./ulb').default;
@@ -82,6 +85,13 @@ export class Client extends BaseClient {
     });
   }
 
+  uclickhouse() {
+    return new UClickhouseClient({
+      config: this.config,
+      credential: this.credential,
+    });
+  }
+
   udb() {
     return new UDBClient({
       config: this.config,
@@ -124,6 +134,13 @@ export class Client extends BaseClient {
     });
   }
 
+  ues() {
+    return new UESClient({
+      config: this.config,
+      credential: this.credential,
+    });
+  }
+
   ufile() {
     return new UFileClient({
       config: this.config,
@@ -133,6 +150,13 @@ export class Client extends BaseClient {
 
   ufs() {
     return new UFSClient({
+      config: this.config,
+      credential: this.credential,
+    });
+  }
+
+  uhadoop() {
+    return new UHadoopClient({
       config: this.config,
       credential: this.credential,
     });
