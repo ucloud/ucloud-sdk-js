@@ -32,7 +32,7 @@ export default class UKafkaClient extends Client {
   }
 
   /**
-   * CreateUKafkaInstance - 创建一个ukafka实例
+   * CreateUKafkaInstance - 创建实例接口。\\ 创建实例前需要按以下步骤准备必要参数：\\ 1.获取Region（地域）和 Zone（可用区），访问链接：https://docs.ucloud.cn/api/summary/regionlist 可以获取所有支持的地域和可用区；\\ 2.获取FrameworkVersion，访问链接：https://docs.ucloud.cn/api/ukafka-api/list_ukafka_framework_version，响应字段的FrameworkVersions[N].Version是支持的 Kafka 版本；\\ 3.ChargeType付费类型，可用值：Dynamic为按小时付费，Month为按月付费，Year为按年付费；\\ 4.获取NodeType机型详情，访问链接：https://docs.ucloud.cn/api/ukafka-api/get_ukafka_node_type，响应字段的NodeTypeSet[N].NodeTypeName是支持的所有机型；\\ 5.获取DiskSize磁盘大小范围 ，访问链接：https://docs.ucloud.cn/api/ukafka-api/get_ukafka_node_type，该接口响应字段的NodeTypeSet[N].MinDiskSize和NodeTypeSet[N].MaxDiskSize是磁盘大小的取值范围；\\ 6.InstanceName，自定义输入实例名称，只能包含中英文、数字以及- _ .
    *
    * See also: https://docs.ucloud.cn/api/ukafka-api/create_ukafka_instance
    */
@@ -74,7 +74,7 @@ export default class UKafkaClient extends Client {
   }
 
   /**
-   * DescribeUKafkaInstance - 获取整个集群的信息
+   * DescribeUKafkaInstance - 获取整个实例的信息。实例ID，可以通过ListUKafkaInstance 接口的ClusterSet. ClusterInstanceId 获取
    *
    * See also: https://docs.ucloud.cn/api/ukafka-api/describe_ukafka_instance
    */
@@ -102,7 +102,7 @@ export default class UKafkaClient extends Client {
   }
 
   /**
-   * IsUKafkaTopicNameExist - 检查一个topic名称是否已经在集群中了
+   * IsUKafkaTopicNameExist - 检查一个topic名称是否已经在集群中了。实例ID，可以通过ListUKafkaInstance 接口的ClusterSet. ClusterInstanceId 获取
    *
    * See also: https://docs.ucloud.cn/api/ukafka-api/is_ukafka_topic_name_exist
    */
@@ -144,7 +144,7 @@ export default class UKafkaClient extends Client {
   }
 
   /**
-   * ListUKafkaInstance - 列举集群信息
+   * ListUKafkaInstance - 获取实例列表信息
    *
    * See also: https://docs.ucloud.cn/api/ukafka-api/list_ukafka_instance
    */
@@ -158,7 +158,7 @@ export default class UKafkaClient extends Client {
   }
 
   /**
-   * ListUKafkaTopics - 展示kafka集群上所有topic
+   * ListUKafkaTopics - 获取 kafka 实例 topic  列表信息。实例ID，可以通过ListUKafkaInstance 接口的ClusterSet. ClusterInstanceId 获取
    *
    * See also: https://docs.ucloud.cn/api/ukafka-api/list_ukafka_topics
    */
@@ -172,7 +172,7 @@ export default class UKafkaClient extends Client {
   }
 
   /**
-   * ModifyUKafkaInstanceType - 规格升降级
+   * ModifyUKafkaInstanceType - 规格升降级，仅升级CPU 和内存
    *
    * See also: https://docs.ucloud.cn/api/ukafka-api/modify_ukafka_instance_type
    */
@@ -219,7 +219,7 @@ export interface AddUKafkaInstanceNodeRequest {
   /**
    * 新添加节点数量
    */
-  NodeCount: number;
+  NodeCount: string;
 }
 
 /**
@@ -228,7 +228,7 @@ export interface AddUKafkaInstanceNodeRequest {
 export interface AddUKafkaInstanceNodeResponse {}
 
 /**
- * CreateUKafkaInstance - 创建一个ukafka实例
+ * CreateUKafkaInstance - 创建实例接口。\\ 创建实例前需要按以下步骤准备必要参数：\\ 1.获取Region（地域）和 Zone（可用区），访问链接：https://docs.ucloud.cn/api/summary/regionlist 可以获取所有支持的地域和可用区；\\ 2.获取FrameworkVersion，访问链接：https://docs.ucloud.cn/api/ukafka-api/list_ukafka_framework_version，响应字段的FrameworkVersions[N].Version是支持的 Kafka 版本；\\ 3.ChargeType付费类型，可用值：Dynamic为按小时付费，Month为按月付费，Year为按年付费；\\ 4.获取NodeType机型详情，访问链接：https://docs.ucloud.cn/api/ukafka-api/get_ukafka_node_type，响应字段的NodeTypeSet[N].NodeTypeName是支持的所有机型；\\ 5.获取DiskSize磁盘大小范围 ，访问链接：https://docs.ucloud.cn/api/ukafka-api/get_ukafka_node_type，该接口响应字段的NodeTypeSet[N].MinDiskSize和NodeTypeSet[N].MaxDiskSize是磁盘大小的取值范围；\\ 6.InstanceName，自定义输入实例名称，只能包含中英文、数字以及- _ .
  */
 export interface CreateUKafkaInstanceRequest {
   /**
@@ -260,7 +260,7 @@ export interface CreateUKafkaInstanceRequest {
    */
   DiskSize: number;
   /**
-   * 实例名，可自定义
+   * 实例名，可自定义。只能包含中英文、数字以及- _ .
    */
   InstanceName: string;
   /**
@@ -272,7 +272,7 @@ export interface CreateUKafkaInstanceRequest {
    */
   Quantity?: string;
   /**
-   * 集群节点数量。默认 3 节点
+   * 实例节点数量。默认 3 节点
    */
   NodeCount?: number;
   /**
@@ -294,7 +294,7 @@ export interface CreateUKafkaInstanceRequest {
 }
 
 /**
- * CreateUKafkaInstance - 创建一个ukafka实例
+ * CreateUKafkaInstance - 创建实例接口。\\ 创建实例前需要按以下步骤准备必要参数：\\ 1.获取Region（地域）和 Zone（可用区），访问链接：https://docs.ucloud.cn/api/summary/regionlist 可以获取所有支持的地域和可用区；\\ 2.获取FrameworkVersion，访问链接：https://docs.ucloud.cn/api/ukafka-api/list_ukafka_framework_version，响应字段的FrameworkVersions[N].Version是支持的 Kafka 版本；\\ 3.ChargeType付费类型，可用值：Dynamic为按小时付费，Month为按月付费，Year为按年付费；\\ 4.获取NodeType机型详情，访问链接：https://docs.ucloud.cn/api/ukafka-api/get_ukafka_node_type，响应字段的NodeTypeSet[N].NodeTypeName是支持的所有机型；\\ 5.获取DiskSize磁盘大小范围 ，访问链接：https://docs.ucloud.cn/api/ukafka-api/get_ukafka_node_type，该接口响应字段的NodeTypeSet[N].MinDiskSize和NodeTypeSet[N].MaxDiskSize是磁盘大小的取值范围；\\ 6.InstanceName，自定义输入实例名称，只能包含中英文、数字以及- _ .
  */
 export interface CreateUKafkaInstanceResponse {
   /**
@@ -331,7 +331,7 @@ export interface DescribeUKafkaConsumerRequest {
    */
   Zone: string;
   /**
-   * Kafka 集群 ID
+   * 实例 ID
    */
   ClusterInstanceId: string;
   /**
@@ -359,11 +359,11 @@ export interface DescribeUKafkaConsumerResponse {
   /**
    * 消费者组所订阅 topic 信息
    */
-  Topics?: string;
+  Topics?: string[];
 }
 
 /**
- * DescribeUKafkaInstance - 获取整个集群的信息
+ * DescribeUKafkaInstance - 获取整个实例的信息。实例ID，可以通过ListUKafkaInstance 接口的ClusterSet. ClusterInstanceId 获取
  */
 export interface DescribeUKafkaInstanceRequest {
   /**
@@ -377,11 +377,11 @@ export interface DescribeUKafkaInstanceRequest {
 }
 
 /**
- * DescribeUKafkaInstance - 获取整个集群的信息
+ * DescribeUKafkaInstance - 获取整个实例的信息。实例ID，可以通过ListUKafkaInstance 接口的ClusterSet. ClusterInstanceId 获取
  */
 export interface DescribeUKafkaInstanceResponse {
   /**
-   * 集群信息列表
+   * 实例信息列表
    */
   ClusterSet: {
     /**
@@ -681,19 +681,31 @@ export interface GetUKafkaNodeTypeResponse {
      * 内存大小（单位 MB）
      */
     Memory?: string;
+    /**
+     * 机型最大支持磁盘大小
+     */
+    MaxDiskSize?: number;
+    /**
+     * 机型最小支持磁盘大小
+     */
+    MinDiskSize?: number;
+    /**
+     * 该机型是否支持安全组
+     */
+    IsOpenSecGroup?: boolean;
   }[];
 }
 
 /**
- * IsUKafkaTopicNameExist - 检查一个topic名称是否已经在集群中了
+ * IsUKafkaTopicNameExist - 检查一个topic名称是否已经在集群中了。实例ID，可以通过ListUKafkaInstance 接口的ClusterSet. ClusterInstanceId 获取
  */
 export interface IsUKafkaTopicNameExistRequest {
   /**
-   * 可用区。参见 [可用区列表](../summary/regionlist.html)
+   * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
    */
   Zone: string;
   /**
-   * 集群ID
+   * 实例ID，可以通过ListUKafkaInstance 接口的ClusterSet. ClusterInstanceId 获取
    */
   ClusterInstanceId: string;
   /**
@@ -703,7 +715,7 @@ export interface IsUKafkaTopicNameExistRequest {
 }
 
 /**
- * IsUKafkaTopicNameExist - 检查一个topic名称是否已经在集群中了
+ * IsUKafkaTopicNameExist - 检查一个topic名称是否已经在集群中了。实例ID，可以通过ListUKafkaInstance 接口的ClusterSet. ClusterInstanceId 获取
  */
 export interface IsUKafkaTopicNameExistResponse {
   /**
@@ -717,11 +729,11 @@ export interface IsUKafkaTopicNameExistResponse {
  */
 export interface ListUKafkaConsumersRequest {
   /**
-   * 可用区。参见 [可用区列表](../summary/regionlist.html)
+   * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
    */
   Zone: string;
   /**
-   * Kafka 集群 ID
+   * 实例ID，可以通过ListUKafkaInstance 接口的ClusterSet. ClusterInstanceId 获取
    */
   ClusterInstanceId: string;
 }
@@ -746,6 +758,10 @@ export interface ListUKafkaConsumersResponse {
      * 订阅 Topic 数量
      */
     NumOfTopics?: number;
+    /**
+     * 消费者组资源ID
+     */
+    GroupId?: string;
   }[];
 }
 
@@ -779,13 +795,13 @@ export interface ListUKafkaFrameworkVersionResponse {
 }
 
 /**
- * ListUKafkaInstance - 列举集群信息
+ * ListUKafkaInstance - 获取实例列表信息
  */
 export interface ListUKafkaInstanceRequest {
   /**
    * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
    */
-  Zone?: string;
+  Zone: string;
   /**
    * 默认为60
    */
@@ -794,10 +810,6 @@ export interface ListUKafkaInstanceRequest {
    * 默认为0
    */
   Offset?: string;
-  /**
-   * 是否过滤删除了的节点，默认为‘true’
-   */
-  Filter?: string;
   /**
    * VPCId
    */
@@ -810,20 +822,97 @@ export interface ListUKafkaInstanceRequest {
    * 业务组 ID
    */
   BusinessId?: string;
-  /**
-   * 实例ID
-   */
-  ClusterInstanceId?: string;
 }
 
 /**
- * ListUKafkaInstance - 列举集群信息
+ * ListUKafkaInstance - 获取实例列表信息
  */
 export interface ListUKafkaInstanceResponse {
   /**
-   * 信息
+   * 实例信息
    */
-  ClusterSet: string;
+  ClusterSet: {
+    /**
+     * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
+     */
+    Zone?: string;
+    /**
+     * 实例id
+     */
+    ClusterInstanceId?: string;
+    /**
+     * 实例名称
+     */
+    ClusterInstanceName?: string;
+    /**
+     * 框架
+     */
+    Framework?: string;
+    /**
+     * Kafka 框架版本
+     */
+    FrameworkVersion?: string;
+    /**
+     * 实例备注
+     */
+    Remark?: string;
+    /**
+     * 实例创建时间戳
+     */
+    CreateTime?: number;
+    /**
+     * 实例运行时间
+     */
+    RunningTime?: number;
+    /**
+     * 实例过期时间
+     */
+    ExpireTime?: number;
+    /**
+     * 是否自动续费
+     */
+    AutoRenew?: string;
+    /**
+     * 付费类型
+     */
+    ChargeType?: string;
+    /**
+     * 实例节点个数
+     */
+    UHostCount?: number;
+    /**
+     * 冗余计数（已废弃）
+     */
+    RedundantCount?: number;
+    /**
+     * 实例当前状态,集群状态："Running"| "Abnormal"| "Creating"| "Deleting"| "CreateFailed"| "DeleteFailed"| "Unavailable"| "Deleted"| "Updating"| "Deploying"| "Migrating"| "ExpandFailed"
+     */
+    State?: string;
+    /**
+     * 实例标记
+     */
+    Tag?: string;
+    /**
+     * 实例机型
+     */
+    InstanceGroupType?: string;
+    /**
+     * 所属 VPC id
+     */
+    VPCId?: string;
+    /**
+     * 所属子网 id
+     */
+    SubnetId?: string;
+    /**
+     * 业务组 ID
+     */
+    BusinessId?: string;
+    /**
+     * 事件状态未读消息（已废弃）
+     */
+    NewMessage?: string;
+  };
   /**
    * 总数
    */
@@ -831,21 +920,21 @@ export interface ListUKafkaInstanceResponse {
 }
 
 /**
- * ListUKafkaTopics - 展示kafka集群上所有topic
+ * ListUKafkaTopics - 获取 kafka 实例 topic  列表信息。实例ID，可以通过ListUKafkaInstance 接口的ClusterSet. ClusterInstanceId 获取
  */
 export interface ListUKafkaTopicsRequest {
   /**
-   * 可用区。参见 [可用区列表](../summary/regionlist.html)
+   * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
    */
   Zone: string;
   /**
-   * 集群资源id
+   * 实例ID，可以通过ListUKafkaInstance 接口的ClusterSet. ClusterInstanceId 获取
    */
   ClusterInstanceId: string;
 }
 
 /**
- * ListUKafkaTopics - 展示kafka集群上所有topic
+ * ListUKafkaTopics - 获取 kafka 实例 topic  列表信息。实例ID，可以通过ListUKafkaInstance 接口的ClusterSet. ClusterInstanceId 获取
  */
 export interface ListUKafkaTopicsResponse {
   /**
@@ -878,13 +967,13 @@ export interface ListUKafkaTopicsResponse {
     Status?: string;
   }[];
   /**
-   * 列表长度
+   * topic 列表长度
    */
   Length?: number;
 }
 
 /**
- * ModifyUKafkaInstanceType - 规格升降级
+ * ModifyUKafkaInstanceType - 规格升降级，仅升级CPU 和内存
  */
 export interface ModifyUKafkaInstanceTypeRequest {
   /**
@@ -896,13 +985,13 @@ export interface ModifyUKafkaInstanceTypeRequest {
    */
   InstanceId: string;
   /**
-   * 目标机型，支持的机型可通过GetUKafkaNodeType 接口返回的InstanceTypeSet[].InstanceTypeName
+   * 目标机型，支持的机型可通过GetUKafkaNodeType 接口返回的InstanceTypeSet[].InstanceTypeName。仅升级CPU 和内存
    */
   NodeType: string;
 }
 
 /**
- * ModifyUKafkaInstanceType - 规格升降级
+ * ModifyUKafkaInstanceType - 规格升降级，仅升级CPU 和内存
  */
 export interface ModifyUKafkaInstanceTypeResponse {}
 
