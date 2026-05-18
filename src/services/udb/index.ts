@@ -173,6 +173,20 @@ export default class UDBClient extends Client {
   }
 
   /**
+   * CreateUDBMySQLInstance - 创建UDB实例（包括创建mysql NVMe、共享型和O2实例以及从备份恢复实例）
+   *
+   * See also: https://docs.ucloud.cn/api/udb-api/create_udb_my_sql_instance
+   */
+  createUDBMySQLInstance(
+    request?: CreateUDBMySQLInstanceRequest
+  ): Promise<CreateUDBMySQLInstanceResponse> {
+    const args = { Action: 'CreateUDBMySQLInstance', ...(request || {}) };
+    return this.invoke(new Request(args)).then(
+      (resp) => resp.toObject() as CreateUDBMySQLInstanceResponse
+    );
+  }
+
+  /**
    * CreateUDBParamGroup - 从已有配置文件创建新配置文件
    *
    * See also: https://docs.ucloud.cn/api/udb-api/create_udb_param_group
@@ -211,6 +225,20 @@ export default class UDBClient extends Client {
     const args = { Action: 'CreateUDBRouteInstance', ...(request || {}) };
     return this.invoke(new Request(args)).then(
       (resp) => resp.toObject() as CreateUDBRouteInstanceResponse
+    );
+  }
+
+  /**
+   * CreateUDBSQLServerInstance - 创建UDB实例（包括创建SQLServer实例以及从备份恢复实例）
+   *
+   * See also: https://docs.ucloud.cn/api/udb-api/create_udb_sql_server_instance
+   */
+  createUDBSQLServerInstance(
+    request?: CreateUDBSQLServerInstanceRequest
+  ): Promise<CreateUDBSQLServerInstanceResponse> {
+    const args = { Action: 'CreateUDBSQLServerInstance', ...(request || {}) };
+    return this.invoke(new Request(args)).then(
+      (resp) => resp.toObject() as CreateUDBSQLServerInstanceResponse
     );
   }
 
@@ -271,7 +299,7 @@ export default class UDBClient extends Client {
   }
 
   /**
-   * DescribeUDBBackup - 列表UDB实例备份信息
+   * DescribeUDBBackup - 列表UDB实例备份信息.Zone不填表示多可用区，填代表单可用区
    *
    * See also: https://docs.ucloud.cn/api/udb-api/describe_udb_backup
    */
@@ -299,7 +327,21 @@ export default class UDBClient extends Client {
   }
 
   /**
-   * DescribeUDBBinlogBackupURL - 获取UDB的Binlog备份地址
+   * DescribeUDBBinlogBackup - 列表UDB实例Binlog自动备份信息
+   *
+   * See also: https://docs.ucloud.cn/api/udb-api/describe_udb_binlog_backup
+   */
+  describeUDBBinlogBackup(
+    request?: DescribeUDBBinlogBackupRequest
+  ): Promise<DescribeUDBBinlogBackupResponse> {
+    const args = { Action: 'DescribeUDBBinlogBackup', ...(request || {}) };
+    return this.invoke(new Request(args)).then(
+      (resp) => resp.toObject() as DescribeUDBBinlogBackupResponse
+    );
+  }
+
+  /**
+   * DescribeUDBBinlogBackupURL - 获取UDB的Binlog或者错误日志或者慢查询日志的备份地址
    *
    * See also: https://docs.ucloud.cn/api/udb-api/describe_udb_binlog_backup_url
    */
@@ -448,7 +490,7 @@ export default class UDBClient extends Client {
   }
 
   /**
-   * DescribeUDBLogBackupURL - 获取UDB的slowlog备份地址
+   * DescribeUDBLogBackupURL - 获取UDB的错误日志或者慢查询日志备份地址
    *
    * See also: https://docs.ucloud.cn/api/udb-api/describe_udb_log_backup_url
    */
@@ -605,6 +647,48 @@ export default class UDBClient extends Client {
   }
 
   /**
+   * GetUDBInstanceSSLCertURL - 获取SSL证书下载地址
+   *
+   * See also: https://docs.ucloud.cn/api/udb-api/get_udb_instance_ssl_cert_url
+   */
+  getUDBInstanceSSLCertURL(
+    request?: GetUDBInstanceSSLCertURLRequest
+  ): Promise<GetUDBInstanceSSLCertURLResponse> {
+    const args = { Action: 'GetUDBInstanceSSLCertURL', ...(request || {}) };
+    return this.invoke(new Request(args)).then(
+      (resp) => resp.toObject() as GetUDBInstanceSSLCertURLResponse
+    );
+  }
+
+  /**
+   * ListUDBMachineType - 获取UDB云数据库支持的计算规格列表，暂不支持获取跨可用区实例的计算规格，目前支持的数据库品类包括：NVMe版和SSD云盘版MySQL
+   *
+   * See also: https://docs.ucloud.cn/api/udb-api/list_udb_machine_type
+   */
+  listUDBMachineType(
+    request?: ListUDBMachineTypeRequest
+  ): Promise<ListUDBMachineTypeResponse> {
+    const args = { Action: 'ListUDBMachineType', ...(request || {}) };
+    return this.invoke(new Request(args)).then(
+      (resp) => resp.toObject() as ListUDBMachineTypeResponse
+    );
+  }
+
+  /**
+   * ListUDBUserTables - 查看udb实例所有的用户表集合 （只包括引擎为innodb和myisam的表）
+   *
+   * See also: https://docs.ucloud.cn/api/udb-api/list_udb_user_tables
+   */
+  listUDBUserTables(
+    request?: ListUDBUserTablesRequest
+  ): Promise<ListUDBUserTablesResponse> {
+    const args = { Action: 'ListUDBUserTables', ...(request || {}) };
+    return this.invoke(new Request(args)).then(
+      (resp) => resp.toObject() as ListUDBUserTablesResponse
+    );
+  }
+
+  /**
    * ModifyUDBInstanceName - 重命名UDB实例
    *
    * See also: https://docs.ucloud.cn/api/udb-api/modify_udb_instance_name
@@ -629,6 +713,34 @@ export default class UDBClient extends Client {
     const args = { Action: 'ModifyUDBInstancePassword', ...(request || {}) };
     return this.invoke(new Request(args)).then(
       (resp) => resp.toObject() as ModifyUDBInstancePasswordResponse
+    );
+  }
+
+  /**
+   * ModifyUDBInstanceRemarkName - 修改UDB实例备注信息
+   *
+   * See also: https://docs.ucloud.cn/api/udb-api/modify_udb_instance_remark_name
+   */
+  modifyUDBInstanceRemarkName(
+    request?: ModifyUDBInstanceRemarkNameRequest
+  ): Promise<ModifyUDBInstanceRemarkNameResponse> {
+    const args = { Action: 'ModifyUDBInstanceRemarkName', ...(request || {}) };
+    return this.invoke(new Request(args)).then(
+      (resp) => resp.toObject() as ModifyUDBInstanceRemarkNameResponse
+    );
+  }
+
+  /**
+   * ModifyUDBInstanceSSL - 调整SSL的信息
+   *
+   * See also: https://docs.ucloud.cn/api/udb-api/modify_udb_instance_ssl
+   */
+  modifyUDBInstanceSSL(
+    request?: ModifyUDBInstanceSSLRequest
+  ): Promise<ModifyUDBInstanceSSLResponse> {
+    const args = { Action: 'ModifyUDBInstanceSSL', ...(request || {}) };
+    return this.invoke(new Request(args)).then(
+      (resp) => resp.toObject() as ModifyUDBInstanceSSLResponse
     );
   }
 
@@ -699,6 +811,20 @@ export default class UDBClient extends Client {
     const args = { Action: 'RestartUDBInstance', ...(request || {}) };
     return this.invoke(new Request(args)).then(
       (resp) => resp.toObject() as RestartUDBInstanceResponse
+    );
+  }
+
+  /**
+   * RollbackUDBInstance - 在原实例回档指定库表
+   *
+   * See also: https://docs.ucloud.cn/api/udb-api/rollback_udb_instance
+   */
+  rollbackUDBInstance(
+    request?: RollbackUDBInstanceRequest
+  ): Promise<RollbackUDBInstanceResponse> {
+    const args = { Action: 'RollbackUDBInstance', ...(request || {}) };
+    return this.invoke(new Request(args)).then(
+      (resp) => resp.toObject() as RollbackUDBInstanceResponse
     );
   }
 
@@ -835,6 +961,20 @@ export default class UDBClient extends Client {
   }
 
   /**
+   * UpgradeUDBVersion - 升级db实例版本
+   *
+   * See also: https://docs.ucloud.cn/api/udb-api/upgrade_udb_version
+   */
+  upgradeUDBVersion(
+    request?: UpgradeUDBVersionRequest
+  ): Promise<UpgradeUDBVersionResponse> {
+    const args = { Action: 'UpgradeUDBVersion', ...(request || {}) };
+    return this.invoke(new Request(args)).then(
+      (resp) => resp.toObject() as UpgradeUDBVersionResponse
+    );
+  }
+
+  /**
    * UploadUDBParamGroup - 导入UDB配置
    *
    * See also: https://docs.ucloud.cn/api/udb-api/upload_udb_param_group
@@ -854,7 +994,7 @@ export default class UDBClient extends Client {
  */
 export interface BackupUDBInstanceRequest {
   /**
-   * 可用区。参见 [可用区列表](../summary/regionlist.html)
+   * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
    */
   Zone?: string;
   /**
@@ -870,7 +1010,7 @@ export interface BackupUDBInstanceRequest {
    */
   UseBlacklist?: boolean;
   /**
-   * 使用的备份方式。（快照备份即物理备份。注意只有SSD版本的mysql实例支持设置为snapshot）
+   * 使用的备份方式。默认使用逻辑备份（快照备份即物理备份。SSD版本的mysql/mongodb实例支持设置为snapshot，NVMe版本的mysql实例支持设置为xtrabackup）
    */
   BackupMethod?: string;
   /**
@@ -893,7 +1033,7 @@ export interface BackupUDBInstanceResponse {}
  */
 export interface BackupUDBInstanceBinlogRequest {
   /**
-   * 可用区。参见 [可用区列表](../summary/regionlist.html)
+   * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
    */
   Zone?: string;
   /**
@@ -920,7 +1060,7 @@ export interface BackupUDBInstanceBinlogResponse {}
  */
 export interface BackupUDBInstanceErrorLogRequest {
   /**
-   * 可用区。参见 [可用区列表](../summary/regionlist.html)
+   * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
    */
   Zone?: string;
   /**
@@ -970,7 +1110,7 @@ export interface BackupUDBInstanceSlowLogResponse {}
  */
 export interface ChangeUDBParamGroupRequest {
   /**
-   * 可用区。参见 [可用区列表](../summary/regionlist.html)
+   * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
    */
   Zone?: string;
   /**
@@ -993,11 +1133,11 @@ export interface ChangeUDBParamGroupResponse {}
  */
 export interface CheckRecoverUDBInstanceRequest {
   /**
-   * 可用区。参见 [可用区列表](../summary/regionlist.html)
+   * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
    */
   Zone?: string;
   /**
-   * 源实例的Id
+   * 源实例的Id(只支持普通版DB不支持高可用)
    */
   SrcDBId: string;
 }
@@ -1037,7 +1177,7 @@ export interface CheckUDBInstanceToHAAllowanceResponse {
  */
 export interface ClearUDBLogRequest {
   /**
-   * 可用区。参见 [可用区列表](../summary/regionlist.html)
+   * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
    */
   Zone?: string;
   /**
@@ -1064,7 +1204,7 @@ export interface ClearUDBLogResponse {}
  */
 export interface CreateMongoDBReplicaSetRequest {
   /**
-   * 可用区。参见 [可用区列表](../summary/regionlist.html)
+   * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
    */
   Zone: string;
   /**
@@ -1076,7 +1216,7 @@ export interface CreateMongoDBReplicaSetRequest {
    */
   AdminPassword: string;
   /**
-   * DB类型id对应的字符串形式（例如：mongodb-2.6）注意：当前仅支持mongodb
+   * DB类型id对应的字符串形式 mongodb-3.4,mongodb-3.6,mongodb-4.0
    */
   DBTypeId: string;
   /**
@@ -1088,7 +1228,7 @@ export interface CreateMongoDBReplicaSetRequest {
    */
   ParamGroupId: number;
   /**
-   * 内存限制(MB)，目前支持以下几档 1000M/2000M/4000M/ 6000M/8000M/12000M/16000M/ 24000M/32000M/48000M/ 64000M/96000M
+   * 内存限制(MB)，目前支持以下几档 2000M/4000M/ 6000M/8000M/12000M/16000M/ 24000M/32000M/48000M/ 64000M/96000M
    */
   MemoryLimit: number;
   /**
@@ -1120,21 +1260,9 @@ export interface CreateMongoDBReplicaSetRequest {
    */
   BackupDuration?: number;
   /**
-   * 是否使用SSD，默认为true
-   */
-  UseSSD?: boolean;
-  /**
-   * SSD类型，可选值为"SATA"、"PCI-E"，如果UseSSD为true ，则必选
-   */
-  SSDType?: string;
-  /**
    * cpu核数
    */
   CPU?: number;
-  /**
-   * UDB数据库机型
-   */
-  InstanceType?: string;
   /**
    * 子网ID
    */
@@ -1168,7 +1296,7 @@ export interface CreateMongoDBReplicaSetResponse {
  */
 export interface CreateUDBInstanceRequest {
   /**
-   * 可用区。参见 [可用区列表](../summary/regionlist.html)
+   * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
    */
   Zone: string;
   /**
@@ -1180,11 +1308,11 @@ export interface CreateUDBInstanceRequest {
    */
   AdminPassword: string;
   /**
-   * DB类型id，mysql/mongodb/postgesql按版本细分 1：mysql-5.1，2：mysql-5.5，3：percona-5.5，4：mysql-5.6，5：percona-5.6，6：mysql-5.7，7：percona-5.7，8：mariadb-10.0，9：mongodb-2.4，10：mongodb-2.6，11：mongodb-3.0，12：mongodb-3.2,13：postgresql-9.4，14：postgresql-9.6，14：postgresql-10.4
+   * DB类型，mysql/sqlserver按版本细分 mysql-8.0, mysql-5.6, percona-5.6, mysql-5.7, percona-5.7,  sqlserver-2017
    */
   DBTypeId: string;
   /**
-   * 端口号，mysql默认3306，mongodb默认27017，postgresql默认5432
+   * 端口号，mysql默认3306，sqlserver默认1433
    */
   Port: number;
   /**
@@ -1196,9 +1324,9 @@ export interface CreateUDBInstanceRequest {
    */
   ParamGroupId: number;
   /**
-   * 内存限制(MB)，目前支持以下几档 1000M/2000M/4000M/ 6000M/8000M/12000M/16000M/ 24000M/32000M/48000M/ 64000M/96000M/128000M/192000M/256000M/320000M
+   * 内存限制(MB)（待废弃，请通过指定MachineType和SpecificationType创建），目前支持以下几档 2000M/4000M/ 6000M/8000M/12000M/16000M/ 24000M/32000M/48000M/ 64000M/96000M/128000M/192000M/256000M/320000M
    */
-  MemoryLimit: number;
+  MemoryLimit?: number;
   /**
    * Year， Month， Dynamic，Trial，默认: Month
    */
@@ -1228,11 +1356,11 @@ export interface CreateUDBInstanceRequest {
    */
   BackupId?: number;
   /**
-   * 是否使用SSD，默认为true。目前主要可用区、海外机房、新机房只提供SSD资源，非SSD资源不再提供。
+   * 对于快杰机型，请使用最新的 SpecificationClass 和 StorageClass 字段进行创建。目前仅有少量地域支持 SATA_SSD 存储类型；若创建的是 SATA_SSD 机型，可通过该字段指定。字段说明：SATA_SSD：SATA SSD 机型（仅部分地域支持）NVMe_SSD：快杰机型
    */
-  UseSSD?: boolean;
+  InstanceType?: string;
   /**
-   * SSD类型，可选值为"SATA"、“NVMe”，如果UseSSD为true ，则必选
+   * 已废弃
    */
   SSDType?: string;
   /**
@@ -1240,15 +1368,11 @@ export interface CreateUDBInstanceRequest {
    */
   InstanceMode?: string;
   /**
-   * 专区ID信息（如果这个参数存在这说明是在专区中创建DB）
-   */
-  UDBCId?: string;
-  /**
-   * cpu核数
+   * cpu核数，如果db类型为sqlserver，必传参数
    */
   CPU?: number;
   /**
-   * 跨可用区高可用备库所在可用区，参见 [可用区列表](../summary/regionlist.html)
+   * 跨可用区高可用备库所在可用区，参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
    */
   BackupZone?: string;
   /**
@@ -1264,21 +1388,62 @@ export interface CreateUDBInstanceRequest {
    */
   DisableSemisync?: boolean;
   /**
-   * 当DB类型(DBTypeId)为mongodb时，需要指定mongo的角色，可选值为configsrv (配置节点)，shardsrv (数据节点)
+   * 已废弃
    */
   ClusterRole?: string;
-  /**
-   * 高可用架构:1） haproxy（默认）: 当前仅支持mysql。2） sentinel: 基于vip和哨兵节点的架构，当前支持mysql和pg。
-   */
-  HAArch?: string;
   /**
    * 实例所在的业务组名称
    */
   Tag?: string;
   /**
-   * 是否创建使用ipv6 资源， 默认为false， 或者不填， 创建ipv6为true
+   * MySQL 小版本号，支持指定小版本进行创建，请通过 DescribeUDBType 接口获取可用版本。
    */
-  EnableIpV6?: boolean;
+  DBSubVersion?: string;
+  /**
+   * mysql大小写参数, 0 为大小写敏感, 1 为大小写不敏感, 目前只针对mysql8.0有效
+   */
+  CaseSensitivityParam?: number;
+  /**
+   * 实例计算规格类型，0或不传代表使用内存方式购买，1代表使用内存-cpu可选配比方式购买，需要填写MachineType
+   */
+  SpecificationType?: string;
+  /**
+   * 规格类型 ID，当 SpecificationType = 1 时生效，请通过 ListUDBMachineType 接口获取。
+   */
+  MachineType?: string;
+  /**
+   * 告警模版id
+   */
+  AlarmTemplateId?: string;
+  /**
+   * 备份文件的US3内网下载地址
+   */
+  BackupURL?: string;
+  /**
+   * 存储类型 CLOUD_SSD: SSD云盘, CLOUD_RSSD: RSSD 云盘， CLOUD_SSD_ESSENTIAL: SSD Essential云盘 ，该字段和SpecificationClass组合优先级比InstanceType字段高
+   */
+  StorageClass?: string;
+  /**
+   * 规格类型 O: NVMe型, OM: 共享型，N: 通用型
+   */
+  SpecificationClass?: string;
+  /**
+   * 半同步开启开关 1：表示开启半同步，2：表示关闭半同步，0：表示默认值，默认也是开启半同步
+   */
+  SemisyncFlag?: number;
+  /**
+   *
+   */
+  Labels?: {
+    /**
+     * 用户资源标签的键值
+     */
+    Key?: string;
+    /**
+     * 用户资源标签值
+     */
+    Value?: string;
+  }[];
   /**
    * 使用的代金券id
    */
@@ -1300,7 +1465,7 @@ export interface CreateUDBInstanceResponse {
  */
 export interface CreateUDBInstanceByRecoveryRequest {
   /**
-   * 可用区。参见 [可用区列表](../summary/regionlist.html)
+   * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
    */
   Zone?: string;
   /**
@@ -1344,6 +1509,22 @@ export interface CreateUDBInstanceByRecoveryRequest {
    */
   EnableIpV6?: boolean;
   /**
+   * 指定需要恢复的表, 如果指定该字段则回档实例只有指定的表数据，格式为(库名.表名)， 指定多个用逗号隔开，eg: [ udb.test, mysql_school.my_student]
+   */
+  Tables?: string;
+  /**
+   * 管理员密码 (指定库表回档到新实例时有效)
+   */
+  AdminPassword?: string;
+  /**
+   * 实例计算规格类型，0或不传代表使用内存方式购买，1代表使用内存-cpu可选配比方式购买，需要填写MachineType
+   */
+  SpecificationType?: number;
+  /**
+   * 规格类型ID,当SpecificationType为1时有效
+   */
+  MachineType?: string;
+  /**
    * 使用的代金券id
    */
   CouponId?: string;
@@ -1355,6 +1536,147 @@ export interface CreateUDBInstanceByRecoveryRequest {
 export interface CreateUDBInstanceByRecoveryResponse {
   /**
    * db实例id
+   */
+  DBId?: string;
+}
+
+/**
+ * CreateUDBMySQLInstance - 创建UDB实例（包括创建mysql NVMe、共享型和O2实例以及从备份恢复实例）
+ */
+export interface CreateUDBMySQLInstanceRequest {
+  /**
+   * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
+   */
+  Zone: string;
+  /**
+   * 实例名称，至少6位
+   */
+  Name: string;
+  /**
+   * 管理员密码
+   */
+  AdminPassword: string;
+  /**
+   * DB类型，mysql按版本细分 mysql-8.4, mysql-8.0,  mysql-5.7, percona-5.7, mysql-5.6, percona-5.6、mysql-5.5
+   */
+  DBTypeId: string;
+  /**
+   * 端口号，mysql默认3306
+   */
+  Port: number;
+  /**
+   * 磁盘空间(GB), 暂时支持20G - 32T
+   */
+  DiskSpace: number;
+  /**
+   * DB实例使用的配置参数组id
+   */
+  ParamGroupId: number;
+  /**
+   * 规格类型 ID，请通过 ListUDBMachineType 接口获取，返回体中的ID字段为MachineType的值。
+   */
+  MachineType: string;
+  /**
+   * 存储类型 CLOUD_RSSD: RSSD 云盘， CLOUD_SSD_ESSENTIAL: SSD Essential云盘 ，该字段和SpecificationClass组合使用，CLOUD_RSSD对应O型，CLOUD_SSD_ESSENTIAL对应OM型(北京2、乌兰察布支持)，注：圣保罗、丹佛、哈萨克斯坦地域仅支持O2机型，CLOUD_RSSD对应O2型
+   */
+  StorageClass: string;
+  /**
+   * 规格类型 O: NVMe型, O2: O2 ,OM: 共享型
+   */
+  SpecificationClass: string;
+  /**
+   * Year， Month， Dynamic，Trial，默认: Month
+   */
+  ChargeType?: string;
+  /**
+   * 购买时长，默认值1
+   */
+  Quantity?: number;
+  /**
+   * 备份策略，每周备份数量，默认7次
+   */
+  BackupCount?: number;
+  /**
+   * 备份策略，备份开始时间，单位小时计，默认1点
+   */
+  BackupTime?: number;
+  /**
+   * 备份策略，备份时间间隔，单位小时计，默认24小时
+   */
+  BackupDuration?: number;
+  /**
+   * 备份id，如果指定，则表明从备份恢复实例
+   */
+  BackupId?: number;
+  /**
+   * UDB实例模式类型, 可选值如下: "Normal": 普通版UDB实例 "HA": 高可用版UDB实例 默认是"Normal"
+   */
+  InstanceMode?: string;
+  /**
+   * 跨可用区高可用备库所在可用区，参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
+   */
+  BackupZone?: string;
+  /**
+   * 子网ID
+   */
+  SubnetId?: string;
+  /**
+   * VPC的ID
+   */
+  VPCId?: string;
+  /**
+   * 是否开启异步高可用，默认不填，可置为true
+   */
+  DisableSemisync?: boolean;
+  /**
+   * 实例所在的业务组名称
+   */
+  Tag?: string;
+  /**
+   * MySQL 小版本号，支持指定小版本进行创建，请通过 DescribeUDBType 接口获取可用版本。
+   */
+  DBSubVersion?: string;
+  /**
+   * mysql大小写参数, 0 为大小写敏感, 1 为大小写不敏感, 目前只针对mysql8.0有效
+   */
+  CaseSensitivityParam?: number;
+  /**
+   * 告警模版id
+   */
+  AlarmTemplateId?: string;
+  /**
+   * 备份文件的US3内网下载地址
+   */
+  BackupURL?: string;
+  /**
+   * 半同步开启开关 1：表示开启半同步，2：表示关闭半同步，0：表示默认值，默认也是开启半同步
+   */
+  SemisyncFlag?: number;
+  /**
+   *
+   */
+  Labels?: {
+    /**
+     * 用户资源标签的键值
+     */
+    Key?: string;
+    /**
+     * 用户资源标签值
+     */
+    Value?: string;
+  }[];
+  /**
+   * 使用的代金券id
+   */
+  CouponId?: string;
+}
+
+/**
+ * CreateUDBMySQLInstance - 创建UDB实例（包括创建mysql NVMe、共享型和O2实例以及从备份恢复实例）
+ */
+export interface CreateUDBMySQLInstanceResponse {
+  /**
+   * BD实例id
    */
   DBId?: string;
 }
@@ -1404,7 +1726,7 @@ export interface CreateUDBParamGroupResponse {
  */
 export interface CreateUDBReplicationInstanceRequest {
   /**
-   * 可用区。参见 [可用区列表](../summary/regionlist.html)
+   * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
    */
   Zone?: string;
   /**
@@ -1424,9 +1746,21 @@ export interface CreateUDBReplicationInstanceRequest {
    */
   IsArbiter?: boolean;
   /**
-   * 是否使用SSD，默认 为 true
+   * 是否使用SSD，默认为true。目前主要可用区、海外机房、新机房只提供SSD资源，非SSD资源不再提供。
    */
   UseSSD?: boolean;
+  /**
+   * UDB数据库机型: "Normal": "标准机型" , "SATA_SSD": "SSD机型" , "PCIE_SSD": "SSD高性能机型" , "Normal_Volume": "标准大容量机型", "SATA_SSD_Volume": "SSD大容量机型" , "PCIE_SSD_Volume": "SSD高性能大容量机型", "NVMe_SSD": "快杰机型"
+   */
+  InstanceType?: string;
+  /**
+   * Year， Month， Dynamic，Trial，默认和主库保持一致
+   */
+  ChargeType?: string;
+  /**
+   * 购买时长，默认默认和主库保持一致
+   */
+  Quantity?: string;
   /**
    * 使用的代金券id
    */
@@ -1508,11 +1842,136 @@ export interface CreateUDBRouteInstanceResponse {
 }
 
 /**
+ * CreateUDBSQLServerInstance - 创建UDB实例（包括创建SQLServer实例以及从备份恢复实例）
+ */
+export interface CreateUDBSQLServerInstanceRequest {
+  /**
+   * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
+   */
+  Zone: string;
+  /**
+   * 实例名称，至少6位
+   */
+  Name: string;
+  /**
+   * 管理员密码
+   */
+  AdminPassword: string;
+  /**
+   * DB类型，SQL Server按版本细分 sqlserver-2017、sqlserver-2019、sqlserver-2022
+   */
+  DBTypeId: string;
+  /**
+   * 端口号，sqlserver默认1433
+   */
+  Port: number;
+  /**
+   * 磁盘空间(GB), 暂时支持20G - 32T
+   */
+  DiskSpace: number;
+  /**
+   * 存储类型 CLOUD_RSSD: RSSD 云盘，该字段和SpecificationClass组合使用，CLOUD_RSSD对应O型
+   */
+  StorageClass: string;
+  /**
+   * 规格类型 O: NVMe型
+   */
+  SpecificationClass: string;
+  /**
+   * UDB实例模式类型, 可选值如下: "Normal": SQL Server普通版实例 "HA": SQL Server集群版实例 默认是"Normal"
+   */
+  InstanceMode?: string;
+  /**
+   * 规格类型 ID，如果创建的是SQL Server集群版，该参数必填，请通过 ListUDBMachineType 接口获取，返回体中的ID字段为MachineType的值。
+   */
+  MachineType?: string;
+  /**
+   * CPU核，如果是创建的SQL Server普通版，该参数必传，目前支持2/4/8/16/32/64
+   */
+  CPU?: number;
+  /**
+   * 内存限制(MB)，如果是创建的SQL Server普通版，该参数必传，目前支持以下几档 2000M/4000M/ 6000M/8000M/12000M/16000M/ 24000M/32000M/48000M/ 64000M/96000M/128000M/192000M/256000M/320000M
+   */
+  MemoryLimit?: number;
+  /**
+   * Year， Month， Dynamic，Trial，默认: Month
+   */
+  ChargeType?: string;
+  /**
+   * 购买时长，默认值1
+   */
+  Quantity?: number;
+  /**
+   * 备份策略，每周备份数量，默认7次
+   */
+  BackupCount?: number;
+  /**
+   * 备份策略，备份开始时间，单位小时计，默认1点
+   */
+  BackupTime?: number;
+  /**
+   * 备份策略，备份时间间隔，单位小时计，默认24小时
+   */
+  BackupDuration?: number;
+  /**
+   * 备份id，如果指定，则表明从备份恢复实例
+   */
+  BackupId?: number;
+  /**
+   * 子网ID，如果创建的是SQL Server集群版，该参数必填
+   */
+  SubnetId?: string;
+  /**
+   * VPC的ID，如果创建的是SQL Server集群版，该参数必填
+   */
+  VPCId?: string;
+  /**
+   * 实例所在的业务组名称
+   */
+  Tag?: string;
+  /**
+   * 告警模版id
+   */
+  AlarmTemplateId?: string;
+  /**
+   * 备份文件的US3内网下载地址
+   */
+  BackupURL?: string;
+  /**
+   *
+   */
+  Labels?: {
+    /**
+     * 用户资源标签的键值
+     */
+    Key?: string;
+    /**
+     * 用户资源标签值
+     */
+    Value?: string;
+  }[];
+  /**
+   * 使用的代金券id
+   */
+  CouponId?: string;
+}
+
+/**
+ * CreateUDBSQLServerInstance - 创建UDB实例（包括创建SQLServer实例以及从备份恢复实例）
+ */
+export interface CreateUDBSQLServerInstanceResponse {
+  /**
+   * BD实例id
+   */
+  DBId?: string;
+}
+
+/**
  * CreateUDBSlave - 创建UDB实例的slave
  */
 export interface CreateUDBSlaveRequest {
   /**
-   * 可用区。参见 [可用区列表](../summary/regionlist.html)
+   * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
    */
   Zone?: string;
   /**
@@ -1528,11 +1987,7 @@ export interface CreateUDBSlaveRequest {
    */
   Port?: number;
   /**
-   * 是否使用SSD，默认为true
-   */
-  UseSSD?: boolean;
-  /**
-   * SSD类型，可选值为"SATA"、"PCI-E"、“NVMe”，如果UseSSD为true ，则必选
+   * 仅对主为SSD型实例有效。 可选值"SATA","NVMe"
    */
   SSDType?: string;
   /**
@@ -1540,21 +1995,13 @@ export interface CreateUDBSlaveRequest {
    */
   IsLock?: boolean;
   /**
-   * UDB实例部署模式，可选值如下：Normal: 普通单点实例HA: 高可用部署实例
-   */
-  InstanceMode?: string;
-  /**
-   * 内存限制(MB)，目前支持以下几档 1000M/2000M/4000M/ 6000M/8000M/12000M/16000M/ 24000M/32000M/48000M/ 64000M/96000M/128000M/192000M/256000M/320000M
+   * 内存限制(MB)，目前支持以下几档 2000M/4000M/ 6000M/8000M/12000M/16000M/ 24000M/32000M/48000M/ 64000M/96000M/128000M/192000M/256000M/320000M
    */
   MemoryLimit?: number;
   /**
    * 磁盘空间(GB), 暂时支持20G - 3000G（API支持，前端暂时只开放内存定制）
    */
   DiskSpace?: number;
-  /**
-   * UDB实例类型：Normal、SATA_SSD、NVMe_SSD
-   */
-  InstanceType?: string;
   /**
    * 子网ID（如果不传用默认子网）
    */
@@ -1576,6 +2023,22 @@ export interface CreateUDBSlaveRequest {
    */
   ParamGroupId?: number;
   /**
+   * 使用物理方式创建从库，目前仅限创建快杰从库，默认为false
+   */
+  IsCreatePhysically?: boolean;
+  /**
+   * 设置从库的延时复制时长（单位秒）
+   */
+  DelaySeconds?: number;
+  /**
+   * 实例计算规格类型，0或不传代表使用内存方式购买，1代表使用内存-cpu可选配比方式购买，需要填写MachineType
+   */
+  SpecificationType?: number;
+  /**
+   * 规格类型ID,当SpecificationType为1时有效
+   */
+  MachineType?: string;
+  /**
    * 使用的代金券id
    */
   CouponId?: string;
@@ -1596,7 +2059,7 @@ export interface CreateUDBSlaveResponse {
  */
 export interface DeleteUDBInstanceRequest {
   /**
-   * 可用区。参见 [可用区列表](../summary/regionlist.html)
+   * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
    */
   Zone?: string;
   /**
@@ -1661,11 +2124,11 @@ export interface DeleteUDBParamGroupRequest {
 export interface DeleteUDBParamGroupResponse {}
 
 /**
- * DescribeUDBBackup - 列表UDB实例备份信息
+ * DescribeUDBBackup - 列表UDB实例备份信息.Zone不填表示多可用区，填代表单可用区
  */
 export interface DescribeUDBBackupRequest {
   /**
-   * 可用区。参见 [可用区列表](../summary/regionlist.html)
+   * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
    */
   Zone?: string;
   /**
@@ -1692,16 +2155,24 @@ export interface DescribeUDBBackupRequest {
    * 过滤条件:结束时间(Unix时间戳)
    */
   EndTime?: number;
+  /**
+   * 如果未指定GroupId，则可选是否选取特定DB类型的配置(sql, nosql, postgresql, sqlserver)
+   */
+  ClassType?: string;
 }
 
 /**
- * DescribeUDBBackup - 列表UDB实例备份信息
+ * DescribeUDBBackup - 列表UDB实例备份信息.Zone不填表示多可用区，填代表单可用区
  */
 export interface DescribeUDBBackupResponse {
   /**
    * 备份信息 参照UDBBackupSet
    */
   DataSet?: {
+    /**
+     * 备份所在可用区
+     */
+    Zone?: string;
     /**
      * 备份id
      */
@@ -1727,6 +2198,10 @@ export interface DescribeUDBBackupResponse {
      */
     State?: string;
     /**
+     * 备份错误信息
+     */
+    ErrorInfo?: string;
+    /**
      * dbid
      */
     DBId?: string;
@@ -1735,10 +2210,6 @@ export interface DescribeUDBBackupResponse {
      */
     DBName?: string;
     /**
-     * 备份所在可用区
-     */
-    Zone?: string;
-    /**
      * 跨机房高可用备库所在可用区
      */
     BackupZone?: string;
@@ -1746,6 +2217,10 @@ export interface DescribeUDBBackupResponse {
      * 备份完成时间(Unix时间戳)
      */
     BackupEndTime?: number;
+    /**
+     * 备份文件的MD5值，备份完成后显示，备份中或备份失败时为空,目前只支持Mysql NVMe机型与Mongo
+     */
+    MD5?: string;
   }[];
   /**
    * 满足条件备份总数，如果指定dbid，则是该db备份总数
@@ -1778,11 +2253,96 @@ export interface DescribeUDBBackupBlacklistResponse {
 }
 
 /**
- * DescribeUDBBinlogBackupURL - 获取UDB的Binlog备份地址
+ * DescribeUDBBinlogBackup - 列表UDB实例Binlog自动备份信息
+ */
+export interface DescribeUDBBinlogBackupRequest {
+  /**
+   * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
+   */
+  Zone?: string;
+  /**
+   * 分页显示的起始偏移，列表操作则指定
+   */
+  Offset: number;
+  /**
+   * 分页显示的条目数，列表操作则指定
+   */
+  Limit: number;
+  /**
+   * DB实例Id，如果指定，则只获取该db的备份信息; 当Type为2时必填
+   */
+  DBId?: string;
+  /**
+   * 过滤条件:起始时间(时间戳)
+   */
+  BeginTime?: number;
+  /**
+   * 过滤条件:结束时间(时间戳)
+   */
+  EndTime?: number;
+}
+
+/**
+ * DescribeUDBBinlogBackup - 列表UDB实例Binlog自动备份信息
+ */
+export interface DescribeUDBBinlogBackupResponse {
+  /**
+   * Binlog备份信息 参见BinlogBackupSet
+   */
+  DataSet?: {
+    /**
+     * 备份id
+     */
+    BackupId?: number;
+    /**
+     * 备份名称
+     */
+    BackupName?: string;
+    /**
+     * 备份时间
+     */
+    BackupTime?: number;
+    /**
+     * 备份文件大小
+     */
+    BackupSize?: number;
+    /**
+     * 备份状态 Backuping // 备份中 Success // 备份成功 Failed // 备份失败 Expired // 备份过期
+     */
+    State?: string;
+    /**
+     * binlog备份类型 Manual:手动备份 ,Auto:自动备份
+     */
+    BinlogType?: string;
+    /**
+     * dbid
+     */
+    DBId?: string;
+    /**
+     * 节点标识ID
+     */
+    ServerId?: string;
+    /**
+     * 日志开始时间
+     */
+    LogStartTime?: number;
+    /**
+     * 日志结束时间
+     */
+    LogEndTime?: number;
+  }[];
+  /**
+   * 备份总数，如果指定dbid，则是该db备份总数
+   */
+  TotalCount?: number;
+}
+
+/**
+ * DescribeUDBBinlogBackupURL - 获取UDB的Binlog或者错误日志或者慢查询日志的备份地址
  */
 export interface DescribeUDBBinlogBackupURLRequest {
   /**
-   * 可用区。参见 [可用区列表](../summary/regionlist.html)
+   * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
    */
   Zone?: string;
   /**
@@ -1790,13 +2350,17 @@ export interface DescribeUDBBinlogBackupURLRequest {
    */
   DBId: string;
   /**
-   * DB实例binlog备份ID，可以从DescribeUDBLogPackage结果当中获得
+   * DB实例日志备份ID，可以从DescribeUDBLogPackage结果当中获得
    */
   BackupId: number;
+  /**
+   * binlog备份类型 Manual:手动备份 ,Auto:自动备份
+   */
+  BinlogType: string;
 }
 
 /**
- * DescribeUDBBinlogBackupURL - 获取UDB的Binlog备份地址
+ * DescribeUDBBinlogBackupURL - 获取UDB的Binlog或者错误日志或者慢查询日志的备份地址
  */
 export interface DescribeUDBBinlogBackupURLResponse {
   /**
@@ -1814,7 +2378,7 @@ export interface DescribeUDBBinlogBackupURLResponse {
  */
 export interface DescribeUDBInstanceRequest {
   /**
-   * 可用区，不填时默认全部可用区。参见 [可用区列表](../summary/regionlist.html)
+   * 可用区，不填时默认全部可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
    */
   Zone?: string;
   /**
@@ -1845,6 +2409,14 @@ export interface DescribeUDBInstanceRequest {
    * 当只获取这个特定DBId的信息时，如果有该选项，那么把这个DBId实例的所有从库信息一起拉取并返回
    */
   IncludeSlaves?: boolean;
+  /**
+   * 根据VPCId筛选DB
+   */
+  VPCId?: string;
+  /**
+   * 根据 业务组 筛选DB
+   */
+  Tag?: string;
 }
 
 /**
@@ -1859,6 +2431,10 @@ export interface DescribeUDBInstanceResponse {
      * DB实例所在可用区
      */
     Zone?: string;
+    /**
+     * 0区分大小写, 1不分区
+     */
+    CaseSensitivityParam?: number;
     /**
      * 当DB类型为mongodb时，返回该实例所在集群中的角色，包括：mongos、configsrv_sccc、configsrv_csrs、shardsrv_datanode、shardsrv_arbiter，其中congfigsrv分为sccc和csrs两种模式，shardsrv分为datanode和arbiter两种模式
      */
@@ -1904,7 +2480,7 @@ export interface DescribeUDBInstanceResponse {
      */
     InstanceType?: string;
     /**
-     * UDB数据库机型ID
+     * UDB数据库机型ID (已弃用)
      */
     InstanceTypeId?: number;
     /**
@@ -1936,7 +2512,7 @@ export interface DescribeUDBInstanceResponse {
      */
     BackupBlacklist?: string;
     /**
-     * DB状态标记 Init：初始化中，Fail：安装失败，Starting：启动中，Running：运行，Shutdown：关闭中，Shutoff：已关闭，Delete：已删除，Upgrading：升级中，Promoting：提升为独库进行中，Recovering：恢复中，Recover fail：恢复失败
+     * DB状态标记 Init：初始化中，Fail：安装失败，Starting：启动中，Running：运行，Shutdown：关闭中，Shutoff：已关闭，Delete：已删除，Upgrading：升级中，Promoting：提升为独库进行中，Recovering：恢复中，Recover fail：恢复失败, Remakeing:重做中,RemakeFail:重做失败，VersionUpgrading:小版本升级中，VersionUpgradeWaitForSwitch:高可用等待切换，VersionUpgradeFail：小版本升级失败，UpdatingSSL：修改SSL中，UpdateSSLFail：修改SSL失败,MajorVersionUpgrading:小版本升级中，MajorVersionUpgradeWaitForSwitch:高可用等待切换，MajorVersionUpgradeFail
      */
     State?: string;
     /**
@@ -2008,6 +2584,10 @@ export interface DescribeUDBInstanceResponse {
        */
       Zone?: string;
       /**
+       * 延时从库时长
+       */
+      ReplicationDelaySeconds?: number;
+      /**
        * DB实例id
        */
       DBId?: string;
@@ -2060,7 +2640,7 @@ export interface DescribeUDBInstanceResponse {
        */
       BackupBlacklist?: string;
       /**
-       * DB状态标记 Init：初始化中，Fail：安装失败，Starting：启动中，Running：运行，Shutdown：关闭中，Shutoff：已关闭，Delete：已删除，Upgrading：升级中，Promoting：提升为独库进行中，Recovering：恢复中，Recover fail：恢复失败
+       * DB状态标记 Init：初始化中，Fail：安装失败，Starting：启动中，Running：运行，Shutdown：关闭中，Shutoff：已关闭，Delete：已删除，Upgrading：升级中，Promoting：提升为独库进行中，Recovering：恢复中，Recover fail：恢复失败,Remakeing:重做中,RemakeFail:重做失败, MajorVersionUpgrading:小版本升级中，MajorVersionUpgradeWaitForSwitch:高可用等待切换，MajorVersionUpgradeFail
        */
       State?: string;
       /**
@@ -2148,9 +2728,17 @@ export interface DescribeUDBInstanceResponse {
        */
       Tag?: string;
       /**
-       * 获取该实例的IPv6地址
+       * 0 区分大小写, 1不区分, 只针对mysql8.0
        */
-      IPv6Address?: string;
+      CaseSensitivityParam?: number;
+      /**
+       * 实例计算规格类型，0或不传代表使用内存方式购买，1代表使用内存-cpu可选配比方式购买，需要填写MachineType
+       */
+      SpecificationType?: number;
+      /**
+       * 规格类型ID,当SpecificationType为1时有效
+       */
+      MachineType?: string;
     }[];
     /**
      * 跨可用区高可用备库所在可用区
@@ -2173,6 +2761,34 @@ export interface DescribeUDBInstanceResponse {
        */
       Bucket?: string;
     };
+    /**
+     * mysql实例提供具体小版本信息
+     */
+    DBSubVersion?: string;
+    /**
+     * mysql是否开启了SSL；1->未开启  2->开启
+     */
+    EnableSSL?: number;
+    /**
+     * SSL到期时间
+     */
+    SSLExpirationTime?: number;
+    /**
+     * 默认的备份方式，nobackup表示不备份， snapshot 表示使用快照备份，logic 表示使用逻辑备份，xtrabackup表示使用物理备份。
+     */
+    BackupMethod?: string;
+    /**
+     * 数据库机型规格
+     */
+    MachineType?: string;
+    /**
+     * 是否使用可选cpu类型规格
+     */
+    SpecificationType?: number;
+    /**
+     * CPU核数
+     */
+    CPU?: number;
   }[];
   /**
    * 用户db组的数量，对于 mysql: 主从结对数量，没有slave，则只有master mongodb: 副本集数量
@@ -2213,7 +2829,7 @@ export interface DescribeUDBInstanceBackupStateResponse {
  */
 export interface DescribeUDBInstanceBackupURLRequest {
   /**
-   * 可用区。参见 [可用区列表](../summary/regionlist.html)
+   * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
    */
   Zone?: string;
   /**
@@ -2224,6 +2840,10 @@ export interface DescribeUDBInstanceBackupURLRequest {
    * DB实例备份ID,该值可以通过DescribeUDBBackup获取
    */
   BackupId: number;
+  /**
+   * DB响应中URL的过期时间,该值最小默认4小时,最大7天。不填默认为四小时。(单位/秒)
+   */
+  ValidTime?: number;
 }
 
 /**
@@ -2238,6 +2858,10 @@ export interface DescribeUDBInstanceBackupURLResponse {
    * DB实例备份文件内网的地址
    */
   InnerBackupPath?: string;
+  /**
+   * 备份文件的md5值
+   */
+  MD5?: string;
 }
 
 /**
@@ -2362,11 +2986,11 @@ export interface DescribeUDBInstanceLogResponse {
  */
 export interface DescribeUDBInstancePriceRequest {
   /**
-   * 可用区。参见 [可用区列表](../summary/regionlist.html)
+   * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
    */
   Zone: string;
   /**
-   * 内存限制(MB)，单位为MB.目前支持：1000-96000
+   * 内存限制(MB)，单位为MB.目前支持：2000-96000
    */
   MemoryLimit: number;
   /**
@@ -2390,17 +3014,37 @@ export interface DescribeUDBInstancePriceRequest {
    */
   Quantity?: number;
   /**
-   * 是否使用SSD，只能填true或false，默认为false
-   */
-  UseSSD?: string;
-  /**
-   * SSD类型，可选值为"SATA"、"PCI-E"，如果UseSSD为true ，则必填
+   * 该字段已废弃。
    */
   SSDType?: string;
   /**
-   * 实例的部署类型。可选值为：Normal: 普通单点实例，Slave: 从库实例,HA: 高可用部署实例，默认是Normal
+   * 实例的部署类型。可选值为：Normal: 普通单点实例，Slave: 从库实例，HA: 高可用部署实例，默认是Normal
    */
   InstanceMode?: string;
+  /**
+   * CPU个数，如果db类型为sqlserver，则为必填参数
+   */
+  CPU?: number;
+  /**
+   * 对于快杰机型，请使用最新的 SpecificationClass 和 StorageClass 字段进行创建。目前仅有少量地域支持 SATA_SSD 存储类型；若创建的是 SATA_SSD 机型，可通过该字段指定。字段说明：SATA_SSD：SATA SSD 机型（仅部分地域支持）NVMe_SSD：快杰机型
+   */
+  InstanceType?: string;
+  /**
+   * 	实例计算规格类型，0或不传代表使用内存方式购买，1代表使用内存-cpu可选配比方式购买，需要填写MachineType
+   */
+  SpecificationType?: number;
+  /**
+   * 规格类型ID,当SpecificationType为1时有效
+   */
+  MachineType?: string;
+  /**
+   * 存储类型 CLOUD_SSD: SSD云盘, CLOUD_RSSD: RSSD 云盘， CLOUD_SSD_ESSENTIAL: SSD Essential云盘 ，该字段和SpecificationClass组合优先级比InstanceType字段高
+   */
+  StorageClass?: string;
+  /**
+   * 规格类型 O: NVME, OM: 共享型，N: 通用型
+   */
+  SpecificationClass?: string;
 }
 
 /**
@@ -2427,7 +3071,7 @@ export interface DescribeUDBInstancePriceResponse {
  */
 export interface DescribeUDBInstanceStateRequest {
   /**
-   * 可用区。参见 [可用区列表](../summary/regionlist.html)
+   * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
    */
   Zone?: string;
   /**
@@ -2451,7 +3095,7 @@ export interface DescribeUDBInstanceStateResponse {
  */
 export interface DescribeUDBInstanceUpgradePriceRequest {
   /**
-   * 可用区。参见 [可用区列表](../summary/regionlist.html)
+   * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
    */
   Zone?: string;
   /**
@@ -2467,13 +3111,29 @@ export interface DescribeUDBInstanceUpgradePriceRequest {
    */
   DiskSpace: number;
   /**
-   * 是否使用SSD，默认为false
-   */
-  UseSSD?: boolean;
-  /**
-   * SSD类型，可选值为"SATA"、"PCI-E"，如果UseSSD为true ，则必选
+   * "SATA", "NVMe"
    */
   SSDType?: string;
+  /**
+   * "SATA_SSD", "NVMe_SSD"
+   */
+  InstanceType?: string;
+  /**
+   * 获取指定时间开始后面的升级价格， 不填的话 是默认当前时间
+   */
+  OrderStartTime?: number;
+  /**
+   * CPU核数 快杰SQLServer升降级必传
+   */
+  CPU?: number;
+  /**
+   * 规格类型ID,当SpecificationType为1时有效
+   */
+  MachineType?: string;
+  /**
+   * 实例计算规格类型，0或不传代表使用内存方式购买，1代表使用内存-cpu可选配比方式购买，需要填写MachineType
+   */
+  SpecificationType?: number;
 }
 
 /**
@@ -2487,7 +3147,7 @@ export interface DescribeUDBInstanceUpgradePriceResponse {
 }
 
 /**
- * DescribeUDBLogBackupURL - 获取UDB的slowlog备份地址
+ * DescribeUDBLogBackupURL - 获取UDB的错误日志或者慢查询日志备份地址
  */
 export interface DescribeUDBLogBackupURLRequest {
   /**
@@ -2499,13 +3159,13 @@ export interface DescribeUDBLogBackupURLRequest {
    */
   DBId: string;
   /**
-   * DB实例备份ID
+   * DB实例日志备份ID, 可以从DescribeUDBLogPackage结果当中获得。
    */
   BackupId: number;
 }
 
 /**
- * DescribeUDBLogBackupURL - 获取UDB的slowlog备份地址
+ * DescribeUDBLogBackupURL - 获取UDB的错误日志或者慢查询日志备份地址
  */
 export interface DescribeUDBLogBackupURLResponse {
   /**
@@ -2523,7 +3183,7 @@ export interface DescribeUDBLogBackupURLResponse {
  */
 export interface DescribeUDBLogPackageRequest {
   /**
-   * 可用区。参见 [可用区列表](../summary/regionlist.html)
+   * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
    */
   Zone?: string;
   /**
@@ -2535,7 +3195,7 @@ export interface DescribeUDBLogPackageRequest {
    */
   Limit: number;
   /**
-   * 需要列出的备份文件类型，每种文件的值如下 2 : BINLOG\_BACKUP 3 : SLOW\_QUERY\_BACKUP 4 : ERRORLOG\_BACKUP
+   * 需要列出的备份文件类型，每种类型的值如下： 2 代表 BINLOG_BACKUP； 3 代表 SLOW_QUERY_BACKUP； 4 代表 ERRORLOG_BACKUP；
    */
   Type?: number;
   /**
@@ -2543,7 +3203,7 @@ export interface DescribeUDBLogPackageRequest {
    */
   Types?: number[];
   /**
-   * DB实例Id，如果指定，则只获取该db的备份信息
+   * DB实例Id，如果指定，则只获取该db的备份信息; 当Type为2时必填
    */
   DBId?: string;
   /**
@@ -2565,6 +3225,10 @@ export interface DescribeUDBLogPackageResponse {
    */
   DataSet?: {
     /**
+     * 所在可用区
+     */
+    Zone?: string;
+    /**
      * 备份id
      */
     BackupId?: number;
@@ -2585,6 +3249,10 @@ export interface DescribeUDBLogPackageResponse {
      */
     BackupType?: number;
     /**
+     * binlog备份类型 Manual //手动备份 Auto //自动备份
+     */
+    BinlogType?: string;
+    /**
      * 备份状态 Backuping // 备份中 Success // 备份成功 Failed // 备份失败 Expired // 备份过期
      */
     State?: string;
@@ -2596,10 +3264,6 @@ export interface DescribeUDBLogPackageResponse {
      * 对应的db名称
      */
     DBName?: string;
-    /**
-     * 所在可用区
-     */
-    Zone?: string;
     /**
      * 跨可用区高可用备库所在可用区
      */
@@ -2622,11 +3286,11 @@ export interface DescribeUDBParamGroupRequest {
   /**
    * 分页显示的起始偏移，列表操作则指定
    */
-  Offset?: number;
+  Offset: number;
   /**
    * 分页显示的条目数，列表操作则指定
    */
-  Limit?: number;
+  Limit: number;
   /**
    * 参数组id，如果指定则获取描述，否则是列表操作，需要 指定Offset/Limit
    */
@@ -2653,6 +3317,10 @@ export interface DescribeUDBParamGroupResponse {
    * 参数组列表 参照UDBParamGroupSet
    */
   DataSet?: {
+    /**
+     * 参数组类型：1：稳定版参数组，2:高性能版参数组。默认是稳定版参数组
+     */
+    GroupType?: number;
     /**
      * 参数组id
      */
@@ -2795,11 +3463,11 @@ export interface DescribeUDBSplittingInfoResponse {
  */
 export interface DescribeUDBTypeRequest {
   /**
-   * 可用区。参见 [可用区列表](../summary/regionlist.html)
+   * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
    */
   Zone: string;
   /**
-   * 跨可用区高可用DB的备库所在区域，仅当该可用区支持跨可用区高可用时填入。参见 [可用区列表](../summary/regionlist.html)
+   * 跨可用区高可用DB的备库所在区域，仅当该可用区支持跨可用区高可用时填入。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
    */
   BackupZone?: string;
   /**
@@ -2818,6 +3486,10 @@ export interface DescribeUDBTypeRequest {
    * 返回从备份创建实例时，该版本号所支持的备份创建版本。如果没传，则表示不是从备份创建。
    */
   CompatibleWithDBType?: string;
+  /**
+   * 返回从备份创建实例时，该小版本号所支持的备份创建小版本。如果没传，则表示不是从备份创建。
+   */
+  DBSubVersion?: string;
 }
 
 /**
@@ -2832,6 +3504,10 @@ export interface DescribeUDBTypeResponse {
      * DB类型id，mysql/mongodb按版本细分各有一个id, 目前id的取值范围为[1,7],数值对应的版本如下： 1：mysql-5.5，2：mysql-5.1，3：percona-5.5 4：mongodb-2.4，5：mongodb-2.6，6：mysql-5.6， 7：percona-5.6
      */
     DBTypeId?: string;
+    /**
+     * mysql子版本，如mysql-8.0.25,mysql-8.0.16
+     */
+    DBSubVersion?: string;
   }[];
 }
 
@@ -2840,7 +3516,7 @@ export interface DescribeUDBTypeResponse {
  */
 export interface DisableUDBRWSplittingRequest {
   /**
-   * 可用区。参见 [可用区列表](../summary/regionlist.html)
+   * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
    */
   Zone: string;
   /**
@@ -2942,7 +3618,7 @@ export interface ExtractUDBParamGroupResponse {
  */
 export interface FetchUDBInstanceEarliestRecoverTimeRequest {
   /**
-   * 可用区。参见 [可用区列表](../summary/regionlist.html)
+   * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
    */
   Zone?: string;
   /**
@@ -2995,11 +3671,163 @@ export interface GetUDBClientConnNumResponse {
 }
 
 /**
+ * GetUDBInstanceSSLCertURL - 获取SSL证书下载地址
+ */
+export interface GetUDBInstanceSSLCertURLRequest {
+  /**
+   * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
+   */
+  Zone: string;
+  /**
+   * 实例ID
+   */
+  DBId: string;
+  /**
+   * URL的过期时间，该值最小默认1小时，最大7天。（单位/秒）
+   */
+  ExpireTime?: number;
+}
+
+/**
+ * GetUDBInstanceSSLCertURL - 获取SSL证书下载地址
+ */
+export interface GetUDBInstanceSSLCertURLResponse {
+  /**
+   * 外网链接
+   */
+  InternetUrl: string;
+  /**
+   * 内网链接
+   */
+  InnerUrl: string;
+}
+
+/**
+ * ListUDBMachineType - 获取UDB云数据库支持的计算规格列表，暂不支持获取跨可用区实例的计算规格，目前支持的数据库品类包括：NVMe版和SSD云盘版MySQL
+ */
+export interface ListUDBMachineTypeRequest {
+  /**
+   * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
+   */
+  Zone: string;
+  /**
+   * UDB实例模式类型, 可选值如下: "Normal": 普通版UDB实例 "HA": 高可用版UDB实例 默认是"Normal"
+   */
+  InstanceMode?: string;
+}
+
+/**
+ * ListUDBMachineType - 获取UDB云数据库支持的计算规格列表，暂不支持获取跨可用区实例的计算规格，目前支持的数据库品类包括：NVMe版和SSD云盘版MySQL
+ */
+export interface ListUDBMachineTypeResponse {
+  /**
+   * 计算规格列表
+   */
+  DataSet: {
+    /**
+     * 计算规格id, 目前支持CPU和内存比1:2、1:4、1:8三类配比规格;规格的格式为："机型.配比.CPU核数规格"；机型支持o和n两种机型，分别代表快杰NVMe和SSD云盘机型；配比映射关系如下:2m代表CPU内存配比1比2，4m代表CPU内存配比1比4，8m代表CPU内存配比1比8，CPU核数规格射关系如下：small代表1C，medium代表2C，xlarge代表4C，2xlarge代表8C，4xlarge代表16C，8xlarge代表32C，16xlarge代表64C，例如 "o.mysql4m.medium"表示创建快杰NVMe机型2C8G的实例，"o.mysql8m.4xlarge"表示创建快杰NVMe机型16C128G的实例
+     */
+    ID?: string;
+    /**
+     * 计算规格描述，格式为"nCmG"，表示n核mG内存实例
+     */
+    Description?: string;
+    /**
+     * 规格cpu核数
+     */
+    Cpu?: number;
+    /**
+     * 规格内存大小，单位（GB）
+     */
+    Memory?: number;
+    /**
+     * 内部云主机机型，可选"o/n"
+     */
+    Os?: string;
+    /**
+     * 内存/cpu配比
+     */
+    Group?: string;
+  }[];
+  /**
+   * 默认计算规格
+   */
+  DefaultMachineType: {
+    /**
+     * 计算规格id, 目前支持CPU和内存比1:2、1:4、1:8三类配比规格;规格的格式为："机型.配比.CPU核数规格"；机型支持o和n两种机型，分别代表快杰NVMe和SSD云盘机型；配比映射关系如下:2m代表CPU内存配比1比2，4m代表CPU内存配比1比4，8m代表CPU内存配比1比8，CPU核数规格射关系如下：small代表1C，medium代表2C，xlarge代表4C，2xlarge代表8C，4xlarge代表16C，8xlarge代表32C，16xlarge代表64C，例如 "o.mysql4m.medium"表示创建快杰NVMe机型2C8G的实例，"o.mysql8m.4xlarge"表示创建快杰NVMe机型16C128G的实例
+     */
+    ID?: string;
+    /**
+     * 计算规格描述，格式为"nCmG"，表示n核mG内存实例
+     */
+    Description?: string;
+    /**
+     * 规格cpu核数
+     */
+    Cpu?: number;
+    /**
+     * 规格内存大小，单位（GB）
+     */
+    Memory?: number;
+    /**
+     * 内部云主机机型，可选"o/n"
+     */
+    Os?: string;
+    /**
+     * 内存/cpu配比
+     */
+    Group?: string;
+  };
+}
+
+/**
+ * ListUDBUserTables - 查看udb实例所有的用户表集合 （只包括引擎为innodb和myisam的表）
+ */
+export interface ListUDBUserTablesRequest {
+  /**
+   * udb实例的ID
+   */
+  DBId: string;
+}
+
+/**
+ * ListUDBUserTables - 查看udb实例所有的用户表集合 （只包括引擎为innodb和myisam的表）
+ */
+export interface ListUDBUserTablesResponse {
+  /**
+   * 用户库表的集合
+   */
+  Tables: {
+    /**
+     * 数据库名称
+     */
+    DBName: string;
+    /**
+     * 该库所有的表集合
+     */
+    TableDataSet: {
+      /**
+       * 表名称
+       */
+      TableName: string;
+      /**
+       * 表所属的库名称
+       */
+      DBName: string;
+      /**
+       * 表的引擎（innodb, myisam）
+       */
+      Engine: string;
+    }[];
+  }[];
+}
+
+/**
  * ModifyUDBInstanceName - 重命名UDB实例
  */
 export interface ModifyUDBInstanceNameRequest {
   /**
-   * 可用区。参见 [可用区列表](../summary/regionlist.html)
+   * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
    */
   Zone?: string;
   /**
@@ -3022,7 +3850,7 @@ export interface ModifyUDBInstanceNameResponse {}
  */
 export interface ModifyUDBInstancePasswordRequest {
   /**
-   * 可用区。参见 [可用区列表](../summary/regionlist.html)
+   * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
    */
   Zone?: string;
   /**
@@ -3045,6 +3873,56 @@ export interface ModifyUDBInstancePasswordRequest {
 export interface ModifyUDBInstancePasswordResponse {}
 
 /**
+ * ModifyUDBInstanceRemarkName - 修改UDB实例备注信息
+ */
+export interface ModifyUDBInstanceRemarkNameRequest {
+  /**
+   * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
+   */
+  Zone: string;
+  /**
+   * 实例的Id,该值可以通过DescribeUDBInstance获取
+   */
+  DBId: string;
+  /**
+   * 实例的新备注
+   */
+  Name: string;
+}
+
+/**
+ * ModifyUDBInstanceRemarkName - 修改UDB实例备注信息
+ */
+export interface ModifyUDBInstanceRemarkNameResponse {}
+
+/**
+ * ModifyUDBInstanceSSL - 调整SSL的信息
+ */
+export interface ModifyUDBInstanceSSLRequest {
+  /**
+   * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
+   */
+  Zone: string;
+  /**
+   * 实例ID
+   */
+  DBId: string;
+  /**
+   * 是否开启SSL 1->关闭 2->开启
+   */
+  EnableSSL: number;
+  /**
+   * SSL证书有效时间，1-5年，默认为1年
+   */
+  ValidTime?: number;
+}
+
+/**
+ * ModifyUDBInstanceSSL - 调整SSL的信息
+ */
+export interface ModifyUDBInstanceSSLResponse {}
+
+/**
  * PromoteUDBInstanceToHA - 普通db升级为高可用(只针对mysql5.5及以上版本SSD机型的实例)  ，对于NVMe机型的单点升级高可用，虽然也能使用该操作再加上SwitchUDBInstanceToHA，但是更建议直接调用新的API接口（UpgradeUDBInstanceToHA）
  */
 export interface PromoteUDBInstanceToHARequest {
@@ -3064,7 +3942,7 @@ export interface PromoteUDBInstanceToHAResponse {}
  */
 export interface PromoteUDBSlaveRequest {
   /**
-   * 可用区。参见 [可用区列表](../summary/regionlist.html)
+   * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
    */
   Zone?: string;
   /**
@@ -3087,7 +3965,7 @@ export interface PromoteUDBSlaveResponse {}
  */
 export interface ResizeUDBInstanceRequest {
   /**
-   * 可用区。参见 [可用区列表](../summary/regionlist.html)
+   * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
    */
   Zone?: string;
   /**
@@ -3095,7 +3973,7 @@ export interface ResizeUDBInstanceRequest {
    */
   DBId: string;
   /**
-   * 内存限制(MB)，目前支持以下几档 1000M/2000M/4000M/ 6000M/8000M/ 12000M/16000M/ 24000M/32000M/ 48000M/64000M/96000M/128000M/192000M/256000M/320000M。
+   * 内存限制(MB)，目前支持以下几档 2000M/4000M/ 6000M/8000M/ 12000M/16000M/ 24000M/32000M/ 48000M/64000M/96000M/128000M/192000M/256000M/320000M。
    */
   MemoryLimit: number;
   /**
@@ -3103,17 +3981,9 @@ export interface ResizeUDBInstanceRequest {
    */
   DiskSpace: number;
   /**
-   * 是否使用SSD，默认为true
-   */
-  UseSSD?: boolean;
-  /**
-   * SSD类型，可选值为"SATA"、"PCI-E"、“NVMe”，如果UseSSD为true ，则必选
+   * SSD类型，可选值为"SATA"、“NVMe”
    */
   SSDType?: string;
-  /**
-   * 专区的ID，如果有值表示专区中的DB配置升降级
-   */
-  UDBCId?: string;
   /**
    * UDB数据库机型: "Normal": "标准机型" ,  "SATA_SSD": "SSD机型" , "PCIE_SSD": "SSD高性能机型" ,  "Normal_Volume": "标准大容量机型",  "SATA_SSD_Volume": "SSD大容量机型" ,  "PCIE_SSD_Volume": "SSD高性能大容量机型"，“NVMe_SSD”：“快杰机型”
    */
@@ -3126,6 +3996,18 @@ export interface ResizeUDBInstanceRequest {
    * DB关闭状态下升降级，升降级后是否启动DB，默认为false
    */
   StartAfterUpgrade?: boolean;
+  /**
+   * 规格类型ID,当SpecificationType为1时有效
+   */
+  MachineType?: string;
+  /**
+   * 实例计算规格类型，0或不传代表使用内存方式购买，1代表使用内存-cpu可选配比方式购买，需要填写MachineType
+   */
+  SpecificationType?: string;
+  /**
+   * 数据库的CPU核数（只对普通版的SQLServer有用）
+   */
+  CPU?: number;
   /**
    * 使用的代金券id
    */
@@ -3142,7 +4024,7 @@ export interface ResizeUDBInstanceResponse {}
  */
 export interface RestartRWSplittingRequest {
   /**
-   * 可用区。参见 [可用区列表](../summary/regionlist.html)
+   * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
    */
   Zone: string;
   /**
@@ -3161,7 +4043,7 @@ export interface RestartRWSplittingResponse {}
  */
 export interface RestartUDBInstanceRequest {
   /**
-   * 可用区。参见 [可用区列表](../summary/regionlist.html)
+   * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
    */
   Zone?: string;
   /**
@@ -3174,6 +4056,34 @@ export interface RestartUDBInstanceRequest {
  * RestartUDBInstance - 重启UDB实例
  */
 export interface RestartUDBInstanceResponse {}
+
+/**
+ * RollbackUDBInstance - 在原实例回档指定库表
+ */
+export interface RollbackUDBInstanceRequest {
+  /**
+   * 源实例的Id
+   */
+  SrcDBId: string;
+  /**
+   * 恢复到某个时间点的时间戳(UTC时间格式，默认单位秒)
+   */
+  RecoveryTime: string;
+  /**
+   * 指定需要恢复的表，格式为(库名.表名)， 指定多个用逗号隔开，eg: [ udb.test, mysql_school.my_student]
+   */
+  Tables: string;
+}
+
+/**
+ * RollbackUDBInstance - 在原实例回档指定库表
+ */
+export interface RollbackUDBInstanceResponse {
+  /**
+   * 源实例的Id
+   */
+  DBId: string;
+}
 
 /**
  * SetUDBRWSplitting - 设置读写分离的模式
@@ -3215,7 +4125,7 @@ export interface SetUDBRWSplittingResponse {}
  */
 export interface StartUDBInstanceRequest {
   /**
-   * 可用区。参见 [可用区列表](../summary/regionlist.html)
+   * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
    */
   Zone?: string;
   /**
@@ -3234,7 +4144,7 @@ export interface StartUDBInstanceResponse {}
  */
 export interface StopUDBInstanceRequest {
   /**
-   * 可用区。参见 [可用区列表](../summary/regionlist.html)
+   * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
    */
   Zone?: string;
   /**
@@ -3312,7 +4222,7 @@ export interface SwitchUDBInstanceToHAResponse {
  */
 export interface UpdateUDBInstanceBackupStrategyRequest {
   /**
-   * 可用区。参见 [可用区列表](../summary/regionlist.html)
+   * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
    */
   Zone?: string;
   /**
@@ -3332,9 +4242,25 @@ export interface UpdateUDBInstanceBackupStrategyRequest {
    */
   ForceDump?: boolean;
   /**
-   * 选择默认的备份方式，可选 snapshot 表示使用快照/物理备份，不填或者其它任何值为默认的逻辑备份。需要同时设置BackupDate字段。（注意现在只有SSD 版本的 MySQL实例支持物理备份）
+   * 选择默认的备份方式，可选nobackup表示不备份， snapshot 表示使用快照备份，logic 表示使用逻辑备份。需要同时设置BackupDate字段。（快照备份即物理备份。SSD版本的mysql实例支持设置为snapshot，NVMe版本的mysql实例支持设置为xtrabackup）
    */
   BackupMethod?: string;
+  /**
+   * 自动备份转存到用户自己的bucket 的tokenid， 需要用户自己自己设置权限
+   */
+  UserTokenID?: string;
+  /**
+   * 自动备份转存到用户自己的bucket名称，要包含到对应的token id里
+   */
+  UserBucket?: string;
+  /**
+   * 是否开启binlog备份, 默认为未开启
+   */
+  EnableBinlogBackup?: boolean;
+  /**
+   * 远端binlog保存时长(天)
+   */
+  BinlogRemoteSaveDays?: number;
 }
 
 /**
@@ -3426,6 +4352,41 @@ export interface UpgradeUDBInstanceToHARequest {
  * UpgradeUDBInstanceToHA - 快杰普通db升级为高可用(只针对mysql5.5及以上版本Nvme机型的实例)
  */
 export interface UpgradeUDBInstanceToHAResponse {}
+
+/**
+ * UpgradeUDBVersion - 升级db实例版本
+ */
+export interface UpgradeUDBVersionRequest {
+  /**
+   * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
+   */
+  Zone: string;
+  /**
+   * db实例资源id
+   */
+  DBId: string;
+  /**
+   * db需要升级的小版本
+   */
+  DBSubVersion: string;
+  /**
+   * 切换类型，可选值为"immediately"和"customize"，分别代表立即切换和自定义切换时间，自定义切换时间需要填写SwitchStartTime和SwitchEndTime
+   */
+  SwitchType: string;
+  /**
+   * 该值为一个unix时间戳，代表开始切换实例的时间
+   */
+  SwitchStartTime?: number;
+  /**
+   * 该值为一个unix时间戳，代表开始预期切换实例结束的时间
+   */
+  SwitchEndTime?: number;
+}
+
+/**
+ * UpgradeUDBVersion - 升级db实例版本
+ */
+export interface UpgradeUDBVersionResponse {}
 
 /**
  * UploadUDBParamGroup - 导入UDB配置
