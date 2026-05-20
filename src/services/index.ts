@@ -31,6 +31,7 @@ const UPhoneClient = require('./uphone').default;
 const UPHostClient = require('./uphost').default;
 const USMSClient = require('./usms').default;
 const UVMSClient = require('./uvms').default;
+const UWSCClient = require('./uwsc').default;
 const VPCClient = require('./vpc').default;
 
 export class Client extends BaseClient {
@@ -242,6 +243,13 @@ export class Client extends BaseClient {
 
   uvms() {
     return new UVMSClient({
+      config: this.config,
+      credential: this.credential,
+    });
+  }
+
+  uwsc() {
+    return new UWSCClient({
       config: this.config,
       credential: this.credential,
     });

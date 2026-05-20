@@ -35,6 +35,7 @@ export declare class Client extends BaseClient {
     uphost(): any;
     usms(): any;
     uvms(): any;
+    uwsc(): any;
     vpc(): any;
 }
 export {};
