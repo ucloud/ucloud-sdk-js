@@ -127,14 +127,6 @@ export interface CreateUKafkaInstanceRequest {
      */
     FrameworkVersion: string;
     /**
-     * VPCID
-     */
-    VPCId: string;
-    /**
-     * 子网 ID
-     */
-    SubnetId: string;
-    /**
      * 付费方式
      */
     ChargeType: string;
@@ -150,6 +142,14 @@ export interface CreateUKafkaInstanceRequest {
      * 实例名，可自定义。只能包含中英文、数字以及- _ .
      */
     InstanceName: string;
+    /**
+     * VPCID，不填时为默认VPCID
+     */
+    VPCId?: string;
+    /**
+     * 子网 ID，不填时为默认子网 ID
+     */
+    SubnetId?: string;
     /**
      * 业务组，默认Default
      */
