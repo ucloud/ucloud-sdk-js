@@ -10,6 +10,7 @@ export declare class Client extends BaseClient {
     ipsecvpn(): any;
     pathx(): any;
     uaccount(): any;
+    uai_modelverse(): any;
     ubill(): any;
     ucdn(): any;
     uclickhouse(): any;
