@@ -158,6 +158,34 @@ export default class UK8SClient extends Client {
   }
 
   /**
+   * GetClusterConfig - 获取集群配置文件，管理集群的凭证
+   *
+   * See also: https://docs.ucloud.cn/api/uk8s-api/get_cluster_config
+   */
+  getClusterConfig(
+    request?: GetClusterConfigRequest
+  ): Promise<GetClusterConfigResponse> {
+    const args = { Action: 'GetClusterConfig', ...(request || {}) };
+    return this.invoke(new Request(args)).then(
+      (resp) => resp.toObject() as GetClusterConfigResponse
+    );
+  }
+
+  /**
+   * GetUK8SVersions - 获取支持创建的UK8S集群版本、Containerd版本
+   *
+   * See also: https://docs.ucloud.cn/api/uk8s-api/get_uk8s_versions
+   */
+  getUK8SVersions(
+    request?: GetUK8SVersionsRequest
+  ): Promise<GetUK8SVersionsResponse> {
+    const args = { Action: 'GetUK8SVersions', ...(request || {}) };
+    return this.invoke(new Request(args)).then(
+      (resp) => resp.toObject() as GetUK8SVersionsResponse
+    );
+  }
+
+  /**
    * ListUK8SClusterNodeV2 - 获取UK8S集群节点信息
    *
    * See also: https://docs.ucloud.cn/api/uk8s-api/list_uk8s_cluster_node_v2
@@ -333,6 +361,14 @@ export interface AddUK8SNodeGroupRequest {
    * 计费模式
    */
   ChargeType?: string;
+  /**
+   * 系统盘大小，单位GB。默认40。范围：[40, 500]。注意SSD本地盘无法调整。
+   */
+  BootDiskSize?: number;
+  /**
+   * 子网 ID。默认为集群创建时填写的子网ID，也可以填写集群同VPC内的子网ID。
+   */
+  SubnetId?: string;
 }
 
 /**
@@ -453,6 +489,10 @@ export interface AddUK8SUHostNodeRequest {
    */
   BootDiskType?: string;
   /**
+   * 系统盘大小，单位GB。默认40。范围：[40, 500]。注意SSD本地盘无法调整。
+   */
+  BootDiskSize?: number;
+  /**
    * 磁盘类型。请参考[[api:uhost-api:disk_type|磁盘类型]]。默认为SSD云盘
    */
   DataDiskType?: string;
@@ -468,10 +508,6 @@ export interface AddUK8SUHostNodeRequest {
    * 云主机机型。枚举值["N", "C", "G", "O", "OS"]。参考[[api:uhost-api:uhost_type|云主机机型说明]]。
    */
   MachineType?: string;
-  /**
-   * 最低cpu平台，枚举值["Intel/Auto", "Intel/IvyBridge", "Intel/Haswell", "Intel/Broadwell", "Intel/Skylake", "Intel/Cascadelake"；"Intel/CascadelakeR"; “Amd/Epyc2”,"Amd/Auto"],默认值是"Intel/Auto"
-   */
-  MinmalCpuPlatform?: string;
   /**
    * GPU类型，枚举值["K80", "P40", "V100",]，MachineType为G时必填
    */
@@ -512,6 +548,93 @@ export interface AddUK8SUHostNodeRequest {
    * 用户自定义Shell脚本。与UserData的区别在于InitScript在节点初始化完毕后才执行，UserData则是云主机初始化时执行。
    */
   InitScript?: string;
+  /**
+   * 最低cpu平台，枚举值["Intel/Auto", "Intel/IvyBridge", "Intel/Haswell", "Intel/Broadwell", "Intel/Skylake", "Intel/Cascadelake"；"Intel/CascadelakeR"; “Amd/Epyc2”,"Amd/Auto"],默认值是"Intel/Auto"
+   */
+  MinimalCpuPlatform?: string;
+  /**
+   * Node节点污点，形式为key=value:effect，多组taints用”,“隔开,最多支持五组。
+   */
+  Taints?: string;
+  /**
+   * 业务组
+   */
+  Tag?: string;
+  /**
+   * 节点池id
+   */
+  NodeGroupId?: string;
+  /**
+   * 主机安全模式。Firewall：防火墙；SecGroup：安全组；默认值：Firewall。
+   */
+  SecurityMode?: string;
+  /**
+   * 自定义主机名前缀。完整的自定义主机名为{NamePrefix}-{NodeIP}。
+   */
+  NamePrefix?: string;
+  /**
+   * 网络增强特性。枚举值：Normal，不开启; Super，开启网络增强1.0； Ultra，开启网络增强2.0；Extreme，开启网络增强3.0; Infiniband, 开启网络增强4.0（详情参考主机官网文档）
+   */
+  NetCapability?: string;
+  /**
+   * 弹性网卡特性。开启了弹性网卡权限位，此特性才生效，默认 false 未开启，true 开启。
+   */
+  UNIFeature?: boolean;
+  /**
+   *
+   */
+  NetworkInterface?: {
+    /**
+     *
+     */
+    EIP?: {
+      /**
+       * 【若绑定EIP，此参数必填】弹性IP的外网带宽, 单位为Mbps. 共享带宽模式下非必传, 非共享带宽模式必须指定非0Mbps带宽. 各地域非共享带宽的带宽范围如下： 流量计费[1-300]，带宽计费[1-800]
+       */
+      Bandwidth?: number;
+      /**
+       * 弹性IP的计费模式. 枚举值: "Traffic", 流量计费; "Bandwidth", 带宽计费; "ShareBandwidth",共享带宽模式. "Free":免费带宽模式,默认为 "Bandwidth"
+       */
+      PayMode?: string;
+      /**
+       * 绑定的共享带宽Id，仅当PayMode为ShareBandwidth时有效
+       */
+      ShareBandwidthId?: string;
+      /**
+       * 【若绑定EIP，此参数必填】弹性IP的线路。枚举值: 国际: International BGP: Bgp 各地域允许的线路参数如下: cn-sh1: Bgp cn-sh2: Bgp cn-gd: Bgp cn-bj1: Bgp cn-bj2: Bgp hk: International us-ca: International th-bkk: International kr-seoul:International us-ws:International ge-fra:International sg:International tw-kh:International.其他海外线路均为 International
+       */
+      OperatorName?: string;
+      /**
+       * 当前EIP代金券id。请通过DescribeCoupon接口查询，或登录用户中心查看。
+       */
+      CouponId?: string;
+    };
+  }[];
+  /**
+   * 防火墙ID，默认：Web推荐防火墙。如何查询SecurityGroupId请参见 [DescribeFirewall](api/unet-api/describe_firewall.html)。
+   */
+  SecurityGroupId?: string;
+  /**
+   *
+   */
+  SecGroupId?: {
+    /**
+     * 安全组 ID。至多可以同时绑定5个安全组。
+     */
+    Id?: string;
+    /**
+     * 安全组优先级。取值范围[1, 5]
+     */
+    Priority?: string;
+    /**
+     * 安全组名称。
+     */
+    Name?: string;
+  }[];
+  /**
+   * UK8S用户标签，key=value形式,多组用”,“隔开，最多5组。 如env=pro,type=game
+   */
+  UserLabels?: string;
 }
 
 /**
@@ -553,9 +676,26 @@ export interface CreateUK8SClusterV2Request {
    */
   Master?: {
     /**
-     * Master节点所属可用区，需要设置 Master.0.Zone、 Master.1.Zone、Master.2.Zone 三个 Master 节点的可用区。 三个节点可部署在不同可用区。参见 [可用区列表](../summary/regionlist.html)
+     * Master节点所属可用区，需要设置 Master.0.Zone、 Master.1.Zone、Master.2.Zone 三个 Master 节点的可用区。 三个节点可部署在不同可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
      */
     Zone: string;
+    /**
+     *
+     */
+    SecGroupId?: {
+      /**
+       * 安全组 ID。至多可以同时绑定5个安全组。
+       */
+      Id?: string;
+      /**
+       * 安全组优先级。取值范围[1, 5]
+       */
+      Priority?: string;
+      /**
+       * 安全组名称。
+       */
+      Name?: string;
+    }[];
   }[];
   /**
    * Master节点的云主机机型（V2.0），如["N", "C", "O", "OS"]，具体请参照云主机机型。
@@ -574,7 +714,7 @@ export interface CreateUK8SClusterV2Request {
    */
   Nodes?: {
     /**
-     * 一组Nodes节点所属可用区，可创建多组Nodes节点，如一组是CPU Nodes节点，另一组是GPU Nodes节点。参见 [可用区列表](../summary/regionlist.html)
+     * 一组Nodes节点所属可用区，可创建多组Nodes节点，如一组是CPU Nodes节点，另一组是GPU Nodes节点。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
      */
     Zone: string;
     /**
@@ -610,13 +750,13 @@ export interface CreateUK8SClusterV2Request {
      */
     BootDiskType?: string;
     /**
+     * Node节点的系统盘大小，单位GB，默认为40。范围：[40, 500]。注意SSD本地盘无法调整。
+     */
+    BootDiskSIze?: number;
+    /**
      * 一组Node节点的数据盘类型，请参考[[api:uhost-api:disk_type|磁盘类型]]。默认为SSD云盘
      */
     DataDiskType?: string;
-    /**
-     * Node节点的最低cpu平台，不选则随机。枚举值["Intel/Auto", "Intel/IvyBridge", "Intel/Haswell", "Intel/Broadwell", "Intel/Skylake", "Intel/Cascadelake"。
-     */
-    MinmalCpuPlatform?: string;
     /**
      * 一组Node节点的GPU类型，枚举值["K80", "P40", "V100"]，最新值参考Console。
      */
@@ -629,19 +769,94 @@ export interface CreateUK8SClusterV2Request {
      * 数据磁盘大小，单位GB。默认0。范围 ：[20, 1000]
      */
     DataDiskSize?: number;
+    /**
+     * Node节点的最低cpu平台，不选则随机。枚举值["Intel/Auto", "Intel/IvyBridge", "Intel/Haswell", "Intel/Broadwell", "Intel/Skylake", "Intel/Cascadelake"。
+     */
+    MinimalCpuPlatform?: string;
+    /**
+     * Node节点污点，形式为key=value:effect，多组taints用”,“隔开,最多支持五组。
+     */
+    Taints?: string;
+    /**
+     * 主机安全模式。Firewall：防火墙；SecGroup：安全组；默认值：Firewall。
+     */
+    SecurityMode?: string;
+    /**
+     * 一组Node的自定义主机名前缀。 完整的自定义主机名为{NamePrefix}-{NodeIP}。
+     */
+    NamePrefix?: string;
+    /**
+     * Node节点的镜像 ID，不填则使用ImageId参数。支持用户自定义镜像。
+     */
+    ImageId?: string;
+    /**
+     * 弹性网卡特性。开启了弹性网卡权限位，此特性才生效，默认 false 未开启，true 开启。
+     */
+    UNIFeature?: string;
+    /**
+     *
+     */
+    NetworkInterface?: {
+      /**
+       *
+       */
+      EIP?: {
+        /**
+         * 【若绑定EIP，此参数必填】弹性IP的外网带宽, 单位为Mbps. 共享带宽模式下非必传, 非共享带宽模式必须指定非0Mbps带宽. 各地域非共享带宽的带宽范围如下： 流量计费[1-300]，带宽计费[1-800]
+         */
+        Bandwidth?: number;
+        /**
+         * 弹性IP的计费模式. 枚举值: "Traffic", 流量计费; "Bandwidth", 带宽计费; "ShareBandwidth",共享带宽模式. "Free":免费带宽模式,默认为 "Bandwidth"
+         */
+        PayMode?: string;
+        /**
+         * 绑定的共享带宽Id，仅当PayMode为ShareBandwidth时有效
+         */
+        ShareBandwidthId?: string;
+        /**
+         * 【若绑定EIP，此参数必填】弹性IP的线路。枚举值: 国际: International BGP: Bgp 各地域允许的线路参数如下: cn-sh1: Bgp cn-sh2: Bgp cn-gd: Bgp cn-bj1: Bgp cn-bj2: Bgp hk: International us-ca: International th-bkk: International kr-seoul:International us-ws:International ge-fra:International sg:International tw-kh:International.其他海外线路均为 International
+         */
+        OperatorName?: string;
+        /**
+         * 当前EIP代金券id。请通过DescribeCoupon接口查询，或登录用户中心查看。
+         */
+        CouponId?: string;
+      };
+    }[];
+    /**
+     * 防火墙ID，默认：Web推荐防火墙。如何查询SecurityGroupId请参见 [DescribeFirewall](api/unet-api/describe_firewall.html)。
+     */
+    SecurityGroupId?: string;
+    /**
+     *
+     */
+    SecGroupId?: {
+      /**
+       * 安全组 ID。至多可以同时绑定5个安全组。
+       */
+      Id?: string;
+      /**
+       * 安全组优先级。取值范围[1, 5]
+       */
+      Priority?: string;
+      /**
+       * 安全组名称。
+       */
+      Name?: string;
+    }[];
   }[];
   /**
    * Master节点系统盘类型。请参考[[api:uhost-api:disk_type|磁盘类型]]。默认为SSD云盘
    */
   MasterBootDiskType?: string;
   /**
+   * Master节点系统盘大小，单位GB，默认为40。范围：[40, 500]。注意SSD本地盘无法调整。
+   */
+  MasterBootDiskSize?: number;
+  /**
    * Master节点数据盘类型。请参考[[api:uhost-api:disk_type|磁盘类型]]。默认为SSD云盘
    */
   MasterDataDiskType?: string;
-  /**
-   * Master节点的最低cpu平台，不选则随机。枚举值["Intel/Auto", "Intel/IvyBridge", "Intel/Haswell", "Intel/Broadwell", "Intel/Skylake", "Intel/Cascadelake"。
-   */
-  MasterMinmalCpuPlatform?: string;
   /**
    * Master节点的数据盘大小，单位GB，默认为0。范围 ：[20, 1000]
    */
@@ -687,6 +902,34 @@ export interface CreateUK8SClusterV2Request {
    * 用户自定义脚本，与UserData不同，自定义脚本将在集群安装完毕后执行。注意：1、总数据量大小不超多16K；2、使用base64编码。
    */
   InitScript?: string;
+  /**
+   * Master节点的最低cpu平台，不选则随机。枚举值["Intel/Auto", "Intel/IvyBridge", "Intel/Haswell", "Intel/Broadwell", "Intel/Skylake", "Intel/Cascadelake"。
+   */
+  MasterMinimalCpuPlatform?: string;
+  /**
+   * 创建集群的时候定义clusterdomain
+   */
+  ClusterDomain?: string;
+  /**
+   * 业务组
+   */
+  Tag?: string;
+  /**
+   * Master节点的镜像 ID，不填则使用ImageId参数。支持用户自定义镜像。
+   */
+  MasterImageId?: string;
+  /**
+   * master lb 类型默认ulb，可选ulb nlb
+   */
+  LbClass?: string;
+  /**
+   * LbClass为nlb的时候支持的源ip转发模式，目前只支持Toa,为空则不开源ip功能 枚举："",Toa
+   */
+  ForwardSrcIPMethod?: string;
+  /**
+   * UK8S用户标签，key=value形式,多组用”,“隔开，最多5组。 如env=pro,type=game
+   */
+  UserLabels?: string;
 }
 
 /**
@@ -1284,6 +1527,63 @@ export interface DescribeUK8SNodeResponse {
 }
 
 /**
+ * GetClusterConfig - 获取集群配置文件，管理集群的凭证
+ */
+export interface GetClusterConfigRequest {
+  /**
+   * 集群ID
+   */
+  ClusterId: string;
+}
+
+/**
+ * GetClusterConfig - 获取集群配置文件，管理集群的凭证
+ */
+export interface GetClusterConfigResponse {
+  /**
+   * 配置信息
+   */
+  KubeConfig: string;
+  /**
+   * 开启公网apiserver的情况下，有数据返回。
+   */
+  ExternalKubeConfig?: string;
+  /**
+   * 用于标示 kubeconfig 是否可以进行替换更新
+   */
+  Updatable?: boolean;
+}
+
+/**
+ * GetUK8SVersions - 获取支持创建的UK8S集群版本、Containerd版本
+ */
+export interface GetUK8SVersionsRequest {
+  /**
+   * 集群类型，可选值为[Dedicated]
+   */
+  Kind: string;
+}
+
+/**
+ * GetUK8SVersions - 获取支持创建的UK8S集群版本、Containerd版本
+ */
+export interface GetUK8SVersionsResponse {
+  /**
+   * UK8S 版本信息列表。
+   */
+  Data?: {
+    /**
+     * K8S 版本
+     */
+    K8sVersion: string;
+    /**
+     * Containerd 版本
+     */
+    ContainerdVersion: string;
+  }[];
+}
+
+/**
  * ListUK8SClusterNodeV2 - 获取UK8S集群节点信息
  */
 export interface ListUK8SClusterNodeV2Request {
@@ -1530,6 +1830,10 @@ export interface ListUK8SNodeGroupResponse {
    */
   NodeGroupList?: {
     /**
+     * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
+     */
+    Zone?: string;
+    /**
      * 节点池ID
      */
     NodeGroupId?: string;
@@ -1570,6 +1874,10 @@ export interface ListUK8SNodeGroupResponse {
      */
     BootDiskType?: string;
     /**
+     * 系统盘大小
+     */
+    BootDiskSize?: number;
+    /**
      * 数据盘大小
      */
     DataDiskSize?: number;
@@ -1589,6 +1897,34 @@ export interface ListUK8SNodeGroupResponse {
      * 节点id列表
      */
     NodeList?: string[];
+    /**
+     * 子网 ID。默认为集群创建时填写的子网ID，也可以填写集群同VPC内的子网ID。
+     */
+    SubnetId?: string;
+    /**
+     * 硬件隔离组id。可通过DescribeIsolationGroup获取。
+     */
+    IsolationGroupId?: string;
+    /**
+     * int默认110，生产环境建议小于等于110。
+     */
+    MaxPods?: string;
+    /**
+     * 用户自定义数据。当镜像支持Cloud-init Feature时可填写此字段。注意：1、总数据量大小不超过 16K；2、使用base64编码。
+     */
+    UserData?: string;
+    /**
+     * 用户自定义Shell脚本。与UserData的区别在于InitScript在节点初始化完毕后才执行，UserData则是云主机初始化时执行。
+     */
+    InitScript?: string;
+    /**
+     * Node节点污点，形式为key=value:effect，多组taints用”,“隔开,最多支持五组。
+     */
+    Taints?: string;
+    /**
+     * Node节点标签。key=value形式,多组用”,“隔开，最多5组。 如env=pro,type=game
+     */
+    Labels?: string;
   }[];
 }
 
