@@ -23,6 +23,7 @@ export declare class Client extends BaseClient {
     ues(): any;
     ufile(): any;
     ufs(): any;
+    ugn(): any;
     uhadoop(): any;
     uhost(): any;
     uk8s(): any;
