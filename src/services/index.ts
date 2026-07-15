@@ -19,6 +19,7 @@ const UECClient = require('./uec').default;
 const UESClient = require('./ues').default;
 const UFileClient = require('./ufile').default;
 const UFSClient = require('./ufs').default;
+const UGNClient = require('./ugn').default;
 const UHadoopClient = require('./uhadoop').default;
 const UHostClient = require('./uhost').default;
 const UK8SClient = require('./uk8s').default;
@@ -160,6 +161,13 @@ export class Client extends BaseClient {
 
   ufs() {
     return new UFSClient({
+      config: this.config,
+      credential: this.credential,
+    });
+  }
+
+  ugn() {
+    return new UGNClient({
       config: this.config,
       credential: this.credential,
     });
