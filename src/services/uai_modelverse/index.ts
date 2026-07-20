@@ -88,6 +88,20 @@ export default class UAIModelverseClient extends Client {
   }
 
   /**
+   * DownloadUMInferRequestLog - 导出推理请求日志。单次导出时间范围最长 30 天，最多导出 2000 万条日志；同一 TopOrganizationID 同一时间仅允许 1 个导出任务在执行，已有任务执行中时请稍后重试。
+   *
+   * See also: https://docs.ucloud.cn/api/uai-modelverse-api/download_um_infer_request_log
+   */
+  downloadUMInferRequestLog(
+    request?: DownloadUMInferRequestLogRequest
+  ): Promise<DownloadUMInferRequestLogResponse> {
+    const args = { Action: 'DownloadUMInferRequestLog', ...(request || {}) };
+    return this.invoke(new Request(args)).then(
+      (resp) => resp.toObject() as DownloadUMInferRequestLogResponse
+    );
+  }
+
+  /**
    * GetFilterOptions - 查询可用于订单筛选的资源、模型、地域等选项列表
    *
    * See also: https://docs.ucloud.cn/api/uai-modelverse-api/get_filter_options
@@ -116,30 +130,44 @@ export default class UAIModelverseClient extends Client {
   }
 
   /**
-   * GetUMInferAPIModel - 获取该apikey能调用api的模型列表
+   * GetUFSquareModelDetail - 获取广场模型详情
    *
-   * See also: https://docs.ucloud.cn/api/uai-modelverse-api/get_um_infer_api_model
+   * See also: https://docs.ucloud.cn/api/uai-modelverse-api/get_uf_square_model_detail
    */
-  getUMInferAPIModel(
-    request?: GetUMInferAPIModelRequest
-  ): Promise<GetUMInferAPIModelResponse> {
-    const args = { Action: 'GetUMInferAPIModel', ...(request || {}) };
+  getUFSquareModelDetail(
+    request?: GetUFSquareModelDetailRequest
+  ): Promise<GetUFSquareModelDetailResponse> {
+    const args = { Action: 'GetUFSquareModelDetail', ...(request || {}) };
     return this.invoke(new Request(args)).then(
-      (resp) => resp.toObject() as GetUMInferAPIModelResponse
+      (resp) => resp.toObject() as GetUFSquareModelDetailResponse
     );
   }
 
   /**
-   * GetUMInferTokenUsage - 获取某个key下的某个模型的token使用量
+   * GetUFSquareModelPrices - 批量查询模型价格
    *
-   * See also: https://docs.ucloud.cn/api/uai-modelverse-api/get_um_infer_token_usage
+   * See also: https://docs.ucloud.cn/api/uai-modelverse-api/get_uf_square_model_prices
    */
-  getUMInferTokenUsage(
-    request?: GetUMInferTokenUsageRequest
-  ): Promise<GetUMInferTokenUsageResponse> {
-    const args = { Action: 'GetUMInferTokenUsage', ...(request || {}) };
+  getUFSquareModelPrices(
+    request?: GetUFSquareModelPricesRequest
+  ): Promise<GetUFSquareModelPricesResponse> {
+    const args = { Action: 'GetUFSquareModelPrices', ...(request || {}) };
     return this.invoke(new Request(args)).then(
-      (resp) => resp.toObject() as GetUMInferTokenUsageResponse
+      (resp) => resp.toObject() as GetUFSquareModelPricesResponse
+    );
+  }
+
+  /**
+   * GetUMInferRequestLogDetail - 原始日志详情
+   *
+   * See also: https://docs.ucloud.cn/api/uai-modelverse-api/get_um_infer_request_log_detail
+   */
+  getUMInferRequestLogDetail(
+    request?: GetUMInferRequestLogDetailRequest
+  ): Promise<GetUMInferRequestLogDetailResponse> {
+    const args = { Action: 'GetUMInferRequestLogDetail', ...(request || {}) };
+    return this.invoke(new Request(args)).then(
+      (resp) => resp.toObject() as GetUMInferRequestLogDetailResponse
     );
   }
 
@@ -186,6 +214,20 @@ export default class UAIModelverseClient extends Client {
   }
 
   /**
+   * ListUFSquareModelFiltersAuth - 登录状态下获取模型广场过滤器中内容
+   *
+   * See also: https://docs.ucloud.cn/api/uai-modelverse-api/list_uf_square_model_filters_auth
+   */
+  listUFSquareModelFiltersAuth(
+    request?: ListUFSquareModelFiltersAuthRequest
+  ): Promise<ListUFSquareModelFiltersAuthResponse> {
+    const args = { Action: 'ListUFSquareModelFiltersAuth', ...(request || {}) };
+    return this.invoke(new Request(args)).then(
+      (resp) => resp.toObject() as ListUFSquareModelFiltersAuthResponse
+    );
+  }
+
+  /**
    * ListUMInferAPIKey - 列表查询apikey
    *
    * See also: https://docs.ucloud.cn/api/uai-modelverse-api/list_um_infer_api_key
@@ -196,6 +238,20 @@ export default class UAIModelverseClient extends Client {
     const args = { Action: 'ListUMInferAPIKey', ...(request || {}) };
     return this.invoke(new Request(args)).then(
       (resp) => resp.toObject() as ListUMInferAPIKeyResponse
+    );
+  }
+
+  /**
+   * ListUMInferRequestLogs - 日志明细列表
+   *
+   * See also: https://docs.ucloud.cn/api/uai-modelverse-api/list_um_infer_request_logs
+   */
+  listUMInferRequestLogs(
+    request?: ListUMInferRequestLogsRequest
+  ): Promise<ListUMInferRequestLogsResponse> {
+    const args = { Action: 'ListUMInferRequestLogs', ...(request || {}) };
+    return this.invoke(new Request(args)).then(
+      (resp) => resp.toObject() as ListUMInferRequestLogsResponse
     );
   }
 
@@ -224,6 +280,20 @@ export default class UAIModelverseClient extends Client {
     const args = { Action: 'ListUnpaidOrders', ...(request || {}) };
     return this.invoke(new Request(args)).then(
       (resp) => resp.toObject() as ListUnpaidOrdersResponse
+    );
+  }
+
+  /**
+   * StartPayUnpaidOrders - 批量支付欠费订单，指定 OrderNos 支付，最多 50 个
+   *
+   * See also: https://docs.ucloud.cn/api/uai-modelverse-api/start_pay_unpaid_orders
+   */
+  startPayUnpaidOrders(
+    request?: StartPayUnpaidOrdersRequest
+  ): Promise<StartPayUnpaidOrdersResponse> {
+    const args = { Action: 'StartPayUnpaidOrders', ...(request || {}) };
+    return this.invoke(new Request(args)).then(
+      (resp) => resp.toObject() as StartPayUnpaidOrdersResponse
     );
   }
 
@@ -599,6 +669,54 @@ export interface DownloadOrderSummaryResponse {
 }
 
 /**
+ * DownloadUMInferRequestLog - 导出推理请求日志。单次导出时间范围最长 30 天，最多导出 2000 万条日志；同一 TopOrganizationID 同一时间仅允许 1 个导出任务在执行，已有任务执行中时请稍后重试。
+ */
+export interface DownloadUMInferRequestLogRequest {
+  /**
+   * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
+   */
+  Zone: string;
+  /**
+   * 导出开始时间，Unix 毫秒时间戳
+   */
+  StartTime: number;
+  /**
+   * 导出结束时间，Unix 毫秒时间戳，最长支持 30 天范围
+   */
+  EndTime: number;
+  /**
+   * 接收导出结果的邮箱地址
+   */
+  Email: string;
+  /**
+   * 模型名称列表，用于过滤
+   */
+  ModelNames?: string[];
+  /**
+   * API Key ID 列表，用于过滤
+   */
+  ApiKeyIds?: string[];
+  /**
+   * 请求 ID，用于精确过滤
+   */
+  RequestId?: string;
+}
+
+/**
+ * DownloadUMInferRequestLog - 导出推理请求日志。单次导出时间范围最长 30 天，最多导出 2000 万条日志；同一 TopOrganizationID 同一时间仅允许 1 个导出任务在执行，已有任务执行中时请稍后重试。
+ */
+export interface DownloadUMInferRequestLogResponse {
+  /**
+   * 导出任务 ID
+   */
+  TaskId?: string;
+  /**
+   * 本次导出查询命中的日志行数
+   */
+  TotalCount?: number;
+}
+
+/**
  * GetFilterOptions - 查询可用于订单筛选的资源、模型、地域等选项列表
  */
 export interface GetFilterOptionsRequest {
@@ -824,37 +942,33 @@ export interface GetOrderAmountResponse {
 }
 
 /**
- * GetUMInferAPIModel - 获取该apikey能调用api的模型列表
+ * GetUFSquareModelDetail - 获取广场模型详情
  */
-export interface GetUMInferAPIModelRequest {
+export interface GetUFSquareModelDetailRequest {
   /**
-   * apikey 的id
+   * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
    */
-  KeyId?: string;
+  Zone: string;
   /**
-   * 模型类型，1: 文本生成，2: 图片生成。
+   * 主键
    */
-  ModelType?: number;
-  /**
-   * 模型广场的id，用来跳转体验中心
-   */
-  SquareId?: string;
+  Id: string;
 }
 
 /**
- * GetUMInferAPIModel - 获取该apikey能调用api的模型列表
+ * GetUFSquareModelDetail - 获取广场模型详情
  */
-export interface GetUMInferAPIModelResponse {
+export interface GetUFSquareModelDetailResponse {
   /**
-   * 模型名称的字符串列表
+   * 模型
    */
-  Data: {
+  SquareModel: {
     /**
-     * 使用OpenAI接口调用时，填入的 model值
+     * 制造商
      */
-    ServedModelName?: string;
+    Manufacturer?: string;
     /**
-     * id
+     * 主键
      */
     Id?: string;
     /**
@@ -862,19 +976,47 @@ export interface GetUMInferAPIModelResponse {
      */
     Name?: string;
     /**
-     * 描述
+     * 简要描述
      */
     SimpleDescribe?: string;
+    /**
+     * 详细描述
+     */
+    Describe?: string;
     /**
      * 语言
      */
     Language?: string[];
     /**
-     * 图标链接
+     * 模型长度
+     */
+    MaxModelLen?: number;
+    /**
+     * 模型类型
+     */
+    ModelType?: string;
+    /**
+     * HuggingFace 更新时间
+     */
+    HfUpdateTime?: number;
+    /**
+     * 创建时间
+     */
+    CreateAt?: number;
+    /**
+     * 更新时间
+     */
+    UpdateAt?: number;
+    /**
+     * 模型能力
+     */
+    SupportedCapabilities?: string[];
+    /**
+     * 图标
      */
     Icon?: string;
     /**
-     * 模型价格
+     * 定价策略
      */
     Pricing?: {
       /**
@@ -890,92 +1032,276 @@ export interface GetUMInferAPIModelResponse {
        */
       Image?: number;
       /**
+       * 生视频定价
+       */
+      Video?: string;
+      /**
        * 币种
        */
       Currency?: string;
+      /**
+       * 单位（中文），如“次” “百万”
+       */
+      Unit?: string;
+      /**
+       * 单位（English），如“Time” “Million”
+       */
+      UnitEn?: string;
     };
     /**
-     * 创建时间
+     * 价格阶梯（有序数组）
      */
-    CreateAt?: number;
+    Tiers?: {
+      /**
+       * 该档位下的收费列表（有序数组）
+       */
+      Rates: {
+        /**
+         * 收费项描述英文描述
+         */
+        ChargeItemDescriptionEn: string;
+        /**
+         * 货币单位
+         */
+        Currency: string;
+        /**
+         * 计价单位
+         */
+        Unit: string;
+        /**
+         * 计价单位英文
+         */
+        UnitEn: string;
+        /**
+         * 收费项：input/output/thinking/tool...
+         */
+        ChargeItem?: string;
+        /**
+         * 收费项描述
+         */
+        ChargeItemDescription?: string;
+        /**
+         * 价格
+         */
+        Price?: string;
+      }[];
+      /**
+       * 档位描述（例如 "标准上下文 32k"）
+       */
+      DescriptionEn: string;
+      /**
+       * 档位/条件（例如 "32k"、"128k"）
+       */
+      Condition?: string;
+      /**
+       * 档位描述（例如 "标准上下文 32k"）
+       */
+      Description?: string;
+    }[];
+  };
+}
+
+/**
+ * GetUFSquareModelPrices - 批量查询模型价格
+ */
+export interface GetUFSquareModelPricesRequest {
+  /**
+   * 模型名称模糊搜索（例：deepseek-r1）
+   */
+  Keyword?: string;
+  /**
+   * 列表起始位置偏移量，默认为0
+   */
+  Offset?: number;
+  /**
+   * 返回数据长度，默认为20
+   */
+  Limit?: number;
+}
+
+/**
+ * GetUFSquareModelPrices - 批量查询模型价格
+ */
+export interface GetUFSquareModelPricesResponse {
+  /**
+   * 匹配模型的价格信息
+   */
+  Models: {
     /**
-     * 更新时间
+     * 制造商
      */
-    UpdateAt?: number;
+    Manufacturer: string;
+    /**
+     * 模型名称
+     */
+    ModelName?: string;
+    /**
+     * ModelId
+     */
+    ModelId?: string;
+    /**
+     * 价格阶梯（有序数组）
+     */
+    Tiers?: {
+      /**
+       * 该档位下的收费列表（有序数组）
+       */
+      Rates: {
+        /**
+         * 收费项描述英文描述
+         */
+        ChargeItemDescriptionEn: string;
+        /**
+         * 货币单位
+         */
+        Currency: string;
+        /**
+         * 计价单位
+         */
+        Unit: string;
+        /**
+         * 计价单位英文
+         */
+        UnitEn: string;
+        /**
+         * 收费项：input/output/thinking/tool...
+         */
+        ChargeItem?: string;
+        /**
+         * 收费项描述
+         */
+        ChargeItemDescription?: string;
+        /**
+         * 价格
+         */
+        Price?: string;
+      }[];
+      /**
+       * 档位描述（例如 "标准上下文 32k"）
+       */
+      DescriptionEn: string;
+      /**
+       * 档位/条件（例如 "32k"、"128k"）
+       */
+      Condition?: string;
+      /**
+       * 档位描述（例如 "标准上下文 32k"）
+       */
+      Description?: string;
+    }[];
   }[];
+  /**
+   * 总条数用于翻页
+   */
+  TotalCount?: number;
 }
 
 /**
- * GetUMInferTokenUsage - 获取某个key下的某个模型的token使用量
+ * GetUMInferRequestLogDetail - 原始日志详情
  */
-export interface GetUMInferTokenUsageRequest {
+export interface GetUMInferRequestLogDetailRequest {
   /**
-   * apikey的id
+   * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
    */
-  KeyId: string;
+  Zone: string;
   /**
-   * 模型名称
+   * 请求 ID
    */
-  Model: string;
-  /**
-   * 开始时间戳
-   */
-  StartTime: number;
-  /**
-   * 结束时间戳
-   */
-  EndTime: number;
+  RequestId: string;
 }
 
 /**
- * GetUMInferTokenUsage - 获取某个key下的某个模型的token使用量
+ * GetUMInferRequestLogDetail - 原始日志详情
  */
-export interface GetUMInferTokenUsageResponse {
+export interface GetUMInferRequestLogDetailResponse {
   /**
-   * token使用详情
+   * 请求日志详情
    */
   Data: {
     /**
-     * 总token量
+     * 请求 ID
      */
-    Total?: number;
+    RequestId?: string;
     /**
-     * 输出总token
+     * 顶级组织 ID
      */
-    InTotal?: number;
+    TopOrganizationId?: string;
     /**
-     * 输出总token
+     * 组织 ID
      */
-    OutTotal?: number;
+    OrganizationId?: string;
     /**
-     * 生图总张数
+     * 客户端 IP
      */
-    ImageGenerationNum?: number;
+    ClientIp?: string;
     /**
-     * 请求总次数
+     * 业务地域
      */
-    RequestTotal?: number;
+    Region?: string;
     /**
-     * 每个时间戳的token使用量
+     * 请求开始时间，Unix 毫秒时间戳
      */
-    Usages?: {
-      /**
-       * 类型，in输入 out输出 total总  request_count 请求次数 image_generation 生图张数
-       */
-      Type?: string;
-      /**
-       * 数量
-       */
-      Count?: number;
-      /**
-       * unix时间戳
-       */
-      Timestamp?: number;
-      /**
-       * 模型名称
-       */
-      Model?: string;
-    }[];
+    StartTime?: number;
+    /**
+     * 请求开始时间，可读格式
+     */
+    StartTimeReadable?: string;
+    /**
+     * 模型名称
+     */
+    ModelName?: string;
+    /**
+     * 是否流式请求
+     */
+    IsStream?: boolean;
+    /**
+     * API Key ID
+     */
+    ApiKeyId?: string;
+    /**
+     * HTTP 状态码
+     */
+    HttpStatusCode?: number;
+    /**
+     * 错误码
+     */
+    ErrorCode?: string;
+    /**
+     * 错误信息
+     */
+    ErrorMessage?: string;
+    /**
+     * 请求是否成功
+     */
+    IsSuccess?: boolean;
+    /**
+     * 请求总延迟，单位毫秒
+     */
+    Latency?: number;
+    /**
+     * 首 Token 延迟，单位毫秒
+     */
+    FirstTokenLatency?: number;
+    /**
+     * 输出 Token 吞吐
+     */
+    OutputTokenThroughput?: number;
+    /**
+     * 模型返回的 usage 原文 JSON
+     */
+    Usage?: string;
+    /**
+     * 请求原文，本期返回为空
+     */
+    Request?: string;
+    /**
+     * 响应原文，本期返回为空
+     */
+    Response?: string;
+    /**
+     * 扩展信息，本期返回为空
+     */
+    Extras?: string;
   };
 }
 
@@ -1408,6 +1734,10 @@ export interface ListUFSquareModelResponse {
    */
   SquareModels: {
     /**
+     * 制造商
+     */
+    Manufacturer?: string;
+    /**
      * 主键
      */
     Id?: string;
@@ -1472,12 +1802,89 @@ export interface ListUFSquareModelResponse {
        */
       Image?: number;
       /**
+       * 生视频定价
+       */
+      Video?: string;
+      /**
        * 币种
        */
       Currency?: string;
+      /**
+       * 单位（中文），如“次” “百万”
+       */
+      Unit?: string;
+      /**
+       * 单位（English），如“Time” “Million”
+       */
+      UnitEn?: string;
     };
+    /**
+     * 价格阶梯（有序数组）
+     */
+    Tiers?: {
+      /**
+       * 该档位下的收费列表（有序数组）
+       */
+      Rates: {
+        /**
+         * 收费项描述英文描述
+         */
+        ChargeItemDescriptionEn: string;
+        /**
+         * 货币单位
+         */
+        Currency: string;
+        /**
+         * 计价单位
+         */
+        Unit: string;
+        /**
+         * 计价单位英文
+         */
+        UnitEn: string;
+        /**
+         * 收费项：input/output/thinking/tool...
+         */
+        ChargeItem?: string;
+        /**
+         * 收费项描述
+         */
+        ChargeItemDescription?: string;
+        /**
+         * 价格
+         */
+        Price?: string;
+      }[];
+      /**
+       * 档位描述（例如 "标准上下文 32k"）
+       */
+      DescriptionEn: string;
+      /**
+       * 档位/条件（例如 "32k"、"128k"）
+       */
+      Condition?: string;
+      /**
+       * 档位描述（例如 "标准上下文 32k"）
+       */
+      Description?: string;
+    }[];
   }[];
 }
+
+/**
+ * ListUFSquareModelFiltersAuth - 登录状态下获取模型广场过滤器中内容
+ */
+export interface ListUFSquareModelFiltersAuthRequest {
+  /**
+   * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
+   */
+  Zone: string;
+}
+
+/**
+ * ListUFSquareModelFiltersAuth - 登录状态下获取模型广场过滤器中内容
+ */
+export interface ListUFSquareModelFiltersAuthResponse {}
 
 /**
  * ListUMInferAPIKey - 列表查询apikey
@@ -1582,6 +1989,157 @@ export interface ListUMInferAPIKeyResponse {
      */
     GrantedModels?: string[];
   }[];
+}
+
+/**
+ * ListUMInferRequestLogs - 日志明细列表
+ */
+export interface ListUMInferRequestLogsRequest {
+  /**
+   * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
+   */
+  Zone: string;
+  /**
+   * 查询开始时间，Unix 毫秒时间戳
+   */
+  StartTime: number;
+  /**
+   * 查询结束时间，Unix 毫秒时间戳，必须大于等于 StartTime
+   */
+  EndTime: number;
+  /**
+   * 模型名称列表，用于过滤
+   */
+  ModelNames?: string[];
+  /**
+   * API Key ID 列表，用于过滤
+   */
+  ApiKeyIds?: string[];
+  /**
+   * 请求 ID，用于精确过滤
+   */
+  RequestId?: string;
+  /**
+   * 列表偏移量，默认 0
+   */
+  Offset?: number;
+  /**
+   * 返回数量，默认 20
+   */
+  Limit?: number;
+}
+
+/**
+ * ListUMInferRequestLogs - 日志明细列表
+ */
+export interface ListUMInferRequestLogsResponse {
+  /**
+   * 日志明细列表返回数据
+   */
+  Data: {
+    /**
+     * 汇总信息
+     */
+    Summary?: {
+      /**
+       * 查询条件命中的总请求数
+       */
+      TotalRequests?: number;
+      /**
+       * 查询条件命中的失败请求数
+       */
+      FailedRequests?: number;
+    };
+    /**
+     * 日志列表，数组元素为 RequestLogItem
+     */
+    Items?: {
+      /**
+       * 请求 ID
+       */
+      RequestId?: string;
+      /**
+       * 请求开始时间，Unix 毫秒时间戳
+       */
+      StartTime?: number;
+      /**
+       * 请求开始时间，可读格式
+       */
+      StartTimeReadable?: string;
+      /**
+       * 业务地域
+       */
+      Region?: string;
+      /**
+       * 模型名称
+       */
+      ModelName?: string;
+      /**
+       * API Key ID
+       */
+      ApiKeyId?: string;
+      /**
+       * API Key 名称
+       */
+      ApiKeyName?: string;
+      /**
+       * 请求总延迟，单位毫秒
+       */
+      Latency?: number;
+      /**
+       * 首 Token 延迟，单位毫秒
+       */
+      FirstTokenLatency?: number;
+      /**
+       * 输出 Token 吞吐
+       */
+      OutputTokenThroughput?: number;
+      /**
+       * HTTP 状态码
+       */
+      HttpStatusCode?: number;
+      /**
+       * 错误码
+       */
+      ErrorCode?: string;
+      /**
+       * 请求是否成功
+       */
+      IsSuccess?: boolean;
+      /**
+       * 总 Token 数
+       */
+      TotalTokens?: number;
+      /**
+       * 输入 Token 数
+       */
+      PromptTokens?: number;
+      /**
+       * 输出 Token 数
+       */
+      CompletionTokens?: number;
+      /**
+       * 缓存命中 Token 数
+       */
+      CacheHitTokens?: number;
+      /**
+       * 缓存写入 Token 数
+       */
+      CacheCreationTokens?: number;
+      /**
+       * 5 分钟缓存写入 Token 数
+       */
+      CacheCreation5mTokens?: number;
+      /**
+       * 1 小时缓存写入 Token 数
+       */
+      CacheCreation1hTokens?: number;
+      /**
+       * 是否存在推理日志
+       */
+      HasInferenceLog?: boolean;
+    }[];
+  };
 }
 
 /**
@@ -1936,6 +2494,47 @@ export interface ListUnpaidOrdersResponse {
      */
     ProductCodeDisplay?: string;
   }[];
+}
+
+/**
+ * StartPayUnpaidOrders - 批量支付欠费订单，指定 OrderNos 支付，最多 50 个
+ */
+export interface StartPayUnpaidOrdersRequest {
+  /**
+   * 欠费订单号列表，最多 50 个
+   */
+  OrderNos: string[];
+}
+
+/**
+ * StartPayUnpaidOrders - 批量支付欠费订单，指定 OrderNos 支付，最多 50 个
+ */
+export interface StartPayUnpaidOrdersResponse {
+  /**
+   * 支付成功数量
+   */
+  SuccessCount: number;
+  /**
+   * 支付失败数量
+   */
+  FailureCount: number;
+  /**
+   * 支付结果
+   */
+  Results?: {
+    /**
+     * 订单号
+     */
+    OrderNo?: string;
+    /**
+     * 是否支付成功
+     */
+    Success?: boolean;
+    /**
+     * 失败原因（成功时为空）
+     */
+    Reason?: string;
+  };
 }
 
 /**
