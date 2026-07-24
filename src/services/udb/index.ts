@@ -18,7 +18,7 @@ export default class UDBClient extends Client {
   }
 
   /**
-   * BackupUDBInstance - 备份UDB实例
+   * BackupUDBInstance - 发起实例备份。
    *
    * See also: https://docs.ucloud.cn/api/udb-api/backup_udb_instance
    */
@@ -131,7 +131,7 @@ export default class UDBClient extends Client {
   }
 
   /**
-   * CreateMongoDBReplicaSet - 一键创建DB副本集
+   * CreateMongoDBReplicaSet - 一键创建DB副本集,本接口适用于物理机MongoDB，该架构即将下线, 若要使用快杰MongoDB，请参考https://docs.ucloud.cn/api/umongodb-api/index
    *
    * See also: https://docs.ucloud.cn/api/udb-api/create_mongo_db_replica_set
    */
@@ -201,7 +201,7 @@ export default class UDBClient extends Client {
   }
 
   /**
-   * CreateUDBReplicationInstance - 创建MongoDB的副本节点（包括仲裁）
+   * CreateUDBReplicationInstance - 创建MongoDB的副本节点（包括仲裁）, 本接口适用于物理机MongoDB，该架构即将下线, 若要使用快杰MongoDB，请参考https://docs.ucloud.cn/api/umongodb-api/index
    *
    * See also: https://docs.ucloud.cn/api/udb-api/create_udb_replication_instance
    */
@@ -215,7 +215,7 @@ export default class UDBClient extends Client {
   }
 
   /**
-   * CreateUDBRouteInstance - 创建mongos实例
+   * CreateUDBRouteInstance - 本接口适用于物理机MongoDB，该架构即将下线, 若要使用快杰MongoDB，请参考https://docs.ucloud.cn/api/umongodb-api/index
    *
    * See also: https://docs.ucloud.cn/api/udb-api/create_udb_route_instance
    */
@@ -327,6 +327,20 @@ export default class UDBClient extends Client {
   }
 
   /**
+   * DescribeUDBBackupStrategy - 获取实例备份策略
+   *
+   * See also: https://docs.ucloud.cn/api/udb-api/describe_udb_backup_strategy
+   */
+  describeUDBBackupStrategy(
+    request?: DescribeUDBBackupStrategyRequest
+  ): Promise<DescribeUDBBackupStrategyResponse> {
+    const args = { Action: 'DescribeUDBBackupStrategy', ...(request || {}) };
+    return this.invoke(new Request(args)).then(
+      (resp) => resp.toObject() as DescribeUDBBackupStrategyResponse
+    );
+  }
+
+  /**
    * DescribeUDBBinlogBackup - 列表UDB实例Binlog自动备份信息
    *
    * See also: https://docs.ucloud.cn/api/udb-api/describe_udb_binlog_backup
@@ -337,6 +351,23 @@ export default class UDBClient extends Client {
     const args = { Action: 'DescribeUDBBinlogBackup', ...(request || {}) };
     return this.invoke(new Request(args)).then(
       (resp) => resp.toObject() as DescribeUDBBinlogBackupResponse
+    );
+  }
+
+  /**
+   * DescribeUDBBinlogBackupStrategy - 获取UDB实例binlog自动备份策略
+   *
+   * See also: https://docs.ucloud.cn/api/udb-api/describe_udb_binlog_backup_strategy
+   */
+  describeUDBBinlogBackupStrategy(
+    request?: DescribeUDBBinlogBackupStrategyRequest
+  ): Promise<DescribeUDBBinlogBackupStrategyResponse> {
+    const args = {
+      Action: 'DescribeUDBBinlogBackupStrategy',
+      ...(request || {}),
+    };
+    return this.invoke(new Request(args)).then(
+      (resp) => resp.toObject() as DescribeUDBBinlogBackupStrategyResponse
     );
   }
 
@@ -657,6 +688,23 @@ export default class UDBClient extends Client {
     const args = { Action: 'GetUDBInstanceSSLCertURL', ...(request || {}) };
     return this.invoke(new Request(args)).then(
       (resp) => resp.toObject() as GetUDBInstanceSSLCertURLResponse
+    );
+  }
+
+  /**
+   * ListUDBInstanceFailoverRecord - 获取实例容灾记录列表
+   *
+   * See also: https://docs.ucloud.cn/api/udb-api/list_udb_instance_failover_record
+   */
+  listUDBInstanceFailoverRecord(
+    request?: ListUDBInstanceFailoverRecordRequest
+  ): Promise<ListUDBInstanceFailoverRecordResponse> {
+    const args = {
+      Action: 'ListUDBInstanceFailoverRecord',
+      ...(request || {}),
+    };
+    return this.invoke(new Request(args)).then(
+      (resp) => resp.toObject() as ListUDBInstanceFailoverRecordResponse
     );
   }
 
@@ -990,7 +1038,7 @@ export default class UDBClient extends Client {
 }
 
 /**
- * BackupUDBInstance - 备份UDB实例
+ * BackupUDBInstance - 发起实例备份。
  */
 export interface BackupUDBInstanceRequest {
   /**
@@ -1024,9 +1072,14 @@ export interface BackupUDBInstanceRequest {
 }
 
 /**
- * BackupUDBInstance - 备份UDB实例
+ * BackupUDBInstance - 发起实例备份。
  */
-export interface BackupUDBInstanceResponse {}
+export interface BackupUDBInstanceResponse {
+  /**
+   * 备份记录 ID
+   */
+  BackupId?: number;
+}
 
 /**
  * BackupUDBInstanceBinlog - 备份UDB指定时间段的binlog列表
@@ -1200,7 +1253,7 @@ export interface ClearUDBLogRequest {
 export interface ClearUDBLogResponse {}
 
 /**
- * CreateMongoDBReplicaSet - 一键创建DB副本集
+ * CreateMongoDBReplicaSet - 一键创建DB副本集,本接口适用于物理机MongoDB，该架构即将下线, 若要使用快杰MongoDB，请参考https://docs.ucloud.cn/api/umongodb-api/index
  */
 export interface CreateMongoDBReplicaSetRequest {
   /**
@@ -1282,7 +1335,7 @@ export interface CreateMongoDBReplicaSetRequest {
 }
 
 /**
- * CreateMongoDBReplicaSet - 一键创建DB副本集
+ * CreateMongoDBReplicaSet - 一键创建DB副本集,本接口适用于物理机MongoDB，该架构即将下线, 若要使用快杰MongoDB，请参考https://docs.ucloud.cn/api/umongodb-api/index
  */
 export interface CreateMongoDBReplicaSetResponse {
   /**
@@ -1549,15 +1602,15 @@ export interface CreateUDBMySQLInstanceRequest {
    */
   Zone: string;
   /**
-   * 实例名称，至少6位
+   * 实例名称，至少6位,最大63位
    */
   Name: string;
   /**
-   * 管理员密码
+   * 管理员密码。 8-36 位，支持大小写字母、数字、@#$%^*-+=_,?!&()~.|，须包含两类及以上字符
    */
   AdminPassword: string;
   /**
-   * DB类型，mysql按版本细分 mysql-8.4, mysql-8.0,  mysql-5.7, percona-5.7, mysql-5.6, percona-5.6、mysql-5.5
+   * DB类型，mysql按版本细分 mysql-8.4, mysql-8.0,  mysql-5.7, percona-5.7, mysql-5.6, percona-5.6、mysql-5.5。 可以通过 DescribeUDBType 查询
    */
   DBTypeId: string;
   /**
@@ -1565,11 +1618,11 @@ export interface CreateUDBMySQLInstanceRequest {
    */
   Port: number;
   /**
-   * 磁盘空间(GB), 暂时支持20G - 32T
+   * 磁盘空间(GB)，支持约 20G–32T，步长通常为 10；
    */
   DiskSpace: number;
   /**
-   * DB实例使用的配置参数组id
+   * DB实例使用的配置参数组id，取值见 DescribeUDBParamGroup 返回的 `GroupId`，且须与 `DBTypeId` 匹配。
    */
   ParamGroupId: number;
   /**
@@ -1577,7 +1630,7 @@ export interface CreateUDBMySQLInstanceRequest {
    */
   MachineType: string;
   /**
-   * 存储类型 CLOUD_RSSD: RSSD 云盘， CLOUD_SSD_ESSENTIAL: SSD Essential云盘 ，该字段和SpecificationClass组合使用，CLOUD_RSSD对应O型，CLOUD_SSD_ESSENTIAL对应OM型(北京2、乌兰察布支持)，注：圣保罗、丹佛、哈萨克斯坦地域仅支持O2机型，CLOUD_RSSD对应O2型
+   * 存储类型 CLOUD_RSSD: RSSD 云盘， CLOUD_SSD_ESSENTIAL: SSD Essential云盘 ，该字段和SpecificationClass组合使用，CLOUD_RSSD对应O型，CLOUD_SSD_ESSENTIAL对应OM型(北京2、乌兰察布支持)，注：圣保罗、丹佛、哈萨克斯坦地域仅支持O2机型，CLOUD_RSSD对应O2型。 可从 ListUDBMachineType 同条规格读取
    */
   StorageClass: string;
   /**
@@ -1605,7 +1658,7 @@ export interface CreateUDBMySQLInstanceRequest {
    */
   BackupDuration?: number;
   /**
-   * 备份id，如果指定，则表明从备份恢复实例
+   * 备份 ID；指定则从备份恢复。取值见 DescribeUDBBackup。
    */
   BackupId?: number;
   /**
@@ -1617,11 +1670,11 @@ export interface CreateUDBMySQLInstanceRequest {
    */
   BackupZone?: string;
   /**
-   * 子网ID
+   * 子网 ID。与 `VPCId` 须同属一个 VPC
    */
   SubnetId?: string;
   /**
-   * VPC的ID
+   * VPC ID。与 `SubnetId` 成对使用；取值见 UVPC 相关接口
    */
   VPCId?: string;
   /**
@@ -1722,7 +1775,7 @@ export interface CreateUDBParamGroupResponse {
 }
 
 /**
- * CreateUDBReplicationInstance - 创建MongoDB的副本节点（包括仲裁）
+ * CreateUDBReplicationInstance - 创建MongoDB的副本节点（包括仲裁）, 本接口适用于物理机MongoDB，该架构即将下线, 若要使用快杰MongoDB，请参考https://docs.ucloud.cn/api/umongodb-api/index
  */
 export interface CreateUDBReplicationInstanceRequest {
   /**
@@ -1768,7 +1821,7 @@ export interface CreateUDBReplicationInstanceRequest {
 }
 
 /**
- * CreateUDBReplicationInstance - 创建MongoDB的副本节点（包括仲裁）
+ * CreateUDBReplicationInstance - 创建MongoDB的副本节点（包括仲裁）, 本接口适用于物理机MongoDB，该架构即将下线, 若要使用快杰MongoDB，请参考https://docs.ucloud.cn/api/umongodb-api/index
  */
 export interface CreateUDBReplicationInstanceResponse {
   /**
@@ -1778,11 +1831,11 @@ export interface CreateUDBReplicationInstanceResponse {
 }
 
 /**
- * CreateUDBRouteInstance - 创建mongos实例
+ * CreateUDBRouteInstance - 本接口适用于物理机MongoDB，该架构即将下线, 若要使用快杰MongoDB，请参考https://docs.ucloud.cn/api/umongodb-api/index
  */
 export interface CreateUDBRouteInstanceRequest {
   /**
-   * 可用区。参见 [可用区列表](../summary/regionlist.html)
+   * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
    */
   Zone?: string;
   /**
@@ -1832,7 +1885,7 @@ export interface CreateUDBRouteInstanceRequest {
 }
 
 /**
- * CreateUDBRouteInstance - 创建mongos实例
+ * CreateUDBRouteInstance - 本接口适用于物理机MongoDB，该架构即将下线, 若要使用快杰MongoDB，请参考https://docs.ucloud.cn/api/umongodb-api/index
  */
 export interface CreateUDBRouteInstanceResponse {
   /**
@@ -2253,6 +2306,55 @@ export interface DescribeUDBBackupBlacklistResponse {
 }
 
 /**
+ * DescribeUDBBackupStrategy - 获取实例备份策略
+ */
+export interface DescribeUDBBackupStrategyRequest {
+  /**
+   * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
+   */
+  Zone: string;
+  /**
+   * 实例ID
+   */
+  DBId: string;
+}
+
+/**
+ * DescribeUDBBackupStrategy - 获取实例备份策略
+ */
+export interface DescribeUDBBackupStrategyResponse {
+  /**
+   * 备份策略，不可修改，开始时间，单位小时计，默认3点
+   */
+  BackupBeginTime: number;
+  /**
+   * 备份日期标记位。共7位,每一位为一周中一天的备份情况 0表示关闭当天备份,1表示打开当天备份。最右边的一位 为星期天的备份开关，其余从右到左依次为星期一到星期 六的备份配置开关，每周必须至少设置两天备份。 例如：1100000 表示打开星期六和星期五的自动备份功能
+   */
+  BackupDate: string;
+  /**
+   * 默认的备份方式，nobackup表示不备份， snapshot 表示使用快照备份，logic 表示使用逻辑备份，xtrabackup表示使用物理备份。ark_snapshot 方舟快照备份
+   */
+  BackupMethod: string;
+  /**
+   * 用户转存备份到自己的UFILE配置, 结构参考UFileDataSet
+   */
+  UserUFileData: {
+    /**
+     * Ufile的令牌tokenid
+     */
+    TokenID?: string;
+    /**
+     * bucket名称
+     */
+    Bucket?: string;
+  };
+  /**
+   * 保留多少天
+   */
+  SaveDays: number;
+}
+
+/**
  * DescribeUDBBinlogBackup - 列表UDB实例Binlog自动备份信息
  */
 export interface DescribeUDBBinlogBackupRequest {
@@ -2335,6 +2437,34 @@ export interface DescribeUDBBinlogBackupResponse {
    * 备份总数，如果指定dbid，则是该db备份总数
    */
   TotalCount?: number;
+}
+
+/**
+ * DescribeUDBBinlogBackupStrategy - 获取UDB实例binlog自动备份策略
+ */
+export interface DescribeUDBBinlogBackupStrategyRequest {
+  /**
+   * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
+   */
+  Zone: string;
+  /**
+   * DB实例Id
+   */
+  DBId: string;
+}
+
+/**
+ * DescribeUDBBinlogBackupStrategy - 获取UDB实例binlog自动备份策略
+ */
+export interface DescribeUDBBinlogBackupStrategyResponse {
+  /**
+   * 是否开启binlog自动备份，false:关闭,true:开启
+   */
+  EnableBinlogBackup: boolean;
+  /**
+   * 远端binlog保存时长(天)
+   */
+  BinlogRemoteSaveDays: number;
 }
 
 /**
@@ -2432,6 +2562,18 @@ export interface DescribeUDBInstanceResponse {
      */
     Zone?: string;
     /**
+     * 0 不自动续费， 1 自动续费
+     */
+    AutoRenew: number;
+    /**
+     * CLOUD_SSD: SSD云盘, CLOUD_RSSD: RSSD 云盘， CLOUD_SSD_ESSENTIAL: SSD Essential云盘，LOCAL_SSD: SSD本地盘
+     */
+    StorageClass: string;
+    /**
+     * 规格类型 O: NVME, OM: 共享型，N: 通用型空的话，显示为-
+     */
+    SpecificationClass: string;
+    /**
      * 0区分大小写, 1不分区
      */
     CaseSensitivityParam?: number;
@@ -2448,7 +2590,7 @@ export interface DescribeUDBInstanceResponse {
      */
     Name?: string;
     /**
-     * DB类型id，mysql/mongodb按版本细分各有一个id 目前id的取值范围为[1,7],数值对应的版本如下： 1：mysql-5.5，2：mysql-5.1，3：percona-5.5 4：mongodb-2.4，5：mongodb-2.6，6：mysql-5.6， 7：percona-5.6
+     * DB类型，mysql/mongodb 按版本细分 mysql-8.4, mysql-8.0, mysql-5.7, percona-5.7, mysql-5.6, percona-5.6、mysql-5.5、mongodb-2.4 、mongodb-2.6 等。可以通过 DescribeUDBType 查询
      */
     DBTypeId?: string;
     /**
@@ -2739,6 +2881,14 @@ export interface DescribeUDBInstanceResponse {
        * 规格类型ID,当SpecificationType为1时有效
        */
       MachineType?: string;
+      /**
+       * CLOUD_SSD: SSD云盘, CLOUD_RSSD: RSSD 云盘， CLOUD_SSD_ESSENTIAL: SSD Essential云盘，LOCAL_SSD: SSD本地盘
+       */
+      StorageClass?: string;
+      /**
+       * 规格类型 O: NVME, OM: 共享型，N: 通用型 空的话，显示为-
+       */
+      SpecificationClass?: string;
     }[];
     /**
      * 跨可用区高可用备库所在可用区
@@ -2762,7 +2912,7 @@ export interface DescribeUDBInstanceResponse {
       Bucket?: string;
     };
     /**
-     * mysql实例提供具体小版本信息
+     * 实例提供具体内核版本信息
      */
     DBSubVersion?: string;
     /**
@@ -2789,6 +2939,10 @@ export interface DescribeUDBInstanceResponse {
      * CPU核数
      */
     CPU?: number;
+    /**
+     * 是否强制加密，1为强制加密，0是不强制加密
+     */
+    ForceEncryption?: number;
   }[];
   /**
    * 用户db组的数量，对于 mysql: 主从结对数量，没有slave，则只有master mongodb: 副本集数量
@@ -2801,15 +2955,15 @@ export interface DescribeUDBInstanceResponse {
  */
 export interface DescribeUDBInstanceBackupStateRequest {
   /**
-   * 可用区。参见 [可用区列表](../summary/regionlist.html)
+   * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
    */
   Zone: string;
   /**
-   * 备份记录ID
+   * 备份记录 ID，见 BackupUDBInstance 响应或 DescribeUDBBackup
    */
   BackupId: number;
   /**
-   * 跨可用区高可用备库所在可用区，参见［可用区列表］
+   * 跨可用区高可用备库所在可用区，参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
    */
   BackupZone?: string;
 }
@@ -3030,11 +3184,11 @@ export interface DescribeUDBInstancePriceRequest {
    */
   InstanceType?: string;
   /**
-   * 	实例计算规格类型，0或不传代表使用内存方式购买，1代表使用内存-cpu可选配比方式购买，需要填写MachineType
+   * 实例计算规格类型，0或不传代表使用内存方式购买，1代表使用内存-cpu可选配比方式购买，需要填写MachineType
    */
   SpecificationType?: number;
   /**
-   * 规格类型ID,当SpecificationType为1时有效
+   * 规格类型ID,当SpecificationType为1时有效。取值见 ListUDBMachineType
    */
   MachineType?: string;
   /**
@@ -3475,11 +3629,11 @@ export interface DescribeUDBTypeRequest {
    */
   DBClusterType?: string;
   /**
-   * 返回支持某种实例类型的DB类型。如果没传，则表示任何实例类型均可。normal:单点,ha:高可用,sharded_cluster:分片集群
+   * 返回支持某种实例类型的DB类型。如果没传，则表示任何实例类型均可。Normal:单点,HA:高可用,sharded_cluster:分片集群。区分大小写
    */
   InstanceMode?: string;
   /**
-   * 返回支持某种磁盘类型的DB类型，如Normal、SSD、NVMe_SSD。如果没传，则表示任何磁盘类型均可。
+   * 返回支持某种磁盘类型的DB类型，如Normal、SSD、NVMe_SSD,CLOUD_SSD_ESSENTIAL。如果没传，则表示任何磁盘类型均可。
    */
   DiskType?: string;
   /**
@@ -3509,6 +3663,19 @@ export interface DescribeUDBTypeResponse {
      */
     DBSubVersion?: string;
   }[];
+  /**
+   * 推荐DB版本
+   */
+  DedaultType?: {
+    /**
+     * DB类型id，mysql/mongodb按版本细分各有一个id, 目前id的取值范围为[1,7],数值对应的版本如下： 1：mysql-5.5，2：mysql-5.1，3：percona-5.5 4：mongodb-2.4，5：mongodb-2.6，6：mysql-5.6， 7：percona-5.6
+     */
+    DBTypeId?: string;
+    /**
+     * mysql子版本，如mysql-8.0.25,mysql-8.0.16
+     */
+    DBSubVersion?: string;
+  };
 }
 
 /**
@@ -3703,6 +3870,59 @@ export interface GetUDBInstanceSSLCertURLResponse {
 }
 
 /**
+ * ListUDBInstanceFailoverRecord - 获取实例容灾记录列表
+ */
+export interface ListUDBInstanceFailoverRecordRequest {
+  /**
+   * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
+   */
+  Zone: string;
+  /**
+   * 实例id
+   */
+  DBId: string;
+  /**
+   * 开始时间
+   */
+  StartTime: number;
+  /**
+   * 结束时间
+   */
+  EndTime: number;
+}
+
+/**
+ * ListUDBInstanceFailoverRecord - 获取实例容灾记录列表
+ */
+export interface ListUDBInstanceFailoverRecordResponse {
+  /**
+   * 容灾记录列表
+   */
+  Dataset: {
+    /**
+     * 时间ID
+     */
+    SessionId?: string;
+    /**
+     * 容灾类型
+     */
+    FailoverType?: number;
+    /**
+     * 开始时间
+     */
+    StartTime?: number;
+    /**
+     * 结束时间
+     */
+    EndTime?: number;
+    /**
+     * 容灾状态
+     */
+    FailoverState?: string;
+  }[];
+}
+
+/**
  * ListUDBMachineType - 获取UDB云数据库支持的计算规格列表，暂不支持获取跨可用区实例的计算规格，目前支持的数据库品类包括：NVMe版和SSD云盘版MySQL
  */
 export interface ListUDBMachineTypeRequest {
@@ -3725,6 +3945,14 @@ export interface ListUDBMachineTypeResponse {
    */
   DataSet: {
     /**
+     * 存储类型 CLOUD_SSD: SSD云盘, CLOUD_RSSD: RSSD 云盘， CLOUD_SSD_ESSENTIAL: SSD Essential云盘
+     */
+    StorageClass?: string;
+    /**
+     * 规格类型 O: NVMe型, OM: 共享型，N: 通用型
+     */
+    SpecificationClass?: string;
+    /**
      * 计算规格id, 目前支持CPU和内存比1:2、1:4、1:8三类配比规格;规格的格式为："机型.配比.CPU核数规格"；机型支持o和n两种机型，分别代表快杰NVMe和SSD云盘机型；配比映射关系如下:2m代表CPU内存配比1比2，4m代表CPU内存配比1比4，8m代表CPU内存配比1比8，CPU核数规格射关系如下：small代表1C，medium代表2C，xlarge代表4C，2xlarge代表8C，4xlarge代表16C，8xlarge代表32C，16xlarge代表64C，例如 "o.mysql4m.medium"表示创建快杰NVMe机型2C8G的实例，"o.mysql8m.4xlarge"表示创建快杰NVMe机型16C128G的实例
      */
     ID?: string;
@@ -3741,7 +3969,7 @@ export interface ListUDBMachineTypeResponse {
      */
     Memory?: number;
     /**
-     * 内部云主机机型，可选"o/n"
+     * 内部云主机机型，可选"O/N/OM"
      */
     Os?: string;
     /**
@@ -3754,6 +3982,14 @@ export interface ListUDBMachineTypeResponse {
    */
   DefaultMachineType: {
     /**
+     * 存储类型 CLOUD_SSD: SSD云盘, CLOUD_RSSD: RSSD 云盘， CLOUD_SSD_ESSENTIAL: SSD Essential云盘
+     */
+    StorageClass?: string;
+    /**
+     * 规格类型 O: NVMe型, OM: 共享型，N: 通用型
+     */
+    SpecificationClass?: string;
+    /**
      * 计算规格id, 目前支持CPU和内存比1:2、1:4、1:8三类配比规格;规格的格式为："机型.配比.CPU核数规格"；机型支持o和n两种机型，分别代表快杰NVMe和SSD云盘机型；配比映射关系如下:2m代表CPU内存配比1比2，4m代表CPU内存配比1比4，8m代表CPU内存配比1比8，CPU核数规格射关系如下：small代表1C，medium代表2C，xlarge代表4C，2xlarge代表8C，4xlarge代表16C，8xlarge代表32C，16xlarge代表64C，例如 "o.mysql4m.medium"表示创建快杰NVMe机型2C8G的实例，"o.mysql8m.4xlarge"表示创建快杰NVMe机型16C128G的实例
      */
     ID?: string;
@@ -3770,7 +4006,7 @@ export interface ListUDBMachineTypeResponse {
      */
     Memory?: number;
     /**
-     * 内部云主机机型，可选"o/n"
+     * 内部云主机机型，可选"O/N/OM"
      */
     Os?: string;
     /**
@@ -3858,7 +4094,7 @@ export interface ModifyUDBInstancePasswordRequest {
    */
   DBId: string;
   /**
-   * 实例的新密码
+   * 实例的新密码。 8-36 位，支持大小写字母、数字、@#$%^*-+=_,?!&()~.|，须包含两类及以上字符
    */
   Password: string;
   /**
@@ -3969,7 +4205,7 @@ export interface ResizeUDBInstanceRequest {
    */
   Zone?: string;
   /**
-   * 实例的Id
+   * DB实例Id,该值可以通过DescribeUDBInstance获取
    */
   DBId: string;
   /**
@@ -3997,7 +4233,7 @@ export interface ResizeUDBInstanceRequest {
    */
   StartAfterUpgrade?: boolean;
   /**
-   * 规格类型ID,当SpecificationType为1时有效
+   * 规格类型ID,当SpecificationType为1时有效, 可以通过 ListUDBMachineType 查询。
    */
   MachineType?: string;
   /**
