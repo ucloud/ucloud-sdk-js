@@ -18,6 +18,20 @@ export default class UHostClient extends Client {
   }
 
   /**
+   * CheckUHostResourceCapacity - 主机创建资源余量检查
+   *
+   * See also: https://docs.ucloud.cn/api/uhost-api/check_uhost_resource_capacity
+   */
+  checkUHostResourceCapacity(
+    request?: CheckUHostResourceCapacityRequest
+  ): Promise<CheckUHostResourceCapacityResponse> {
+    const args = { Action: 'CheckUHostResourceCapacity', ...(request || {}) };
+    return this.invoke(new Request(args)).then(
+      (resp) => resp.toObject() as CheckUHostResourceCapacityResponse
+    );
+  }
+
+  /**
    * CopyCustomImage - 复制自制镜像
    *
    * See also: https://docs.ucloud.cn/api/uhost-api/copy_custom_image
@@ -133,6 +147,23 @@ export default class UHostClient extends Client {
   }
 
   /**
+   * DescribeHostMachineTypeFamilies - 获取实例规格族列表（所有机型的信息）
+   *
+   * See also: https://docs.ucloud.cn/api/uhost-api/describe_host_machine_type_families
+   */
+  describeHostMachineTypeFamilies(
+    request?: DescribeHostMachineTypeFamiliesRequest
+  ): Promise<DescribeHostMachineTypeFamiliesResponse> {
+    const args = {
+      Action: 'DescribeHostMachineTypeFamilies',
+      ...(request || {}),
+    };
+    return this.invoke(new Request(args)).then(
+      (resp) => resp.toObject() as DescribeHostMachineTypeFamiliesResponse
+    );
+  }
+
+  /**
    * DescribeImage - 获取指定数据中心镜像列表，用户可通过指定操作系统类型，镜像Id进行过滤。
    *
    * See also: https://docs.ucloud.cn/api/uhost-api/describe_image
@@ -157,6 +188,23 @@ export default class UHostClient extends Client {
     const args = { Action: 'DescribeIsolationGroup', ...(request || {}) };
     return this.invoke(new Request(args)).then(
       (resp) => resp.toObject() as DescribeIsolationGroupResponse
+    );
+  }
+
+  /**
+   * DescribeUHostAvailableDiskTypes - 获取主机可挂载的磁盘信息
+   *
+   * See also: https://docs.ucloud.cn/api/uhost-api/describe_uhost_available_disk_types
+   */
+  describeUHostAvailableDiskTypes(
+    request?: DescribeUHostAvailableDiskTypesRequest
+  ): Promise<DescribeUHostAvailableDiskTypesResponse> {
+    const args = {
+      Action: 'DescribeUHostAvailableDiskTypes',
+      ...(request || {}),
+    };
+    return this.invoke(new Request(args)).then(
+      (resp) => resp.toObject() as DescribeUHostAvailableDiskTypesResponse
     );
   }
 
@@ -241,6 +289,34 @@ export default class UHostClient extends Client {
     const args = { Action: 'GetUHostInstanceVncInfo', ...(request || {}) };
     return this.invoke(new Request(args)).then(
       (resp) => resp.toObject() as GetUHostInstanceVncInfoResponse
+    );
+  }
+
+  /**
+   * GetUHostRefundPrice - 获取主机删除扣除费用。包括主机、磁盘、快照服务、EIP等资源的费用
+   *
+   * See also: https://docs.ucloud.cn/api/uhost-api/get_uhost_refund_price
+   */
+  getUHostRefundPrice(
+    request?: GetUHostRefundPriceRequest
+  ): Promise<GetUHostRefundPriceResponse> {
+    const args = { Action: 'GetUHostRefundPrice', ...(request || {}) };
+    return this.invoke(new Request(args)).then(
+      (resp) => resp.toObject() as GetUHostRefundPriceResponse
+    );
+  }
+
+  /**
+   * GetUHostRenewPrice - 获取主机续费价格
+   *
+   * See also: https://docs.ucloud.cn/api/uhost-api/get_uhost_renew_price
+   */
+  getUHostRenewPrice(
+    request?: GetUHostRenewPriceRequest
+  ): Promise<GetUHostRenewPriceResponse> {
+    const args = { Action: 'GetUHostRenewPrice', ...(request || {}) };
+    return this.invoke(new Request(args)).then(
+      (resp) => resp.toObject() as GetUHostRenewPriceResponse
     );
   }
 
@@ -495,20 +571,149 @@ export default class UHostClient extends Client {
       (resp) => resp.toObject() as TerminateUHostInstanceResponse
     );
   }
+}
 
+/**
+ * CheckUHostResourceCapacity - 主机创建资源余量检查
+ */
+export interface CheckUHostResourceCapacityRequest {
   /**
-   * UpgradeToArkUHostInstance - 普通升级为方舟机型
-   *
-   * See also: https://docs.ucloud.cn/api/uhost-api/upgrade_to_ark_uhost_instance
+   * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
    */
-  upgradeToArkUHostInstance(
-    request?: UpgradeToArkUHostInstanceRequest
-  ): Promise<UpgradeToArkUHostInstanceResponse> {
-    const args = { Action: 'UpgradeToArkUHostInstance', ...(request || {}) };
-    return this.invoke(new Request(args)).then(
-      (resp) => resp.toObject() as UpgradeToArkUHostInstanceResponse
-    );
-  }
+  Zone: string;
+  /**
+   * 镜像ID。 请通过 [DescribeImage](describe_image.html)获取
+   */
+  ImageId: string;
+  /**
+   *
+   */
+  Disks?: {
+    /**
+     * 是否是系统盘。枚举值：\\ > True，是系统盘 \\ > False，是数据盘（默认）。Disks数组中有且只能有一块盘是系统盘。
+     */
+    IsBoot: string;
+    /**
+     * 磁盘类型。请参考[[api:uhost-api:disk_type|磁盘类型]]。
+     */
+    Type: string;
+    /**
+     * 磁盘大小，单位GB。请参考[[api:uhost-api:disk_type|磁盘类型]]。
+     */
+    Size: number;
+    /**
+     * 磁盘备份方案。枚举值：\\ > NONE，无备份 \\ > DATAARK，数据方舟 \\ > SNAPSHOT，快照 \\当前磁盘支持的备份模式参考 [[api:uhost-api:disk_type|磁盘类型]],默认值:NONE
+     */
+    BackupType?: string;
+    /**
+     * 云盘代金券id。不适用于系统盘/本地盘。请通过DescribeCoupon接口查询，或登录用户中心查看
+     */
+    CouponId?: string;
+    /**
+     * 指定快照备份策略。当Disks.N.BackupType为"SNAPSHOT"时此参数生效。枚举值："Lite"：轻量版，"Base"：基础版，"Ultimate"：旗舰版，"Custom"：自定义备份链；默认值："Base"
+     */
+    BackupMode?: string;
+    /**
+     *
+     */
+    CustomBackup?: {
+      /**
+       * Disks.N.BackupMode为"Custom"时，进行设置, 以12小时秒级为基础进行倍数扩增，如12、24、36、48。
+       */
+      Journal?: string;
+      /**
+       * Disks.N.BackupMode为"Custom"时，进行设置, 以24小时级为基础进行倍数扩增，如24、48、72、96。
+       */
+      Hour?: string;
+      /**
+       * Disks.N.BackupMode为"Custom"时，进行设置, 以5天级为基础进行倍数扩增，如5、10、15、20、25、30。
+       */
+      Day?: string;
+    };
+    /**
+     * 从快照创建盘时所用快照id，目前仅支持数据盘
+     */
+    SnapshotId?: string;
+  }[];
+  /**
+   * 计费模式。枚举值为： \\ > Year，按年付费； \\ > Month，按月付费；\\ > Dynamic，按小时预付费 \\ > Postpay，按小时后付费（支持关机不收费，目前仅部分可用区支持，请联系您的客户经理） \\ > Spot计费为抢占式实例(内测阶段) \\ 默认为月付
+   */
+  ChargeType?: string;
+  /**
+   * 虚拟CPU核数。可选参数：1-64（具体机型与CPU的对应关系参照控制台）。默认值: 4。
+   */
+  CPU?: number;
+  /**
+   * 内存大小。单位：MB。范围 ：[1024, 262144]，取值为1024的倍数（可选范围参考控制台）。默认值：8192
+   */
+  Memory?: number;
+  /**
+   * GPU类型，枚举值["K80", "P40", "V100", "T4","T4A", "T4S","2080Ti","2080Ti-4C","1080Ti", "T4/4", "MI100", "V100S",2080","2080TiS","2080TiPro","3090","A100", "4090", "4090Pro", "4090_48G", "5090"]，MachineType为G时必填
+   */
+  GpuType?: string;
+  /**
+   * GPU卡核心数。仅GPU机型支持此字段（可选范围与MachineType+GpuType相关）
+   */
+  GPU?: number;
+  /**
+   * 网络增强特性。枚举值：Normal，不开启;  Super，开启网络增强1.0； Ultra，开启网络增强2.0（详情参考官网文档）
+   */
+  NetCapability?: string;
+  /**
+   * 热升级特性。True为开启，False为未开启，默认False。
+   */
+  HotplugFeature?: boolean;
+  /**
+   * 硬件隔离组id。可通过DescribeIsolationGroup获取。
+   */
+  IsolationGroup?: string;
+  /**
+   * 云主机机型（V2.0），在本字段和字段UHostType中，仅需要其中1个字段即可。枚举值["N", "C", "G", "O", "OS", "OM", "OPRO", "OMAX", "O.BM", "O.EPC"]。参考[[api:uhost-api:uhost_type|云主机机型说明]]。
+   */
+  MachineType?: string;
+  /**
+   * 最低cpu平台，枚举值["Intel/Auto", "Intel/IvyBridge", "Intel/Haswell", "Intel/Broadwell", "Intel/Skylake", "Intel/Cascadelake", "Intel/CascadelakeR", "Intel/IceLake", "Amd/Epyc2", "Amd/Auto","Ampere/Auto","Ampere/Altra"],默认值是"Intel/Auto"。
+   */
+  MinimalCpuPlatform?: string;
+  /**
+   * 本次最大创建主机数量，取值范围是[1,100]，默认值为1。
+   */
+  MaxCount?: number;
+  /**
+   *
+   */
+  Features?: {
+    /**
+     * 弹性网卡特性。开启了弹性网卡权限位，此特性才生效，默认 false 未开启，true 开启，仅与 NetCapability Normal 兼容。
+     */
+    UNI?: boolean;
+  };
+  /**
+   * 主机安全模式。Firewall：防火墙；SecGroup：安全组；默认值：Firewall。
+   */
+  SecurityMode?: string;
+  /**
+   * 规格族。由机型代号和 CPU 平台组成，用于指定云主机的硬件类型与处理器平台。当 MachineType 为 "O"（快杰型）时，支持以下取值：o1i：快杰型 O1 代，Intel 平台o1a：快杰型 O1 代，AMD 平台o1r：快杰型 O1 代，ARM 平台o2i：快杰型 O2 代，Intel 平台默认值：o1i 或 o1a（系统将根据资源情况自动选择）当 MachineType 为 "OM"（快杰共享型）时，支持以下取值：om1i：快杰内存增强型 OM1 代，Intel 平台om2i：快杰内存增强型 OM2 代，Intel 平台⚠️ 注意：规格族必须与 MachineType 匹配，否则请求将被拒绝。
+   */
+  UHostFamily?: string;
+  /**
+   * 本次最小创建主机数量，取值范围是[1,100]，默认值为1。
+   */
+  MinCount?: number;
+}
+
+/**
+ * CheckUHostResourceCapacity - 主机创建资源余量检查
+ */
+export interface CheckUHostResourceCapacityResponse {
+  /**
+   * 资源是否充足
+   */
+  ResourceEnough?: boolean;
+  /**
+   * 随机的资源对应的RdmaClusterId数组，若资源不足则为空，只有快杰系列机型，以及A800才可能有此字段
+   */
+  RdmaClusterIds?: string[];
 }
 
 /**
@@ -528,7 +733,7 @@ export interface CopyCustomImageRequest {
    */
   TargetProjectId: string;
   /**
-   * 目标地域，不跨地域不用填
+   * 目标地域，不跨地域可不填
    */
   TargetRegion?: string;
   /**
@@ -539,6 +744,14 @@ export interface CopyCustomImageRequest {
    * 目标镜像描述
    */
   TargetImageDescription?: string;
+  /**
+   * 目标镜像业务组
+   */
+  TargetImageTag?: string;
+  /**
+   * 目标地域的集合，批量复制时填写
+   */
+  TargetRegionList?: string[];
 }
 
 /**
@@ -546,9 +759,30 @@ export interface CopyCustomImageRequest {
  */
 export interface CopyCustomImageResponse {
   /**
-   * 目标镜像Id
+   * 目标镜像Id，只有非批量复制的时候该字段才存在
    */
   TargetImageId?: string;
+  /**
+   * 目标镜像复制的任务Id，只有非批量复制的时候该字段才存在
+   */
+  TaskId?: string;
+  /**
+   * 批量复制时的任务信息，参考下方的CopyImageTaskInfo
+   */
+  Infos?: {
+    /**
+     * 目标镜像复制的任务Id
+     */
+    TaskId?: string;
+    /**
+     * 目标镜像Id
+     */
+    TargetImageId?: string;
+    /**
+     * 目标地域
+     */
+    TargetRegion?: string;
+  }[];
 }
 
 /**
@@ -571,6 +805,14 @@ export interface CreateCustomImageRequest {
    * 镜像描述
    */
   ImageDescription?: string;
+  /**
+   * 镜像业务组。默认：Default
+   */
+  Tag?: string;
+  /**
+   * 【数组】关联的云盘数据盘id列表。注意: 云盘数据盘需要开启快照服务
+   */
+  DataUDiskIds?: string[];
 }
 
 /**
@@ -581,6 +823,10 @@ export interface CreateCustomImageResponse {
    * 镜像Id
    */
   ImageId?: string;
+  /**
+   * 云盘数据盘快照id列表
+   */
+  DataSnapshotIds?: string[];
 }
 
 /**
@@ -636,7 +882,7 @@ export interface CreateUHostInstanceRequest {
      */
     Size: number;
     /**
-     * 磁盘备份方案。枚举值：\\ > NONE，无备份 \\ > DATAARK，数据方舟 \\ > SNAPSHOT，快照 \\当前磁盘支持的备份模式参考 [[api:uhost-api:disk_type|磁盘类型]],默认值:NONE
+     * 磁盘备份方案。枚举值：\\ > NONE，无备份 \\ > SNAPSHOT，快照 \\当前磁盘支持的备份模式参考 [[api:uhost-api:disk_type|磁盘类型]],默认值:NONE
      */
     BackupType?: string;
     /**
@@ -652,16 +898,37 @@ export interface CreateUHostInstanceRequest {
      */
     CouponId?: string;
     /**
+     * 指定快照备份策略。当Disks.N.BackupType为"SNAPSHOT"时此参数生效。枚举值："Base"：标准版，"Ultimate"：旗舰版，"Custom"：自定义备份链；默认值："Base"。
+     */
+    BackupMode?: string;
+    /**
      *
      */
-    CustomBackup?: object;
+    CustomBackup?: {
+      /**
+       * Disks.N.BackupMode为"Custom"时，进行设置, 以12小时秒级为基础进行倍数扩增，如12、24、36、48。
+       */
+      Journal?: string;
+      /**
+       * Disks.N.BackupMode为"Custom"时，进行设置, 以24小时级为基础进行倍数扩增，如24、48、72、96。
+       */
+      Hour?: string;
+      /**
+       * Disks.N.BackupMode为"Custom"时，进行设置, 以5天级为基础进行倍数扩增，如5、10、15、20、25、30。
+       */
+      Day?: string;
+    };
+    /**
+     * 从快照创建盘时所用快照id，目前仅支持数据盘
+     */
+    SnapshotId?: string;
   }[];
   /**
-   * 主机登陆模式。密码（默认选项）: Password，密钥：KeyPair。
+   * 主机登陆模式。密码（默认选项）: Password，密钥：KeyPair，Password，自制镜像密码：ImagePasswd。
    */
   LoginMode: string;
   /**
-   * UHost密码。请遵照[[api:uhost-api:specification|字段规范]]设定密码。密码需使用base64进行编码，举例如下：# echo -n Password1 | base64UGFzc3dvcmQx。
+   * UHost密码。请遵照[[api:uhost-api:specification|字段规范]]设定密码。密码需使用base64进行编码，举例如下：# echo -n Password1 | base64 UGFzc3dvcmQx。
    */
   Password?: string;
   /**
@@ -673,7 +940,7 @@ export interface CreateUHostInstanceRequest {
    */
   Tag?: string;
   /**
-   * 计费模式。枚举值为： \\ > Year，按年付费； \\ > Month，按月付费；\\ > Dynamic，按小时预付费 \\ > Postpay，按小时后付费（支持关机不收费，目前仅部分可用区支持，请联系您的客户经理） \\Preemptive计费为抢占式实例(内测阶段) \\ 默认为月付
+   * 计费模式。枚举值为： \\ > Year，按年付费； \\ > Month，按月付费；\\ > Dynamic，按小时预付费 \\ > Postpay，按小时后付费（支持关机不收费，目前仅部分可用区支持，请联系您的客户经理） \\ > Spot计费为抢占式实例(内测阶段) \\ 默认为月付
    */
   ChargeType?: string;
   /**
@@ -693,7 +960,7 @@ export interface CreateUHostInstanceRequest {
    */
   Memory?: number;
   /**
-   * GPU类型，枚举值["K80", "P40", "V100", "T4", "T4S","2080Ti","2080Ti-4C","1080Ti", "T4/4", "MI100", "V100S"]，MachineType为G时必填
+   * GPU类型，枚举值["K80", "P40", "V100", "T4","T4A", "T4S","2080Ti","2080Ti-4C","1080Ti", "T4/4", "V100S",2080","2080TiS","2080TiPro","3090","4090","4090Pro","4090_48G","A100","A800","H20"]。MachineType为G时必填
    */
   GpuType?: string;
   /**
@@ -701,7 +968,7 @@ export interface CreateUHostInstanceRequest {
    */
   GPU?: number;
   /**
-   * 网络增强特性。枚举值：Normal，不开启;  Super，开启网络增强1.0； Ultra，开启网络增强2.0（详情参考官网文档）
+   * 网络增强特性。枚举值：Normal，不开启;  Super，开启网络增强1.0； Ultra，开启网络增强2.0；Extreme，开启网络增强3.0（详情参考官网文档）
    */
   NetCapability?: string;
   /**
@@ -729,19 +996,19 @@ export interface CreateUHostInstanceRequest {
    */
   IsolationGroup?: string;
   /**
-   * 告警模板id，如果传了告警模板id，且告警模板id正确，则绑定告警模板。绑定告警模板失败只会在后台有日志，不会影响创建主机流程，也不会在前端报错。
+   * 告警模板id，如果传了告警模板id，且告警模板id正确，则绑定告警模板。绑定告警模板失败不会影响创建主机流程。
    */
   AlarmTemplateId?: number;
   /**
-   * 云主机机型（V2.0），在本字段和字段UHostType中，仅需要其中1个字段即可。枚举值["N", "C", "G", "O", "OS", "OM", "OPRO", "OMAX", "O.BM", "O.EPC"]。参考[[api:uhost-api:uhost_type|云主机机型说明]]。
+   * 云主机机型（V2.0），在本字段和字段UHostType中，仅需要其中1个字段即可。枚举值["N", "C", "G", "O", "OM", "OMEM"， "OPRO", "OPROG"]。参考[[api:uhost-api:uhost_type|云主机机型说明]]。
    */
   MachineType?: string;
   /**
-   * 最低cpu平台，枚举值["Intel/Auto", "Intel/IvyBridge", "Intel/Haswell", "Intel/Broadwell", "Intel/Skylake", "Intel/Cascadelake", "Intel/CascadelakeR", "Intel/IceLake", "Amd/Epyc2", "Amd/Auto"],默认值是"Intel/Auto"。
+   * 最低cpu平台，枚举值["Intel/Auto", "Intel/IvyBridge", "Intel/Haswell", "Intel/Broadwell", "Intel/Skylake", "Intel/Cascadelake", "Intel/CascadelakeR", "Intel/IceLake", "Intel/SapphireRapids", "Amd/Epyc2", "Amd/Auto","Ampere/Auto","Ampere/Altra"],默认值是"Intel/Auto"。
    */
   MinimalCpuPlatform?: string;
   /**
-   * 本次最大创建主机数量，取值范围是[1,100]，默认值为1。
+   * 本次最大创建主机数量，取值范围是[1,100]，默认值为1。- 库存数量不足时，按库存数量创建。- 配额不足时，返回错误。- 使用隔离组时，以隔离组可用数量为准。
    */
   MaxCount?: number;
   /**
@@ -753,7 +1020,7 @@ export interface CreateUHostInstanceRequest {
      */
     EIP?: {
       /**
-       * 【若绑定EIP，此参数必填】弹性IP的外网带宽, 单位为Mbps. 共享带宽模式必须指定0M带宽, 非共享带宽模式必须指定非0Mbps带宽. 各地域非共享带宽的带宽范围如下： 流量计费[1-300]，带宽计费[1-800]
+       * 【若绑定EIP，此参数必填】弹性IP的外网带宽, 单位为Mbps. 共享带宽模式下非必传, 非共享带宽模式必须指定非0Mbps带宽. 各地域非共享带宽的带宽范围如下： 流量计费[1-300]，带宽计费[1-800]
        */
       Bandwidth?: number;
       /**
@@ -776,7 +1043,12 @@ export interface CreateUHostInstanceRequest {
     /**
      *
      */
-    IPv6?: object;
+    IPv6?: {
+      /**
+       * 第N个网卡对应的IPv6地址，默认不分配IPv6，“Auto”自动分配，不为空的其他字符串为实际要分配的IPv6地址。当前仅支持分配一个IPv6地址
+       */
+      Address?: string;
+    };
     /**
      * 申请并绑定一个教育网EIP。True为申请并绑定，False为不会申请绑定，默认False。当前只支持具有HPC特性的机型。
      */
@@ -803,14 +1075,64 @@ export interface CreateUHostInstanceRequest {
    */
   Features?: {
     /**
-     * 弹性网卡特性。开启了弹性网卡权限位，此特性才生效，默认 false 未开启，true 开启，仅与 NetCapability Normal 兼容。
+     * 弹性网卡特性。开启了弹性网卡权限位，此特性才生效，默认 false 未开启，true 开启。
      */
     UNI?: boolean;
   };
   /**
    *
    */
-  SecGroupId?: object[];
+  SecGroupId?: {
+    /**
+     * 安全组 ID。至多可以同时绑定5个安全组。
+     */
+    Id?: string;
+    /**
+     * 安全组优先级。取值范围[1, 5]
+     */
+    Priority?: number;
+  }[];
+  /**
+   * 主机安全模式。Firewall：防火墙；SecGroup：安全组；默认值：Firewall。
+   */
+  SecurityMode?: string;
+  /**
+   * 【私有专区属性】专区id
+   */
+  UDSetId?: string;
+  /**
+   * 【私有专区属性】专区宿主机id
+   */
+  UDHostId?: string;
+  /**
+   * 【私有专区属性】专区云主机开启宿住关联属性
+   */
+  HostBinding?: boolean;
+  /**
+   * 本次最小创建主机数量，取值范围是[1,100]，默认值为1。- 配额不足时，返回错误。
+   */
+  MinCount?: number;
+  /**
+   *
+   */
+  Labels?: {
+    /**
+     * 用户资源标签的键值
+     */
+    Key?: string;
+    /**
+     * 用户资源标签的值
+     */
+    Value?: string;
+  }[];
+  /**
+   * 删除保护，设置删除保护参数，true表示不允许控制台删除
+   */
+  DeletionProtection?: boolean;
+  /**
+   * 规格族。 由机型代号和 CPU 平台组成，用于指定云主机的硬件类型与处理器平台。 当 MachineType 为 "O"（快杰型）时，支持以下取值：- o1i：快杰型 O1 代，Intel 平台 - o1a：快杰型 O1 代，AMD 平台- o1r：快杰型 O1 代，ARM 平台 - o2i：快杰型 O2 代，Intel 平台 默认值：o1i 或 o1a当 MachineType 为 "OM"（快杰共享型）时，支持以下取值： - om1i：快杰内存增强型 OM1 代，Intel 平台 - om2i：快杰内存增强型 OM2 代，Intel 平台注意：规格族必须与 MachineType 匹配，否则请求将被拒绝。
+   */
+  UHostFamily?: string;
   /**
    * 主机代金券ID。请通过DescribeCoupon接口查询，或登录用户中心查看
    */
@@ -926,7 +1248,11 @@ export interface DescribeAvailableInstanceTypesRequest {
   /**
    * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
    */
-  Zone: string;
+  Zone?: string;
+  /**
+   * 指定机型列表
+   */
+  MachineTypes?: string[];
 }
 
 /**
@@ -937,6 +1263,14 @@ export interface DescribeAvailableInstanceTypesResponse {
    * AvailableInstanceTypes
    */
   AvailableInstanceTypes: {
+    /**
+     * 可用区信息
+     */
+    Zone?: string;
+    /**
+     * 实例类型，枚举值["uhost", "spot"]
+     */
+    InstanceType?: string;
     /**
      * 机型名称：快杰O型|O 、快杰共享型|OM 、快杰内存型|OMEM 、 快杰PRO型|OPRO、通用N型|N、高主频C型|C和GPU G型|G等
      */
@@ -962,6 +1296,36 @@ export interface DescribeAvailableInstanceTypesResponse {
        */
       Ampere?: string[];
     };
+    /**
+     * 规格族信息
+     */
+    UHostFamilies?: {
+      /**
+       * 规格族
+       */
+      Name?: string;
+      /**
+       * CPU频率信息
+       */
+      CpuFrequency?: string;
+      /**
+       * CPU平台信息
+       */
+      CpuPlatforms?: {
+        /**
+         * CPU平台
+         */
+        Name?: string;
+        /**
+         * CPU Model列表
+         */
+        CpuModels?: string[];
+        /**
+         * CPU频率
+         */
+        CpuFrequency?: string;
+      }[];
+    }[];
     /**
      * 磁盘信息。磁盘主要分类如下：云盘|cloudDisk、普通本地盘|normalLocalDisk和SSD本地盘|ssdLocalDisk。其中云盘主要包含普通云盘|CLOUD_NORMAL、SSD云盘|CLOUD_SSD和RSSD云盘|CLOUD_RSSD。普通本地盘只包含普通本地盘|LOCAL_NORMAL一种。SSD本地盘只包含SSD本地盘|LOCAL_SSD一种。MinimalSize为磁盘最小值，如果没有该字段，最小值取基础镜像Size值即可（linux为20G，windows为40G）。MaximalSize为磁盘最大值。InstantResize表示系统盘是否允许扩容，如果是本地盘，则不允许扩容，InstantResize为false。Features为磁盘可支持的服务：数据方舟|DATAARK，快照服务|SNAPSHOT，加密盘|Encrypted。
      */
@@ -1011,6 +1375,10 @@ export interface DescribeAvailableInstanceTypesResponse {
          * 数据盘可支持的服务
          */
         Features?: string[];
+        /**
+         * 支持的快照备份策略
+         */
+        BackupMode?: string[];
       }[];
     }[];
     /**
@@ -1095,6 +1463,301 @@ export interface DescribeAvailableInstanceTypesResponse {
        */
       Rate?: number;
     };
+    /**
+     * 父机型
+     */
+    ParentType?: string;
+    /**
+     * 机型描述
+     */
+    Description?: string;
+  }[];
+  /**
+   * 当前区域是否可售
+   */
+  Status?: string;
+}
+
+/**
+ * DescribeHostMachineTypeFamilies - 获取实例规格族列表（所有机型的信息）
+ */
+export interface DescribeHostMachineTypeFamiliesRequest {}
+
+/**
+ * DescribeHostMachineTypeFamilies - 获取实例规格族列表（所有机型的信息）
+ */
+export interface DescribeHostMachineTypeFamiliesResponse {
+  /**
+   * 机型配置列表
+   */
+  MachineTypes?: {
+    /**
+     * 机型名称
+     */
+    Name?: string;
+    /**
+     * 机型中文名称
+     */
+    Description?: string;
+    /**
+     * 机型ComponentCode
+     */
+    OperationStatus?: string;
+    /**
+     * CPU平台列表
+     */
+    CpuPlatforms?: {
+      /**
+       * CPU平台
+       */
+      Name?: string;
+      /**
+       * 运营Commpont Code
+       */
+      OperationStatus?: string;
+    }[];
+    /**
+     * 磁盘信息
+     */
+    Disks?: {
+      /**
+       * 磁盘介质类别信息，磁盘主要分类如下：云盘|cloudDisk、普通本地盘|normalLocalDisk和SSD本地盘|ssdLocalDisk。
+       */
+      Name?: string;
+      /**
+       * 系统盘信息
+       */
+      BootDisk?: {
+        /**
+         * 系统盘类别，包含普通云盘|CLOUD_NORMAL、SSD云盘|CLOUD_SSD和RSSD云盘|CLOUD_RSSD。普通本地盘只包含普通本地盘|LOCAL_NORMAL一种。SSD本地盘只包含SSD本地盘|LOCAL_SSD一种。
+         */
+        Name?: string;
+        /**
+         * 系统盘是否允许扩容，如果是本地盘，则不允许扩容，InstantResize为false。
+         */
+        InstantResize?: boolean;
+        /**
+         * MaximalSize为磁盘最大值
+         */
+        MaximalSize?: number;
+        /**
+         * 磁盘可支持的服务
+         */
+        Features?: {
+          /**
+           * 特性名称
+           */
+          Name?: string;
+          /**
+           * 特性详情
+           */
+          Modes?: {
+            /**
+             * 名称
+             */
+            Name?: string;
+            /**
+             * 标记
+             */
+            OperationStatus?: string;
+          }[];
+        }[];
+      }[];
+      /**
+       * 数据盘信息
+       */
+      DataDisk?: {
+        /**
+         * 磁盘最小值，如果没有该字段，最小值取基础镜像Size值即可（linux为20G，windows为40G）。
+         */
+        MinimalSize?: number;
+        /**
+         * 数据盘类别，包含普通云盘|CLOUD_NORMAL、SSD云盘|CLOUD_SSD和RSSD云盘|CLOUD_RSSD。普通本地盘只包含普通本地盘|LOCAL_NORMAL一种。SSD本地盘只包含SSD本地盘|LOCAL_SSD一种。
+         */
+        Name?: string;
+        /**
+         * MaximalSize为磁盘最大值
+         */
+        MaximalSize?: number;
+        /**
+         * 数据盘可支持的服务
+         */
+        Features?: {
+          /**
+           * 特性名称
+           */
+          Name?: string;
+          /**
+           * 特性详情
+           */
+          Modes?: {
+            /**
+             * 名称
+             */
+            Name?: string;
+            /**
+             * 标记
+             */
+            OperationStatus?: string;
+          }[];
+        }[];
+      }[];
+      /**
+       * 权限位
+       */
+      OperationStatus?: string;
+    }[];
+    /**
+     * 规格信息
+     */
+    MachineSizes?: {
+      /**
+       * Gpu为GPU可支持的规格即GPU颗数，非GPU机型，Gpu为0
+       */
+      Gpu?: number;
+      /**
+       * CPU和内存可支持的规格
+       */
+      Collection?: {
+        /**
+         * CPU规格
+         */
+        Cpu?: number;
+        /**
+         * 内存规格
+         */
+        Memory?: number[];
+        /**
+         * CPU和内存规格只能在列出来的CPU平台支持
+         */
+        MinimalCpuPlatform?: string[];
+      }[];
+    }[];
+    /**
+     * 特性信息
+     */
+    Features?: {
+      /**
+       * 可支持的特性名称。目前支持的特性网络增强|NetCapability、热升级|Hotplug
+       */
+      Name?: string;
+      /**
+       * 可以提供的模式类别
+       */
+      Modes?: {
+        /**
+         * 模式|特性名称
+         */
+        Name?: string;
+        /**
+         * 为镜像上支持这个特性的标签。例如DescribeImage返回的字段Features包含HotPlug，说明该镜像支持热升级。
+         */
+        RelatedToImageFeature?: string[];
+        /**
+         * 这个特性必须是列出来的CPU平台及以上的CPU才支持
+         */
+        MinimalCpuPlatform?: string[];
+      }[];
+    }[];
+    /**
+     * 父类型。如GPU机型的父类型为"G"
+     */
+    ParentType?: string;
+    /**
+     * GPU信息
+     */
+    GpuType?: {
+      /**
+       * 机型名称
+       */
+      Name?: string;
+      /**
+       * 显存信息
+       */
+      GraphicsMemory?: {
+        /**
+         * 值，单位是GB
+         */
+        Value?: number;
+        /**
+         * 交互展示参数，可忽略
+         */
+        Rate?: number;
+      };
+      /**
+       * 性能信息
+       */
+      Performance?: {
+        /**
+         * 值，单位是TFlops
+         */
+        Value?: number;
+        /**
+         * 交互展示参数，可忽略
+         */
+        Rate?: number;
+      };
+    };
+    /**
+     * 场景分类
+     */
+    SceneCategories?: string[];
+    /**
+     * GPU系列
+     */
+    GpuSeries?: string;
+    /**
+     * 规格族信息
+     */
+    UHostFamilies?: {
+      /**
+       * 规格族
+       */
+      Name?: string;
+      /**
+       * CPU频率信息
+       */
+      CpuFrequency?: string;
+      /**
+       * CPU平台信息
+       */
+      CpuPlatforms?: {
+        /**
+         * CPU平台
+         */
+        Name?: string;
+        /**
+         * CPU Model列表
+         */
+        CpuModels?: string[];
+        /**
+         * CPU频率
+         */
+        CpuFrequency?: string;
+      }[];
+    }[];
+    /**
+     * 是否为非真实机型
+     */
+    Virtual?: boolean;
+    /**
+     * 仅OPROG\OPRO机型返回
+     */
+    ProType?: {
+      /**
+       * 机型名称
+       */
+      Name?: string;
+      /**
+       * 频率
+       */
+      Frequency?: {
+        /**
+         * 值
+         */
+        Value?: number;
+      };
+    };
   }[];
 }
 
@@ -1111,6 +1774,10 @@ export interface DescribeImageRequest {
    */
   ImageType?: string;
   /**
+   * 镜像归属,枚举值:["gpu","app","uhost"]。"gpu": 对gpu进行处理过的行业镜像；"app"：轻量云主机专用的镜像；"uhost"：云主机镜像市场的行业镜像。FuncType传参错误会被忽略
+   */
+  FuncType?: string;
+  /**
    * 操作系统类型：Linux， Windows 默认返回所有类型
    */
   OsType?: string;
@@ -1118,6 +1785,14 @@ export interface DescribeImageRequest {
    * 镜像Id
    */
   ImageId?: string;
+  /**
+   * 镜像Id列表
+   */
+  ImageIds?: string[];
+  /**
+   * 业务组Id。默认：Default
+   */
+  Tag?: string;
   /**
    * 列表起始位置偏移量，默认为0
    */
@@ -1157,6 +1832,10 @@ export interface DescribeImageResponse {
      */
     ImageName?: string;
     /**
+     * 业务组
+     */
+    Tag?: string;
+    /**
      * 操作系统类型：Linux，Windows
      */
     OsType?: string;
@@ -1169,11 +1848,11 @@ export interface DescribeImageResponse {
      */
     ImageType?: string;
     /**
-     * 特殊状态标识， 目前包含NetEnhnced（网络增强1.0）, NetEnhanced_Ultra]（网络增强2.0）, HotPlug(热升级), CloudInit, IPv6
+     * 特殊状态标识，目前包含NetEnhnced（网络增强1.0）, NetEnhanced_Ultra（网络增强2.0）, NetEnhanced_Extreme（网络增强3.0）, HotPlug(热升级), GPU（GPU镜像）,CloudInit, IPv6（支持IPv6网络）,RssdAttachable（支持RSSD云盘）,Vgpu_AMD（支持AMD的vgpu）,Vgpu_NVIDIA（支持NVIDIA的vgpu）,Aarch64_Type（支持arm64架构）
      */
     Features?: string[];
     /**
-     * 行业镜像类型（仅行业镜像将返回这个值）
+     * 镜像归属,枚举值:["gpu","app","uhost"]。"gpu": 对gpu进行处理过的行业镜像；"app"：轻量云主机专用的镜像；"uhost"：云主机镜像市场的行业镜像
      */
     FuncType?: string;
     /**
@@ -1189,7 +1868,7 @@ export interface DescribeImageResponse {
      */
     Links?: string;
     /**
-     * 镜像状态， 可用：Available，制作中：Making， 不可用：Unavailable
+     * 镜像状态， 可用：Available，制作中：Making， 不可用：Unavailable，复制中：Copying
      */
     State?: string;
     /**
@@ -1208,6 +1887,43 @@ export interface DescribeImageResponse {
      * 默认值为空'''。当CentOS 7.3/7.4/7.5等镜像会标记为“Broadwell”
      */
     MinimalCPU?: string;
+    /**
+     * 系统EOL的时间，格式：YYYY/MM/DD
+     */
+    MaintainEol?: string;
+    /**
+     * 关联的云盘数据盘快照Id列表
+     */
+    DataSnapshotIds?: string[];
+    /**
+     * 支持的GPU机型
+     */
+    SupportedGPUTypes?: string[];
+    /**
+     * 场景分类，目前包含Featured（精选），PreInstalledDrivers（预装驱动），AIPainting（AI绘画），AIModels（AI模型），HPC（高性能计算）
+     */
+    SceneCategories?: string[];
+    /**
+     * 主要安装软件
+     */
+    PrimarySoftware?: string;
+    /**
+     * 镜像的价格信息
+     */
+    PriceSet?: {
+      /**
+       * 计费类型
+       */
+      ChargeType?: string;
+      /**
+       * 价格，单位: 元，保留小数点后两位有效数字
+       */
+      Price?: number;
+      /**
+       * 限时优惠的折前原价（即列表价乘以商务折扣后的单价）。
+       */
+      OriginalPrice?: number;
+    }[];
   }[];
 }
 
@@ -1270,6 +1986,94 @@ export interface DescribeIsolationGroupResponse {
 }
 
 /**
+ * DescribeUHostAvailableDiskTypes - 获取主机可挂载的磁盘信息
+ */
+export interface DescribeUHostAvailableDiskTypesRequest {
+  /**
+   * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
+   */
+  Zone?: string;
+  /**
+   * 实例Id列表。最多100个
+   */
+  UHostIds: string[];
+}
+
+/**
+ * DescribeUHostAvailableDiskTypes - 获取主机可挂载的磁盘信息
+ */
+export interface DescribeUHostAvailableDiskTypesResponse {
+  /**
+   * 可挂载的磁盘信息列表
+   */
+  DiskTypeSet: {
+    /**
+     * 可用区
+     */
+    Zone?: string;
+    /**
+     * 实例Id
+     */
+    UHostId?: string;
+    /**
+     * 可用磁盘信息
+     */
+    AvailableDisks?: {
+      /**
+       * 磁盘介质类别信息，磁盘主要分类如下：云盘|cloudDisk、普通本地盘|normalLocalDisk和SSD本地盘|ssdLocalDisk。
+       */
+      Name?: string;
+      /**
+       * 系统盘信息
+       */
+      BootDisk?: {
+        /**
+         * 系统盘类别，包含普通云盘|CLOUD_NORMAL、SSD云盘|CLOUD_SSD和RSSD云盘|CLOUD_RSSD。普通本地盘只包含普通本地盘|LOCAL_NORMAL一种。SSD本地盘只包含SSD本地盘|LOCAL_SSD一种。
+         */
+        Name?: string;
+        /**
+         * 系统盘是否允许扩容，如果是本地盘，则不允许扩容，InstantResize为false。
+         */
+        InstantResize?: boolean;
+        /**
+         * MaximalSize为磁盘最大值
+         */
+        MaximalSize?: number;
+        /**
+         * 磁盘可支持的服务
+         */
+        Features?: string[];
+      }[];
+      /**
+       * 数据盘信息
+       */
+      DataDisk?: {
+        /**
+         * 磁盘最小值，如果没有该字段，最小值取基础镜像Size值即可（linux为20G，windows为40G）。
+         */
+        MinimalSize?: number;
+        /**
+         * 数据盘类别，包含普通云盘|CLOUD_NORMAL、SSD云盘|CLOUD_SSD和RSSD云盘|CLOUD_RSSD。普通本地盘只包含普通本地盘|LOCAL_NORMAL一种。SSD本地盘只包含SSD本地盘|LOCAL_SSD一种。
+         */
+        Name?: string;
+        /**
+         * MaximalSize为磁盘最大值
+         */
+        MaximalSize?: number;
+        /**
+         * 数据盘可支持的服务
+         */
+        Features?: string[];
+        /**
+         * 支持的快照备份策略
+         */
+        BackupMode?: string[];
+      }[];
+    }[];
+  }[];
+}
+
+/**
  * DescribeUHostInstance - 获取主机或主机列表信息，并可根据数据中心，主机ID等参数进行过滤。
  */
 export interface DescribeUHostInstanceRequest {
@@ -1328,10 +2132,6 @@ export interface DescribeUHostInstanceResponse {
      */
     Zone?: string;
     /**
-     * true:有ipv6特性；false，没有ipv6特性
-     */
-    IPv6Feature?: boolean;
-    /**
      * UHost实例ID
      */
     UHostId?: string;
@@ -1347,6 +2147,10 @@ export interface DescribeUHostInstanceResponse {
      * 云主机CPU平台。参考[[api:uhost-api:uhost_type#主机概念20版本|云主机机型说明]]。
      */
     CpuPlatform?: string;
+    /**
+     * 规格族。 由机型代号和 CPU 平台组成，用于指定云主机的硬件类型与处理器平台。 当 MachineType 为 "O"（快杰型）时，支持以下取值： - o1i：快杰型 O1 代，Intel 平台 - o1a：快杰型 O1 代，AMD 平台 - o1r：快杰型 O1 代，ARM 平台 - o2i：快杰型 O2 代，Intel 平台 默认值：o1i 或 o1a或o1r（系统将根据资源情况自动选择） 当 MachineType 为 "OM"（快杰共享型）时，支持以下取值： - om1i：快杰内存增强型 OM1 代，Intel 平台 - om2i：快杰内存增强型 OM2 代，Intel 平台
+     */
+    UHostFamily?: string;
     /**
      * 【建议不再使用】主机磁盘类型。 枚举值为：\\ > LocalDisk，本地磁盘; \\ > UDisk 云盘。\\只要有一块磁盘为本地盘，即返回LocalDisk。
      */
@@ -1506,10 +2310,6 @@ export interface DescribeUHostInstanceResponse {
      */
     TimemachineFeature?: string;
     /**
-     * true: 开启热升级； false，未开启热升级
-     */
-    HotplugFeature?: boolean;
-    /**
      * 【建议不再使用】仅北京A的云主机会返回此字段。基础网络模式：Default；子网模式：Private
      */
     SubnetType?: string;
@@ -1534,6 +2334,14 @@ export interface DescribeUHostInstanceResponse {
      */
     GPU?: number;
     /**
+     * GPU类型;枚举值["K80", "P40", "V100", "T4","T4A", "T4S","2080Ti","2080Ti-4C","1080Ti", "T4/4", "MI100", "V100S",2080","2080TiS","2080TiPro","3090","4090","4090Pro","A100","A800","H20"]
+     */
+    GpuType?: string;
+    /**
+     * 热升级支持的最大CPU个数
+     */
+    HotPlugMaxCpu?: number;
+    /**
      * 系统盘状态 Normal表示初始化完成；Initializing表示在初始化。仍在初始化的系统盘无法制作镜像。
      */
     BootDiskState?: string;
@@ -1546,10 +2354,6 @@ export interface DescribeUHostInstanceResponse {
      */
     IsolationGroup?: string;
     /**
-     * true，支持cloutinit方式初始化；false,不支持
-     */
-    CloudInitFeature?: boolean;
-    /**
      * RDMA集群id，仅快杰云主机返回该值；其他类型云主机返回""。当云主机的此值与RSSD云盘的RdmaClusterId相同时，RSSD可以挂载到这台云主机。
      */
     RdmaClusterId?: string;
@@ -1558,9 +2362,37 @@ export interface DescribeUHostInstanceResponse {
      */
     RestrictMode?: string;
     /**
+     * true: 开启热升级； false，未开启热升级
+     */
+    HotplugFeature?: boolean;
+    /**
+     * true: 支持cloutinit方式初始化；false: 不支持
+     */
+    CloudInitFeature?: boolean;
+    /**
+     * true: 有ipv6特性；false，没有ipv6特性
+     */
+    IPv6Feature?: boolean;
+    /**
      * true: 开启 hpc 系列功能；false: 未开启
      */
     HpcFeature?: boolean;
+    /**
+     * true: 高性能计算主机；false: 不是
+     */
+    EpcInstance?: boolean;
+    /**
+     * 【待废弃】true: 绑定了安全组的主机；false: 不是
+     */
+    SecGroupInstance?: boolean;
+    /**
+     * Firewall:防火墙,SecGroup:安全组,Acl:acl
+     */
+    NetFeatureTag?: string;
+    /**
+     * true: 开启 hidden kvm 功能；false: 不是
+     */
+    HiddenKvm?: boolean;
     /**
      * 密钥信息见 UHostKeyPair
      */
@@ -1573,6 +2405,32 @@ export interface DescribeUHostInstanceResponse {
        * 主机密钥对状态，Normal 正常，Deleted 删除
        */
       KeyPairState?: string;
+    };
+    /**
+     * 私有专区宿主机属性
+     */
+    UDHostAttribute?: {
+      /**
+       * 私有专区宿主机
+       */
+      UDHostId?: string;
+      /**
+       * 私有专区
+       */
+      UDSetId?: string;
+      /**
+       * 是否绑定私有专区宿主机
+       */
+      HostBinding?: boolean;
+    };
+    /**
+     * 竞价实例信息
+     */
+    SpotAttribute?: {
+      /**
+       * 回收时间
+       */
+      RecycleTime?: number;
     };
   }[];
 }
@@ -1684,7 +2542,7 @@ export interface GetAttachedDiskUpgradePriceRequest {
    */
   Zone?: string;
   /**
-   * 磁盘大小，单位GB，步长为10。取值范围需大于当前磁盘大小，最大值请参考[[api:uhost-api:disk_type|磁盘类型]]。
+   * 磁盘大小，单位GB。取值范围需大于当前磁盘大小，最大值请参考[[api:uhost-api:disk_type|磁盘类型]]。
    */
   DiskSpace: number;
   /**
@@ -1709,6 +2567,53 @@ export interface GetAttachedDiskUpgradePriceResponse {
    * 升级差价。精度为小数点后2位。
    */
   Price?: number;
+  /**
+   * 用户折后价。精度为小数点后2位。
+   */
+  OriginalPrice?: number;
+  /**
+   * 原价。精度为小数点后2位。
+   */
+  ListPrice?: number;
+  /**
+   * 升级价格详情，精度为小数点后2位。
+   */
+  PriceDetail?: {
+    /**
+     * 磁盘的价格
+     */
+    UDisk?: number;
+    /**
+     * 快照的价格
+     */
+    Snapshot?: number;
+  };
+  /**
+   * 用户折后价详情，精度为小数点后2位。
+   */
+  OriginalPriceDetail?: {
+    /**
+     * 磁盘的价格
+     */
+    UDisk?: number;
+    /**
+     * 快照的价格
+     */
+    Snapshot?: number;
+  };
+  /**
+   * 原价详情，精度为小数点后2位。
+   */
+  ListPriceDetail?: {
+    /**
+     * 磁盘的价格
+     */
+    UDisk?: number;
+    /**
+     * 快照的价格
+     */
+    Snapshot?: number;
+  };
 }
 
 /**
@@ -1761,7 +2666,7 @@ export interface GetUHostInstancePriceRequest {
    */
   GPU?: number;
   /**
-   * 计费模式。枚举值为： \\ > Year，按年付费； \\ > Month，按月付费；\\ > Dynamic，按小时付费 // >Preemptive 抢占式实例 \\ 如果不传某个枚举值，默认返回年付、月付、时付的价格组合集。
+   * 计费模式。枚举值为： \\ > Year，按年付费； \\ > Month，按月付费；\\ > Dynamic，按小时付费 // >Spot 抢占式实例 \\ 如果不传某个枚举值，默认返回年付、月付、时付的价格组合集。
    */
   ChargeType?: string;
   /**
@@ -1773,11 +2678,11 @@ export interface GetUHostInstancePriceRequest {
    */
   UHostType?: string;
   /**
-   * 云主机机型（V2版本概念）。枚举值["N", "C", "G", "O", "OS", "OPRO", "OMAX", "O.BM"]。参考[[api:uhost-api:uhost_type|云主机机型说明]]。
+   * 云主机机型（V2版本概念）。枚举值["N", "C", "G", "O", "OS", "OPRO", "OMAX", "O.BM", "O.EPC"]。参考[[api:uhost-api:uhost_type|云主机机型说明]]。
    */
   MachineType?: string;
   /**
-   * GPU类型，枚举值["K80", "P40", "V100", "T4","T4S","2080Ti","2080Ti-4C","1080Ti"]
+   * GPU类型，枚举值["K80", "P40", "V100", "T4","T4A", "T4S","2080Ti","2080Ti-4C","1080Ti", "T4/4", "MI100", "V100S",2080","2080TiS","2080TiPro","3090","4090","4090Pro","A100","A800"]
    */
   GpuType?: string;
   /**
@@ -1793,9 +2698,17 @@ export interface GetUHostInstancePriceRequest {
    */
   Volumes?: object[];
   /**
-   *
+   * 专区云主机。如果要在专区宿主机上创建云主机，该参数可以填写为true
    */
-  VirtualGpu?: object;
+  UDSetUHostInstance?: boolean;
+  /**
+   * 返回价格详细信息
+   */
+  ShowPriceDetails?: boolean;
+  /**
+   * 规格族。 由机型代号和 CPU 平台组成，用于指定云主机的硬件类型与处理器平台。当 MachineType 为 "O"（快杰型）时，支持以下取值： - o1i：快杰型 O1 代，Intel 平台 - o1a：快杰型 O1 代，AMD 平台- o1r：快杰型 O1 代，ARM 平台 - o2i：快杰型 O2 代，Intel 平台 默认值：o1i 或 o1a或o1r当 MachineType 为 "OM"（快杰共享型）时，支持以下取值： - om1i：快杰内存增强型 OM1 代，Intel 平台 - om2i：快杰内存增强型 OM2 代，Intel 平台注意：规格族必须与 MachineType 匹配，否则请求将被拒绝。
+   */
+  UHostFamily?: string;
 }
 
 /**
@@ -1815,13 +2728,51 @@ export interface GetUHostInstancePriceResponse {
      */
     Price: number;
     /**
-     * 限时优惠的折前原价（即列表价乘以商务折扣后的单价）。
+     * 限时优惠的折前原价。
      */
     OriginalPrice: number;
     /**
-     * 产品列表价。
+     * 价格详细信息（只有询价接口返回）。
      */
-    ListPrice?: number;
+    PriceDetail?: {
+      /**
+       * 主机价格
+       */
+      UHost?: number;
+      /**
+       * 云盘价格
+       */
+      UDisk?: number;
+      /**
+       * 快照价格
+       */
+      Snapshot?: number;
+      /**
+       * 数据卷价格
+       */
+      Volume?: number;
+    };
+    /**
+     * 原价详细信息（只有询价接口返回）。
+     */
+    OriginalPriceDetail?: {
+      /**
+       * 主机价格
+       */
+      UHost?: number;
+      /**
+       * 云盘价格
+       */
+      UDisk?: number;
+      /**
+       * 快照价格
+       */
+      Snapshot?: number;
+      /**
+       * 数据卷价格
+       */
+      Volume?: number;
+    };
   }[];
 }
 
@@ -1862,6 +2813,76 @@ export interface GetUHostInstanceVncInfoResponse {
 }
 
 /**
+ * GetUHostRefundPrice - 获取主机删除扣除费用。包括主机、磁盘、快照服务、EIP等资源的费用
+ */
+export interface GetUHostRefundPriceRequest {
+  /**
+   * 【数组】UHost实例ID。参见 [DescribeUHostInstance](describe_uhost_instance.html)
+   */
+  UHostIds: string[];
+}
+
+/**
+ * GetUHostRefundPrice - 获取主机删除扣除费用。包括主机、磁盘、快照服务、EIP等资源的费用
+ */
+export interface GetUHostRefundPriceResponse {
+  /**
+   * 主机删除扣除费用详情
+   */
+  RefundPriceSet: {
+    /**
+     * UHost实例ID
+     */
+    UHostId: string;
+    /**
+     * 实例操作结果的错误码。0为成功
+     */
+    Code: number;
+    /**
+     * 实例的删除退费金额
+     */
+    RefundPrice?: number;
+  }[];
+}
+
+/**
+ * GetUHostRenewPrice - 获取主机续费价格
+ */
+export interface GetUHostRenewPriceRequest {
+  /**
+   * UHost实例ID
+   */
+  UHostId: string;
+  /**
+   * 计费类型。Year，Month，Dynamic，默认返回全部计费方式对应的价格
+   */
+  ChargeType: string;
+}
+
+/**
+ * GetUHostRenewPrice - 获取主机续费价格
+ */
+export interface GetUHostRenewPriceResponse {
+  /**
+   * 价格列表
+   */
+  PriceSet?: {
+    /**
+     * 计费类型
+     */
+    ChargeType?: string;
+    /**
+     * 价格，单位: 元，保留小数点后两位有效数字
+     */
+    Price?: number;
+    /**
+     * 限时优惠的折前原价（即列表价乘以商务折扣后的单价）。
+     */
+    OriginalPrice?: number;
+  }[];
+}
+
+/**
  * GetUHostUpgradePrice - 获取UHost实例升级配置的价格。可选配置范围请参考[[api:uhost-api:uhost_type|云主机机型说明]]。
  */
 export interface GetUHostUpgradePriceRequest {
@@ -1882,7 +2903,11 @@ export interface GetUHostUpgradePriceRequest {
    */
   Memory?: number;
   /**
-   * 网卡升降级（1，表示升级，2表示降级，0表示不变）
+   * GPU卡核心数。仅GPU机型支持此字段（可选范围与MachineType+GpuType相关）
+   */
+  GPU?: number;
+  /**
+   * 网卡升降级（1，表示升级，2表示降级，0表示不变）。仅支持网络增强1.0和网络增强2.0的开启和关闭，不支持网络增强特性互相转换，如网络增强1.0升级到网络增强2.0是不被支持的。
    */
   NetCapValue?: number;
 }
@@ -1929,6 +2954,10 @@ export interface ImportCustomImageRequest {
    * 是否授权。必须填true
    */
   Auth: boolean;
+  /**
+   * 业务组
+   */
+  Tag?: string;
   /**
    * 镜像描述
    */
@@ -2198,11 +3227,11 @@ export interface ReinstallUHostInstanceRequest {
    */
   ImageId?: string;
   /**
-   * 是否保留数据盘，保留：Yes，不报留：No， 默认：Yes；如果是从Windows重装为Linux或反之，则无法保留数据盘（该参数目前仅对本地数据盘起作用）
+   * 是否保留数据盘，保留：Yes，不保留：No， 默认：Yes；如果是从Windows重装为Linux或反之，则无法保留数据盘（该参数目前仅对本地数据盘起作用）
    */
   ReserveDisk?: string;
   /**
-   * 系统盘大小。 单位：GB， 范围[20,100]， 步长：10
+   * 系统盘大小。 单位：GB， 范围[20,100]。
    */
   BootDiskSpace?: number;
   /**
@@ -2214,13 +3243,17 @@ export interface ReinstallUHostInstanceRequest {
    */
   AutoDataDiskInit?: string;
   /**
-   * 主机登陆模式。密码（默认选项）: Password，密钥 KeyPair。
+   * 主机登陆模式。密码（默认选项）: Password，密钥 KeyPair，自制镜像密码: ImagePasswd。
    */
   LoginMode?: string;
   /**
    * KeypairId 密钥对ID，LoginMode为KeyPair时此项必须。
    */
   KeyPairId?: string;
+  /**
+   * 操作系统主机名
+   */
+  HostName?: string;
 }
 
 /**
@@ -2248,7 +3281,19 @@ export interface ResetUHostInstancePasswordRequest {
   /**
    * UHost新密码（密码格式使用BASE64编码）
    */
-  Password: string;
+  Password?: string;
+  /**
+   * 主机登陆模式。密码（默认选项）: Password，密钥 KeyPair。
+   */
+  LoginMode?: string;
+  /**
+   * KeypairId 密钥对ID，LoginMode为KeyPair时此项必须。
+   */
+  KeyPairId?: string;
+  /**
+   * 修改密码结束后是否立即开机，默认为false， 如果设置为true，则修改密码成功后立即开机； 抢占式和后付费云主机暂不支持当前功能；
+   */
+  AutoStart?: boolean;
 }
 
 /**
@@ -2322,9 +3367,17 @@ export interface ResizeUHostInstanceRequest {
    */
   Memory?: number;
   /**
+   * GPU卡核心数。仅GPU机型支持此字段（可选范围与MachineType+GpuType相关）
+   */
+  GPU?: number;
+  /**
    * 网卡升降级（1，表示升级，2表示降级，0表示不变）
    */
   NetCapValue?: number;
+  /**
+   * 扩容结束后是否立即开机，默认为false，如果设置为true，则扩容成功后立即开机；抢占式和后付费云主机暂不支持当前功能；
+   */
+  AutoStart?: boolean;
 }
 
 /**
@@ -2443,32 +3496,4 @@ export interface TerminateUHostInstanceResponse {
    * UHost 实例 Id
    */
   UHostId?: string;
-}
-
-/**
- * UpgradeToArkUHostInstance - 普通升级为方舟机型
- */
-export interface UpgradeToArkUHostInstanceRequest {
-  /**
-   * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
-   */
-  Zone: string;
-  /**
-   * UHost主机的资源ID，例如UHostIds.0代表希望升级的主机1，UHostIds.1代表主机2。
-   */
-  UHostIds: string[];
-  /**
-   * 代金券ID 请参考DescribeCoupon接口
-   */
-  CouponId?: string;
-}
-
-/**
- * UpgradeToArkUHostInstance - 普通升级为方舟机型
- */
-export interface UpgradeToArkUHostInstanceResponse {
-  /**
-   * UHost主机的资源ID数组
-   */
-  UHostSet?: string[];
 }
