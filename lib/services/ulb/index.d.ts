@@ -883,6 +883,24 @@ export interface CreateRuleRequest {
              */
             Content?: string;
         };
+        /**
+         *
+         */
+        ProxyBufferingConfig?: {
+            /**
+             * 关闭缓存
+             */
+            CloseProxyBuffering?: boolean;
+        };
+        /**
+         *
+         */
+        BackendConnectionConfig?: {
+            /**
+             * 开启长连接
+             */
+            EnablePersistentConnection?: boolean;
+        };
     }[];
     /**
      * 当转发的服务节点为空时，规则是否忽略。默认值true
@@ -1376,29 +1394,53 @@ export interface DescribeListenersResponse {
          */
         HealthCheckConfig?: {
             /**
-             * 是否开启健康检查功能。暂时不支持关闭。 默认值为：true
+             * 是否开启健康检查功能。 默认值为：true
              */
             Enabled?: boolean;
             /**
-             * 健康检查方式。应用型限定取值： Port -> 端口检查；HTTP -> HTTP检查； 默认值：Port
+             * 健康检查方式。应用型限定取值： Port -> 端口检查；HTTP -> HTTP检查；GRPC -> GRPC检测； 默认值：Port
              */
             Type?: string;
             /**
-             * （应用型专用）HTTP检查域名。 当Type为HTTP时，此字段有意义，代表HTTP检查域名
+             * （应用型专用）HTTP检查域名。 当Type为HTTP/GRPC时，此字段有意义，代表HTTP检查域名
              */
             Domain?: string;
             /**
-             * （应用型专用）HTTP检查路径。当Type为HTTP时，此字段有意义，代表HTTP检查路径
+             * （应用型专用）HTTP检查路径。当Type为HTTP/GRPC时，此字段有意义，代表HTTP检查路径
              */
             Path?: string;
             /**
-             * （应用型专用）HTTP检查方法。当Type为HTTP时，此字段有意义，代表HTTP检查方法
+             * （应用型专用）HTTP检查方法。当Type为HTTP/GRPC时，此字段有意义，代表HTTP检查方法
              */
             Method?: string;
             /**
-             * （应用型专用）GRPC检查响应码。当Type为GRPC时，此字段有意义，代表GRPC检查响应码
+             * （应用型专用）检查预期状态码。HTTP时为2xx,3xx格式(逗号分隔)，GRPC时为数字码(逗号分隔)。
              */
             ResponseCode?: string;
+            /**
+             * （应用型专用）检查协议
+             */
+            HTTPVersion?: string;
+            /**
+             * （应用型专用）端口
+             */
+            Port?: number;
+            /**
+             * （应用型专用）超时时间，秒，必须小于Interval
+             */
+            TimeOut?: number;
+            /**
+             * （应用型专用）间隔时间，秒，必须大于TimeOut
+             */
+            Interval?: number;
+            /**
+             * （应用型专用）判定成功的连续次数
+             */
+            UpCounts?: number;
+            /**
+             * （应用型专用）判定失败的连续次数
+             */
+            DownCounts?: number;
         };
         /**
          * （应用型专用）是否开启数据压缩功能。目前只支持使用gzip对特定文件类型进行压缩
@@ -1606,6 +1648,24 @@ export interface DescribeListenersResponse {
                  * 转发规则动作执行的顺序，取值为1~1000，按值从小到大执行动作。值不能为空，不能重复。Forward、FixedResponse 类型的动作不判断 Order，最后一个执行
                  */
                 Order?: number;
+                /**
+                 * 关闭缓存
+                 */
+                ProxyBufferingConfig?: {
+                    /**
+                     * 关闭缓存
+                     */
+                    CloseProxyBuffering?: boolean;
+                };
+                /**
+                 * 开启长连接
+                 */
+                BackendConnectionConfig?: {
+                    /**
+                     * 是否开启长连接
+                     */
+                    EnablePersistentConnection?: boolean;
+                };
             }[];
             /**
              * 是否为默认转发规则
@@ -1620,6 +1680,10 @@ export interface DescribeListenersResponse {
          * listener健康状态。限定枚举值：Healthy -> 健康，Unhealthy -> 不健康，PartialHealth -> 部分健康，None -> 无节点状态
          */
         State?: string;
+        /**
+         * 后端协议。应用型限定取值：“HTTP,HTTPS,GRPC"，默认值“HTTP”
+         */
+        TargetProtocol?: string;
     }[];
 }
 /**
@@ -1849,29 +1913,53 @@ export interface DescribeLoadBalancersResponse {
              */
             HealthCheckConfig?: {
                 /**
-                 * 是否开启健康检查功能。暂时不支持关闭。 默认值为：true
+                 * 是否开启健康检查功能。 默认值为：true
                  */
                 Enabled?: boolean;
                 /**
-                 * 健康检查方式。应用型限定取值： Port -> 端口检查；HTTP -> HTTP检查； 默认值：Port
+                 * 健康检查方式。应用型限定取值： Port -> 端口检查；HTTP -> HTTP检查；GRPC -> GRPC检测； 默认值：Port
                  */
                 Type?: string;
                 /**
-                 * （应用型专用）HTTP检查域名。 当Type为HTTP时，此字段有意义，代表HTTP检查域名
+                 * （应用型专用）HTTP检查域名。 当Type为HTTP/GRPC时，此字段有意义，代表HTTP检查域名
                  */
                 Domain?: string;
                 /**
-                 * （应用型专用）HTTP检查路径。当Type为HTTP时，此字段有意义，代表HTTP检查路径
+                 * （应用型专用）HTTP检查路径。当Type为HTTP/GRPC时，此字段有意义，代表HTTP检查路径
                  */
                 Path?: string;
                 /**
-                 * （应用型专用）HTTP检查方法。当Type为HTTP时，此字段有意义，代表HTTP检查方法
+                 * （应用型专用）HTTP检查方法。当Type为HTTP/GRPC时，此字段有意义，代表HTTP检查方法
                  */
                 Method?: string;
                 /**
-                 * （应用型专用）GRPC检查响应码。当Type为GRPC时，此字段有意义，代表GRPC检查响应码
+                 * （应用型专用）检查预期状态码。HTTP时为2xx,3xx格式(逗号分隔)，GRPC时为数字码(逗号分隔)。
                  */
                 ResponseCode?: string;
+                /**
+                 * （应用型专用）检查协议
+                 */
+                HTTPVersion?: string;
+                /**
+                 * （应用型专用）端口
+                 */
+                Port?: number;
+                /**
+                 * （应用型专用）超时时间，秒，必须小于Interval
+                 */
+                TimeOut?: number;
+                /**
+                 * （应用型专用）间隔时间，秒，必须大于TimeOut
+                 */
+                Interval?: number;
+                /**
+                 * （应用型专用）判定成功的连续次数
+                 */
+                UpCounts?: number;
+                /**
+                 * （应用型专用）判定失败的连续次数
+                 */
+                DownCounts?: number;
             };
             /**
              * （应用型专用）是否开启数据压缩功能。目前只支持使用gzip对特定文件类型进行压缩
@@ -2079,6 +2167,24 @@ export interface DescribeLoadBalancersResponse {
                      * 转发规则动作执行的顺序，取值为1~1000，按值从小到大执行动作。值不能为空，不能重复。Forward、FixedResponse 类型的动作不判断 Order，最后一个执行
                      */
                     Order?: number;
+                    /**
+                     * 关闭缓存
+                     */
+                    ProxyBufferingConfig?: {
+                        /**
+                         * 关闭缓存
+                         */
+                        CloseProxyBuffering?: boolean;
+                    };
+                    /**
+                     * 开启长连接
+                     */
+                    BackendConnectionConfig?: {
+                        /**
+                         * 是否开启长连接
+                         */
+                        EnablePersistentConnection?: boolean;
+                    };
                 }[];
                 /**
                  * 是否为默认转发规则
@@ -2093,6 +2199,10 @@ export interface DescribeLoadBalancersResponse {
              * listener健康状态。限定枚举值：Healthy -> 健康，Unhealthy -> 不健康，PartialHealth -> 部分健康，None -> 无节点状态
              */
             State?: string;
+            /**
+             * 后端协议。应用型限定取值：“HTTP,HTTPS,GRPC"，默认值“HTTP”
+             */
+            TargetProtocol?: string;
         }[];
         /**
          * lb状态：Normal-正常；Arrears-欠费停服
@@ -2283,6 +2393,24 @@ export interface DescribeRulesResponse {
              * 转发规则动作执行的顺序，取值为1~1000，按值从小到大执行动作。值不能为空，不能重复。Forward、FixedResponse 类型的动作不判断 Order，最后一个执行
              */
             Order?: number;
+            /**
+             * 关闭缓存
+             */
+            ProxyBufferingConfig?: {
+                /**
+                 * 关闭缓存
+                 */
+                CloseProxyBuffering?: boolean;
+            };
+            /**
+             * 开启长连接
+             */
+            BackendConnectionConfig?: {
+                /**
+                 * 是否开启长连接
+                 */
+                EnablePersistentConnection?: boolean;
+            };
         }[];
         /**
          * 是否为默认转发规则
@@ -4160,6 +4288,24 @@ export interface UpdateRuleAttributeRequest {
              * 返回的固定内容。最大支持存储 1 KB，只支持 ASCII 码值ch >= 32 && ch < 127范围内、不包括 $ 的可打印字符。
              */
             Content?: string;
+        };
+        /**
+         *
+         */
+        ProxyBufferingConfig?: {
+            /**
+             * 关闭缓存
+             */
+            CloseProxyBuffering?: boolean;
+        };
+        /**
+         *
+         */
+        BackendConnectionConfig?: {
+            /**
+             * 开启长连接
+             */
+            EnablePersistentConnection?: boolean;
         };
     }[];
     /**
