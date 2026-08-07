@@ -28,6 +28,7 @@ export declare class Client extends BaseClient {
     uhost(): any;
     uk8s(): any;
     ukafka(): any;
+    ukms(): any;
     ulb(): any;
     ulight_host(): any;
     umem(): any;
