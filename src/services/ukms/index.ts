@@ -1041,6 +1041,18 @@ export interface ListAliasesRequest {
    * 返回数据长度。
    */
   Limit?: number;
+  /**
+   * 按完整别名（含 alias/ 前缀）进行子串模糊匹配
+   */
+  Alias?: string;
+  /**
+   * 排序字段
+   */
+  OrderBy?: string;
+  /**
+   * 排序方向，默认 desc
+   */
+  Sort?: string;
 }
 
 /**
@@ -1094,6 +1106,18 @@ export interface ListKeysRequest {
    * 返回数据长度。最大1000
    */
   Limit?: number;
+  /**
+   * 状态筛选：Active、Deactivated、PendingDeletion
+   */
+  Status?: string;
+  /**
+   * 排序字段
+   */
+  OrderBy?: string;
+  /**
+   * 排序方向，默认 desc
+   */
+  Sort?: string;
 }
 
 /**
@@ -1179,6 +1203,18 @@ export interface ListScheduleDeletionKeysRequest {
    * 列表排序方式, 可选项: "-created_time", "created_time","plan_delete_time","-plan_delete_time";默认按-plan_delete_time 计划删除时间升序返回
    */
   OrderBy?: string;
+  /**
+   * 按密钥 ID 或别名模糊过滤
+   */
+  Alias?: string;
+  /**
+   * UKMS 实例资源 ID
+   */
+  ResourceId?: string;
+  /**
+   * 排序方向，默认 desc
+   */
+  Sort?: string;
 }
 
 /**
@@ -1194,29 +1230,29 @@ export interface ListScheduleDeletionKeysResponse {
      */
     KeyId: string;
     /**
-     * 密钥类型，仅支持UCloudManagedKeys、CustomerManagedKeys。默认值CustomerManagedKeys
+     * 密钥类型，如RSA、EC、DES
      */
-    Type: string;
+    KeyType: string;
     /**
-     * 对密钥的描述说明
-     */
-    Description: string;
-    /**
-     * 是否启用
-     */
-    Enabled: boolean;
-    /**
-     * 创建时间 时间戳
+     * 创建时间
      */
     CreatedTime: number;
     /**
-     * 最后修改时间 时间戳
-     */
-    LastModifiedTime: number;
-    /**
      * 别名，与CMK一一对应
      */
-    Alias?: string;
+    Alias: string;
+    /**
+     * 密钥状态 "Pre-Active", "Active", "Deactivated", "Compromised", "Destroyed", "Destroyed Compromised"
+     */
+    Status: string;
+    /**
+     * 更新时间
+     */
+    UpdateTime: number;
+    /**
+     * 对密钥的描述说明
+     */
+    Description?: string;
     /**
      * 计划删除时间 时间戳
      */
