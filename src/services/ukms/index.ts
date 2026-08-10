@@ -660,7 +660,7 @@ export interface DisableKeyRequest {
   /**
    * 密钥 DB 数字 ID。
    */
-  KeyId: number;
+  KeyId: string;
   /**
    * UKMS 实例资源 ID。
    */
@@ -698,7 +698,7 @@ export interface EnableKeyRequest {
   /**
    * 密钥 DB 数字 ID。
    */
-  KeyId: number;
+  KeyId: string;
   /**
    * UKMS 实例资源 ID。
    */
@@ -911,6 +911,10 @@ export interface GenerateMacRequest {
    * 待哈希的消息。
    */
   MacMessage: string;
+  /**
+   * 用于生成消息认证码的 MAC 算法。
+   */
+  MacAlgorithm: string;
 }
 
 /**
@@ -1263,11 +1267,15 @@ export interface ScheduleKeyDeletionRequest {
   /**
    * 密钥 DB 数字 ID。
    */
-  KeyId: number;
+  KeyId: string;
   /**
    * UKMS 实例资源 ID。
    */
   ResourceId?: string;
+  /**
+   * 删除等待天数，取值范围为 7~30 天；未填写时默认为 30 天。
+   */
+  DeleteDay?: number;
 }
 
 /**
@@ -1379,10 +1387,6 @@ export interface UpdateKeyDescriptionResponse {
  */
 export interface VerifyRequest {
   /**
-   * UKMS 实例资源 ID。
-   */
-  ResourceId: string;
-  /**
    * 密钥 ID、ARN 或别名。
    */
   KeyId: string;
@@ -1398,6 +1402,10 @@ export interface VerifyRequest {
    * 签名时使用的算法。可选值：RSASSA_PSS_SHA_256、RSASSA_PSS_SHA_384、RSASSA_PSS_SHA_512、RSASSA_PKCS1_V1_5_SHA_256、RSASSA_PKCS1_V1_5_SHA_384、RSASSA_PKCS1_V1_5_SHA_512、ECDSA_SHA_256、ECDSA_SHA_384、ECDSA_SHA_512；须与密钥 KeySpec 匹配。
    */
   SigningAlgorithm: string;
+  /**
+   * UKMS 实例资源 ID。
+   */
+  ResourceId?: string;
   /**
    * 消息类型。可选值：RAW、DIGEST；默认 RAW。
    */
