@@ -603,6 +603,10 @@ export interface DescribeKeyResponse {
    */
   KeyMetadata: {
     /**
+     * 密钥所属项目的对外别名，格式为 org-xxx。该值由项目数字 ID 解析得到，可能因项目别名查询失败而为空。
+     */
+    ProjectId?: string;
+    /**
      * 密钥资源长 ID。
      */
     KeyId: string;
@@ -650,6 +654,10 @@ export interface DescribeKeyResponse {
      * 计划删除时间，Unix 时间戳。
      */
     DeletionDate?: number;
+    /**
+     * 密钥所属组织的数字 ID，来源于密钥关联的资源交易记录。
+     */
+    OrganizationId?: number;
   };
 }
 
@@ -1129,6 +1137,10 @@ export interface ListKeysResponse {
    */
   Data: {
     /**
+     * 密钥所属项目的对外别名，格式为 org-xxx。该值由项目数字 ID 解析得到，可能因项目别名查询失败而为空。
+     */
+    ProjectId?: string;
+    /**
      * 对外主密钥 ID（ukms_key_info.key_id）。
      */
     KeyId: string;
@@ -1180,6 +1192,10 @@ export interface ListKeysResponse {
      * 下次自动轮转时间（Unix 时间戳，秒）；仅在已开启自动轮转时返回。
      */
     NextRotationDate?: number;
+    /**
+     * 密钥所属组织的数字 ID，来源于密钥关联的资源交易记录。
+     */
+    OrganizationId?: number;
   }[];
   /**
    * 符合条件的总数，不同于 Limit。
