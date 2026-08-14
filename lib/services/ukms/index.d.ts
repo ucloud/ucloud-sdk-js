@@ -307,7 +307,7 @@ export interface DecryptRequest {
      */
     KeyId?: string;
     /**
-     * 加密上下文，JSON Object。
+     * 加密上下文，JSON Object。该参数内容会记录在日志中，请勿传入密码、密钥、令牌等敏感信息。
      */
     EncryptionContext?: string;
     /**
@@ -518,7 +518,7 @@ export interface EncryptRequest {
      */
     Plaintext: string;
     /**
-     * 加密上下文，JSON Object。
+     * 加密上下文，JSON Object。该参数内容会记录在日志中，请勿传入密码、密钥、令牌等敏感信息。
      */
     EncryptionContext?: string;
     /**
