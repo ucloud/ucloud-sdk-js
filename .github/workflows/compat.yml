@@ -1,0 +1,45 @@
+name: Compatibility
+
+# 老版本 node 兼容矩阵。原 workflow.yml 把 node 10/12/14 挂在裸 [push, pull_request] 上，
+# 这里把它从 PR 路径整体移出，只留定时 + 手动触发。三条理由：
+#   1. 它回答的是「声明支持的下界今天还装不装得上」，与某个 PR 改得对不对无关；
+#      放在 PR 上只会给每次 codegen 提交增加与改动无关的 check。
+#   2. 这些版本的失败多半来自外部环境漂移（runner 镜像换代、npm registry 的
+#      TLS/协议要求提高、依赖发布新版丢掉老 engines 支持），不是代码回归。
+#      让它去阻断合并，等于把上游漂移变成本仓的合并事故。
+#   3. 门禁只认 ci.yml 的 ci-gate；这里刻意不产出任何 required check。
+#
+# fail-fast: false —— 目的是一次跑出「哪几个版本还活着」的完整结论，
+# 而不是在第一个挂掉的版本上就停下、看不到其余版本的状态。
+#
+# 版本可行性说明（2026-08-18 查证）：setup-node@v7 的 node-version 输入
+# 在其 README 里仍以 `12.x` / `10.15.1` 作为合法语法示例，且在 node-versions
+# manifest 未命中时会回落到 nodejs.org/dist 直下，语法层面 10/12/14 仍受支持。
+# 但**未实测**这些老二进制能否在当前 ubuntu-latest 镜像上跑起来
+# （glibc、以及 node 10 自带的老 npm 能否完成 registry 握手，均未验证）。
+# 若某个版本在此长期红着，先判断是环境漂移还是真实回归，再决定是降下界还是修代码。
+
+on:
+  schedule:
+    # 每周一 03:00 UTC。频率取周级即可：这里跟踪的是外部环境漂移，不是每次提交。
+    - cron: '0 3 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  legacy-node:
+    name: node ${{ matrix.node-version }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node-version: ['10', '12', '14']
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: npm install
+      - run: make test-cov
