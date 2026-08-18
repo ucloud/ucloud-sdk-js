@@ -660,6 +660,14 @@ export interface GenerateMacRequest {
  * GenerateMac - 使用HMAC密钥管理服务（KMS）密钥和该密钥支持的MAC算法，为消息生成基于哈希的消息认证码（HMAC）。
  */
 export interface GenerateMacResponse {
+    /**
+     * 针对指定消息生成的基于哈希的消息认证码 (HMAC)、HMAC KMS 密钥和 MAC 算法。
+     */
+    Mac?: string;
+    /**
+     * 用于生成 HMAC 的 MAC 算法。
+     */
+    MacAlgorithm?: string;
 }
 /**
  * GenerateRandom - 生成随机数
@@ -1217,4 +1225,16 @@ export interface VerifyMacRequest {
  * VerifyMac - 验证签名
  */
 export interface VerifyMacResponse {
+    /**
+     * 密钥ID
+     */
+    KeyId?: string;
+    /**
+     * 验证中使用的 MAC 算法。
+     */
+    MacAlgorithm?: string;
+    /**
+     * 一个布尔值，表示 HMAC 是否已验证。
+     */
+    MacValid?: boolean;
 }
