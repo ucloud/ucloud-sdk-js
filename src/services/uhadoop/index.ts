@@ -32,7 +32,7 @@ export default class UHadoopClient extends Client {
   }
 
   /**
-   * CreateUHadoopInstance - 创建实例接口。\\ 创建实例前需要按以下步骤准备必要参数：\\ 1.获取Region（地域）和 Zone（可用区），访问链接：https://docs.ucloud.cn/api/summary/regionlist 可以获取所有支持的地域和可用区；\\ 2.FrameworkVersion，访问链接：https://docs.ucloud.cn/api/uhadoop-api/list_uhadoop_framework_app_by_use_case，响应字段的AppConfigSet[N].FrameworkVersion是框架版本是支持的 UHadoop 版本；\\ 3.ChargeType付费类型，可用值：Dynamic为按小时付费，Month为按月付费，Year为按年付费；\\ 4.InstanceGroupConfigs需要获取NodeType机型详情，访问链接：https://docs.ucloud.cn/api/uhadoop-api/get_uhadoop_node_type，响应字段的InstanceTypeSet[N].NodeType是机型名称，响应字段的InstanceTypeSet[N].SuitableRole是机型可用的节点类型；\\ 5.获取DiskSize磁盘大小范围 ，访问链接：https://docs.ucloud.cn/api/uhadoop-api/get_uhadoop_node_type，该接口响应字段的InstanceTypeSet[N].DiskSet[N].DiskMinSize和InstanceTypeSet[N].DiskSet[N].DiskMaxSize是磁盘大小的取值范围；\\ 6.InstanceName，自定义输入实例名称，只能包含中英文、数字以及- _ ;\\7.Password,集群机器的登录密码,需要输入base64编码后的内容;\\8.AppConfigs 集群需要安装的组件，访问链接，https://docs.ucloud.cn/api/uhadoop-api/list_uhadoop_framework_app ，AppConfigSet[N].AppName是组件名称，AppConfigSet[N].AppVersion是组件版本
+   * CreateUHadoopInstance - 创建实例接口。\\ 创建实例前需要按以下步骤准备必要参数：\\ 1.获取Region（地域）和 Zone（可用区），访问链接：https://docs.ucloud.cn/api/summary/regionlist 可以获取所有支持的地域和可用区；\\ 2.FrameworkVersion，访问链接：https://docs.ucloud.cn/api/uhadoop-api/list_uhadoop_framework_app_by_use_case，响应字段的AppConfigSet[N].FrameworkVersion是框架版本是支持的 UHadoop 版本；\\ 3.ChargeType付费类型，可用值：Dynamic为按小时付费，Month为按月付费，Year为按年付费；\\ 4.InstanceGroupConfigs需要获取NodeType机型详情，访问链接：https://docs.ucloud.cn/api/uhadoop-api/get_uhadoop_node_type，响应字段的InstanceTypeSet[N].NodeType是机型名称，响应字段的InstanceTypeSet[N].SuitableRole是机型可用的节点类型；\\ 5.获取DiskSize磁盘大小范围 ，访问链接：https://docs.ucloud.cn/api/uhadoop-api/get_uhadoop_node_type，该接口响应字段的InstanceTypeSet[N].DiskSet[N].DiskMinSize和InstanceTypeSet[N].DiskSet[N].DiskMaxSize是磁盘大小的取值范围；\\ 6.InstanceName，自定义输入实例名称，只能包含中英文、数字以及- _ ;\\7.Password,集群机器的登录密码,需要输入base64编码后的内容;\\8.AppConfigs 集群需要安装的组件，访问链接，https://docs.ucloud.cn/api/uhadoop-api/list_uhadoop_framework_app ，返回字段中的AppConfigSet[N].AppName是组件名称，返回字段中的AppConfigSet[N].AppVersion是组件版本
    *
    * See also: https://docs.ucloud.cn/api/uhadoop-api/create_uhadoop_instance
    */
@@ -231,7 +231,7 @@ export interface AddUHadoopInstanceNodeRequest {
 export interface AddUHadoopInstanceNodeResponse {}
 
 /**
- * CreateUHadoopInstance - 创建实例接口。\\ 创建实例前需要按以下步骤准备必要参数：\\ 1.获取Region（地域）和 Zone（可用区），访问链接：https://docs.ucloud.cn/api/summary/regionlist 可以获取所有支持的地域和可用区；\\ 2.FrameworkVersion，访问链接：https://docs.ucloud.cn/api/uhadoop-api/list_uhadoop_framework_app_by_use_case，响应字段的AppConfigSet[N].FrameworkVersion是框架版本是支持的 UHadoop 版本；\\ 3.ChargeType付费类型，可用值：Dynamic为按小时付费，Month为按月付费，Year为按年付费；\\ 4.InstanceGroupConfigs需要获取NodeType机型详情，访问链接：https://docs.ucloud.cn/api/uhadoop-api/get_uhadoop_node_type，响应字段的InstanceTypeSet[N].NodeType是机型名称，响应字段的InstanceTypeSet[N].SuitableRole是机型可用的节点类型；\\ 5.获取DiskSize磁盘大小范围 ，访问链接：https://docs.ucloud.cn/api/uhadoop-api/get_uhadoop_node_type，该接口响应字段的InstanceTypeSet[N].DiskSet[N].DiskMinSize和InstanceTypeSet[N].DiskSet[N].DiskMaxSize是磁盘大小的取值范围；\\ 6.InstanceName，自定义输入实例名称，只能包含中英文、数字以及- _ ;\\7.Password,集群机器的登录密码,需要输入base64编码后的内容;\\8.AppConfigs 集群需要安装的组件，访问链接，https://docs.ucloud.cn/api/uhadoop-api/list_uhadoop_framework_app ，AppConfigSet[N].AppName是组件名称，AppConfigSet[N].AppVersion是组件版本
+ * CreateUHadoopInstance - 创建实例接口。\\ 创建实例前需要按以下步骤准备必要参数：\\ 1.获取Region（地域）和 Zone（可用区），访问链接：https://docs.ucloud.cn/api/summary/regionlist 可以获取所有支持的地域和可用区；\\ 2.FrameworkVersion，访问链接：https://docs.ucloud.cn/api/uhadoop-api/list_uhadoop_framework_app_by_use_case，响应字段的AppConfigSet[N].FrameworkVersion是框架版本是支持的 UHadoop 版本；\\ 3.ChargeType付费类型，可用值：Dynamic为按小时付费，Month为按月付费，Year为按年付费；\\ 4.InstanceGroupConfigs需要获取NodeType机型详情，访问链接：https://docs.ucloud.cn/api/uhadoop-api/get_uhadoop_node_type，响应字段的InstanceTypeSet[N].NodeType是机型名称，响应字段的InstanceTypeSet[N].SuitableRole是机型可用的节点类型；\\ 5.获取DiskSize磁盘大小范围 ，访问链接：https://docs.ucloud.cn/api/uhadoop-api/get_uhadoop_node_type，该接口响应字段的InstanceTypeSet[N].DiskSet[N].DiskMinSize和InstanceTypeSet[N].DiskSet[N].DiskMaxSize是磁盘大小的取值范围；\\ 6.InstanceName，自定义输入实例名称，只能包含中英文、数字以及- _ ;\\7.Password,集群机器的登录密码,需要输入base64编码后的内容;\\8.AppConfigs 集群需要安装的组件，访问链接，https://docs.ucloud.cn/api/uhadoop-api/list_uhadoop_framework_app ，返回字段中的AppConfigSet[N].AppName是组件名称，返回字段中的AppConfigSet[N].AppVersion是组件版本
  */
 export interface CreateUHadoopInstanceRequest {
   /**
@@ -239,7 +239,7 @@ export interface CreateUHadoopInstanceRequest {
    */
   Zone: string;
   /**
-   * 集群机器的登录密码,需要输入base64编码后的内容
+   * 集群机器的登录密码,需要Base64加密。
    */
   Password: string;
   /**
@@ -314,10 +314,14 @@ export interface CreateUHadoopInstanceRequest {
    * 实例名称，默认为实例ID
    */
   InstanceName?: string;
+  /**
+   * 集群加密磁盘密钥ID
+   */
+  DataDiskKmsKeyId?: string;
 }
 
 /**
- * CreateUHadoopInstance - 创建实例接口。\\ 创建实例前需要按以下步骤准备必要参数：\\ 1.获取Region（地域）和 Zone（可用区），访问链接：https://docs.ucloud.cn/api/summary/regionlist 可以获取所有支持的地域和可用区；\\ 2.FrameworkVersion，访问链接：https://docs.ucloud.cn/api/uhadoop-api/list_uhadoop_framework_app_by_use_case，响应字段的AppConfigSet[N].FrameworkVersion是框架版本是支持的 UHadoop 版本；\\ 3.ChargeType付费类型，可用值：Dynamic为按小时付费，Month为按月付费，Year为按年付费；\\ 4.InstanceGroupConfigs需要获取NodeType机型详情，访问链接：https://docs.ucloud.cn/api/uhadoop-api/get_uhadoop_node_type，响应字段的InstanceTypeSet[N].NodeType是机型名称，响应字段的InstanceTypeSet[N].SuitableRole是机型可用的节点类型；\\ 5.获取DiskSize磁盘大小范围 ，访问链接：https://docs.ucloud.cn/api/uhadoop-api/get_uhadoop_node_type，该接口响应字段的InstanceTypeSet[N].DiskSet[N].DiskMinSize和InstanceTypeSet[N].DiskSet[N].DiskMaxSize是磁盘大小的取值范围；\\ 6.InstanceName，自定义输入实例名称，只能包含中英文、数字以及- _ ;\\7.Password,集群机器的登录密码,需要输入base64编码后的内容;\\8.AppConfigs 集群需要安装的组件，访问链接，https://docs.ucloud.cn/api/uhadoop-api/list_uhadoop_framework_app ，AppConfigSet[N].AppName是组件名称，AppConfigSet[N].AppVersion是组件版本
+ * CreateUHadoopInstance - 创建实例接口。\\ 创建实例前需要按以下步骤准备必要参数：\\ 1.获取Region（地域）和 Zone（可用区），访问链接：https://docs.ucloud.cn/api/summary/regionlist 可以获取所有支持的地域和可用区；\\ 2.FrameworkVersion，访问链接：https://docs.ucloud.cn/api/uhadoop-api/list_uhadoop_framework_app_by_use_case，响应字段的AppConfigSet[N].FrameworkVersion是框架版本是支持的 UHadoop 版本；\\ 3.ChargeType付费类型，可用值：Dynamic为按小时付费，Month为按月付费，Year为按年付费；\\ 4.InstanceGroupConfigs需要获取NodeType机型详情，访问链接：https://docs.ucloud.cn/api/uhadoop-api/get_uhadoop_node_type，响应字段的InstanceTypeSet[N].NodeType是机型名称，响应字段的InstanceTypeSet[N].SuitableRole是机型可用的节点类型；\\ 5.获取DiskSize磁盘大小范围 ，访问链接：https://docs.ucloud.cn/api/uhadoop-api/get_uhadoop_node_type，该接口响应字段的InstanceTypeSet[N].DiskSet[N].DiskMinSize和InstanceTypeSet[N].DiskSet[N].DiskMaxSize是磁盘大小的取值范围；\\ 6.InstanceName，自定义输入实例名称，只能包含中英文、数字以及- _ ;\\7.Password,集群机器的登录密码,需要输入base64编码后的内容;\\8.AppConfigs 集群需要安装的组件，访问链接，https://docs.ucloud.cn/api/uhadoop-api/list_uhadoop_framework_app ，返回字段中的AppConfigSet[N].AppName是组件名称，返回字段中的AppConfigSet[N].AppVersion是组件版本
  */
 export interface CreateUHadoopInstanceResponse {
   /**
@@ -454,7 +458,20 @@ export interface DescribeUHadoopInstanceResponse {
     /**
      * 组件集合
      */
-    AppConfigSet?: string;
+    AppConfigSet?: {
+      /**
+       * 需要安装的应用如：Hive,HBase, Spark,Hue,Pig等其他组件
+       */
+      AppName?: string;
+      /**
+       * 应用的版本号(0.13.1,0.98.6 等等)
+       */
+      AppVersion?: string;
+      /**
+       * 应用的状态(运行中)'Running'｜(已停止)'Stopped'｜(启动中)'Starting'｜(停止中)'Stopping'|(启动失败)'StartFailed'|(停止失败)'StopFailed'|(安装中)'Installing'|(安装失败)'InstallFailed'|(未安装)'NotInstalled',
+       */
+      AppStatus?: string;
+    }[];
     /**
      * 组件数量
      */
@@ -466,11 +483,131 @@ export interface DescribeUHadoopInstanceResponse {
     /**
      * 节点集合
      */
-    NodeSet?: string;
+    NodeSet?: {
+      /**
+       * 节点ID
+       */
+      NodeId: string;
+      /**
+       * 机型种类，可选OutStanding(快杰机型)|Genenal(普通机型)|BareMetal(裸金属机型)三种类型
+       */
+      HostType: string;
+      /**
+       * 磁盘信息集合
+       */
+      DiskSet: {
+        /**
+         * 磁盘数量
+         */
+        DiskNum: number;
+        /**
+         * 磁盘角色，一般分Boot和Data两种
+         */
+        DiskRole: string;
+        /**
+         * 磁盘大小，单位为GB
+         */
+        DiskSize: number;
+        /**
+         * 磁盘类型，分为CLOUD_RSSD(云盘RSSD)、CLOUD_SSD(云盘SSD)、LOCAL_SSD（本地SSD盘）、LOCAL_NORMAL（本地普通盘）、SATA（SATA盘）
+         */
+        DiskType: string;
+      }[];
+      /**
+       * CPU数量
+       */
+      CPU: number;
+      /**
+       * 资源ID
+       */
+      ResourceId: string;
+      /**
+       * 实例ID
+       */
+      InstanceId: string;
+      /**
+       * 创建时间戳
+       */
+      CreateTime: number;
+      /**
+       * 是否是新机型,快杰机型，GPU机型，云盘裸金属机型为新机型
+       */
+      IsNewType: boolean;
+      /**
+       * 内存大小，单位为MB
+       */
+      Memory: number;
+      /**
+       * 节点在集群中的⻆色(有Master,Core,Task 3种)
+       */
+      NodeRole: string;
+      /**
+       * 节点名称
+       */
+      NodeName: string;
+      /**
+       * 备注
+       */
+      Remark: string;
+      /**
+       * 节点的到期时间(下次扣款时间)
+       */
+      ExpireTime: number;
+      /**
+       * 机型
+       */
+      NodeType: string;
+      /**
+       * 防火墙 信息
+       */
+      FirewallGroupConfig: {
+        /**
+         * 防火墙ID
+         */
+        GroupId: string;
+        /**
+         * 防火墙组的名称
+         */
+        GroupName: string;
+        /**
+         * 放火墙组创建时间，格式为Unix Timestamp
+         */
+        CreateTime: number;
+        /**
+         * 防火墙组类型，枚举值为： 0：用户自定义防火墙； 1：默认 Web防火墙； 2：默认非Web防火墙
+         */
+        Type: string;
+      }[];
+      /**
+       * 运行：Running； 创建中：Creating； 删除中：Deleting； 创建失败：CreateFailed； 不可用：Unavailable； 删除失败：DeleteFailed； 已删除：Deleted； 部署中： Deploying
+       */
+      State: string;
+      /**
+       * IP 信息
+       */
+      IPSet: {
+        /**
+         * 类别
+         */
+        Type?: string;
+        /**
+         * IP
+         */
+        IP?: string;
+      }[];
+      /**
+       * 是否是弹性伸缩节点
+       */
+      Scaling?: boolean;
+    }[];
     /**
      * 节点数量
      */
     NodeCount?: string;
+    /**
+     * 集群磁盘加密密钥ID
+     */
+    DataDiskKmsKeyId?: string;
   }[];
 }
 
@@ -718,7 +855,7 @@ export interface ListUHadoopInstanceRequest {
  */
 export interface ListUHadoopInstanceResponse {
   /**
-   * 集群信息集合
+   * 集群信息
    */
   ClusterSet: {
     /**

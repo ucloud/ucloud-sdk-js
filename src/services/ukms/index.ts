@@ -32,20 +32,6 @@ export default class UKMSClient extends Client {
   }
 
   /**
-   * CancelScheduleKeyDeletion - 取消计划删除密钥
-   *
-   * See also: https://docs.ucloud.cn/api/ukms-api/cancel_schedule_key_deletion
-   */
-  cancelScheduleKeyDeletion(
-    request?: CancelScheduleKeyDeletionRequest
-  ): Promise<CancelScheduleKeyDeletionResponse> {
-    const args = { Action: 'CancelScheduleKeyDeletion', ...(request || {}) };
-    return this.invoke(new Request(args)).then(
-      (resp) => resp.toObject() as CancelScheduleKeyDeletionResponse
-    );
-  }
-
-  /**
    * CreateAlias - 为密钥创建别名。
    *
    * See also: https://docs.ucloud.cn/api/ukms-api/create_alias
@@ -432,25 +418,6 @@ export interface CancelKeyDeletionRequest {
 export interface CancelKeyDeletionResponse {}
 
 /**
- * CancelScheduleKeyDeletion - 取消计划删除密钥
- */
-export interface CancelScheduleKeyDeletionRequest {
-  /**
-   * 需要查看的主密钥对应的 KeyId
-   */
-  KeyId: string;
-  /**
-   * 资源id
-   */
-  ResourceId?: string;
-}
-
-/**
- * CancelScheduleKeyDeletion - 取消计划删除密钥
- */
-export interface CancelScheduleKeyDeletionResponse {}
-
-/**
  * CreateAlias - 为密钥创建别名。
  */
 export interface CreateAliasRequest {
@@ -637,7 +604,7 @@ export interface DescribeKeyResponse {
     /**
      * 是否开启删除保护。取值：true、false。
      */
-    DeletionProtection: string;
+    DeletionProtection: boolean;
     /**
      * 当前密钥版本。
      */
@@ -806,7 +773,7 @@ export interface GenerateDataKeyRequest {
    */
   NumberOfBytes?: number;
   /**
-   * 加密上下文，JSON Object。
+   * 加密上下文，JSON Object。该参数内容会记录在日志中，请勿传入密码、密钥、令牌等敏感信息。
    */
   EncryptionContext?: string;
 }
