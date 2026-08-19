@@ -5,6 +5,7 @@ const BaseClient = require('../core/client').default;
 const CubeClient = require('./cube').default;
 const IPSecVPNClient = require('./ipsecvpn').default;
 const PathXClient = require('./pathx').default;
+const sandboxClient = require('./sandbox').default;
 const UAccountClient = require('./uaccount').default;
 const UAIModelverseClient = require('./uai_modelverse').default;
 const UBillClient = require('./ubill').default;
@@ -64,6 +65,13 @@ export class Client extends BaseClient {
 
   pathx() {
     return new PathXClient({
+      config: this.config,
+      credential: this.credential,
+    });
+  }
+
+  sandbox() {
+    return new sandboxClient({
       config: this.config,
       credential: this.credential,
     });

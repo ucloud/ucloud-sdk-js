@@ -348,6 +348,10 @@ export interface CreateUMInferAPIKeyRequest {
    * ip白名单，换行分割的多组ip。支持IPv4和网段,输入后回车生效,最多100个, 示例:﻿192.168.1.1192.168.1.10-192.168.1.100192.168.1.10/24
    */
   IPWhitelist?: string;
+  /**
+   * 是否开启推理日志
+   */
+  InferenceLogEnabled?: number;
 }
 
 /**
@@ -362,6 +366,10 @@ export interface CreateUMInferAPIKeyResponse {
      * ip白名单，换行分割的多组ip。支持IPv4和网段,输入后回车生效,最多100个, 示例: ﻿ 192.168.1.1 192.168.1.10-192.168.1.100 192.168.1.10/24
      */
     IPWhitelist: string;
+    /**
+     * 是否开启推理日志
+     */
+    InferenceLogEnabled: number;
     /**
      * 资源ID
      */
@@ -963,6 +971,18 @@ export interface GetUFSquareModelDetailResponse {
    * 模型
    */
   SquareModel: {
+    /**
+     * 关联的 batch 模型广场id
+     */
+    BatchSquareModelId: string;
+    /**
+     * 是否关联有可用 batch 模型
+     */
+    IsHasBatch?: boolean;
+    /**
+     * 关联的 batch 模型名称
+     */
+    BatchName?: string;
     /**
      * 制造商
      */
@@ -1719,6 +1739,14 @@ export interface ListUFSquareModelRequest {
    * 语言，数组类型，可选值 ["chinese", "english"]
    */
   Language?: string[];
+  /**
+   * 制造商，可选值来源于ListUFSquareModelFilters枚举接口。可多选
+   */
+  Manufacturer?: string[];
+  /**
+   * 模型特性，可选值来源于ListUFSquareModelFilters枚举接口。可多选
+   */
+  Capabilities?: string[];
 }
 
 /**
@@ -1733,6 +1761,18 @@ export interface ListUFSquareModelResponse {
    * 广场模型
    */
   SquareModels: {
+    /**
+     * 关联的 batch 模型广场id
+     */
+    BatchSquareModelId: string;
+    /**
+     * 是否关联有可用 batch 模型
+     */
+    IsHasBatch?: boolean;
+    /**
+     * 关联的 batch 模型名称
+     */
+    BatchName?: string;
     /**
      * 制造商
      */
@@ -1920,6 +1960,10 @@ export interface ListUMInferAPIKeyResponse {
      * ip白名单，换行分割的多组ip。支持IPv4和网段,输入后回车生效,最多100个, 示例: ﻿ 192.168.1.1 192.168.1.10-192.168.1.100 192.168.1.10/24
      */
     IPWhitelist: string;
+    /**
+     * 是否开启推理日志
+     */
+    InferenceLogEnabled: number;
     /**
      * 资源ID
      */
@@ -2577,6 +2621,10 @@ export interface UpdateUMInferAPIKeyRequest {
    * ip白名单，换行分割的多组ip。支持IPv4和网段,输入后回车生效,最多100个, 示例: ﻿ 192.168.1.1 192.168.1.10-192.168.1.100 192.168.1.10/24
    */
   IPWhitelist?: string;
+  /**
+   * 是否开启推理日志
+   */
+  InferenceLogEnabled?: number;
 }
 
 /**
