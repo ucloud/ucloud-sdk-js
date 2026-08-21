@@ -6,6 +6,7 @@ export declare class Client extends BaseClient {
         config: ConfigOptions;
         credential: CredentialOptions;
     });
+    cloudwatch(): any;
     cube(): any;
     ipsecvpn(): any;
     pathx(): any;

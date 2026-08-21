@@ -2,6 +2,7 @@ import { ConfigOptions } from '../core/config';
 import { CredentialOptions } from '../core/credential';
 const BaseClient = require('../core/client').default;
 
+const CloudWatchClient = require('./cloudwatch').default;
 const CubeClient = require('./cube').default;
 const IPSecVPNClient = require('./ipsecvpn').default;
 const PathXClient = require('./pathx').default;
@@ -46,6 +47,13 @@ export class Client extends BaseClient {
     credential: CredentialOptions;
   }) {
     super({ config, credential });
+  }
+
+  cloudwatch() {
+    return new CloudWatchClient({
+      config: this.config,
+      credential: this.credential,
+    });
   }
 
   cube() {
