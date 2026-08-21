@@ -712,7 +712,16 @@ export interface ListAlertRecordResponse {
         /**
          * 产品相关的额外属性列表
          */
-        ContentAttrList?: string[];
+        ContentAttrList?: {
+            /**
+             * 键
+             */
+            Key?: string;
+            /**
+             * 值
+             */
+            Value?: string;
+        }[];
     }[];
     /**
      * 告警记录总数
@@ -1200,37 +1209,13 @@ export interface QueryMetricDataSetResponse {
              */
             TagEntries?: {
                 /**
-                 * ID
+                 * 标签名称
                  */
-                Id?: number;
+                TagName?: string;
                 /**
-                 * 资源类型ID
+                 * 标签候选值列表
                  */
-                ObjectType?: string;
-                /**
-                 * 资源类型
-                 */
-                ObjectTypeKey?: string;
-                /**
-                 * 产品名称
-                 */
-                ProductName?: string;
-                /**
-                 * 产品子名称
-                 */
-                ProductName1?: string;
-                /**
-                 * 产品中文名称
-                 */
-                ProductCNName?: string;
-                /**
-                 * 产品英文名称
-                 */
-                ProductENName?: string;
-                /**
-                 * {type: spec|basic, key:string, name: string}[] -> JSON字符串
-                 */
-                Metas?: string;
+                KeyList?: string[];
             }[];
             /**
              * 查询到的时间序列列表
@@ -1247,7 +1232,16 @@ export interface QueryMetricDataSetResponse {
                 /**
                  * 资源标签列表。每项为 TagListItem：Tag（标签名）和 TagValue（标签值）。
                  */
-                TagList?: number[];
+                TagList?: {
+                    /**
+                     * 标签名
+                     */
+                    Tag?: string;
+                    /**
+                     * 标签值
+                     */
+                    TagValue?: string;
+                }[];
                 /**
                  * 指标数据点列表，元素为 MetricPoint
                  */
@@ -1331,144 +1325,26 @@ export interface QueryMetricDataSummaryResponse {
              */
             ResourceExtendAttrList?: {
                 /**
-                 * 指标名
+                 * 键
                  */
-                Metric?: string;
+                Key?: string;
                 /**
-                 * 指标数据数组
+                 * 值
                  */
-                MetricValues?: {
-                    /**
-                     * 指标名
-                     */
-                    Metric?: string;
-                    /**
-                     * 指标标签列表
-                     */
-                    TagsList?: {
-                        /**
-                         * ID
-                         */
-                        Id?: number;
-                        /**
-                         * 资源类型ID
-                         */
-                        ProductType?: number;
-                        /**
-                         * 资源类型唯一key
-                         */
-                        ProductKey?: string;
-                        /**
-                         * 产品名称
-                         */
-                        ProductName?: string;
-                        /**
-                         * 产品子名称
-                         */
-                        ProductName1?: string;
-                        /**
-                         * 产品中文名称
-                         */
-                        ProductChName?: string;
-                        /**
-                         * 产品英文名称
-                         */
-                        ProductEnName?: string;
-                        /**
-                         * {Type: 1|2, Key:string, Name: string}[] -> JSON字符串
-                         */
-                        Metas?: string;
-                        /**
-                         * 产品分组
-                         */
-                        ProductGroup?: string;
-                    }[];
-                    /**
-                     * 指标单个样本点对象
-                     */
-                    Value?: {
-                        /**
-                         * 时间戳
-                         */
-                        Timestamp?: number;
-                        /**
-                         * 样本值
-                         */
-                        Value?: number;
-                    };
-                }[];
+                Value?: string;
             }[];
             /**
              * 资源标签属性列表
              */
             LabelAttrList?: {
                 /**
-                 * 指标名
+                 * 键
                  */
-                Metric?: string;
+                Key?: string;
                 /**
-                 * 指标数据数组
+                 * 值
                  */
-                MetricValues?: {
-                    /**
-                     * 指标名
-                     */
-                    Metric?: string;
-                    /**
-                     * 指标标签列表
-                     */
-                    TagsList?: {
-                        /**
-                         * ID
-                         */
-                        Id?: number;
-                        /**
-                         * 资源类型ID
-                         */
-                        ProductType?: number;
-                        /**
-                         * 资源类型唯一key
-                         */
-                        ProductKey?: string;
-                        /**
-                         * 产品名称
-                         */
-                        ProductName?: string;
-                        /**
-                         * 产品子名称
-                         */
-                        ProductName1?: string;
-                        /**
-                         * 产品中文名称
-                         */
-                        ProductChName?: string;
-                        /**
-                         * 产品英文名称
-                         */
-                        ProductEnName?: string;
-                        /**
-                         * {Type: 1|2, Key:string, Name: string}[] -> JSON字符串
-                         */
-                        Metas?: string;
-                        /**
-                         * 产品分组
-                         */
-                        ProductGroup?: string;
-                    }[];
-                    /**
-                     * 指标单个样本点对象
-                     */
-                    Value?: {
-                        /**
-                         * 时间戳
-                         */
-                        Timestamp?: number;
-                        /**
-                         * 样本值
-                         */
-                        Value?: number;
-                    };
-                }[];
+                Value?: string;
             }[];
             /**
              * 公司id
@@ -1523,41 +1399,13 @@ export interface QueryMetricDataSummaryResponse {
                      */
                     TagsList?: {
                         /**
-                         * ID
+                         * 标签名
                          */
-                        Id?: number;
+                        Tag?: string;
                         /**
-                         * 资源类型ID
+                         * 标签值
                          */
-                        ProductType?: number;
-                        /**
-                         * 资源类型唯一key
-                         */
-                        ProductKey?: string;
-                        /**
-                         * 产品名称
-                         */
-                        ProductName?: string;
-                        /**
-                         * 产品子名称
-                         */
-                        ProductName1?: string;
-                        /**
-                         * 产品中文名称
-                         */
-                        ProductChName?: string;
-                        /**
-                         * 产品英文名称
-                         */
-                        ProductEnName?: string;
-                        /**
-                         * {Type: 1|2, Key:string, Name: string}[] -> JSON字符串
-                         */
-                        Metas?: string;
-                        /**
-                         * 产品分组
-                         */
-                        ProductGroup?: string;
+                        TagValue?: string;
                     }[];
                     /**
                      * 指标单个样本点对象
