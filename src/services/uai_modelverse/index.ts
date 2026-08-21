@@ -352,6 +352,18 @@ export interface CreateUMInferAPIKeyRequest {
    * 是否开启推理日志
    */
   InferenceLogEnabled?: number;
+  /**
+   * API Key 过期时间，Unix 时间戳，单位为秒。传 -1 表示永不过期。
+   */
+  ExpireTime?: number;
+  /**
+   * 模型访问策略：whitelist 表示白名单模式，blacklist 表示黑名单模式。
+   */
+  ModelAccessMode?: string;
+  /**
+   * API Key 禁止访问的模型列表。内容为数组格式。
+   */
+  DeniedModels?: string;
 }
 
 /**
@@ -370,6 +382,14 @@ export interface CreateUMInferAPIKeyResponse {
      * 是否开启推理日志
      */
     InferenceLogEnabled: number;
+    /**
+     * 禁止访问的模型列表。当 ModelAccessMode=blacklist 时生效。
+     */
+    DeniedModels?: string[];
+    /**
+     * 模型访问策略。可选值：whitelist（白名单模式，默认）或 blacklist（黑名单模式）。
+     */
+    ModelAccessMode?: string;
     /**
      * 资源ID
      */
@@ -1965,6 +1985,14 @@ export interface ListUMInferAPIKeyResponse {
      */
     InferenceLogEnabled: number;
     /**
+     * 禁止访问的模型列表。当 ModelAccessMode=blacklist 时生效。
+     */
+    DeniedModels?: string[];
+    /**
+     * 模型访问策略。可选值：whitelist（白名单模式，默认）或 blacklist（黑名单模式）。
+     */
+    ModelAccessMode?: string;
+    /**
      * 资源ID
      */
     KeyId?: string;
@@ -2625,6 +2653,18 @@ export interface UpdateUMInferAPIKeyRequest {
    * 是否开启推理日志
    */
   InferenceLogEnabled?: number;
+  /**
+   * API Key 过期时间，Unix 时间戳，单位为秒。传 -1 表示永不过期。
+   */
+  ExpireTime?: number;
+  /**
+   * 模型访问策略。可选值：whitelist（白名单模式，默认）或 blacklist（黑名单模式）。
+   */
+  ModelAccessMode?: string;
+  /**
+   * 禁止访问的模型列表。当 ModelAccessMode=blacklist 时生效。数组类型，示例 ["gpt-4o", "sora-2"]
+   */
+  DeniedModels?: string;
 }
 
 /**
