@@ -136,12 +136,6 @@ export default class UKMSClient extends Client {
      */
     listKeys(request?: ListKeysRequest): Promise<ListKeysResponse>;
     /**
-     * ListScheduleDeletionKeys - 获取计划删除密钥列表，调用ScheduleKeyDeletion命令后进入此列表， 默认30天后正式删除。正式删除前可调用CancelScheduleKeyDeletion恢复
-     *
-     * See also: https://docs.ucloud.cn/api/ukms-api/list_schedule_deletion_keys
-     */
-    listScheduleDeletionKeys(request?: ListScheduleDeletionKeysRequest): Promise<ListScheduleDeletionKeysResponse>;
-    /**
      * RotateKeyOnDemand - 立即触发一次密钥轮转。
      *
      * See also: https://docs.ucloud.cn/api/ukms-api/rotate_key_on_demand
@@ -178,7 +172,7 @@ export default class UKMSClient extends Client {
      */
     verify(request?: VerifyRequest): Promise<VerifyResponse>;
     /**
-     * VerifyMac - 验证签名
+     * VerifyMac - 验证指定消息、HMAC KMS 密钥和 MAC 算法的基于哈希的消息认证码 (HMAC)。为了验证 HMAC，VerifyMac 会使用您指定的消息、HMAC KMS 密钥和 MAC 算法计算 HMAC，并将计算出的 HMAC 与您指定的 HMAC 进行比较。如果两个 HMAC 完全相同，则验证成功；否则，验证失败。  验证结果表明，自计算 HMAC 以来，消息未发生更改，并且使用了指定的密钥来生成和验证 HMAC。
      *
      * See also: https://docs.ucloud.cn/api/ukms-api/verify_mac
      */
@@ -399,10 +393,6 @@ export interface DescribeKeyResponse {
          * 计划删除时间，Unix 时间戳。
          */
         DeletionDate?: number;
-        /**
-         * 密钥所属组织的数字 ID，来源于密钥关联的资源交易记录。
-         */
-        OrganizationId?: number;
     };
 }
 /**
@@ -586,6 +576,26 @@ export interface GenerateDataKeyPairRequest {
  * GenerateDataKeyPair - 创建数据密钥对
  */
 export interface GenerateDataKeyPairResponse {
+    /**
+     * 用于加密私钥的 KMS 密钥
+     */
+    KeyId?: string;
+    /**
+     * 生成的数据键对类型。
+     */
+    KeyPairSpec?: string;
+    /**
+     * 私钥的加密副本。
+     */
+    PrivateKeyCiphertextBlob?: string;
+    /**
+     * 私钥的明文副本。
+     */
+    PrivateKeyPlaintext?: string;
+    /**
+     * 公钥（明文）。
+     */
+    DataPublicKey?: string;
 }
 /**
  * GenerateDataKeyPairWithoutPlaintext - 创建数据密钥对（无明文返回）
@@ -595,6 +605,14 @@ export interface GenerateDataKeyPairWithoutPlaintextRequest {
      * 密钥ID
      */
     KeyId: string;
+    /**
+     * 指定生成的数据密钥对类型。
+     */
+    KeyPairSpec: string;
+    /**
+     * 指定加密私钥时使用的加密上下文。
+     */
+    EncryptionContext?: string;
 }
 /**
  * GenerateDataKeyPairWithoutPlaintext - 创建数据密钥对（无明文返回）
@@ -682,6 +700,10 @@ export interface GenerateRandomRequest {
  * GenerateRandom - 生成随机数
  */
 export interface GenerateRandomResponse {
+    /**
+     * 随机字节串。
+     */
+    Plaintext?: string;
 }
 /**
  * GetKeyRotationStatus - 查询密钥自动轮转状态。
@@ -934,89 +956,6 @@ export interface ListKeysResponse {
     TotalCount: number;
 }
 /**
- * ListScheduleDeletionKeys - 获取计划删除密钥列表，调用ScheduleKeyDeletion命令后进入此列表， 默认30天后正式删除。正式删除前可调用CancelScheduleKeyDeletion恢复
- */
-export interface ListScheduleDeletionKeysRequest {
-    /**
-     * 输出列表起始位置，默认从0开始
-     */
-    Offset?: number;
-    /**
-     * 输出列表数量，默认返回200个
-     */
-    Limit?: number;
-    /**
-     * 列表排序方式, 可选项: "-created_time", "created_time","plan_delete_time","-plan_delete_time";默认按-plan_delete_time 计划删除时间升序返回
-     */
-    OrderBy?: string;
-    /**
-     * 按密钥 ID 或别名模糊过滤
-     */
-    Alias?: string;
-    /**
-     * UKMS 实例资源 ID
-     */
-    ResourceId?: string;
-    /**
-     * 排序方向，默认 desc
-     */
-    Sort?: string;
-}
-/**
- * ListScheduleDeletionKeys - 获取计划删除密钥列表，调用ScheduleKeyDeletion命令后进入此列表， 默认30天后正式删除。正式删除前可调用CancelScheduleKeyDeletion恢复
- */
-export interface ListScheduleDeletionKeysResponse {
-    /**
-     * 主密钥信息组成的列表
-     */
-    Objects: {
-        /**
-         * CMK 的唯一标识符
-         */
-        KeyId: string;
-        /**
-         * 密钥类型，如RSA、EC、DES
-         */
-        KeyType: string;
-        /**
-         * 创建时间
-         */
-        CreatedTime: number;
-        /**
-         * 别名，与CMK一一对应
-         */
-        Alias: string;
-        /**
-         * 密钥状态 "Pre-Active", "Active", "Deactivated", "Compromised", "Destroyed", "Destroyed Compromised"
-         */
-        Status: string;
-        /**
-         * 更新时间
-         */
-        UpdateTime: number;
-        /**
-         * 对密钥的描述说明
-         */
-        Description?: string;
-        /**
-         * 计划删除时间 时间戳
-         */
-        PlanDeleteTime?: number;
-    }[];
-    /**
-     * 操作结果
-     */
-    Status?: string;
-    /**
-     * 请求唯一标识符
-     */
-    RequestUuid?: string;
-    /**
-     * 符合条件的总数, 不同于Limit
-     */
-    TotalCount?: number;
-}
-/**
  * RotateKeyOnDemand - 立即触发一次密钥轮转。
  */
 export interface RotateKeyOnDemandRequest {
@@ -1201,7 +1140,7 @@ export interface VerifyResponse {
     SigningAlgorithm: string;
 }
 /**
- * VerifyMac - 验证签名
+ * VerifyMac - 验证指定消息、HMAC KMS 密钥和 MAC 算法的基于哈希的消息认证码 (HMAC)。为了验证 HMAC，VerifyMac 会使用您指定的消息、HMAC KMS 密钥和 MAC 算法计算 HMAC，并将计算出的 HMAC 与您指定的 HMAC 进行比较。如果两个 HMAC 完全相同，则验证成功；否则，验证失败。  验证结果表明，自计算 HMAC 以来，消息未发生更改，并且使用了指定的密钥来生成和验证 HMAC。
  */
 export interface VerifyMacRequest {
     /**
@@ -1222,7 +1161,7 @@ export interface VerifyMacRequest {
     MacAlgorithm: string;
 }
 /**
- * VerifyMac - 验证签名
+ * VerifyMac - 验证指定消息、HMAC KMS 密钥和 MAC 算法的基于哈希的消息认证码 (HMAC)。为了验证 HMAC，VerifyMac 会使用您指定的消息、HMAC KMS 密钥和 MAC 算法计算 HMAC，并将计算出的 HMAC 与您指定的 HMAC 进行比较。如果两个 HMAC 完全相同，则验证成功；否则，验证失败。  验证结果表明，自计算 HMAC 以来，消息未发生更改，并且使用了指定的密钥来生成和验证 HMAC。
  */
 export interface VerifyMacResponse {
     /**
