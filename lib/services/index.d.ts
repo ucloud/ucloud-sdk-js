@@ -33,6 +33,7 @@ export declare class Client extends BaseClient {
     ukms(): any;
     ulb(): any;
     ulight_host(): any;
+    ulogservice(): any;
     umem(): any;
     umongodb(): any;
     unet(): any;
