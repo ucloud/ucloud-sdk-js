@@ -29,6 +29,7 @@ const UKafkaClient = require('./ukafka').default;
 const UKMSClient = require('./ukms').default;
 const ULBClient = require('./ulb').default;
 const ULightHostClient = require('./ulight_host').default;
+const ULogServiceClient = require('./ulogservice').default;
 const UMemClient = require('./umem').default;
 const UMongoDBClient = require('./umongodb').default;
 const UNetClient = require('./unet').default;
@@ -234,6 +235,13 @@ export class Client extends BaseClient {
 
   ulight_host() {
     return new ULightHostClient({
+      config: this.config,
+      credential: this.credential,
+    });
+  }
+
+  ulogservice() {
+    return new ULogServiceClient({
       config: this.config,
       credential: this.credential,
     });
