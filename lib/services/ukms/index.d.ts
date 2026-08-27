@@ -716,7 +716,7 @@ export interface GetKeyRotationStatusRequest {
     /**
      * UKMS 实例资源 ID。
      */
-    ResourceId?: string;
+    ResourceId: string;
 }
 /**
  * GetKeyRotationStatus - 查询密钥自动轮转状态。
@@ -742,6 +742,10 @@ export interface GetKeyRotationStatusResponse {
      * 按需轮转开始时间，Unix 时间戳。
      */
     OnDemandRotationStartDate?: number;
+    /**
+     * 最后一次轮转时间，Unix 时间戳。
+     */
+    LastRotationDate?: number;
 }
 /**
  * GetPublicKey - 获取非对称密钥的公钥。

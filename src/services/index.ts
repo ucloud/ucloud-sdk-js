@@ -33,6 +33,7 @@ const ULogServiceClient = require('./ulogservice').default;
 const UMemClient = require('./umem').default;
 const UMongoDBClient = require('./umongodb').default;
 const UNetClient = require('./unet').default;
+const UPFSClient = require('./upfs').default;
 const UPhoneClient = require('./uphone').default;
 const UPHostClient = require('./uphost').default;
 const USMSClient = require('./usms').default;
@@ -263,6 +264,13 @@ export class Client extends BaseClient {
 
   unet() {
     return new UNetClient({
+      config: this.config,
+      credential: this.credential,
+    });
+  }
+
+  upfs() {
+    return new UPFSClient({
       config: this.config,
       credential: this.credential,
     });
