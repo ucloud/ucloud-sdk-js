@@ -243,13 +243,13 @@ export interface CreateKeyRequest {
      */
     KeyUsage?: string;
     /**
-     * 密钥材料来源，默认 UCLOUD_KMS。当前仅支持 UCLOUD_KMS；EXTERNAL 为 BYOK 规划值，当前传入会返回 100660。
+     * 密钥材料来源，默认 UCLOUD_KMS。当前仅支持 UCLOUD_KMS；EXTERNAL 为 BYOK 规划值，当前传入会返回 1230。
      */
     Origin?: string;
     /**
      * 是否开启删除保护。可选值：true、false；默认 false。
      */
-    DeletionProtection?: string;
+    DeletionProtection?: boolean;
 }
 /**
  * CreateKey - 创建密钥。
@@ -281,7 +281,7 @@ export interface DecryptRequest {
      */
     EncryptionContext?: string;
     /**
-     * 解密算法。可选值：SYMMETRIC_DEFAULT、RSAES_OAEP_SHA_1、RSAES_OAEP_SHA_256；非对称密钥解密时必填或使用默认 RSAES_OAEP_SHA_256。
+     * 解密算法。可选值：SYMMETRIC_DEFAULT、RSAES_OAEP_SHA_1、RSAES_OAEP_SHA_256；非对称密钥解密时必填。
      */
     EncryptionAlgorithm?: string;
 }
@@ -342,7 +342,7 @@ export interface DescribeKeyResponse {
      */
     KeyMetadata: {
         /**
-         * 密钥所属项目的对外别名，格式为 org-xxx。该值由项目数字 ID 解析得到，可能因项目别名查询失败而为空。
+         * 密钥所属项目ID。
          */
         ProjectId?: string;
         /**
@@ -393,6 +393,14 @@ export interface DescribeKeyResponse {
          * 计划删除时间，Unix 时间戳。
          */
         DeletionDate?: number;
+        /**
+         * ucs:ukms:{Region}:{CompanyId}:key/{KeyId}
+         */
+        Arn?: string;
+        /**
+         * 所属组织数字 ID
+         */
+        OrganizationId?: number;
     };
 }
 /**
@@ -400,7 +408,7 @@ export interface DescribeKeyResponse {
  */
 export interface DisableKeyRequest {
     /**
-     * 密钥 DB 数字 ID。
+     * 密钥资源长 ID
      */
     KeyId: string;
     /**
@@ -424,7 +432,7 @@ export interface DisableKeyRotationRequest {
     /**
      * UKMS 实例资源 ID。
      */
-    ResourceId?: string;
+    ResourceId: string;
 }
 /**
  * DisableKeyRotation - 关闭密钥自动轮转。
@@ -436,7 +444,7 @@ export interface DisableKeyRotationResponse {
  */
 export interface EnableKeyRequest {
     /**
-     * 密钥 DB 数字 ID。
+     * 密钥资源长 ID
      */
     KeyId: string;
     /**
@@ -910,7 +918,7 @@ export interface ListKeysResponse {
          */
         KeyUsage: string[];
         /**
-         * 密钥来源，由 Origin 派生。取值：ucloud、import。当前 CreateKey 仅支持 ucloud。
+         * 密钥来源，由 Origin 派生。取值：UCLOUD_KMS、EXTERNAL。当前 CreateKey 仅支持 UCLOUD_KMS。
          */
         Origin: string;
         /**
@@ -970,7 +978,7 @@ export interface RotateKeyOnDemandRequest {
     /**
      * UKMS 实例资源 ID。
      */
-    ResourceId?: string;
+    ResourceId: string;
 }
 /**
  * RotateKeyOnDemand - 立即触发一次密钥轮转。
@@ -986,7 +994,7 @@ export interface RotateKeyOnDemandResponse {
  */
 export interface ScheduleKeyDeletionRequest {
     /**
-     * 密钥 DB 数字 ID。
+     * 密钥资源长 ID
      */
     KeyId: string;
     /**
