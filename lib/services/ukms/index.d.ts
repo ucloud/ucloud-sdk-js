@@ -205,7 +205,7 @@ export interface CreateAliasRequest {
      */
     AliasName: string;
     /**
-     * 密钥 ID、ARN 或别名。
+     * 密钥 ID 或别名。
      */
     KeyId: string;
     /**
@@ -426,7 +426,7 @@ export interface DisableKeyResponse {
  */
 export interface DisableKeyRotationRequest {
     /**
-     * 密钥 ID、ARN 或别名。
+     * 密钥 ID或别名。
      */
     KeyId: string;
     /**
@@ -484,7 +484,7 @@ export interface EnableKeyRotationResponse {
  */
 export interface EncryptRequest {
     /**
-     * 密钥资源长 ID、ARN 或别名。
+     * 密钥资源长 ID 或别名。
      */
     KeyId: string;
     /**
@@ -632,7 +632,7 @@ export interface GenerateDataKeyPairWithoutPlaintextResponse {
  */
 export interface GenerateDataKeyWithoutPlaintextRequest {
     /**
-     * 密钥资源长 ID、ARN 或别名。
+     * 密钥资源长 ID或别名。
      */
     KeyId: string;
     /**
@@ -718,7 +718,7 @@ export interface GenerateRandomResponse {
  */
 export interface GetKeyRotationStatusRequest {
     /**
-     * 密钥资源长 ID、ARN 或别名。
+     * 密钥资源长 ID 或别名。
      */
     KeyId: string;
     /**
@@ -760,7 +760,7 @@ export interface GetKeyRotationStatusResponse {
  */
 export interface GetPublicKeyRequest {
     /**
-     * 密钥 ID、ARN 或别名。
+     * 密钥 ID 或 别名。
      */
     KeyId: string;
     /**
@@ -972,7 +972,7 @@ export interface ListKeysResponse {
  */
 export interface RotateKeyOnDemandRequest {
     /**
-     * 密钥 ID、ARN 或别名。
+     * 密钥 ID 或别名。
      */
     KeyId: string;
     /**
@@ -1016,7 +1016,7 @@ export interface ScheduleKeyDeletionResponse {
  */
 export interface SignRequest {
     /**
-     * 密钥资源长 ID、ARN 或别名。
+     * 密钥资源长 ID 或别名。
      */
     KeyId: string;
     /**
@@ -1062,7 +1062,7 @@ export interface UpdateAliasRequest {
      */
     AliasName: string;
     /**
-     * 密钥 ID、ARN 或别名。
+     * 密钥 ID 或别名。
      */
     KeyId: string;
     /**
@@ -1080,7 +1080,7 @@ export interface UpdateAliasResponse {
  */
 export interface UpdateKeyDescriptionRequest {
     /**
-     * 密钥资源长 ID、ARN 或别名。
+     * 密钥资源长 ID或别名。
      */
     KeyId: string;
     /**
@@ -1110,7 +1110,7 @@ export interface UpdateKeyDescriptionResponse {
  */
 export interface VerifyRequest {
     /**
-     * 密钥 ID、ARN 或别名。
+     * 密钥 ID或别名。
      */
     KeyId: string;
     /**
