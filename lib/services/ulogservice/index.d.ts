@@ -70,6 +70,12 @@ export default class ULogServiceClient extends Client {
      */
     describeULogServiceMachineGroup(request?: DescribeULogServiceMachineGroupRequest): Promise<DescribeULogServiceMachineGroupResponse>;
     /**
+     * GetULogServiceTopicField - 获取ULogService主题索引字段
+     *
+     * See also: https://docs.ucloud.cn/api/ulogservice-api/get_u_log_service_topic_field
+     */
+    getULogServiceTopicField(request?: GetULogServiceTopicFieldRequest): Promise<GetULogServiceTopicFieldResponse>;
+    /**
      * ListULogServiceCollectConf - 查询日志主题采集配置列表
      *
      * See also: https://docs.ucloud.cn/api/ulogservice-api/list_u_log_service_collect_conf
@@ -111,6 +117,12 @@ export default class ULogServiceClient extends Client {
      * See also: https://docs.ucloud.cn/api/ulogservice-api/update_u_log_service_machine_group
      */
     updateULogServiceMachineGroup(request?: UpdateULogServiceMachineGroupRequest): Promise<UpdateULogServiceMachineGroupResponse>;
+    /**
+     * UpdateULogServiceTopicField - 更新ULogService主题索引字段
+     *
+     * See also: https://docs.ucloud.cn/api/ulogservice-api/update_u_log_service_topic_field
+     */
+    updateULogServiceTopicField(request?: UpdateULogServiceTopicFieldRequest): Promise<UpdateULogServiceTopicFieldResponse>;
 }
 /**
  * BindULogServiceGroupToCollectConf - 日志主题采集配置绑定机器组
@@ -438,6 +450,41 @@ export interface DescribeULogServiceMachineGroupResponse {
          */
         Ips?: string;
     };
+}
+/**
+ * GetULogServiceTopicField - 获取ULogService主题索引字段
+ */
+export interface GetULogServiceTopicFieldRequest {
+    /**
+     * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
+     */
+    Zone: string;
+    /**
+     * 主题Id
+     */
+    TopicId: string;
+}
+/**
+ * GetULogServiceTopicField - 获取ULogService主题索引字段
+ */
+export interface GetULogServiceTopicFieldResponse {
+    /**
+     * 索引字段数据，是一个数组
+     */
+    Data: {
+        /**
+         * 索引名称
+         */
+        FieldName?: string;
+        /**
+         * 索引类型，可取的值有: long, double, text
+         */
+        FieldType?: string;
+        /**
+         * 是否保留字段，true表示保留字段，false表示非保留字段
+         */
+        IsReserved?: boolean;
+    }[];
 }
 /**
  * ListULogServiceCollectConf - 查询日志主题采集配置列表
@@ -914,4 +961,35 @@ export interface UpdateULogServiceMachineGroupRequest {
  * UpdateULogServiceMachineGroup - 更新日志机器组
  */
 export interface UpdateULogServiceMachineGroupResponse {
+}
+/**
+ * UpdateULogServiceTopicField - 更新ULogService主题索引字段
+ */
+export interface UpdateULogServiceTopicFieldRequest {
+    /**
+     * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
+     */
+    Zone: string;
+    /**
+     * 主题Id
+     */
+    TopicId: string;
+    /**
+     *
+     */
+    FieldInfos?: {
+        /**
+         * 字段名称支持字母、横线(-)、斜杠(/)、特殊符号（@）、数字、下划线（_）和点（.），且不能以下划线开头，长度不超过255个字符
+         */
+        FieldName?: string;
+        /**
+         * 主题字段类型（text、long、double）
+         */
+        FieldType?: string;
+    }[];
+}
+/**
+ * UpdateULogServiceTopicField - 更新ULogService主题索引字段
+ */
+export interface UpdateULogServiceTopicFieldResponse {
 }
