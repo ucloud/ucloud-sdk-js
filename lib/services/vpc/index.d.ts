@@ -12,415 +12,607 @@ export default class VPCClient extends Client {
     /**
      * AddSnatRule - 对于绑定了多个EIP的NAT网关，您可以将一个子网下的某台云主机映射到某个特定的EIP上，规则生效后，则该云主机通过该特定的EIP访问互联网。
      *
-     * See also: https://docs.ucloud.cn/api/vpc2.0-api/add_snat_rule
+     * See also: https://docs.ucloud.cn/api/vpc-api/add_snat_rule
      */
     addSnatRule(request?: AddSnatRuleRequest): Promise<AddSnatRuleResponse>;
     /**
+     * AddSubnetIPv6 - 子网关联IPv6
+     *
+     * See also: https://docs.ucloud.cn/api/vpc-api/add_subnet_ip_v6
+     */
+    addSubnetIPv6(request?: AddSubnetIPv6Request): Promise<AddSubnetIPv6Response>;
+    /**
+     * AddVPCIPv6 - VPC关联IPv6网段
+     *
+     * See also: https://docs.ucloud.cn/api/vpc-api/add_vpc_ip_v6
+     */
+    addVPCIPv6(request?: AddVPCIPv6Request): Promise<AddVPCIPv6Response>;
+    /**
      * AddVPCNetwork - 添加VPC网段
      *
-     * See also: https://docs.ucloud.cn/api/vpc2.0-api/add_vpc_network
+     * See also: https://docs.ucloud.cn/api/vpc-api/add_vpc_network
      */
     addVPCNetwork(request?: AddVPCNetworkRequest): Promise<AddVPCNetworkResponse>;
     /**
      * AddWhiteListResource - 添加NAT网关白名单
      *
-     * See also: https://docs.ucloud.cn/api/vpc2.0-api/add_white_list_resource
+     * See also: https://docs.ucloud.cn/api/vpc-api/add_white_list_resource
      */
     addWhiteListResource(request?: AddWhiteListResourceRequest): Promise<AddWhiteListResourceResponse>;
     /**
      * AllocateBatchSecondaryIp - 批量申请虚拟网卡辅助IP
      *
-     * See also: https://docs.ucloud.cn/api/vpc2.0-api/allocate_batch_secondary_ip
+     * See also: https://docs.ucloud.cn/api/vpc-api/allocate_batch_secondary_ip
      */
     allocateBatchSecondaryIp(request?: AllocateBatchSecondaryIpRequest): Promise<AllocateBatchSecondaryIpResponse>;
     /**
      * AllocateSecondaryIp - 分配ip（用于uk8s使用）
      *
-     * See also: https://docs.ucloud.cn/api/vpc2.0-api/allocate_secondary_ip
+     * See also: https://docs.ucloud.cn/api/vpc-api/allocate_secondary_ip
      */
     allocateSecondaryIp(request?: AllocateSecondaryIpRequest): Promise<AllocateSecondaryIpResponse>;
     /**
      * AllocateVIP - 根据提供信息，申请内网VIP(Virtual IP），多用于高可用程序作为漂移IP。
      *
-     * See also: https://docs.ucloud.cn/api/vpc2.0-api/allocate_vip
+     * See also: https://docs.ucloud.cn/api/vpc-api/allocate_vip
      */
     allocateVIP(request?: AllocateVIPRequest): Promise<AllocateVIPResponse>;
     /**
+     * AssignIPv6 - 申请IPv6地址
+     *
+     * See also: https://docs.ucloud.cn/api/vpc-api/assign_ip_v6
+     */
+    assignIPv6(request?: AssignIPv6Request): Promise<AssignIPv6Response>;
+    /**
      * AssociateRouteTable - 绑定子网的路由表
      *
-     * See also: https://docs.ucloud.cn/api/vpc2.0-api/associate_route_table
+     * See also: https://docs.ucloud.cn/api/vpc-api/associate_route_table
      */
     associateRouteTable(request?: AssociateRouteTableRequest): Promise<AssociateRouteTableResponse>;
     /**
+     * AssociateSecGroup - 绑定资源到安全组
+     *
+     * See also: https://docs.ucloud.cn/api/vpc-api/associate_sec_group
+     */
+    associateSecGroup(request?: AssociateSecGroupRequest): Promise<AssociateSecGroupResponse>;
+    /**
+     * AssociateSecGroupDynamic - 绑定安全组，动态调整绑定优先级
+     *
+     * See also: https://docs.ucloud.cn/api/vpc-api/associate_sec_group_dynamic
+     */
+    associateSecGroupDynamic(request?: AssociateSecGroupDynamicRequest): Promise<AssociateSecGroupDynamicResponse>;
+    /**
+     * AttachNetworkInterface - 绑定网卡到云主机
+     *
+     * See also: https://docs.ucloud.cn/api/vpc-api/attach_network_interface
+     */
+    attachNetworkInterface(request?: AttachNetworkInterfaceRequest): Promise<AttachNetworkInterfaceResponse>;
+    /**
      * CloneRouteTable - 将现有的路由表复制为一张新的路由表
      *
-     * See also: https://docs.ucloud.cn/api/vpc2.0-api/clone_route_table
+     * See also: https://docs.ucloud.cn/api/vpc-api/clone_route_table
      */
     cloneRouteTable(request?: CloneRouteTableRequest): Promise<CloneRouteTableResponse>;
     /**
+     * CopySecGroup - 复制安全组
+     *
+     * See also: https://docs.ucloud.cn/api/vpc-api/copy_sec_group
+     */
+    copySecGroup(request?: CopySecGroupRequest): Promise<CopySecGroupResponse>;
+    /**
      * CreateNATGW - 创建NAT网关
      *
-     * See also: https://docs.ucloud.cn/api/vpc2.0-api/create_natgw
+     * See also: https://docs.ucloud.cn/api/vpc-api/create_natgw
      */
     createNATGW(request?: CreateNATGWRequest): Promise<CreateNATGWResponse>;
     /**
      * CreateNATGWPolicy - 添加NAT网关端口转发规则
      *
-     * See also: https://docs.ucloud.cn/api/vpc2.0-api/create_natgw_policy
+     * See also: https://docs.ucloud.cn/api/vpc-api/create_natgw_policy
      */
     createNATGWPolicy(request?: CreateNATGWPolicyRequest): Promise<CreateNATGWPolicyResponse>;
     /**
      * CreateNetworkAcl - 创建网络ACL
      *
-     * See also: https://docs.ucloud.cn/api/vpc2.0-api/create_network_acl
+     * See also: https://docs.ucloud.cn/api/vpc-api/create_network_acl
      */
     createNetworkAcl(request?: CreateNetworkAclRequest): Promise<CreateNetworkAclResponse>;
     /**
      * CreateNetworkAclAssociation - 创建ACL的绑定关系
      *
-     * See also: https://docs.ucloud.cn/api/vpc2.0-api/create_network_acl_association
+     * See also: https://docs.ucloud.cn/api/vpc-api/create_network_acl_association
      */
     createNetworkAclAssociation(request?: CreateNetworkAclAssociationRequest): Promise<CreateNetworkAclAssociationResponse>;
     /**
      * CreateNetworkAclEntry - 创建ACL的规则
      *
-     * See also: https://docs.ucloud.cn/api/vpc2.0-api/create_network_acl_entry
+     * See also: https://docs.ucloud.cn/api/vpc-api/create_network_acl_entry
      */
     createNetworkAclEntry(request?: CreateNetworkAclEntryRequest): Promise<CreateNetworkAclEntryResponse>;
     /**
      * CreateNetworkInterface - 创建虚拟网卡
      *
-     * See also: https://docs.ucloud.cn/api/vpc2.0-api/create_network_interface
+     * See also: https://docs.ucloud.cn/api/vpc-api/create_network_interface
      */
     createNetworkInterface(request?: CreateNetworkInterfaceRequest): Promise<CreateNetworkInterfaceResponse>;
     /**
      * CreateRouteTable - 创建路由表
      *
-     * See also: https://docs.ucloud.cn/api/vpc2.0-api/create_route_table
+     * See also: https://docs.ucloud.cn/api/vpc-api/create_route_table
      */
     createRouteTable(request?: CreateRouteTableRequest): Promise<CreateRouteTableResponse>;
     /**
+     * CreateSecGroup - 创建安全组
+     *
+     * See also: https://docs.ucloud.cn/api/vpc-api/create_sec_group
+     */
+    createSecGroup(request?: CreateSecGroupRequest): Promise<CreateSecGroupResponse>;
+    /**
+     * CreateSecGroupRule -
+     *
+     * See also: https://docs.ucloud.cn/api/vpc-api/create_sec_group_rule
+     */
+    createSecGroupRule(request?: CreateSecGroupRuleRequest): Promise<CreateSecGroupRuleResponse>;
+    /**
      * CreateSnatDnatRule - 调用接口后会自动创建内外网IP之间的SNAT和DNAT规则，支持TCP、UDP协议全端口
      *
-     * See also: https://docs.ucloud.cn/api/vpc2.0-api/create_snat_dnat_rule
+     * See also: https://docs.ucloud.cn/api/vpc-api/create_snat_dnat_rule
      */
     createSnatDnatRule(request?: CreateSnatDnatRuleRequest): Promise<CreateSnatDnatRuleResponse>;
     /**
      * CreateSubnet - 创建子网
      *
-     * See also: https://docs.ucloud.cn/api/vpc2.0-api/create_subnet
+     * See also: https://docs.ucloud.cn/api/vpc-api/create_subnet
      */
     createSubnet(request?: CreateSubnetRequest): Promise<CreateSubnetResponse>;
     /**
      * CreateVPC - 创建VPC
      *
-     * See also: https://docs.ucloud.cn/api/vpc2.0-api/create_vpc
+     * See also: https://docs.ucloud.cn/api/vpc-api/create_vpc
      */
     createVPC(request?: CreateVPCRequest): Promise<CreateVPCResponse>;
     /**
      * CreateVPCIntercom - 新建VPC互通关系
      *
-     * See also: https://docs.ucloud.cn/api/vpc2.0-api/create_vpc_intercom
+     * See also: https://docs.ucloud.cn/api/vpc-api/create_vpc_intercom
      */
     createVPCIntercom(request?: CreateVPCIntercomRequest): Promise<CreateVPCIntercomResponse>;
     /**
      * DeleteNATGW - 删除NAT网关
      *
-     * See also: https://docs.ucloud.cn/api/vpc2.0-api/delete_natgw
+     * See also: https://docs.ucloud.cn/api/vpc-api/delete_natgw
      */
     deleteNATGW(request?: DeleteNATGWRequest): Promise<DeleteNATGWResponse>;
     /**
      * DeleteNATGWPolicy - 删除NAT网关端口转发规则
      *
-     * See also: https://docs.ucloud.cn/api/vpc2.0-api/delete_natgw_policy
+     * See also: https://docs.ucloud.cn/api/vpc-api/delete_natgw_policy
      */
     deleteNATGWPolicy(request?: DeleteNATGWPolicyRequest): Promise<DeleteNATGWPolicyResponse>;
     /**
      * DeleteNetworkAcl - 删除网络ACL
      *
-     * See also: https://docs.ucloud.cn/api/vpc2.0-api/delete_network_acl
+     * See also: https://docs.ucloud.cn/api/vpc-api/delete_network_acl
      */
     deleteNetworkAcl(request?: DeleteNetworkAclRequest): Promise<DeleteNetworkAclResponse>;
     /**
      * DeleteNetworkAclAssociation - 删除网络ACL绑定关系
      *
-     * See also: https://docs.ucloud.cn/api/vpc2.0-api/delete_network_acl_association
+     * See also: https://docs.ucloud.cn/api/vpc-api/delete_network_acl_association
      */
     deleteNetworkAclAssociation(request?: DeleteNetworkAclAssociationRequest): Promise<DeleteNetworkAclAssociationResponse>;
     /**
      * DeleteNetworkAclEntry - 删除ACL的规则
      *
-     * See also: https://docs.ucloud.cn/api/vpc2.0-api/delete_network_acl_entry
+     * See also: https://docs.ucloud.cn/api/vpc-api/delete_network_acl_entry
      */
     deleteNetworkAclEntry(request?: DeleteNetworkAclEntryRequest): Promise<DeleteNetworkAclEntryResponse>;
     /**
+     * DeleteNetworkInterface - 删除网卡
+     *
+     * See also: https://docs.ucloud.cn/api/vpc-api/delete_network_interface
+     */
+    deleteNetworkInterface(request?: DeleteNetworkInterfaceRequest): Promise<DeleteNetworkInterfaceResponse>;
+    /**
      * DeleteRouteTable - 删除自定义路由表
      *
-     * See also: https://docs.ucloud.cn/api/vpc2.0-api/delete_route_table
+     * See also: https://docs.ucloud.cn/api/vpc-api/delete_route_table
      */
     deleteRouteTable(request?: DeleteRouteTableRequest): Promise<DeleteRouteTableResponse>;
     /**
+     * DeleteSecGroup - 删除安全组
+     *
+     * See also: https://docs.ucloud.cn/api/vpc-api/delete_sec_group
+     */
+    deleteSecGroup(request?: DeleteSecGroupRequest): Promise<DeleteSecGroupResponse>;
+    /**
+     * DeleteSecGroupRule -
+     *
+     * See also: https://docs.ucloud.cn/api/vpc-api/delete_sec_group_rule
+     */
+    deleteSecGroupRule(request?: DeleteSecGroupRuleRequest): Promise<DeleteSecGroupRuleResponse>;
+    /**
      * DeleteSecondaryIp - 删除ip（用于uk8s使用）
      *
-     * See also: https://docs.ucloud.cn/api/vpc2.0-api/delete_secondary_ip
+     * See also: https://docs.ucloud.cn/api/vpc-api/delete_secondary_ip
      */
     deleteSecondaryIp(request?: DeleteSecondaryIpRequest): Promise<DeleteSecondaryIpResponse>;
     /**
      * DeleteSnatDnatRule - 删除NAT创建内外网IP映射规则
      *
-     * See also: https://docs.ucloud.cn/api/vpc2.0-api/delete_snat_dnat_rule
+     * See also: https://docs.ucloud.cn/api/vpc-api/delete_snat_dnat_rule
      */
     deleteSnatDnatRule(request?: DeleteSnatDnatRuleRequest): Promise<DeleteSnatDnatRuleResponse>;
     /**
      * DeleteSnatRule - 删除指定的出口规则（SNAT规则）
      *
-     * See also: https://docs.ucloud.cn/api/vpc2.0-api/delete_snat_rule
+     * See also: https://docs.ucloud.cn/api/vpc-api/delete_snat_rule
      */
     deleteSnatRule(request?: DeleteSnatRuleRequest): Promise<DeleteSnatRuleResponse>;
     /**
      * DeleteSubnet - 删除子网
      *
-     * See also: https://docs.ucloud.cn/api/vpc2.0-api/delete_subnet
+     * See also: https://docs.ucloud.cn/api/vpc-api/delete_subnet
      */
     deleteSubnet(request?: DeleteSubnetRequest): Promise<DeleteSubnetResponse>;
     /**
+     * DeleteSubnetIPv6 - 子网取消关联IPv6
+     *
+     * See also: https://docs.ucloud.cn/api/vpc-api/delete_subnet_ip_v6
+     */
+    deleteSubnetIPv6(request?: DeleteSubnetIPv6Request): Promise<DeleteSubnetIPv6Response>;
+    /**
      * DeleteVPC - 删除VPC
      *
-     * See also: https://docs.ucloud.cn/api/vpc2.0-api/delete_vpc
+     * See also: https://docs.ucloud.cn/api/vpc-api/delete_vpc
      */
     deleteVPC(request?: DeleteVPCRequest): Promise<DeleteVPCResponse>;
     /**
+     * DeleteVPCIPv6 - VPC取消关联IPv6网段
+     *
+     * See also: https://docs.ucloud.cn/api/vpc-api/delete_vpc_ip_v6
+     */
+    deleteVPCIPv6(request?: DeleteVPCIPv6Request): Promise<DeleteVPCIPv6Response>;
+    /**
      * DeleteVPCIntercom - 删除VPC互通关系
      *
-     * See also: https://docs.ucloud.cn/api/vpc2.0-api/delete_vpc_intercom
+     * See also: https://docs.ucloud.cn/api/vpc-api/delete_vpc_intercom
      */
     deleteVPCIntercom(request?: DeleteVPCIntercomRequest): Promise<DeleteVPCIntercomResponse>;
     /**
      * DeleteWhiteListResource - 删除NAT网关白名单列表
      *
-     * See also: https://docs.ucloud.cn/api/vpc2.0-api/delete_white_list_resource
+     * See also: https://docs.ucloud.cn/api/vpc-api/delete_white_list_resource
      */
     deleteWhiteListResource(request?: DeleteWhiteListResourceRequest): Promise<DeleteWhiteListResourceResponse>;
     /**
      * DescribeInstanceNetworkInterface - 展示云主机绑定的网卡信息
      *
-     * See also: https://docs.ucloud.cn/api/vpc2.0-api/describe_instance_network_interface
+     * See also: https://docs.ucloud.cn/api/vpc-api/describe_instance_network_interface
      */
     describeInstanceNetworkInterface(request?: DescribeInstanceNetworkInterfaceRequest): Promise<DescribeInstanceNetworkInterfaceResponse>;
     /**
      * DescribeNATGW - 获取NAT网关信息
      *
-     * See also: https://docs.ucloud.cn/api/vpc2.0-api/describe_natgw
+     * See also: https://docs.ucloud.cn/api/vpc-api/describe_natgw
      */
     describeNATGW(request?: DescribeNATGWRequest): Promise<DescribeNATGWResponse>;
     /**
      * DescribeNATGWPolicy - 展示NAT网关端口转发规则
      *
-     * See also: https://docs.ucloud.cn/api/vpc2.0-api/describe_natgw_policy
+     * See also: https://docs.ucloud.cn/api/vpc-api/describe_natgw_policy
      */
     describeNATGWPolicy(request?: DescribeNATGWPolicyRequest): Promise<DescribeNATGWPolicyResponse>;
     /**
      * DescribeNetworkAcl - 获取网络ACL
      *
-     * See also: https://docs.ucloud.cn/api/vpc2.0-api/describe_network_acl
+     * See also: https://docs.ucloud.cn/api/vpc-api/describe_network_acl
      */
     describeNetworkAcl(request?: DescribeNetworkAclRequest): Promise<DescribeNetworkAclResponse>;
     /**
      * DescribeNetworkAclAssociation - 获取网络ACL的绑定关系列表
      *
-     * See also: https://docs.ucloud.cn/api/vpc2.0-api/describe_network_acl_association
+     * See also: https://docs.ucloud.cn/api/vpc-api/describe_network_acl_association
      */
     describeNetworkAclAssociation(request?: DescribeNetworkAclAssociationRequest): Promise<DescribeNetworkAclAssociationResponse>;
     /**
      * DescribeNetworkAclAssociationBySubnet - 获取子网的ACL绑定信息
      *
-     * See also: https://docs.ucloud.cn/api/vpc2.0-api/describe_network_acl_association_by_subnet
+     * See also: https://docs.ucloud.cn/api/vpc-api/describe_network_acl_association_by_subnet
      */
     describeNetworkAclAssociationBySubnet(request?: DescribeNetworkAclAssociationBySubnetRequest): Promise<DescribeNetworkAclAssociationBySubnetResponse>;
     /**
      * DescribeNetworkAclEntry - 获取ACL的规则信息
      *
-     * See also: https://docs.ucloud.cn/api/vpc2.0-api/describe_network_acl_entry
+     * See also: https://docs.ucloud.cn/api/vpc-api/describe_network_acl_entry
      */
     describeNetworkAclEntry(request?: DescribeNetworkAclEntryRequest): Promise<DescribeNetworkAclEntryResponse>;
     /**
      * DescribeNetworkInterface - 展示虚拟网卡信息
      *
-     * See also: https://docs.ucloud.cn/api/vpc2.0-api/describe_network_interface
+     * See also: https://docs.ucloud.cn/api/vpc-api/describe_network_interface
      */
     describeNetworkInterface(request?: DescribeNetworkInterfaceRequest): Promise<DescribeNetworkInterfaceResponse>;
     /**
+     * DescribeResourceSecGroup - 查询资源绑定的安全组信息
+     *
+     * See also: https://docs.ucloud.cn/api/vpc-api/describe_resource_sec_group
+     */
+    describeResourceSecGroup(request?: DescribeResourceSecGroupRequest): Promise<DescribeResourceSecGroupResponse>;
+    /**
      * DescribeRouteTable - 获取路由表详细信息(包括路由策略)
      *
-     * See also: https://docs.ucloud.cn/api/vpc2.0-api/describe_route_table
+     * See also: https://docs.ucloud.cn/api/vpc-api/describe_route_table
      */
     describeRouteTable(request?: DescribeRouteTableRequest): Promise<DescribeRouteTableResponse>;
     /**
+     * DescribeSecGroup -
+     *
+     * See also: https://docs.ucloud.cn/api/vpc-api/describe_sec_group
+     */
+    describeSecGroup(request?: DescribeSecGroupRequest): Promise<DescribeSecGroupResponse>;
+    /**
+     * DescribeSecGroupResource - 获取安全组绑资源信息
+     *
+     * See also: https://docs.ucloud.cn/api/vpc-api/describe_sec_group_resource
+     */
+    describeSecGroupResource(request?: DescribeSecGroupResourceRequest): Promise<DescribeSecGroupResourceResponse>;
+    /**
      * DescribeSecondaryIp - 查询SecondaryIp（uk8s使用）
      *
-     * See also: https://docs.ucloud.cn/api/vpc2.0-api/describe_secondary_ip
+     * See also: https://docs.ucloud.cn/api/vpc-api/describe_secondary_ip
      */
     describeSecondaryIp(request?: DescribeSecondaryIpRequest): Promise<DescribeSecondaryIpResponse>;
     /**
      * DescribeSnatDnatRule - 获取基于NAT创建的内外网IP映射规则信息
      *
-     * See also: https://docs.ucloud.cn/api/vpc2.0-api/describe_snat_dnat_rule
+     * See also: https://docs.ucloud.cn/api/vpc-api/describe_snat_dnat_rule
      */
     describeSnatDnatRule(request?: DescribeSnatDnatRuleRequest): Promise<DescribeSnatDnatRuleResponse>;
     /**
      * DescribeSnatRule - 获取Nat网关的出口规则（SNAT规则）
      *
-     * See also: https://docs.ucloud.cn/api/vpc2.0-api/describe_snat_rule
+     * See also: https://docs.ucloud.cn/api/vpc-api/describe_snat_rule
      */
     describeSnatRule(request?: DescribeSnatRuleRequest): Promise<DescribeSnatRuleResponse>;
     /**
      * DescribeSubnet - 获取子网信息
      *
-     * See also: https://docs.ucloud.cn/api/vpc2.0-api/describe_subnet
+     * See also: https://docs.ucloud.cn/api/vpc-api/describe_subnet
      */
     describeSubnet(request?: DescribeSubnetRequest): Promise<DescribeSubnetResponse>;
     /**
      * DescribeSubnetResource - 展示子网资源
      *
-     * See also: https://docs.ucloud.cn/api/vpc2.0-api/describe_subnet_resource
+     * See also: https://docs.ucloud.cn/api/vpc-api/describe_subnet_resource
      */
     describeSubnetResource(request?: DescribeSubnetResourceRequest): Promise<DescribeSubnetResourceResponse>;
     /**
      * DescribeVIP - 获取内网VIP详细信息
      *
-     * See also: https://docs.ucloud.cn/api/vpc2.0-api/describe_vip
+     * See also: https://docs.ucloud.cn/api/vpc-api/describe_vip
      */
     describeVIP(request?: DescribeVIPRequest): Promise<DescribeVIPResponse>;
     /**
      * DescribeVPC - 获取VPC信息
      *
-     * See also: https://docs.ucloud.cn/api/vpc2.0-api/describe_vpc
+     * See also: https://docs.ucloud.cn/api/vpc-api/describe_vpc
      */
     describeVPC(request?: DescribeVPCRequest): Promise<DescribeVPCResponse>;
     /**
      * DescribeVPCIntercom - 获取VPC互通信息
      *
-     * See also: https://docs.ucloud.cn/api/vpc2.0-api/describe_vpc_intercom
+     * See also: https://docs.ucloud.cn/api/vpc-api/describe_vpc_intercom
      */
     describeVPCIntercom(request?: DescribeVPCIntercomRequest): Promise<DescribeVPCIntercomResponse>;
     /**
      * DescribeWhiteListResource - 展示NAT网关白名单资源列表
      *
-     * See also: https://docs.ucloud.cn/api/vpc2.0-api/describe_white_list_resource
+     * See also: https://docs.ucloud.cn/api/vpc-api/describe_white_list_resource
      */
     describeWhiteListResource(request?: DescribeWhiteListResourceRequest): Promise<DescribeWhiteListResourceResponse>;
     /**
+     * DetachNetworkInterface - 解绑云主机关联网卡
+     *
+     * See also: https://docs.ucloud.cn/api/vpc-api/detach_network_interface
+     */
+    detachNetworkInterface(request?: DetachNetworkInterfaceRequest): Promise<DetachNetworkInterfaceResponse>;
+    /**
+     * DisableUniEipDirectMode - 关闭虚拟网卡EIP直通功能
+     *
+     * See also: https://docs.ucloud.cn/api/vpc-api/disable_uni_eip_direct_mode
+     */
+    disableUniEipDirectMode(request?: DisableUniEipDirectModeRequest): Promise<DisableUniEipDirectModeResponse>;
+    /**
+     * DisableVPCIPv6 - VPC关闭IPv6
+     *
+     * See also: https://docs.ucloud.cn/api/vpc-api/disable_vpc_ip_v6
+     */
+    disableVPCIPv6(request?: DisableVPCIPv6Request): Promise<DisableVPCIPv6Response>;
+    /**
+     * DisassociateSecGroup - 解绑安全组和资源绑定关系
+     *
+     * See also: https://docs.ucloud.cn/api/vpc-api/disassociate_sec_group
+     */
+    disassociateSecGroup(request?: DisassociateSecGroupRequest): Promise<DisassociateSecGroupResponse>;
+    /**
+     * EnableUniEipDirectMode - 开启虚拟网卡EIP直通功能
+     *
+     * See also: https://docs.ucloud.cn/api/vpc-api/enable_uni_eip_direct_mode
+     */
+    enableUniEipDirectMode(request?: EnableUniEipDirectModeRequest): Promise<EnableUniEipDirectModeResponse>;
+    /**
      * EnableWhiteList - 修改NAT网关白名单开关
      *
-     * See also: https://docs.ucloud.cn/api/vpc2.0-api/enable_white_list
+     * See also: https://docs.ucloud.cn/api/vpc-api/enable_white_list
      */
     enableWhiteList(request?: EnableWhiteListRequest): Promise<EnableWhiteListResponse>;
     /**
      * GetAvailableResourceForPolicy - 获取NAT网关可配置端口转发规则的资源信息
      *
-     * See also: https://docs.ucloud.cn/api/vpc2.0-api/get_available_resource_for_policy
+     * See also: https://docs.ucloud.cn/api/vpc-api/get_available_resource_for_policy
      */
     getAvailableResourceForPolicy(request?: GetAvailableResourceForPolicyRequest): Promise<GetAvailableResourceForPolicyResponse>;
     /**
      * GetAvailableResourceForSnatRule - 获取可用于添加snat规则（出口规则）的资源列表
      *
-     * See also: https://docs.ucloud.cn/api/vpc2.0-api/get_available_resource_for_snat_rule
+     * See also: https://docs.ucloud.cn/api/vpc-api/get_available_resource_for_snat_rule
      */
     getAvailableResourceForSnatRule(request?: GetAvailableResourceForSnatRuleRequest): Promise<GetAvailableResourceForSnatRuleResponse>;
     /**
      * GetAvailableResourceForWhiteList - 获取NAT网关可添加白名单的资源
      *
-     * See also: https://docs.ucloud.cn/api/vpc2.0-api/get_available_resource_for_white_list
+     * See also: https://docs.ucloud.cn/api/vpc-api/get_available_resource_for_white_list
      */
     getAvailableResourceForWhiteList(request?: GetAvailableResourceForWhiteListRequest): Promise<GetAvailableResourceForWhiteListResponse>;
     /**
      * GetNetworkAclTargetResource - 获取ACL规则应用目标列表
      *
-     * See also: https://docs.ucloud.cn/api/vpc2.0-api/get_network_acl_target_resource
+     * See also: https://docs.ucloud.cn/api/vpc-api/get_network_acl_target_resource
      */
     getNetworkAclTargetResource(request?: GetNetworkAclTargetResourceRequest): Promise<GetNetworkAclTargetResourceResponse>;
     /**
      * ListSubnetForNATGW - 展示NAT网关可绑定的子网列表
      *
-     * See also: https://docs.ucloud.cn/api/vpc2.0-api/list_subnet_for_natgw
+     * See also: https://docs.ucloud.cn/api/vpc-api/list_subnet_for_natgw
      */
     listSubnetForNATGW(request?: ListSubnetForNATGWRequest): Promise<ListSubnetForNATGWResponse>;
     /**
      * ModifyRouteRule - 路由策略增、删、改
      *
-     * See also: https://docs.ucloud.cn/api/vpc2.0-api/modify_route_rule
+     * See also: https://docs.ucloud.cn/api/vpc-api/modify_route_rule
      */
     modifyRouteRule(request?: ModifyRouteRuleRequest): Promise<ModifyRouteRuleResponse>;
     /**
      * MoveSecondaryIPMac - 把 Secondary IP 从旧 MAC 迁移到新 MAC
      *
-     * See also: https://docs.ucloud.cn/api/vpc2.0-api/move_secondary_ip_mac
+     * See also: https://docs.ucloud.cn/api/vpc-api/move_secondary_ip_mac
      */
     moveSecondaryIPMac(request?: MoveSecondaryIPMacRequest): Promise<MoveSecondaryIPMacResponse>;
     /**
      * ReleaseVIP - 释放VIP资源
      *
-     * See also: https://docs.ucloud.cn/api/vpc2.0-api/release_vip
+     * See also: https://docs.ucloud.cn/api/vpc-api/release_vip
      */
     releaseVIP(request?: ReleaseVIPRequest): Promise<ReleaseVIPResponse>;
     /**
      * SetGwDefaultExport - 设置NAT网关的默认出口
      *
-     * See also: https://docs.ucloud.cn/api/vpc2.0-api/set_gw_default_export
+     * See also: https://docs.ucloud.cn/api/vpc-api/set_gw_default_export
      */
     setGwDefaultExport(request?: SetGwDefaultExportRequest): Promise<SetGwDefaultExportResponse>;
     /**
+     * SwitchToFirewall - 切换至防火墙模式
+     *
+     * See also: https://docs.ucloud.cn/api/vpc-api/switch_to_firewall
+     */
+    switchToFirewall(request?: SwitchToFirewallRequest): Promise<SwitchToFirewallResponse>;
+    /**
+     * SwitchToSecGroup - 切换至安全组模式
+     *
+     * See also: https://docs.ucloud.cn/api/vpc-api/switch_to_sec_group
+     */
+    switchToSecGroup(request?: SwitchToSecGroupRequest): Promise<SwitchToSecGroupResponse>;
+    /**
+     * UnassignIPv6 - 释放IPv6地址
+     *
+     * See also: https://docs.ucloud.cn/api/vpc-api/unassign_ip_v6
+     */
+    unassignIPv6(request?: UnassignIPv6Request): Promise<UnassignIPv6Response>;
+    /**
+     * UpdateNATGW - 更新nat网关基本信息
+     *
+     * See also: https://docs.ucloud.cn/api/vpc-api/update_natgw
+     */
+    updateNATGW(request?: UpdateNATGWRequest): Promise<UpdateNATGWResponse>;
+    /**
      * UpdateNATGWPolicy - 更新NAT网关端口转发规则
      *
-     * See also: https://docs.ucloud.cn/api/vpc2.0-api/update_natgw_policy
+     * See also: https://docs.ucloud.cn/api/vpc-api/update_natgw_policy
      */
     updateNATGWPolicy(request?: UpdateNATGWPolicyRequest): Promise<UpdateNATGWPolicyResponse>;
     /**
+     * UpdateNATGWSnatpool - NAT网关默认出口规则是否开启Snatpool，若开启，对应控制台上的负载均衡流量出口方式。
+     *
+     * See also: https://docs.ucloud.cn/api/vpc-api/update_natgw_snatpool
+     */
+    updateNATGWSnatpool(request?: UpdateNATGWSnatpoolRequest): Promise<UpdateNATGWSnatpoolResponse>;
+    /**
      * UpdateNATGWSubnet - 更新NAT网关绑定的子网
      *
-     * See also: https://docs.ucloud.cn/api/vpc2.0-api/update_natgw_subnet
+     * See also: https://docs.ucloud.cn/api/vpc-api/update_natgw_subnet
      */
     updateNATGWSubnet(request?: UpdateNATGWSubnetRequest): Promise<UpdateNATGWSubnetResponse>;
     /**
      * UpdateNetworkAcl - 更改ACL
      *
-     * See also: https://docs.ucloud.cn/api/vpc2.0-api/update_network_acl
+     * See also: https://docs.ucloud.cn/api/vpc-api/update_network_acl
      */
     updateNetworkAcl(request?: UpdateNetworkAclRequest): Promise<UpdateNetworkAclResponse>;
     /**
      * UpdateNetworkAclEntry - 更新ACL的规则
      *
-     * See also: https://docs.ucloud.cn/api/vpc2.0-api/update_network_acl_entry
+     * See also: https://docs.ucloud.cn/api/vpc-api/update_network_acl_entry
      */
     updateNetworkAclEntry(request?: UpdateNetworkAclEntryRequest): Promise<UpdateNetworkAclEntryResponse>;
     /**
+     * UpdateNetworkInterfaceDefaultOutput - 更新虚拟网卡默认出口(仅用于开启EIP网卡可见模式的虚拟网卡)
+     *
+     * See also: https://docs.ucloud.cn/api/vpc-api/update_network_interface_default_output
+     */
+    updateNetworkInterfaceDefaultOutput(request?: UpdateNetworkInterfaceDefaultOutputRequest): Promise<UpdateNetworkInterfaceDefaultOutputResponse>;
+    /**
      * UpdateRouteTableAttribute - 更新路由表基本信息
      *
-     * See also: https://docs.ucloud.cn/api/vpc2.0-api/update_route_table_attribute
+     * See also: https://docs.ucloud.cn/api/vpc-api/update_route_table_attribute
      */
     updateRouteTableAttribute(request?: UpdateRouteTableAttributeRequest): Promise<UpdateRouteTableAttributeResponse>;
     /**
+     * UpdateSecGroup - 更新安全组基本信息
+     *
+     * See also: https://docs.ucloud.cn/api/vpc-api/update_sec_group
+     */
+    updateSecGroup(request?: UpdateSecGroupRequest): Promise<UpdateSecGroupResponse>;
+    /**
+     * UpdateSecGroupAssociation - 仅对操作的安全组ID生效，其他已有的绑定关系不受影响。
+     *
+     * See also: https://docs.ucloud.cn/api/vpc-api/update_sec_group_association
+     */
+    updateSecGroupAssociation(request?: UpdateSecGroupAssociationRequest): Promise<UpdateSecGroupAssociationResponse>;
+    /**
+     * UpdateSecGroupRule -
+     *
+     * See also: https://docs.ucloud.cn/api/vpc-api/update_sec_group_rule
+     */
+    updateSecGroupRule(request?: UpdateSecGroupRuleRequest): Promise<UpdateSecGroupRuleResponse>;
+    /**
      * UpdateSnatRule - 更新指定的出口规则（SNAT规则）
      *
-     * See also: https://docs.ucloud.cn/api/vpc2.0-api/update_snat_rule
+     * See also: https://docs.ucloud.cn/api/vpc-api/update_snat_rule
      */
     updateSnatRule(request?: UpdateSnatRuleRequest): Promise<UpdateSnatRuleResponse>;
     /**
      * UpdateSubnetAttribute - 更新子网信息
      *
-     * See also: https://docs.ucloud.cn/api/vpc2.0-api/update_subnet_attribute
+     * See also: https://docs.ucloud.cn/api/vpc-api/update_subnet_attribute
      */
     updateSubnetAttribute(request?: UpdateSubnetAttributeRequest): Promise<UpdateSubnetAttributeResponse>;
     /**
      * UpdateVIPAttribute - 更新VIP信息
      *
-     * See also: https://docs.ucloud.cn/api/vpc2.0-api/update_vip_attribute
+     * See also: https://docs.ucloud.cn/api/vpc-api/update_vip_attribute
      */
     updateVIPAttribute(request?: UpdateVIPAttributeRequest): Promise<UpdateVIPAttributeResponse>;
     /**
+     * UpdateVPCIPv6 - 更新VPC IPv6网段
+     *
+     * See also: https://docs.ucloud.cn/api/vpc-api/update_vpc_ip_v6
+     */
+    updateVPCIPv6(request?: UpdateVPCIPv6Request): Promise<UpdateVPCIPv6Response>;
+    /**
      * UpdateVPCNetwork - 更新VPC网段
      *
-     * See also: https://docs.ucloud.cn/api/vpc2.0-api/update_vpc_network
+     * See also: https://docs.ucloud.cn/api/vpc-api/update_vpc_network
      */
     updateVPCNetwork(request?: UpdateVPCNetworkRequest): Promise<UpdateVPCNetworkResponse>;
 }
@@ -449,6 +641,78 @@ export interface AddSnatRuleRequest {
  * AddSnatRule - 对于绑定了多个EIP的NAT网关，您可以将一个子网下的某台云主机映射到某个特定的EIP上，规则生效后，则该云主机通过该特定的EIP访问互联网。
  */
 export interface AddSnatRuleResponse {
+}
+/**
+ * AddSubnetIPv6 - 子网关联IPv6
+ */
+export interface AddSubnetIPv6Request {
+    /**
+     * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
+     */
+    Zone: string;
+    /**
+     * 子网ID
+     */
+    SubnetworkId: string;
+    /**
+     * 私有网络 ID
+     */
+    VPCId?: string;
+    /**
+     * 所属VPC的IPv6网段，可选，不填默认选择一个VPC IPv6网段进行分配
+     */
+    VPCIPv6Network?: string;
+    /**
+     * 指定IPv6网段
+     */
+    IPv6Network?: string;
+    /**
+     * 指定IPv6网段掩码
+     */
+    IPv6PrefixLength?: number;
+}
+/**
+ * AddSubnetIPv6 - 子网关联IPv6
+ */
+export interface AddSubnetIPv6Response {
+    /**
+     * IPv6网段
+     */
+    IPv6Network: string;
+}
+/**
+ * AddVPCIPv6 - VPC关联IPv6网段
+ */
+export interface AddVPCIPv6Request {
+    /**
+     * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
+     */
+    Zone: string;
+    /**
+     * VPC资源ID
+     */
+    VPCId: string;
+    /**
+     * 类型 BGP | Telecom | ChinaMobile | Unicom
+     */
+    OperatorName: string;
+    /**
+     * Default--默认网段、Custom--客户自带
+     */
+    IPv6NetworkType?: string;
+    /**
+     * 指定IPv6网段
+     */
+    IPv6Network?: string;
+}
+/**
+ * AddVPCIPv6 - VPC关联IPv6网段
+ */
+export interface AddVPCIPv6Response {
+    /**
+     * IPv6网段
+     */
+    IPv6Network: string;
 }
 /**
  * AddVPCNetwork - 添加VPC网段
@@ -571,7 +835,7 @@ export interface AllocateBatchSecondaryIpResponse {
  */
 export interface AllocateSecondaryIpRequest {
     /**
-     * 可用区。参见 [可用区列表](../summary/regionlist.html)
+     * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
      */
     Zone: string;
     /**
@@ -697,6 +961,72 @@ export interface AllocateVIPResponse {
     DataSet?: string[];
 }
 /**
+ * AssignIPv6 - 申请IPv6地址
+ */
+export interface AssignIPv6Request {
+    /**
+     * 子网ID
+     */
+    SubnetworkId: string;
+    /**
+     * 资源短ID
+     */
+    ObjectId: string;
+    /**
+     * vpc ID
+     */
+    VPCId?: string;
+    /**
+     * 实际资源短ID--pass产品实际ID
+     */
+    InstanceId?: string;
+    /**
+     * 与InstanceID对应，实际资源大类ID--pass产品实际类型
+     */
+    InstanceType?: number;
+    /**
+     * 选填，资源的Mac
+     */
+    Mac?: string;
+    /**
+     * 指定IP分配，与Count互斥
+     */
+    IPv6Addresses?: string[];
+    /**
+     * 指定数量分配，与IPv6Addresses互斥
+     */
+    Count?: number;
+    /**
+     * IP属性：支持开启公网(Normal)、仅支持内网(Private)，默认Normal
+     */
+    Attribute?: string;
+    /**
+     * 指定网段分配IP
+     */
+    Segment?: string;
+}
+/**
+ * AssignIPv6 - 申请IPv6地址
+ */
+export interface AssignIPv6Response {
+    /**
+     * IPv6地址
+     */
+    IPv6Addresses: string[];
+    /**
+     * IP类型
+     */
+    OperatorName: string;
+    /**
+     * IPv6网关
+     */
+    IPv6Gateway: string;
+    /**
+     * 掩码
+     */
+    Mask: number;
+}
+/**
  * AssociateRouteTable - 绑定子网的路由表
  */
 export interface AssociateRouteTableRequest {
@@ -715,6 +1045,69 @@ export interface AssociateRouteTableRequest {
 export interface AssociateRouteTableResponse {
 }
 /**
+ * AssociateSecGroup - 绑定资源到安全组
+ */
+export interface AssociateSecGroupRequest {
+    /**
+     * 资源短 ID，安全组参数和该字段只支持一个批量。支持 string 数组。
+     */
+    ResourceId: string[];
+    /**
+     *
+     */
+    PrioritySecGroup?: {
+        /**
+         * 绑定优先级。该字段和资源 ID 只支持一个批量。支持 PrioritySecGroup 的 JSON 格式数组。
+         */
+        Priority: number;
+        /**
+         * 安全组 ID。该字段和资源 ID 只支持一个批量。支持 PrioritySecGroup 的 JSON 格式数组。
+         */
+        SecGroupId: string;
+    }[];
+}
+/**
+ * AssociateSecGroup - 绑定资源到安全组
+ */
+export interface AssociateSecGroupResponse {
+}
+/**
+ * AssociateSecGroupDynamic - 绑定安全组，动态调整绑定优先级
+ */
+export interface AssociateSecGroupDynamicRequest {
+    /**
+     * 资源短 ID 数组。支持数组模式。Type 为 string 数组。
+     */
+    ResourceId: string[];
+    /**
+     * 安全组ID
+     */
+    SecGroupId: string;
+}
+/**
+ * AssociateSecGroupDynamic - 绑定安全组，动态调整绑定优先级
+ */
+export interface AssociateSecGroupDynamicResponse {
+}
+/**
+ * AttachNetworkInterface - 绑定网卡到云主机
+ */
+export interface AttachNetworkInterfaceRequest {
+    /**
+     * 虚拟网卡ID
+     */
+    InterfaceId: string;
+    /**
+     * 云主机ID（仅支持绑定开启网卡功能，且未开启网络增强的云主机）
+     */
+    InstanceId: string;
+}
+/**
+ * AttachNetworkInterface - 绑定网卡到云主机
+ */
+export interface AttachNetworkInterfaceResponse {
+}
+/**
  * CloneRouteTable - 将现有的路由表复制为一张新的路由表
  */
 export interface CloneRouteTableRequest {
@@ -731,6 +1124,48 @@ export interface CloneRouteTableResponse {
      * 复制后新的路由表资源ID
      */
     RouteTableId?: string;
+}
+/**
+ * CopySecGroup - 复制安全组
+ */
+export interface CopySecGroupRequest {
+    /**
+     * 源安全组ID
+     */
+    SecGroupId: string;
+    /**
+     * 目的地域
+     */
+    DstRegion: string;
+    /**
+     * 目的项目ID
+     */
+    DstProjectId: string;
+    /**
+     * 目的VPC ID
+     */
+    DstVPCId: string;
+    /**
+     * 目的安全组名称，最长64个字符
+     */
+    DstName?: string;
+    /**
+     * 目的安全组备注
+     */
+    DstRemark?: string;
+}
+/**
+ * CopySecGroup - 复制安全组
+ */
+export interface CopySecGroupResponse {
+    /**
+     * 复制得到的安全组ID
+     */
+    SecGroupId: string;
+    /**
+     * 复制得到的规则ID
+     */
+    RuleID: string[];
 }
 /**
  * CreateNATGW - 创建NAT网关
@@ -975,6 +1410,31 @@ export interface CreateNetworkInterfaceRequest {
      * 备注
      */
     Remark?: string;
+    /**
+     * 指定使用 安全组还是防火墙。为 0 时绑定防火墙，为1时绑定安全组
+     */
+    SecurityMode?: number;
+    /**
+     *
+     */
+    PrioritySecGroup?: {
+        /**
+         * 安全组优先级
+         */
+        Priority?: number;
+        /**
+         * 安全组 ID
+         */
+        SecGroupId?: string;
+    }[];
+    /**
+     * 是否开启EIP直通，默认false
+     */
+    EipDirectMode?: boolean;
+    /**
+     * 枚举值1:EIP网卡可见2:EIP直通默认为1
+     */
+    EipDirectVersion?: number;
 }
 /**
  * CreateNetworkInterface - 创建虚拟网卡
@@ -1040,6 +1500,14 @@ export interface CreateNetworkInterfaceResponse {
          * 业务组
          */
         Tag?: string;
+        /**
+         * 是否开启EIP直通模式
+         */
+        EipDirectMode?: boolean;
+        /**
+         * EIP直通版本
+         */
+        EipDirectVersion?: number;
     };
 }
 /**
@@ -1071,6 +1539,83 @@ export interface CreateRouteTableResponse {
      * 路由表ID
      */
     RouteTableId?: string;
+}
+/**
+ * CreateSecGroup - 创建安全组
+ */
+export interface CreateSecGroupRequest {
+    /**
+     * 资源ID所属的VPC
+     */
+    VPCID: string;
+    /**
+     * 安全组名称，最长64个字符。
+     */
+    Name: string;
+}
+/**
+ * CreateSecGroup - 创建安全组
+ */
+export interface CreateSecGroupResponse {
+    /**
+     * 安全组ID
+     */
+    SecGroupId: string;
+}
+/**
+ * CreateSecGroupRule -
+ */
+export interface CreateSecGroupRuleRequest {
+    /**
+     * 需要添加规则的安全组资源ID。
+     */
+    SecGroupId: string;
+    /**
+     *
+     */
+    Rule?: {
+        /**
+         *  "Ingress/Egress"，入站规则/出站规则
+         */
+        Direction: string;
+        /**
+         * IP 地址信息，逗号分隔。
+         */
+        IPRange: string;
+        /**
+         * 规则优先级。范围为 1~200
+         */
+        Priority: number;
+        /**
+         *  协议类型。"TCP","UDP","ICMP","ICMPv6","ALL"
+         */
+        ProtocolType: string;
+        /**
+         * 目的端口。逗号分隔，如 "80,443"、"443,2000-10000"
+         */
+        DstPort: string;
+        /**
+         * 规则行为。"Accept" 或 "Drop"
+         */
+        RuleAction: string;
+        /**
+         *  规则备注
+         */
+        Remark: string;
+        /**
+         * IP 版本，如 “IPv4”。支持 IPv6 后废弃
+         */
+        IPVersion?: string;
+    }[];
+}
+/**
+ * CreateSecGroupRule -
+ */
+export interface CreateSecGroupRuleResponse {
+    /**
+     * 规则 ID
+     */
+    RuleId: string[];
 }
 /**
  * CreateSnatDnatRule - 调用接口后会自动创建内外网IP之间的SNAT和DNAT规则，支持TCP、UDP协议全端口
@@ -1122,6 +1667,18 @@ export interface CreateSubnetRequest {
      * 备注
      */
     Remark?: string;
+    /**
+     * 是否关联IPv6
+     */
+    AssociateIPv6?: boolean;
+    /**
+     * 所属VPC的IPv6网段，可选，不填默认从VPC IPv6网段中选择一个进行分配
+     */
+    VPCIPv6Network?: string;
+    /**
+     * IPv6网段
+     */
+    IPv6Network?: string;
 }
 /**
  * CreateSubnet - 创建子网
@@ -1131,6 +1688,10 @@ export interface CreateSubnetResponse {
      * 子网ID
      */
     SubnetId?: string;
+    /**
+     * IPv6网段
+     */
+    IPv6Network?: string;
 }
 /**
  * CreateVPC - 创建VPC
@@ -1152,6 +1713,14 @@ export interface CreateVPCRequest {
      * 备注
      */
     Remark?: string;
+    /**
+     * 是否关联IPv6
+     */
+    AssociateIPv6?: boolean;
+    /**
+     * IPv6网段类型
+     */
+    OperatorName?: string;
 }
 /**
  * CreateVPC - 创建VPC
@@ -1275,6 +1844,20 @@ export interface DeleteNetworkAclEntryRequest {
 export interface DeleteNetworkAclEntryResponse {
 }
 /**
+ * DeleteNetworkInterface - 删除网卡
+ */
+export interface DeleteNetworkInterfaceRequest {
+    /**
+     * 虚拟网卡ID
+     */
+    InterfaceId: string;
+}
+/**
+ * DeleteNetworkInterface - 删除网卡
+ */
+export interface DeleteNetworkInterfaceResponse {
+}
+/**
  * DeleteRouteTable - 删除自定义路由表
  */
 export interface DeleteRouteTableRequest {
@@ -1289,11 +1872,43 @@ export interface DeleteRouteTableRequest {
 export interface DeleteRouteTableResponse {
 }
 /**
+ * DeleteSecGroup - 删除安全组
+ */
+export interface DeleteSecGroupRequest {
+    /**
+     * 安全组资源 Id。支持 string 数组格式。
+     */
+    SecGroupId: string[];
+}
+/**
+ * DeleteSecGroup - 删除安全组
+ */
+export interface DeleteSecGroupResponse {
+}
+/**
+ * DeleteSecGroupRule -
+ */
+export interface DeleteSecGroupRuleRequest {
+    /**
+     * 所属安全组 ID。
+     */
+    SecGroupId: string;
+    /**
+     * 安全组规则 ID。支持 string 数组格式。
+     */
+    RuleId: string[];
+}
+/**
+ * DeleteSecGroupRule -
+ */
+export interface DeleteSecGroupRuleResponse {
+}
+/**
  * DeleteSecondaryIp - 删除ip（用于uk8s使用）
  */
 export interface DeleteSecondaryIpRequest {
     /**
-     * 可用区。参见 [可用区列表](../summary/regionlist.html)
+     * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
      */
     Zone: string;
     /**
@@ -1377,6 +1992,24 @@ export interface DeleteSubnetRequest {
 export interface DeleteSubnetResponse {
 }
 /**
+ * DeleteSubnetIPv6 - 子网取消关联IPv6
+ */
+export interface DeleteSubnetIPv6Request {
+    /**
+     * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
+     */
+    Zone: string;
+    /**
+     * 子网ID
+     */
+    SubnetworkId: string;
+}
+/**
+ * DeleteSubnetIPv6 - 子网取消关联IPv6
+ */
+export interface DeleteSubnetIPv6Response {
+}
+/**
  * DeleteVPC - 删除VPC
  */
 export interface DeleteVPCRequest {
@@ -1389,6 +2022,28 @@ export interface DeleteVPCRequest {
  * DeleteVPC - 删除VPC
  */
 export interface DeleteVPCResponse {
+}
+/**
+ * DeleteVPCIPv6 - VPC取消关联IPv6网段
+ */
+export interface DeleteVPCIPv6Request {
+    /**
+     * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
+     */
+    Zone: string;
+    /**
+     * VPC资源ID
+     */
+    VPCId: string;
+    /**
+     * IPv6网段
+     */
+    IPv6Network: string;
+}
+/**
+ * DeleteVPCIPv6 - VPC取消关联IPv6网段
+ */
+export interface DeleteVPCIPv6Response {
 }
 /**
  * DeleteVPCIntercom - 删除VPC互通关系
@@ -1587,17 +2242,17 @@ export interface DescribeNATGWResponse {
          */
         SubnetSet: {
             /**
-             * 子网id
-             */
-            SubnetworkId: string;
-            /**
              * 子网网段
              */
             Subnet: string;
             /**
+             * 子网id
+             */
+            SubnetworkId?: string;
+            /**
              * 子网名字
              */
-            SubnetName: string;
+            SubnetName?: string;
         }[];
         /**
          * 绑定的EIP 信息
@@ -2086,6 +2741,10 @@ export interface DescribeNetworkInterfaceRequest {
      * 默认为0
      */
     Offset?: number;
+    /**
+     * 是否展示安全组信息
+     */
+    WithSecGroup?: boolean;
 }
 /**
  * DescribeNetworkInterface - 展示虚拟网卡信息
@@ -2120,9 +2779,42 @@ export interface DescribeNetworkInterfaceResponse {
          */
         Status: number;
         /**
-         * 网卡的内网IP信息
+         * EIP Id 集合
          */
-        PrivateIp?: {
+        EIPIdSet: string[];
+        /**
+         * 防火墙 ID 集合
+         */
+        FirewallIdSet: string[];
+        /**
+         * 防火墙信息
+         */
+        FirewallSet: {
+            /**
+             * 防火墙资源 ID
+             */
+            Id?: string;
+            /**
+             * 防火墙资源名称
+             */
+            Name?: string;
+        }[];
+        /**
+         * EIP 直通 false：不是，true：是
+         */
+        EipDirectMode: boolean;
+        /**
+         * EIP 直通版本信息
+         */
+        EipDirectionVersion: number;
+        /**
+         * 默认IP 出口
+         */
+        DefaultOutput: string;
+        /**
+         * 私有 IP 信息
+         */
+        PrivateIp: {
             /**
              * ip类型 SecondaryIp/PrimaryIp
              */
@@ -2131,6 +2823,56 @@ export interface DescribeNetworkInterfaceResponse {
              * ip 地址
              */
             IpAddr?: string[];
+        }[];
+        /**
+         * IPv6 地址信息
+         */
+        IPv6AddressInfo: {
+            /**
+             * IPv6 地址
+             */
+            IPv6Address?: string;
+            /**
+             * IPv6 资源 ID
+             */
+            IPv6Id?: string;
+            /**
+             * 属性
+             */
+            Attribute?: string;
+        }[];
+        /**
+         * IPv6 网关地址
+         */
+        IPv6Gateway: string;
+        /**
+         * IPv6 掩码
+         */
+        IPv6Mask: number;
+        /**
+         * 运营商
+         */
+        OperatorName: string;
+        /**
+         * 关联安全组数量
+         */
+        SecGroupCount?: number;
+        /**
+         * 关联安全组信息
+         */
+        SecGroup?: {
+            /**
+             * 安全组名称
+             */
+            Name: string;
+            /**
+             * 关联优先级
+             */
+            Priority?: number;
+            /**
+             * 安全组ID
+             */
+            SecGroupId?: string;
         }[];
         /**
          * 虚拟网卡名称
@@ -2165,15 +2907,7 @@ export interface DescribeNetworkInterfaceResponse {
          */
         Tag?: string;
         /**
-         * 虚拟网卡绑定的EIP ID信息
-         */
-        EIPIdSet?: string[];
-        /**
-         * 虚拟网卡绑定的防火墙ID信息
-         */
-        FirewallIdSet?: string[];
-        /**
-         * 网卡的内网IP配额信息
+         * 私有 IP 配额
          */
         PrivateIpLimit?: {
             /**
@@ -2184,12 +2918,139 @@ export interface DescribeNetworkInterfaceResponse {
              * 网卡内网IP配额
              */
             PrivateIpQuota?: number;
-        };
+        }[];
     }[];
     /**
      * 虚拟网卡总数
      */
     TotalCount?: number;
+}
+/**
+ * DescribeResourceSecGroup - 查询资源绑定的安全组信息
+ */
+export interface DescribeResourceSecGroupRequest {
+    /**
+     * 资源类型，如 uhost, uni
+     */
+    ResourceType?: string;
+    /**
+     * 分页查询时的偏移量。传入了 ResourceId 则不分页。
+     */
+    Offset?: number;
+    /**
+     * 分页查询时的最大返回资源数量。
+     */
+    Limit?: number;
+    /**
+     * VPC ID。非必须，分页使用（分页时，也可不传）；ResourceId 非空时，忽略
+     */
+    VPCId?: string;
+    /**
+     * 资源 ID 数组，如果指定则不分页；否则分页获取该账号下的指定类型的资源。支持  string 数组格式。
+     */
+    ResourceId?: string[];
+}
+/**
+ * DescribeResourceSecGroup - 查询资源绑定的安全组信息
+ */
+export interface DescribeResourceSecGroupResponse {
+    /**
+     * 资源总数量。传入 ResourceId 时，为传入资源中的有效资源数量。
+     */
+    TotalCount: number;
+    /**
+     * 资源绑定的安全组信息
+     */
+    DataSet: {
+        /**
+         * 资源 ID
+         */
+        ResourceId: string;
+        /**
+         * 资源名称
+         */
+        ResourceName: string;
+        /**
+         * 该资源绑定的安全组数量
+         */
+        Count: number;
+        /**
+         * 绑定安全组信息
+         */
+        SecGroupInfo: {
+            /**
+             * 安全组 ID
+             */
+            SecGroupId?: string;
+            /**
+             * 安全组名称
+             */
+            Name?: string;
+            /**
+             * 安全组所属 VPC
+             */
+            VPCId?: string;
+            /**
+             * 该资源与该安全组绑定的优先级
+             */
+            Priority?: number;
+        }[];
+        /**
+         * 表示是否允许绑定安全组
+         */
+        PermitAssociate: boolean;
+        /**
+         * 资源额外信息
+         */
+        ExInfo?: {
+            /**
+             * 父级资源ID
+             */
+            SuperResourceId: string;
+            /**
+             * 资源名称
+             */
+            ResourceName?: string;
+            /**
+             * 主机内网IP
+             */
+            IP?: string[];
+            /**
+             * 主机外网IP
+             */
+            EIP?: string[];
+            /**
+             * 弹性网卡信息
+             */
+            Uni?: {
+                /**
+                 * 资源ID
+                 */
+                ResourceId: string;
+                /**
+                 * 资源绑定安全组数量
+                 */
+                Count: number;
+                /**
+                 * 详见SecGroupSimpleInfo
+                 */
+                SecGroupInfo?: {
+                    /**
+                     * 安全组资源ID
+                     */
+                    SecGroupId?: string;
+                    /**
+                     * 安全组名称
+                     */
+                    Name?: string;
+                }[];
+            }[];
+            /**
+             * 父级资源名称
+             */
+            SuperResourceName?: string;
+        };
+    }[];
 }
 /**
  * DescribeRouteTable - 获取路由表详细信息(包括路由策略)
@@ -2336,6 +3197,177 @@ export interface DescribeRouteTableResponse {
     }[];
     /**
      * RouteTables字段的数量
+     */
+    TotalCount?: number;
+}
+/**
+ * DescribeSecGroup -
+ */
+export interface DescribeSecGroupRequest {
+    /**
+     * 分页查询数据长度。默认为20
+     */
+    Limit?: number;
+    /**
+     * 分页查询起始位置偏移量。默认为0
+     */
+    Offset?: number;
+    /**
+     * 资源ID所属的 VPC ID
+     */
+    VPCId?: string;
+    /**
+     * 安全组资源 ID 数组，传入则 Offset/Limit/BusinessId 失效。支持数组格式。Type 为 string 数组。
+     */
+    SecGroupId?: string[];
+}
+/**
+ * DescribeSecGroup -
+ */
+export interface DescribeSecGroupResponse {
+    /**
+     * 详见SecGroupInfo
+     */
+    DataSet: {
+        /**
+         * 安全组资源ID
+         */
+        SecGroupId?: string;
+        /**
+         * 安全组名称
+         */
+        Name?: string;
+        /**
+         * VPC资源ID
+         */
+        VPCId?: string;
+        /**
+         * 用户 ID
+         */
+        Account?: number;
+        /**
+         * 业务组
+         */
+        Tag?: string;
+        /**
+         * 备注
+         */
+        Remark?: string;
+        /**
+         * 安全组类型，枚举值为： "user defined", 自定义创建安全组； "recommend web", 使用Web模板创建的安全组； "recommend non web", 使用非Web模板创建的安全组
+         */
+        Type?: string;
+        /**
+         * 创建的时间，格式为Unix Timestamp，如 1747030299
+         */
+        CreateTime?: number;
+        /**
+         * 安全组组中的规则列表，参见 SecGroupRuleInfo
+         */
+        Rule?: {
+            /**
+             * 规则ID
+             */
+            RuleId?: string;
+            /**
+             * "Ingress/Egress"，入站规则/出站规则
+             */
+            Direction?: string;
+            /**
+             * 地址
+             */
+            IPRange?: string;
+            /**
+             * 优先级
+             */
+            Priority?: number;
+            /**
+             * 协议类型
+             */
+            ProtocolType?: string;
+            /**
+             * 目标端口
+             */
+            DstPort?: string;
+            /**
+             * 匹配策略
+             */
+            RuleAction?: string;
+            /**
+             * 安全组规则备注
+             */
+            Remark?: string;
+            /**
+             * IP 版本，如 "IPv4"。支持 IPv6 后废弃
+             */
+            IPVersion?: string;
+        }[];
+    }[];
+}
+/**
+ * DescribeSecGroupResource - 获取安全组绑资源信息
+ */
+export interface DescribeSecGroupResourceRequest {
+    /**
+     * 安全组资源ID。
+     */
+    SecGroupId?: string;
+    /**
+     * 分页查询长度。默认为20
+     */
+    Limit?: number;
+    /**
+     * 分页查询起始位置偏移量。默认为0
+     */
+    Offset?: number;
+}
+/**
+ * DescribeSecGroupResource - 获取安全组绑资源信息
+ */
+export interface DescribeSecGroupResourceResponse {
+    /**
+     * 详见SecGroupResourceInfo
+     */
+    DataSet: {
+        /**
+         * 可用区
+         */
+        Zone?: number;
+        /**
+         * 绑定的虚拟网卡的名称
+         */
+        SubResourceName?: string;
+        /**
+         * 资源绑定的虚拟网卡的ID
+         */
+        SubResourceId?: string;
+        /**
+         * 绑定的虚拟网卡的类型，“uni”，虚拟网卡
+         */
+        SubResourceType?: string;
+        /**
+         * 名称
+         */
+        Name?: string;
+        /**
+         * 内网IP
+         */
+        PrivateIp?: string;
+        /**
+         * 资源ID
+         */
+        ResourceId?: string;
+        /**
+         * 资源类型。"unatgw"，NAT网关； "uhost"，云主机； "upm"，物理云主机； "hadoophost"，hadoop节点； "fortresshost"，堡垒机； "udhost"，私有专区主机；"udockhost"，容器；"dbaudit"，数据库审计，“uni”，虚拟网卡。
+         */
+        ResourceType?: string;
+        /**
+         * 业务组
+         */
+        Tag?: string;
+    }[];
+    /**
+     * 安全组绑定的资源总数
      */
     TotalCount?: number;
 }
@@ -2520,6 +3552,10 @@ export interface DescribeSubnetRequest {
      * 是否返回子网的可用IP数，true为是，false为否，默认不返回
      */
     ShowAvailableIPs?: boolean;
+    /**
+     * 默认为 false针对控制台调用，可设置为true，不进行控制台非必要数据的查询
+     */
+    IgnoreResource?: boolean;
 }
 /**
  * DescribeSubnet - 获取子网信息
@@ -2538,7 +3574,7 @@ export interface DescribeSubnetResponse {
          */
         Zone?: string;
         /**
-         * 子网关联的IPv6网段
+         * IPv6网段
          */
         IPv6Network?: string;
         /**
@@ -2597,6 +3633,10 @@ export interface DescribeSubnetResponse {
          * 可用IP数量
          */
         AvailableIPs?: number;
+        /**
+         * 可用IPv6数量
+         */
+        AvailableIPv6Count?: number;
     }[];
 }
 /**
@@ -2633,7 +3673,7 @@ export interface DescribeSubnetResourceResponse {
      */
     DataSet?: {
         /**
-         * 名称
+         * 资源名称
          */
         Name?: string;
         /**
@@ -2641,13 +3681,29 @@ export interface DescribeSubnetResourceResponse {
          */
         ResourceId?: string;
         /**
-         * 资源类型。对应的资源类型：UHOST，云主机；PHOST，物理云主机；ULB，负载均衡；UHADOOP_HOST，hadoop节点；UFORTRESS_HOST，堡垒机；UNATGW，NAT网关；UKAFKA，分布式消息系统；UMEM，内存存储；DOCKER，容器集群；UDB，数据库；UDW，数据仓库；VIP，内网VIP.
+         * 资源类型。对应的资源类型：UHOST，云主机；PHOST，物理云主机；ULB，负载均衡；UHADOOP_HOST，hadoop节点；UFORTRESS_HOST，堡垒机；UNATGW，NAT网关；UKAFKA，Kafka消息队列；UMEM，内存存储；DOCKER，容器集群；UDB，数据库；UDW，数据仓库；VIP，内网VIP.
          */
         ResourceType?: string;
+        /**
+         * 资源绑定的虚拟网卡的实例名称
+         */
+        SubResourceName?: string;
+        /**
+         * 资源绑定的虚拟网卡的实例ID
+         */
+        SubResourceId?: string;
+        /**
+         * 资源绑定的虚拟网卡的类型
+         */
+        SubResourceType?: string;
         /**
          * 资源ip
          */
         IP?: string;
+        /**
+         * 资源的IPv6地址
+         */
+        IPv6Address?: string;
     }[];
 }
 /**
@@ -2655,7 +3711,7 @@ export interface DescribeSubnetResourceResponse {
  */
 export interface DescribeVIPRequest {
     /**
-     * 可用区。参见 [可用区列表](../summary/regionlist.html)
+     * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
      */
     Zone?: string;
     /**
@@ -2750,11 +3806,11 @@ export interface DescribeVPCRequest {
      */
     Tag?: string;
     /**
-     *
+     * 数据偏移量，默认为0
      */
     Offset?: number;
     /**
-     *
+     * 数据分页值
      */
     Limit?: number;
 }
@@ -2767,7 +3823,7 @@ export interface DescribeVPCResponse {
      */
     DataSet?: {
         /**
-         *
+         * vpc地址空间信息，详见VPCNetworkInfo
          */
         NetworkInfo: {
             /**
@@ -2780,31 +3836,35 @@ export interface DescribeVPCResponse {
             SubnetCount?: number;
         }[];
         /**
-         *
+         * 子网数
          */
         SubnetCount: number;
         /**
-         *
+         * 创建时间
          */
         CreateTime: number;
         /**
-         *
+         * 更新时间
          */
         UpdateTime: number;
         /**
-         *
+         * 业务组
          */
         Tag: string;
         /**
-         *
+         * VPC名称
          */
         Name: string;
         /**
-         * VPCId
+         * DefaultVPC 默认VPC，DefinedVPC，自定义VPC
+         */
+        VPCType?: string;
+        /**
+         * VPC资源ID
          */
         VPCId?: string;
         /**
-         *
+         * VPC网段
          */
         Network?: string[];
         /**
@@ -2815,7 +3875,28 @@ export interface DescribeVPCResponse {
          * VPC关联的IPv6网段所属运营商
          */
         OperatorName?: string;
+        /**
+         * VPC关联的IPv6网段信息
+         */
+        IPv6NetworkInfos?: {
+            /**
+             * IPv6网段
+             */
+            IPv6Network?: string;
+            /**
+             * 类型
+             */
+            OperatorName?: string;
+            /**
+             * IPv6子网数量
+             */
+            IPv6SubnetCount?: number;
+        }[];
     }[];
+    /**
+     *
+     */
+    TotalCount?: number;
 }
 /**
  * DescribeVPCIntercom - 获取VPC互通信息
@@ -2884,14 +3965,6 @@ export interface DescribeWhiteListResourceRequest {
      * NAT网关的Id
      */
     NATGWIds: string[];
-    /**
-     * 数据偏移量, 默认为0
-     */
-    Offset?: number;
-    /**
-     * 数据分页值, 默认为20
-     */
-    Limit?: number;
 }
 /**
  * DescribeWhiteListResource - 展示NAT网关白名单资源列表
@@ -2957,6 +4030,112 @@ export interface DescribeWhiteListResourceResponse {
     TotalCount: number;
 }
 /**
+ * DetachNetworkInterface - 解绑云主机关联网卡
+ */
+export interface DetachNetworkInterfaceRequest {
+    /**
+     * 虚拟网卡ID
+     */
+    InterfaceId: string;
+    /**
+     * 云主机ID
+     */
+    InstanceId: string;
+}
+/**
+ * DetachNetworkInterface - 解绑云主机关联网卡
+ */
+export interface DetachNetworkInterfaceResponse {
+}
+/**
+ * DisableUniEipDirectMode - 关闭虚拟网卡EIP直通功能
+ */
+export interface DisableUniEipDirectModeRequest {
+    /**
+     * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
+     */
+    Zone?: string;
+    /**
+     * VPC ID
+     */
+    VPCId: string;
+    /**
+     * 虚拟网卡ID
+     */
+    InterfaceId: string;
+}
+/**
+ * DisableUniEipDirectMode - 关闭虚拟网卡EIP直通功能
+ */
+export interface DisableUniEipDirectModeResponse {
+}
+/**
+ * DisableVPCIPv6 - VPC关闭IPv6
+ */
+export interface DisableVPCIPv6Request {
+    /**
+     * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
+     */
+    Zone: string;
+    /**
+     * VPC资源ID
+     */
+    VPCId: string;
+}
+/**
+ * DisableVPCIPv6 - VPC关闭IPv6
+ */
+export interface DisableVPCIPv6Response {
+}
+/**
+ * DisassociateSecGroup - 解绑安全组和资源绑定关系
+ */
+export interface DisassociateSecGroupRequest {
+    /**
+     * 安全组ID，不传表示解绑安全组绑定的所以资源，安全组ID和资源ID至少传一个,且只能有一个批量。支持 string 数组格式。
+     */
+    SecGroupId?: string[];
+    /**
+     * 资源ID，不传表示解绑资源上所有安全组，安全组ID和资源ID至少传一个，且只能有一个批量。支持 string 数组格式。
+     */
+    ResourceId?: string[];
+    /**
+     * 是否强制解绑。默认为 false。为 true 表示强制解绑，用于删除资源前的解绑，因为开启安全组特性的资源至少绑定一个安全组，正常情况下是不允许解绑所有安全组。
+     */
+    Force?: boolean;
+}
+/**
+ * DisassociateSecGroup - 解绑安全组和资源绑定关系
+ */
+export interface DisassociateSecGroupResponse {
+}
+/**
+ * EnableUniEipDirectMode - 开启虚拟网卡EIP直通功能
+ */
+export interface EnableUniEipDirectModeRequest {
+    /**
+     * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
+     */
+    Zone?: string;
+    /**
+     * VPC ID
+     */
+    VPCId: string;
+    /**
+     * 虚拟网卡ID
+     */
+    InterfaceId: string;
+    /**
+     * 枚举值：1-EIP网卡可见2-EIP直通默认为1
+     */
+    EipDirectVersion?: number;
+}
+/**
+ * EnableUniEipDirectMode - 开启虚拟网卡EIP直通功能
+ */
+export interface EnableUniEipDirectModeResponse {
+}
+/**
  * EnableWhiteList - 修改NAT网关白名单开关
  */
 export interface EnableWhiteListRequest {
@@ -3012,6 +4191,10 @@ export interface GetAvailableResourceForPolicyResponse {
          */
         ResourceType: string;
     }[];
+    /**
+     * 可配置端口转发规则的资源总数
+     */
+    TotalCount?: number;
 }
 /**
  * GetAvailableResourceForSnatRule - 获取可用于添加snat规则（出口规则）的资源列表
@@ -3208,10 +4391,6 @@ export interface ListSubnetForNATGWResponse {
      */
     DataSet?: {
         /**
-         * 子网id
-         */
-        SubnetId: string;
-        /**
          * 子网网段
          */
         Subnet: string;
@@ -3220,13 +4399,17 @@ export interface ListSubnetForNATGWResponse {
          */
         Netmask: string;
         /**
-         * 子网名字
-         */
-        SubnetName: string;
-        /**
          * 是否绑定NATGW
          */
         HasNATGW: boolean;
+        /**
+         * 子网id
+         */
+        SubnetId?: string;
+        /**
+         * 子网名字
+         */
+        SubnetName?: string;
     }[];
 }
 /**
@@ -3314,6 +4497,98 @@ export interface SetGwDefaultExportRequest {
 export interface SetGwDefaultExportResponse {
 }
 /**
+ * SwitchToFirewall - 切换至防火墙模式
+ */
+export interface SwitchToFirewallRequest {
+    /**
+     * 资源ID。资源类型为 UHost、UNI、PAAS 资源
+     */
+    ResourceId: string;
+    /**
+     * 防火墙 ID
+     */
+    Firewall?: string;
+    /**
+     * map[string]string，string 到 防火墙 ID 的映射。ResourceId是uhost则Node是uni；ResourceId是uhadoop则Node是hadoophost
+     */
+    NodeToFirewall?: string;
+}
+/**
+ * SwitchToFirewall - 切换至防火墙模式
+ */
+export interface SwitchToFirewallResponse {
+}
+/**
+ * SwitchToSecGroup - 切换至安全组模式
+ */
+export interface SwitchToSecGroupRequest {
+    /**
+     * 资源ID。资源类型为 UHost、UNI、PAAS 资源
+     */
+    ResourceId: string;
+    /**
+     * 是否移除当前的防火墙（且绑定默认全通的防火墙）
+     */
+    IsRemoveFirewall: boolean;
+    /**
+     * PrioritySecGroup类型的数组
+     */
+    PrioritySecGroup?: string[];
+    /**
+     * map[string][]PrioritySecGroup， string 到 PrioritySecGroup 数组的映射
+     */
+    UniToPrioritySecGroup?: string;
+}
+/**
+ * SwitchToSecGroup - 切换至安全组模式
+ */
+export interface SwitchToSecGroupResponse {
+}
+/**
+ * UnassignIPv6 - 释放IPv6地址
+ */
+export interface UnassignIPv6Request {
+    /**
+     * 资源ID
+     */
+    ObjectId: string;
+    /**
+     * IPv6地址
+     */
+    IPv6Addresses: string[];
+}
+/**
+ * UnassignIPv6 - 释放IPv6地址
+ */
+export interface UnassignIPv6Response {
+}
+/**
+ * UpdateNATGW - 更新nat网关基本信息
+ */
+export interface UpdateNATGWRequest {
+    /**
+     * natgw id
+     */
+    NATGWId: string;
+    /**
+     * NATGateWay 名字
+     */
+    NATGWName?: string;
+    /**
+     * 业务组
+     */
+    Tag?: string;
+    /**
+     * 备注
+     */
+    Remark?: string;
+}
+/**
+ * UpdateNATGW - 更新nat网关基本信息
+ */
+export interface UpdateNATGWResponse {
+}
+/**
  * UpdateNATGWPolicy - 更新NAT网关端口转发规则
  */
 export interface UpdateNATGWPolicyRequest {
@@ -3354,6 +4629,24 @@ export interface UpdateNATGWPolicyRequest {
  * UpdateNATGWPolicy - 更新NAT网关端口转发规则
  */
 export interface UpdateNATGWPolicyResponse {
+}
+/**
+ * UpdateNATGWSnatpool - NAT网关默认出口规则是否开启Snatpool，若开启，对应控制台上的负载均衡流量出口方式。
+ */
+export interface UpdateNATGWSnatpoolRequest {
+    /**
+     * NAT网关的资源ID
+     */
+    NATGWId: string;
+    /**
+     * 开启，"enable"；关闭，"disable"；
+     */
+    IsSnatpoolEnabled: string;
+}
+/**
+ * UpdateNATGWSnatpool - NAT网关默认出口规则是否开启Snatpool，若开启，对应控制台上的负载均衡流量出口方式。
+ */
+export interface UpdateNATGWSnatpoolResponse {
 }
 /**
  * UpdateNATGWSubnet - 更新NAT网关绑定的子网
@@ -3450,6 +4743,28 @@ export interface UpdateNetworkAclEntryRequest {
 export interface UpdateNetworkAclEntryResponse {
 }
 /**
+ * UpdateNetworkInterfaceDefaultOutput - 更新虚拟网卡默认出口(仅用于开启EIP网卡可见模式的虚拟网卡)
+ */
+export interface UpdateNetworkInterfaceDefaultOutputRequest {
+    /**
+     * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
+     */
+    Zone: string;
+    /**
+     * 虚拟网卡Id
+     */
+    InterfaceId: string;
+    /**
+     * 出口IP
+     */
+    Output?: string;
+}
+/**
+ * UpdateNetworkInterfaceDefaultOutput - 更新虚拟网卡默认出口(仅用于开启EIP网卡可见模式的虚拟网卡)
+ */
+export interface UpdateNetworkInterfaceDefaultOutputResponse {
+}
+/**
  * UpdateRouteTableAttribute - 更新路由表基本信息
  */
 export interface UpdateRouteTableAttributeRequest {
@@ -3474,6 +4789,114 @@ export interface UpdateRouteTableAttributeRequest {
  * UpdateRouteTableAttribute - 更新路由表基本信息
  */
 export interface UpdateRouteTableAttributeResponse {
+}
+/**
+ * UpdateSecGroup - 更新安全组基本信息
+ */
+export interface UpdateSecGroupRequest {
+    /**
+     * 安全组资源ID数组。不支持 .n 格式。Type 为 string 数组。
+     */
+    SecGroupId: string;
+    /**
+     * 安全组名称，默认为空，为空则不做修改。Name,Tag,Remark必须填写1个及以上
+     */
+    Name?: string;
+    /**
+     * 安全组备注，默认为空，为空则不做修改。Name,Tag,Remark必须填写1个及以上
+     */
+    Remark?: string;
+}
+/**
+ * UpdateSecGroup - 更新安全组基本信息
+ */
+export interface UpdateSecGroupResponse {
+}
+/**
+ * UpdateSecGroupAssociation - 仅对操作的安全组ID生效，其他已有的绑定关系不受影响。
+ */
+export interface UpdateSecGroupAssociationRequest {
+    /**
+     * 资源ID
+     */
+    ResourceId: string;
+    /**
+     * 被替换的安全组ID。支持数组格式，即为 string 数组。
+     */
+    OldSecGroupId: string[];
+    /**
+     *
+     */
+    NewPrioritySecGroup?: {
+        /**
+         * 新绑定安全组的绑定优先级。支持 NewPrioritySecGroup 为数组格式，即传对应数据的 JSON 格式数组。
+         */
+        Priority: number;
+        /**
+         * 需新绑定的安全组ID
+         */
+        SecGroupId: string;
+    }[];
+}
+/**
+ * UpdateSecGroupAssociation - 仅对操作的安全组ID生效，其他已有的绑定关系不受影响。
+ */
+export interface UpdateSecGroupAssociationResponse {
+}
+/**
+ * UpdateSecGroupRule -
+ */
+export interface UpdateSecGroupRuleRequest {
+    /**
+     * 规则所属得安全组 ID。
+     */
+    SecGroupId: string;
+    /**
+     *
+     */
+    Rule?: {
+        /**
+         * 规则 ID
+         */
+        RuleId: string;
+        /**
+         *  "Ingress/Egress"，入站规则/出站规则
+         */
+        Direction: string;
+        /**
+         * IP 地址信息，逗号分隔。
+         */
+        IPRange: string;
+        /**
+         * 规则优先级。范围为 1~200
+         */
+        Priority: number;
+        /**
+         *  协议类型。"TCP","UDP","ICMP","ICMPv6","ALL"
+         */
+        ProtocolType: string;
+        /**
+         * 目的端口。逗号分隔，如 "80,443"、"443,2000-10000"
+         */
+        DstPort: string;
+        /**
+         * 规则行为。"Accept" 或 "Drop"
+         */
+        RuleAction: string;
+        /**
+         *  规则备注
+         */
+        Remark: string;
+        /**
+         * IP 版本，如 “IPv4”。支持 IPv6 后废弃
+         */
+        IPVersion?: string;
+    }[];
+}
+/**
+ * UpdateSecGroupRule -
+ */
+export interface UpdateSecGroupRuleResponse {
 }
 /**
  * UpdateSnatRule - 更新指定的出口规则（SNAT规则）
@@ -3548,6 +4971,41 @@ export interface UpdateVIPAttributeRequest {
  * UpdateVIPAttribute - 更新VIP信息
  */
 export interface UpdateVIPAttributeResponse {
+}
+/**
+ * UpdateVPCIPv6 - 更新VPC IPv6网段
+ */
+export interface UpdateVPCIPv6Request {
+    /**
+     * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
+     */
+    Zone: string;
+    /**
+     * VPC资源ID
+     */
+    VPCId: string;
+    /**
+     *
+     */
+    IPv6NetworkConfig?: {
+        /**
+         * 需要保留的所有网段
+         */
+        IPv6Network: string;
+        /**
+         * 网段对应的运营商类型
+         */
+        OperatorName: string;
+        /**
+         * 网段分类：Default--默认网段、Custom--客户自带网段
+         */
+        Type?: string;
+    }[];
+}
+/**
+ * UpdateVPCIPv6 - 更新VPC IPv6网段
+ */
+export interface UpdateVPCIPv6Response {
 }
 /**
  * UpdateVPCNetwork - 更新VPC网段
