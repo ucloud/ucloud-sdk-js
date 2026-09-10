@@ -118,6 +118,12 @@ export default class UK8SClient extends Client {
      */
     listUK8SULSConfig(request?: ListUK8SULSConfigRequest): Promise<ListUK8SULSConfigResponse>;
     /**
+     * ModifyUK8SClusterName - 修改k8s集群名称
+     *
+     * See also: https://docs.ucloud.cn/api/uk8s-api/modify_uk8s_cluster_name
+     */
+    modifyUK8SClusterName(request?: ModifyUK8SClusterNameRequest): Promise<ModifyUK8SClusterNameResponse>;
+    /**
      * RemoveUK8SNodeGroup - 删除UK8S节点池
      *
      * See also: https://docs.ucloud.cn/api/uk8s-api/remove_uk8s_node_group
@@ -3267,6 +3273,24 @@ export interface ListUK8SULSConfigResponse {
          */
         Name?: string;
     }[];
+}
+/**
+ * ModifyUK8SClusterName - 修改k8s集群名称
+ */
+export interface ModifyUK8SClusterNameRequest {
+    /**
+     * 集群ID
+     */
+    ClusterId: string;
+    /**
+     * 集群名称
+     */
+    ClusterName: string;
+}
+/**
+ * ModifyUK8SClusterName - 修改k8s集群名称
+ */
+export interface ModifyUK8SClusterNameResponse {
 }
 /**
  * RemoveUK8SNodeGroup - 删除UK8S节点池
