@@ -107,6 +107,10 @@ export interface CreateSandboxSiteRequest {
      */
     AccessCode: string;
     /**
+     * 站点空间空间模版，格式：site-nc-ng,n为偶数
+     */
+    TemplateName: string;
+    /**
      * 环境变量，格式：["key=value"]
      */
     Envs?: string;
