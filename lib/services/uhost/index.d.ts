@@ -699,6 +699,10 @@ export interface CreateUHostInstanceRequest {
              */
             OperatorName?: string;
             /**
+             * 指定EIP Id进行绑定
+             */
+            ExistEIPId?: string;
+            /**
              * 当前EIP代金券id。请通过DescribeCoupon接口查询，或登录用户中心查看。
              */
             CouponId?: string;
