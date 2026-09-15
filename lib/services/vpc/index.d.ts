@@ -2918,7 +2918,7 @@ export interface DescribeNetworkInterfaceResponse {
              * 网卡内网IP配额
              */
             PrivateIpQuota?: number;
-        }[];
+        };
     }[];
     /**
      * 虚拟网卡总数

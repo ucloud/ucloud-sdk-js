@@ -196,6 +196,19 @@ export interface GetSandboxSiteResponse {
          */
         ConnectKey: string;
         /**
+         * 计算资源
+         */
+        Resource: {
+            /**
+             * CPU核心
+             */
+            CPU: number;
+            /**
+             * 内存占用MB
+             */
+            MemoryMB: number;
+        };
+        /**
          * 站点环境变量。格式：["key=value"]
          */
         Envs?: string[];
@@ -279,6 +292,19 @@ export interface ListSandboxSitesResponse {
          * 连接密钥
          */
         ConnectKey: string;
+        /**
+         * 计算资源
+         */
+        Resource: {
+            /**
+             * CPU核心
+             */
+            CPU: number;
+            /**
+             * 内存占用MB
+             */
+            MemoryMB: number;
+        };
         /**
          * 站点环境变量。格式：["key=value"]
          */
