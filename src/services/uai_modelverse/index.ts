@@ -994,7 +994,15 @@ export interface GetUFSquareModelDetailResponse {
     /**
      * 关联的 batch 模型广场id
      */
-    BatchSquareModelId: string;
+    BatchSquareModelId?: string;
+    /**
+     * 一级分类
+     */
+    ModelCategory?: string;
+    /**
+     * 二级分类列表
+     */
+    ModelSubCategories?: string;
     /**
      * 是否关联有可用 batch 模型
      */
@@ -1003,6 +1011,39 @@ export interface GetUFSquareModelDetailResponse {
      * 关联的 batch 模型名称
      */
     BatchName?: string;
+    /**
+     * 是否有关联的推理地域模型
+     */
+    IsHasInferenceRegions?: boolean;
+    /**
+     * 推理地域模型列表
+     */
+    InferenceRegions?: {
+      /**
+       * 地域代码: sg(新加坡)/us(美国)/hk(香港)
+       */
+      RegionCode?: string;
+      /**
+       * 地域名称: 新加坡/美国/香港
+       */
+      RegionName?: string;
+      /**
+       * 地域名称(英文): Singapore/United States/Hong Kong
+       */
+      RegionNameEn?: string;
+      /**
+       * 地域模型ID (例如: deepseek-v4-flash-sg)
+       */
+      ModelId?: string;
+      /**
+       * 广场模型ID (umodel-xxx)
+       */
+      SquareModelId?: string;
+      /**
+       * 状态: published(已发布)/unpublished(未发布)
+       */
+      Status?: string;
+    }[];
     /**
      * 制造商
      */
@@ -1028,13 +1069,62 @@ export interface GetUFSquareModelDetailResponse {
      */
     Language?: string[];
     /**
-     * 模型长度
+     * 模型长度，单位 token
      */
     MaxModelLen?: number;
+    /**
+     * 模型长度，单位 K tokens
+     */
+    MaxModelLenNew?: number;
+    /**
+     * 最大输入token数
+     */
+    MaxInputTokens?: number;
+    /**
+     * 最大输出token数
+     */
+    MaxOutputTokens?: number;
+    /**
+     * 模型类型映射
+     */
+    ModelTypeMap?: {
+      /**
+       * 文生文模型，true 表示是文生文模型，下同
+       */
+      TextGeneration?: boolean;
+      /**
+       * 图生图模型
+       */
+      ImageToImage?: boolean;
+      /**
+       * 文生图模型
+       */
+      TextToImage?: boolean;
+      /**
+       * 文生视频模型
+       */
+      TextToVideo?: boolean;
+      /**
+       * 图生视频模型
+       */
+      ImageToVideo?: boolean;
+      /**
+       * 海外模型
+       */
+      Sensitive?: boolean;
+      /**
+       * 微调模型
+       */
+      Inference?: boolean;
+    };
     /**
      * 模型类型
      */
     ModelType?: string;
+    /**
+     * 模型封面链接
+     */
+    CoverUrl?: string;
     /**
      * HuggingFace 更新时间
      */
@@ -1051,6 +1141,76 @@ export interface GetUFSquareModelDetailResponse {
      * 模型能力
      */
     SupportedCapabilities?: string[];
+    /**
+     * 模型能力详细映射
+     */
+    Capabilities?: {
+      /**
+       * 是否支持上下文缓存
+       */
+      ContextCaching?: boolean;
+      /**
+       * 是否支持批量推理
+       */
+      BatchInference?: boolean;
+      /**
+       * 是否支持结构化输出
+       */
+      StructuredOutput?: boolean;
+      /**
+       * 是否支持函数调用
+       */
+      FunctionCall?: boolean;
+      /**
+       * 是否支持联网搜索
+       */
+      WebSearch?: boolean;
+      /**
+       * 是否支持知识库
+       */
+      KnowledgeBase?: boolean;
+      /**
+       * 是否支持MCP
+       */
+      Mcp?: boolean;
+      /**
+       * 是否支持体验
+       */
+      Experience?: boolean;
+    };
+    /**
+     * 模型额外标签
+     */
+    ExtraModelTags?: string[];
+    /**
+     * api协议映射
+     */
+    ApiProtocols?: {
+      /**
+       * 是否支持chat协议
+       */
+      ChatCompletions?: boolean;
+      /**
+       * 是否支持responses协议
+       */
+      Responses?: boolean;
+      /**
+       * 是否支持gemini协议
+       */
+      Gemini?: boolean;
+      /**
+       * 是否支持Anthropic协议
+       */
+      Anthropic?: boolean;
+    };
+    /**
+     * 输入模态
+     */
+    InputModalities?: string[];
+    /**
+     * 输出模态
+     */
+    OutputModalities?: string[];
     /**
      * 图标
      */
@@ -1784,7 +1944,15 @@ export interface ListUFSquareModelResponse {
     /**
      * 关联的 batch 模型广场id
      */
-    BatchSquareModelId: string;
+    BatchSquareModelId?: string;
+    /**
+     * 一级分类
+     */
+    ModelCategory?: string;
+    /**
+     * 二级分类列表
+     */
+    ModelSubCategories?: string;
     /**
      * 是否关联有可用 batch 模型
      */
@@ -1793,6 +1961,39 @@ export interface ListUFSquareModelResponse {
      * 关联的 batch 模型名称
      */
     BatchName?: string;
+    /**
+     * 是否有关联的推理地域模型
+     */
+    IsHasInferenceRegions?: boolean;
+    /**
+     * 推理地域模型列表
+     */
+    InferenceRegions?: {
+      /**
+       * 地域代码: sg(新加坡)/us(美国)/hk(香港)
+       */
+      RegionCode?: string;
+      /**
+       * 地域名称: 新加坡/美国/香港
+       */
+      RegionName?: string;
+      /**
+       * 地域名称(英文): Singapore/United States/Hong Kong
+       */
+      RegionNameEn?: string;
+      /**
+       * 地域模型ID (例如: deepseek-v4-flash-sg)
+       */
+      ModelId?: string;
+      /**
+       * 广场模型ID (umodel-xxx)
+       */
+      SquareModelId?: string;
+      /**
+       * 状态: published(已发布)/unpublished(未发布)
+       */
+      Status?: string;
+    }[];
     /**
      * 制造商
      */
@@ -1818,13 +2019,62 @@ export interface ListUFSquareModelResponse {
      */
     Language?: string[];
     /**
-     * 模型长度
+     * 模型长度，单位 token
      */
     MaxModelLen?: number;
+    /**
+     * 模型长度，单位 K tokens
+     */
+    MaxModelLenNew?: number;
+    /**
+     * 最大输入token数
+     */
+    MaxInputTokens?: number;
+    /**
+     * 最大输出token数
+     */
+    MaxOutputTokens?: number;
+    /**
+     * 模型类型映射
+     */
+    ModelTypeMap?: {
+      /**
+       * 文生文模型，true 表示是文生文模型，下同
+       */
+      TextGeneration?: boolean;
+      /**
+       * 图生图模型
+       */
+      ImageToImage?: boolean;
+      /**
+       * 文生图模型
+       */
+      TextToImage?: boolean;
+      /**
+       * 文生视频模型
+       */
+      TextToVideo?: boolean;
+      /**
+       * 图生视频模型
+       */
+      ImageToVideo?: boolean;
+      /**
+       * 海外模型
+       */
+      Sensitive?: boolean;
+      /**
+       * 微调模型
+       */
+      Inference?: boolean;
+    };
     /**
      * 模型类型
      */
     ModelType?: string;
+    /**
+     * 模型封面链接
+     */
+    CoverUrl?: string;
     /**
      * HuggingFace 更新时间
      */
@@ -1841,6 +2091,76 @@ export interface ListUFSquareModelResponse {
      * 模型能力
      */
     SupportedCapabilities?: string[];
+    /**
+     * 模型能力详细映射
+     */
+    Capabilities?: {
+      /**
+       * 是否支持上下文缓存
+       */
+      ContextCaching?: boolean;
+      /**
+       * 是否支持批量推理
+       */
+      BatchInference?: boolean;
+      /**
+       * 是否支持结构化输出
+       */
+      StructuredOutput?: boolean;
+      /**
+       * 是否支持函数调用
+       */
+      FunctionCall?: boolean;
+      /**
+       * 是否支持联网搜索
+       */
+      WebSearch?: boolean;
+      /**
+       * 是否支持知识库
+       */
+      KnowledgeBase?: boolean;
+      /**
+       * 是否支持MCP
+       */
+      Mcp?: boolean;
+      /**
+       * 是否支持体验
+       */
+      Experience?: boolean;
+    };
+    /**
+     * 模型额外标签
+     */
+    ExtraModelTags?: string[];
+    /**
+     * api协议映射
+     */
+    ApiProtocols?: {
+      /**
+       * 是否支持chat协议
+       */
+      ChatCompletions?: boolean;
+      /**
+       * 是否支持responses协议
+       */
+      Responses?: boolean;
+      /**
+       * 是否支持gemini协议
+       */
+      Gemini?: boolean;
+      /**
+       * 是否支持Anthropic协议
+       */
+      Anthropic?: boolean;
+    };
+    /**
+     * 输入模态
+     */
+    InputModalities?: string[];
+    /**
+     * 输出模态
+     */
+    OutputModalities?: string[];
     /**
      * 图标
      */
@@ -1944,7 +2264,197 @@ export interface ListUFSquareModelFiltersAuthRequest {
 /**
  * ListUFSquareModelFiltersAuth - 登录状态下获取模型广场过滤器中内容
  */
-export interface ListUFSquareModelFiltersAuthResponse {}
+export interface ListUFSquareModelFiltersAuthResponse {
+  /**
+   * 模型类型筛选（一级/二级分类树）
+   */
+  ModalTypes?: {
+    /**
+     *
+     */
+    Children: string;
+    /**
+     * 显示标签
+     */
+    Label?: string;
+    /**
+     * 英文标签
+     */
+    LabelEn?: string;
+    /**
+     * 枚举值
+     */
+    Value?: string;
+  }[];
+  /**
+   * 厂商选项
+   */
+  Manufacturers?: {
+    /**
+     *
+     */
+    Children: string;
+    /**
+     * 显示标签
+     */
+    Label?: string;
+    /**
+     * 英文标签
+     */
+    LabelEn?: string;
+    /**
+     * 枚举值
+     */
+    Value?: string;
+  }[];
+  /**
+   * 最大上下文长度选项
+   */
+  MaxModelLens?: {
+    /**
+     *
+     */
+    Children: string;
+    /**
+     * 显示标签
+     */
+    Label?: string;
+    /**
+     * 英文标签
+     */
+    LabelEn?: string;
+    /**
+     * 枚举值
+     */
+    Value?: string;
+  }[];
+  /**
+   * 能力选项
+   */
+  Capabilities?: {
+    /**
+     *
+     */
+    Children: string;
+    /**
+     * 显示标签
+     */
+    Label?: string;
+    /**
+     * 英文标签
+     */
+    LabelEn?: string;
+    /**
+     * 枚举值
+     */
+    Value?: string;
+  }[];
+  /**
+   * 输入模态选项
+   */
+  InputModalities?: {
+    /**
+     *
+     */
+    Children: string;
+    /**
+     * 显示标签
+     */
+    Label?: string;
+    /**
+     * 英文标签
+     */
+    LabelEn?: string;
+    /**
+     * 枚举值
+     */
+    Value?: string;
+  }[];
+  /**
+   * 输出模态选项
+   */
+  OutputModalities?: {
+    /**
+     *
+     */
+    Children: string;
+    /**
+     * 显示标签
+     */
+    Label?: string;
+    /**
+     * 英文标签
+     */
+    LabelEn?: string;
+    /**
+     * 枚举值
+     */
+    Value?: string;
+  }[];
+  /**
+   * API协议选项
+   */
+  ApiProtocols?: {
+    /**
+     *
+     */
+    Children: string;
+    /**
+     * 显示标签
+     */
+    Label?: string;
+    /**
+     * 英文标签
+     */
+    LabelEn?: string;
+    /**
+     * 枚举值
+     */
+    Value?: string;
+  }[];
+  /**
+   * 推理地域选项
+   */
+  InferenceRegions?: {
+    /**
+     *
+     */
+    Children: string;
+    /**
+     * 显示标签
+     */
+    Label?: string;
+    /**
+     * 英文标签
+     */
+    LabelEn?: string;
+    /**
+     * 枚举值
+     */
+    Value?: string;
+  }[];
+  /**
+   * 模型状态选项
+   */
+  IsComingOffline?: {
+    /**
+     *
+     */
+    Children: string;
+    /**
+     * 显示标签
+     */
+    Label?: string;
+    /**
+     * 英文标签
+     */
+    LabelEn?: string;
+    /**
+     * 枚举值
+     */
+    Value?: string;
+  }[];
+}
 
 /**
  * ListUMInferAPIKey - 列表查询apikey
