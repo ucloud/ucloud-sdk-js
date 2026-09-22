@@ -1283,7 +1283,7 @@ export interface GetUFSquareModelDetailResponse {
         /**
          * 价格
          */
-        Price?: string;
+        Price?: number;
       }[];
       /**
        * 档位描述（例如 "标准上下文 32k"）
@@ -1374,7 +1374,7 @@ export interface GetUFSquareModelPricesResponse {
         /**
          * 价格
          */
-        Price?: string;
+        Price?: number;
       }[];
       /**
        * 档位描述（例如 "标准上下文 32k"）
@@ -2233,7 +2233,7 @@ export interface ListUFSquareModelResponse {
         /**
          * 价格
          */
-        Price?: string;
+        Price?: number;
       }[];
       /**
        * 档位描述（例如 "标准上下文 32k"）

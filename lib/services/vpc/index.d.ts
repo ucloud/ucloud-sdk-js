@@ -4797,7 +4797,7 @@ export interface UpdateSecGroupRequest {
     /**
      * 安全组资源ID数组。不支持 .n 格式。Type 为 string 数组。
      */
-    SecGroupId: string;
+    SecGroupId: string[];
     /**
      * 安全组名称，默认为空，为空则不做修改。Name,Tag,Remark必须填写1个及以上
      */
