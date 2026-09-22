@@ -629,6 +629,10 @@ export interface ListULogServiceLogSetResponse {
          */
         TopicCount?: number;
         /**
+         * 日志集ID
+         */
+        LogSetId?: string;
+        /**
          * 日志集备注
          */
         LogSetRemark?: string;
@@ -645,6 +649,10 @@ export interface ListULogServiceLogSetResponse {
          */
         UpdateTime?: number;
     }[];
+    /**
+     * 日志集数量
+     */
+    TotalCount?: number;
 }
 /**
  * ListULogServiceMachineGroup - 查看机器组列表

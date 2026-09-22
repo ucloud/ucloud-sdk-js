@@ -153,7 +153,7 @@ export interface SendSESEmailResponse {
      */
     Bcc?: string[];
     /**
-     * 模版变量
+     * 模版变量,variableName{##}variableValue 格式；仅使用模版发送（SendSESEmailTemplate）时返回，未使用模版发送（SendSESEmail）时不返回该字段
      */
     TemplateVariableParams?: string[];
     /**
@@ -277,7 +277,7 @@ export interface SendSESEmailTemplateResponse {
      */
     Bcc?: string[];
     /**
-     * 模版变量
+     * 模版变量,variableName{##}variableValue 格式；仅使用模版发送（SendSESEmailTemplate）时返回，未使用模版发送（SendSESEmail）时不返回该字段
      */
     TemplateVariableParams?: string[];
     /**
