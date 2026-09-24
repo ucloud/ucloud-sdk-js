@@ -46,6 +46,12 @@ export default class CloudWatchClient extends Client {
      */
     getMetricDataAggregationMethod(request?: GetMetricDataAggregationMethodRequest): Promise<GetMetricDataAggregationMethodResponse>;
     /**
+     * GetProductHighPrecisionMetrics - 获取云产品关联的高精度指标列表
+     *
+     * See also: https://docs.ucloud.cn/api/cloudwatch-api/get_product_high_precision_metrics
+     */
+    getProductHighPrecisionMetrics(request?: GetProductHighPrecisionMetricsRequest): Promise<GetProductHighPrecisionMetricsResponse>;
+    /**
      * GetProductMetrics - 获取云产品关联的指标列表
      *
      * See also: https://docs.ucloud.cn/api/cloudwatch-api/get_product_metrics
@@ -93,6 +99,12 @@ export default class CloudWatchClient extends Client {
      * See also: https://docs.ucloud.cn/api/cloudwatch-api/query_metric_data_summary
      */
     queryMetricDataSummary(request?: QueryMetricDataSummaryRequest): Promise<QueryMetricDataSummaryResponse>;
+    /**
+     * QueryMetricDenseData - 获取高精度指标样本数据
+     *
+     * See also: https://docs.ucloud.cn/api/cloudwatch-api/query_metric_dense_data
+     */
+    queryMetricDenseData(request?: QueryMetricDenseDataRequest): Promise<QueryMetricDenseDataResponse>;
     /**
      * UnBindAlertStrategy - 解绑告警策略
      *
@@ -401,6 +413,173 @@ export interface GetMetricDataAggregationMethodResponse {
              * 描述
              */
             Description: string;
+        }[];
+    };
+}
+/**
+ * GetProductHighPrecisionMetrics - 获取云产品关联的高精度指标列表
+ */
+export interface GetProductHighPrecisionMetricsRequest {
+    /**
+     * 产品唯一标识，参见 [产品概览](https://docs.ucloud.cn/cloudwatch/metric/intro)
+     */
+    ProductKey: string;
+}
+/**
+ * GetProductHighPrecisionMetrics - 获取云产品关联的高精度指标列表
+ */
+export interface GetProductHighPrecisionMetricsResponse {
+    /**
+     * 返回数据
+     */
+    Data: {
+        /**
+         * 查询结果总数
+         */
+        Total?: number;
+        /**
+         * 指标列表
+         */
+        List?: {
+            /**
+             * 云产品ID
+             */
+            ProductType?: number;
+            /**
+             * 单位ID
+             */
+            UnitID?: number;
+            /**
+             * 指标ID
+             */
+            MetricID?: number;
+            /**
+             * 指标唯一标识 (uhost_cpu_usage)
+             */
+            Metric?: string;
+            /**
+             * 指标英文名称
+             */
+            MetricEnName?: string;
+            /**
+             * 指标中文名称
+             */
+            MetricChName?: string;
+            /**
+             * 指标英文描述
+             */
+            MetricEnDesc?: string;
+            /**
+             * 指标中文描述
+             */
+            MetricChDesc?: string;
+            /**
+             * 指标分类/指标组
+             */
+            MetricGroup?: string;
+            /**
+             * 上报频率毫秒
+             */
+            FrequencyMs?: number;
+            /**
+             * 单位
+             */
+            Unit?: {
+                /**
+                 * 单位id
+                 */
+                UnitID?: number;
+                /**
+                 * GroupId
+                 */
+                GroupId?: number;
+                /**
+                 * 单位英文名称
+                 */
+                UnitEnName?: string;
+                /**
+                 * 单位中文名称
+                 */
+                UnitChName?: string;
+                /**
+                 * 单位描述
+                 */
+                UnitDesc?: string;
+                /**
+                 * 转换因子
+                 */
+                ConversionFactor?: number;
+                /**
+                 * 创建人
+                 */
+                CreatedBy?: string;
+                /**
+                 * 修改人
+                 */
+                UpdatedBy?: string;
+                /**
+                 * 创建时间
+                 */
+                CreatedAt?: string;
+                /**
+                 * 修改时间
+                 */
+                UpdatedAt?: string;
+                /**
+                 * 删除时间
+                 */
+                DeletedAt?: number;
+            };
+            /**
+             * 创建者
+             */
+            CreatedBy?: string;
+            /**
+             * 创建时间
+             */
+            CreatedAt?: string;
+            /**
+             * 修改者
+             */
+            UpdatedBy?: string;
+            /**
+             * 修改时间
+             */
+            UpdatedAt?: string;
+        }[];
+        /**
+         * 单位转换信息
+         */
+        UnitConfigs?: {
+            /**
+             * 指标中文名列表
+             */
+            UnitCnNames?: string[];
+            /**
+             * 指标英文名列表
+             */
+            UnitEnNames?: string[];
+            /**
+             * 转换因子
+             */
+            ConversionFactor?: number;
+            /**
+             * 转换规则
+             */
+            ConversionRules?: {
+                /**
+                 * 来源
+                 */
+                From?: string;
+                /**
+                 * 目标
+                 */
+                To?: string;
+                /**
+                 * 转换因子
+                 */
+                ConversionFactor?: number;
+            }[];
         }[];
     };
 }
@@ -1420,6 +1599,128 @@ export interface QueryMetricDataSummaryResponse {
                          */
                         Value?: number;
                     };
+                }[];
+            }[];
+        }[];
+    };
+}
+/**
+ * QueryMetricDenseData - 获取高精度指标样本数据
+ */
+export interface QueryMetricDenseDataRequest {
+    /**
+     * 资源类型
+     */
+    ProductKey: string;
+    /**
+     * 开始时间戳
+     */
+    StartTime: number;
+    /**
+     * 截止时间戳
+     */
+    EndTime: number;
+    /**
+     *
+     */
+    MetricInfos?: {
+        /**
+         * 指标名
+         */
+        Metric?: string;
+        /**
+         * 资源id
+         */
+        ResourceId?: string;
+        /**
+         *
+         */
+        Tags?: {
+            /**
+             * AnyKey：代表任意一个用户自定义的key。Tags是一个用户自定义对象map，是要查询指标的tag的key和value。用户自定义的Tags对象里的key和value，它们分别是要查询的tag的key和value。如："Tags":{  "tag1":"value1",  "tag2":"value2",  "tag3":"value3"}
+             */
+            AnyKey?: string;
+        };
+    }[];
+}
+/**
+ * QueryMetricDenseData - 获取高精度指标样本数据
+ */
+export interface QueryMetricDenseDataResponse {
+    /**
+     * 返回高精度指标监控数据
+     */
+    Data?: {
+        /**
+         * 无效或无权限资源的 ID 列表
+         */
+        InvalidResourceIds?: string[];
+        /**
+         * 查询的结果集
+         */
+        List?: {
+            /**
+             * 指标名
+             */
+            Metric?: string;
+            /**
+             * 该指标查询的处理状态码
+             */
+            ErrCode?: number;
+            /**
+             * 该指标查询的状态说明
+             */
+            ErrMsg?: string;
+            /**
+             * 标签列表。每项为 TagEntry：TagName（标签名）和 KeyList（该标签的全部候选值）。
+             */
+            TagEntries?: {
+                /**
+                 * 标签名称
+                 */
+                TagName?: string;
+                /**
+                 * 标签候选值列表
+                 */
+                KeyList?: string[];
+            }[];
+            /**
+             * 查询到的时间序列列表
+             */
+            Results?: {
+                /**
+                 * 资源的短id
+                 */
+                ResourceId?: string;
+                /**
+                 * 资源名称
+                 */
+                ResourceName?: string;
+                /**
+                 * 资源标签列表。每项为 TagListItem：Tag（标签名）和 TagValue（标签值）。
+                 */
+                TagList?: {
+                    /**
+                     * 标签名
+                     */
+                    Tag?: string;
+                    /**
+                     * 标签值
+                     */
+                    TagValue?: string;
+                }[];
+                /**
+                 * 指标数据点列表，元素为 MetricPoint
+                 */
+                Values?: {
+                    /**
+                     * 时间戳
+                     */
+                    Timestamp?: number;
+                    /**
+                     * 样本值
+                     */
+                    Value?: number;
                 }[];
             }[];
         }[];
