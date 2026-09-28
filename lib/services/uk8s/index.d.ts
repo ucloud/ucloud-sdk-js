@@ -817,6 +817,18 @@ export interface CreateUK8SClusterV2Request {
      */
     Password: string;
     /**
+     * Master节点的云主机机型（V2.0），如["N", "C", "O", "OS"]，具体请参照云主机机型。
+     */
+    MasterMachineType: string;
+    /**
+     * Master节点的虚拟CPU核数。可选参数：2-64（具体机型与CPU的对应关系参照控制台）。
+     */
+    MasterCPU: number;
+    /**
+     * Master节点的内存大小。单位：MB。范围 ：[4096, 262144]，取值为1024的倍数（可选范围参考控制台）。
+     */
+    MasterMem: number;
+    /**
      *
      */
     Master?: {
@@ -842,18 +854,6 @@ export interface CreateUK8SClusterV2Request {
             Name?: string;
         }[];
     }[];
-    /**
-     * Master节点的云主机机型（V2.0），如["N", "C", "O", "OS"]，具体请参照云主机机型。
-     */
-    MasterMachineType: string;
-    /**
-     * Master节点的虚拟CPU核数。可选参数：2-64（具体机型与CPU的对应关系参照控制台）。
-     */
-    MasterCPU: number;
-    /**
-     * Master节点的内存大小。单位：MB。范围 ：[4096, 262144]，取值为1024的倍数（可选范围参考控制台）。
-     */
-    MasterMem: number;
     /**
      *
      */
@@ -897,11 +897,15 @@ export interface CreateUK8SClusterV2Request {
         /**
          * Node节点的系统盘大小，单位GB，默认为40。范围：[40, 500]。注意SSD本地盘无法调整。
          */
-        BootDiskSIze?: number;
+        BootDiskSize?: number;
         /**
          * 一组Node节点的数据盘类型，请参考[[api:uhost-api:disk_type|磁盘类型]]。默认为SSD云盘
          */
         DataDiskType?: string;
+        /**
+         * 数据磁盘大小，单位GB。默认0。范围 ：[20, 1000]
+         */
+        DataDiskSize?: number;
         /**
          * 一组Node节点的GPU类型，枚举值["K80", "P40", "V100"]，最新值参考Console。
          */
@@ -910,10 +914,6 @@ export interface CreateUK8SClusterV2Request {
          * 一组Node节点的GPU卡核心数，仅GPU机型支持此字段。
          */
         GPU?: number;
-        /**
-         * 数据磁盘大小，单位GB。默认0。范围 ：[20, 1000]
-         */
-        DataDiskSize?: number;
         /**
          * Node节点的最低cpu平台，不选则随机。枚举值["Intel/Auto", "Intel/IvyBridge", "Intel/Haswell", "Intel/Broadwell", "Intel/Skylake", "Intel/Cascadelake"。
          */
@@ -959,7 +959,7 @@ export interface CreateUK8SClusterV2Request {
                  */
                 ShareBandwidthId?: string;
                 /**
-                 * 【若绑定EIP，此参数必填】弹性IP的线路。枚举值: 国际: International BGP: Bgp 各地域允许的线路参数如下: cn-sh1: Bgp cn-sh2: Bgp cn-gd: Bgp cn-bj1: Bgp cn-bj2: Bgp hk: International us-ca: International th-bkk: International kr-seoul:International us-ws:International ge-fra:International sg:International tw-kh:International.其他海外线路均为 International
+                 * 【若绑定EIP，此参数必填】弹性IP的线路。枚举值: 国际: International，BGP: Bgp。各地域允许的线路参数如下: cn-sh1: Bgp cn-sh2: Bgp cn-gd: Bgp cn-bj1: Bgp cn-bj2: Bgp hk: International us-ca: International th-bkk: International kr-seoul:International us-ws:International ge-fra:International sg:International tw-kh:International.其他海外线路均为 International
                  */
                 OperatorName?: string;
                 /**
@@ -989,7 +989,32 @@ export interface CreateUK8SClusterV2Request {
              */
             Name?: string;
         }[];
+        /**
+         * Node节点规格族
+         */
+        UHostFamily?: string;
+        /**
+         *
+         */
+        KubeletConfiguration?: {
+            /**
+             * 全量KubeletConfiguration.XXX定义参考AddUK8SNodeGroup接口: https://uxiao.ucloudadmin.com/#/api-manager/api/detail/UK8S/AddUK8SNodeGroup
+             */
+            ContainerLogMaxFiles?: string;
+        };
+        /**
+         * 节点数据盘加密使用的 key id
+         */
+        DataDiskKmsKeyId?: string;
     }[];
+    /**
+     * k8s集群的版本，版本信息请参考UK8S集群创建页。
+     */
+    K8sVersion: string;
+    /**
+     * Master节点和Node节点的镜像 ID，不填则随机选择可用的基础镜像。支持用户自定义镜像。
+     */
+    ImageId: string;
     /**
      * Master节点系统盘类型。请参考[[api:uhost-api:disk_type|磁盘类型]]。默认为SSD云盘
      */
@@ -1011,10 +1036,6 @@ export interface CreateUK8SClusterV2Request {
      */
     ChargeType?: string;
     /**
-     * k8s集群的版本，版本信息请参考UK8S集群创建页，不指定的话默认为当前支持的最高版本。
-     */
-    K8sVersion?: string;
-    /**
      * 购买时长。默认为1。按小时购买(Dynamic)时无需此参数。 月付时，此参数传0，代表了购买至月末。
      */
     Quantity?: number;
@@ -1035,10 +1056,6 @@ export interface CreateUK8SClusterV2Request {
          */
         Mode?: string;
     };
-    /**
-     * Master节点和Node节点的镜像 ID，不填则随机选择可用的基础镜像。支持用户自定义镜像。
-     */
-    ImageId?: string;
     /**
      * 用户自定义数据。注意：1、总数据量大小不超多16K；2、使用base64编码。
      */
@@ -1072,9 +1089,34 @@ export interface CreateUK8SClusterV2Request {
      */
     ForwardSrcIPMethod?: string;
     /**
-     * UK8S用户标签，key=value形式,多组用”,“隔开，最多5组。 如env=pro,type=game
+     * Master节点规格族，如o1a, o1i
      */
-    UserLabels?: string;
+    MasterUHostFamily?: string;
+    /**
+     * 开启 kms 插件的 key id
+     */
+    KmsPluginKeyId?: string;
+    /**
+     * master 节点数据盘使用的 kms key id
+     */
+    MasterDataDiskKmsKeyId?: string;
+    /**
+     * kms 加密的资源
+     */
+    KmsPluginResource?: string[];
+    /**
+     *
+     */
+    UserLabels?: {
+        /**
+         * UK8S用户资源标签的键值
+         */
+        Key?: string;
+        /**
+         * UK8S用户资源标签的值
+         */
+        Value?: string;
+    }[];
 }
 /**
  * CreateUK8SClusterV2 - 创建UK8S集群
