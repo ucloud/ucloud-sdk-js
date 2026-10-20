@@ -74,6 +74,20 @@ export default class UDNSClient extends Client {
   }
 
   /**
+   * DeleteUDNSZone - 删除域名
+   *
+   * See also: https://docs.ucloud.cn/api/udns-api/delete_udns_zone
+   */
+  deleteUDNSZone(
+    request?: DeleteUDNSZoneRequest
+  ): Promise<DeleteUDNSZoneResponse> {
+    const args = { Action: 'DeleteUDNSZone', ...(request || {}) };
+    return this.invoke(new Request(args)).then(
+      (resp) => resp.toObject() as DeleteUDNSZoneResponse
+    );
+  }
+
+  /**
    * DescribeUDNSDomain - zone下所有域名的rr记录
    *
    * See also: https://docs.ucloud.cn/api/udns-api/describe_udns_domain
@@ -112,6 +126,34 @@ export default class UDNSClient extends Client {
     const args = { Action: 'DescribeUDNSZone', ...(request || {}) };
     return this.invoke(new Request(args)).then(
       (resp) => resp.toObject() as DescribeUDNSZoneResponse
+    );
+  }
+
+  /**
+   * DescribeUDNSZoneByVPC - 根据VPC id 查询绑定的UDNSZone
+   *
+   * See also: https://docs.ucloud.cn/api/udns-api/describe_udns_zone_by_vpc
+   */
+  describeUDNSZoneByVPC(
+    request?: DescribeUDNSZoneByVPCRequest
+  ): Promise<DescribeUDNSZoneByVPCResponse> {
+    const args = { Action: 'DescribeUDNSZoneByVPC', ...(request || {}) };
+    return this.invoke(new Request(args)).then(
+      (resp) => resp.toObject() as DescribeUDNSZoneByVPCResponse
+    );
+  }
+
+  /**
+   * DescribeUDNSZoneForward - 获取域名转发配置
+   *
+   * See also: https://docs.ucloud.cn/api/udns-api/describe_udns_zone_forward
+   */
+  describeUDNSZoneForward(
+    request?: DescribeUDNSZoneForwardRequest
+  ): Promise<DescribeUDNSZoneForwardResponse> {
+    const args = { Action: 'DescribeUDNSZoneForward', ...(request || {}) };
+    return this.invoke(new Request(args)).then(
+      (resp) => resp.toObject() as DescribeUDNSZoneForwardResponse
     );
   }
 
@@ -291,6 +333,21 @@ export interface DeleteUDNSRecordRequest {
  * DeleteUDNSRecord - 删除域名记录
  */
 export interface DeleteUDNSRecordResponse {}
+
+/**
+ * DeleteUDNSZone - 删除域名
+ */
+export interface DeleteUDNSZoneRequest {
+  /**
+   * 域名资源ID
+   */
+  DNSZoneId: string;
+}
+
+/**
+ * DeleteUDNSZone - 删除域名
+ */
+export interface DeleteUDNSZoneResponse {}
 
 /**
  * DescribeUDNSDomain - zone下所有域名的rr记录
@@ -559,6 +616,53 @@ export interface DescribeUDNSZoneResponse {
 }
 
 /**
+ * DescribeUDNSZoneByVPC - 根据VPC id 查询绑定的UDNSZone
+ */
+export interface DescribeUDNSZoneByVPCRequest {
+  /**
+   * VPC id
+   */
+  VPCId: string;
+}
+
+/**
+ * DescribeUDNSZoneByVPC - 根据VPC id 查询绑定的UDNSZone
+ */
+export interface DescribeUDNSZoneByVPCResponse {}
+
+/**
+ * DescribeUDNSZoneForward - 获取域名转发配置
+ */
+export interface DescribeUDNSZoneForwardRequest {
+  /**
+   * 域名ID
+   */
+  DNSZoneId: string;
+}
+
+/**
+ * DescribeUDNSZoneForward - 获取域名转发配置
+ */
+export interface DescribeUDNSZoneForwardResponse {
+  /**
+   * 转发目标VPC所属VPC
+   */
+  VPCProjectId?: string;
+  /**
+   * 转发目标VPC所属地域
+   */
+  VPCRegion?: string;
+  /**
+   * 转发目标VPC的ID
+   */
+  VPCId?: string;
+  /**
+   * 转发目标DNS 服务器地址
+   */
+  Servers?: string[];
+}
+
+/**
  * DisassociateUDNSZoneVPC - 解绑域名和VPC
  */
 export interface DisassociateUDNSZoneVPCRequest {
@@ -633,7 +737,7 @@ export interface ModifyUDNSZoneRequest {
    */
   Remark?: string;
   /**
-   * 是否支持迭代。枚举值,"enable",支持迭代; "disable",不支持迭代
+   * 是否支持递归。枚举值,"enable",支持; "disable",不支持
    */
   IsRecursionEnabled?: string;
 }
