@@ -10,6 +10,18 @@ export default class USMSClient extends Client {
         credential: CredentialOptions;
     });
     /**
+     * AddBackfill - 用户通过接口发送消息，当消息在终端被消费，调用该接口，进行记录。
+     *
+     * See also: https://docs.ucloud.cn/api/usms-api/add_backfill
+     */
+    addBackfill(request?: AddBackfillRequest): Promise<AddBackfillResponse>;
+    /**
+     * AddUSMSSignatureQualification - 添加短信签名资质申请记录
+     *
+     * See also: https://docs.ucloud.cn/api/usms-api/add_usms_signature_qualification
+     */
+    addUSMSSignatureQualification(request?: AddUSMSSignatureQualificationRequest): Promise<AddUSMSSignatureQualificationResponse>;
+    /**
      * CreateUSMSSignature - 调用接口CreateUSMSSignature申请短信签名
      *
      * See also: https://docs.ucloud.cn/api/usms-api/create_usms_signature
@@ -28,6 +40,12 @@ export default class USMSClient extends Client {
      */
     deleteUSMSSignature(request?: DeleteUSMSSignatureRequest): Promise<DeleteUSMSSignatureResponse>;
     /**
+     * DeleteUSMSSignatureQualification - 删除短信签名资质申请记录
+     *
+     * See also: https://docs.ucloud.cn/api/usms-api/delete_usms_signature_qualification
+     */
+    deleteUSMSSignatureQualification(request?: DeleteUSMSSignatureQualificationRequest): Promise<DeleteUSMSSignatureQualificationResponse>;
+    /**
      * DeleteUSMSTemplate - 调用接口DeleteUSMSTemplate删除短信模板
      *
      * See also: https://docs.ucloud.cn/api/usms-api/delete_usms_template
@@ -40,11 +58,35 @@ export default class USMSClient extends Client {
      */
     getUSMSSendReceipt(request?: GetUSMSSendReceiptRequest): Promise<GetUSMSSendReceiptResponse>;
     /**
+     * GetUSMSSendStatistics - 获取发送统计数据
+     *
+     * See also: https://docs.ucloud.cn/api/usms-api/get_usms_send_statistics
+     */
+    getUSMSSendStatistics(request?: GetUSMSSendStatisticsRequest): Promise<GetUSMSSendStatisticsResponse>;
+    /**
+     * GetUSMSSignatureQualification - 获取短信签名资质申请记录列表
+     *
+     * See also: https://docs.ucloud.cn/api/usms-api/get_usms_signature_qualification
+     */
+    getUSMSSignatureQualification(request?: GetUSMSSignatureQualificationRequest): Promise<GetUSMSSignatureQualificationResponse>;
+    /**
+     * GetUSMSTemplateSendStatistics - 获取模板发送统计数据
+     *
+     * See also: https://docs.ucloud.cn/api/usms-api/get_usms_template_send_statistics
+     */
+    getUSMSTemplateSendStatistics(request?: GetUSMSTemplateSendStatisticsRequest): Promise<GetUSMSTemplateSendStatisticsResponse>;
+    /**
      * QueryUSMSSignature - 调用接口QueryUSMSSignature查询短信签名申请状态
      *
      * See also: https://docs.ucloud.cn/api/usms-api/query_usms_signature
      */
     queryUSMSSignature(request?: QueryUSMSSignatureRequest): Promise<QueryUSMSSignatureResponse>;
+    /**
+     * QueryUSMSSignatureQualification - 获取短信签名资质申请记录详情
+     *
+     * See also: https://docs.ucloud.cn/api/usms-api/query_usms_signature_qualification
+     */
+    queryUSMSSignatureQualification(request?: QueryUSMSSignatureQualificationRequest): Promise<QueryUSMSSignatureQualificationResponse>;
     /**
      * QueryUSMSTemplate - 调用接口QueryUSMSTemplate查询短信模板申请状态
      *
@@ -70,11 +112,135 @@ export default class USMSClient extends Client {
      */
     updateUSMSSignature(request?: UpdateUSMSSignatureRequest): Promise<UpdateUSMSSignatureResponse>;
     /**
+     * UpdateUSMSSignatureQualification - 修改短信签名资质申请记录
+     *
+     * See also: https://docs.ucloud.cn/api/usms-api/update_usms_signature_qualification
+     */
+    updateUSMSSignatureQualification(request?: UpdateUSMSSignatureQualificationRequest): Promise<UpdateUSMSSignatureQualificationResponse>;
+    /**
      * UpdateUSMSTemplate - 调用接口UpdateUSMSTemplate修改未通过审核的短信模板，并重新提交审核
      *
      * See also: https://docs.ucloud.cn/api/usms-api/update_usms_template
      */
     updateUSMSTemplate(request?: UpdateUSMSTemplateRequest): Promise<UpdateUSMSTemplateResponse>;
+    /**
+     * UploadUSMSFile - 上传文件
+     *
+     * See also: https://docs.ucloud.cn/api/usms-api/upload_usms_file
+     */
+    uploadUSMSFile(request?: UploadUSMSFileRequest): Promise<UploadUSMSFileResponse>;
+}
+/**
+ * AddBackfill - 用户通过接口发送消息，当消息在终端被消费，调用该接口，进行记录。
+ */
+export interface AddBackfillRequest {
+    /**
+     * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
+     */
+    Zone?: string;
+    /**
+     * 发送Number，记录一次发送请求的唯一性
+     */
+    SendNo: string;
+    /**
+     * 短信的接收目标,手机号需要添加国家码，比如(1)231xxxx
+     */
+    Target: string;
+    /**
+     * 回填时间，秒级别时间戳
+     */
+    BackfillTime?: number;
+    /**
+     * 回填内容
+     */
+    Content?: string;
+    /**
+     * 发送请求的时间，秒级别时间戳
+     */
+    SendTime?: number;
+}
+/**
+ * AddBackfill - 用户通过接口发送消息，当消息在终端被消费，调用该接口，进行记录。
+ */
+export interface AddBackfillResponse {
+}
+/**
+ * AddUSMSSignatureQualification - 添加短信签名资质申请记录
+ */
+export interface AddUSMSSignatureQualificationRequest {
+    /**
+     * 资质名称
+     */
+    Name: string;
+    /**
+     * 资质属性，0-自用 1-他用
+     */
+    Attr: number;
+    /**
+     * 状态：0-草稿，1-提交审核
+     */
+    Status: number;
+    /**
+     * 经办人手机号
+     */
+    HandlerPhone: string;
+    /**
+     * 公司名称，长度限制100
+     */
+    CompanyName?: string;
+    /**
+     * 公司统一社会信用代码
+     */
+    CompanyCreditCode?: string;
+    /**
+     * 公司证件文件FileId
+     */
+    CompanyCertificateFileId?: string;
+    /**
+     * 公司工作现场照片FileId
+     */
+    CompanyWorkScenePhotosFileId?: string;
+    /**
+     * 经办人姓名
+     */
+    HandlerName?: string;
+    /**
+     * 经办人身份证号码
+     */
+    HandlerIDNumber?: string;
+    /**
+     * 经办人身份证人像面图片FileId
+     */
+    HandlerIDCardFrontImageFileId?: string;
+    /**
+     * 经办人身份证国徽面图片FileId
+     */
+    HandlerIDCardBackImageFileId?: string;
+    /**
+     * 经办人手持身份证图片FileId
+     */
+    HandlerHandHeldImageFileId?: string;
+    /**
+     * 法人姓名
+     */
+    ManagerName?: string;
+    /**
+     * 法人手机号
+     */
+    ManagerPhone?: string;
+    /**
+     * 法人身份证号码
+     */
+    ManagerIDNumber?: string;
+}
+/**
+ * AddUSMSSignatureQualification - 添加短信签名资质申请记录
+ */
+export interface AddUSMSSignatureQualificationResponse {
+    /**
+     * 资质Id
+     */
+    QualificationId: string;
 }
 /**
  * CreateUSMSSignature - 调用接口CreateUSMSSignature申请短信签名
@@ -103,7 +269,7 @@ export interface CreateUSMSSignatureRequest {
     /**
      * 短信签名的资质证明文件，需先进行base64编码格式转换，此处填写转换后的字符串。文件大小不超过4 MB
      */
-    File: string;
+    File?: string;
     /**
      * 国内/国际短信。true:国际短信，false:国内短信，若不传值则默认该值为false
      */
@@ -112,6 +278,14 @@ export interface CreateUSMSSignatureRequest {
      * 短信签名授权委托文件，需先进行base64编码格式转换，此处填写转换后的字符串。文件大小不超过4 MB；当您是代理并使用第三方的签名时（也即SigPurpose为1-他用），该项为必填项；
      */
     ProxyFile?: string;
+    /**
+     * 资质ID
+     */
+    QualificationId?: string;
+    /**
+     * 短信签名对应的场景说明
+     */
+    SceneDesc?: string;
 }
 /**
  * CreateUSMSSignature - 调用接口CreateUSMSSignature申请短信签名
@@ -147,7 +321,7 @@ export interface CreateUSMSTemplateRequest {
      */
     Remark?: string;
     /**
-     * 当Purpose为3时，也即会员推广类短信模板，该项必填。枚举值：TD退订、回T退订、回N退订、回TD退订、退订回T、退订回D、退订回TD、退订回复T、退订回复D、退订回复N、退订回复TD、拒收回T
+     * 当Purpose=3并且International=false时，也即国内会员推广类短信模板，该项必填。枚举值：【拒收请回复R】
      */
     UnsubscribeInfo?: string;
     /**
@@ -177,6 +351,20 @@ export interface DeleteUSMSSignatureRequest {
  * DeleteUSMSSignature - 调用接口DeleteUSMSSignature删除短信签名
  */
 export interface DeleteUSMSSignatureResponse {
+}
+/**
+ * DeleteUSMSSignatureQualification - 删除短信签名资质申请记录
+ */
+export interface DeleteUSMSSignatureQualificationRequest {
+    /**
+     * 签名资质Id，支持以数组的方式，举例，以QualificationIds.0、QualificationIds.1...QualificationIds.N方式传入
+     */
+    QualificationIds: string[];
+}
+/**
+ * DeleteUSMSSignatureQualification - 删除短信签名资质申请记录
+ */
+export interface DeleteUSMSSignatureQualificationResponse {
 }
 /**
  * DeleteUSMSTemplate - 调用接口DeleteUSMSTemplate删除短信模板
@@ -253,6 +441,417 @@ export interface GetUSMSSendReceiptResponse {
     }[];
 }
 /**
+ * GetUSMSSendStatistics - 获取发送统计数据
+ */
+export interface GetUSMSSendStatisticsRequest {
+    /**
+     * 页编号，从0开始
+     */
+    Page: number;
+    /**
+     * 每页记录个数
+     */
+    NumPerPage: number;
+    /**
+     * 排序字段，如BrevityCode表示按照BrevityCode排列，配合OrderType使用。目前支持SendDate、BrevityCode
+     */
+    OrderBy: string;
+    /**
+     * 排序方式，asc-正序 desc-倒序
+     */
+    OrderType: string;
+    /**
+     * 开始日期，格式为YYYY-MM-DD
+     */
+    StartDate: string;
+    /**
+     * 结束日期，格式为YYYY-MM-DD
+     */
+    EndDate: string;
+    /**
+     * 国内标记，0-国际短信 1-国内短信
+     */
+    Domestic: number;
+    /**
+     * 国际简码，如CN表示中国，当需要查询多个国家时，使用-分割，如CN-ID。
+     */
+    BrevityCode?: string;
+    /**
+     * 短信类型，1-验证码 2-通知类 3-营销类
+     */
+    Purpose?: number;
+}
+/**
+ * GetUSMSSendStatistics - 获取发送统计数据
+ */
+export interface GetUSMSSendStatisticsResponse {
+    /**
+     * 返回记录数
+     */
+    Total?: number;
+    /**
+     * 符合查询条件的发送数据统计求和集，具体字段信息见StatisticsData模型
+     */
+    StatisticsData?: {
+        /**
+         * 状态未知数（提交条数）
+         */
+        UnknownCount: number;
+        /**
+         * 发送成功数（提交条数）
+         */
+        SuccessCount: number;
+        /**
+         * 发送总数（拆分条数）
+         */
+        SendCostCount: number;
+        /**
+         * 发送失败数（提交条数）
+         */
+        FailCount: number;
+        /**
+         * 发送总数（提交条数）
+         */
+        SendCount: number;
+        /**
+         * 发送成功数（拆分条数）
+         */
+        SuccessCostCount: number;
+        /**
+         * 发送失败数（拆分条数）
+         */
+        FailCostCount: number;
+        /**
+         * 状态未知数（拆分条数）
+         */
+        UnknownCostCount: number;
+        /**
+         * 提交失败数（提交条数）
+         */
+        SubmitFailCount: number;
+        /**
+         * 提交失败数（拆分条数）
+         */
+        SubmitFailCostCount: number;
+    };
+    /**
+     * 以天为统计维度的发送数据统计集合，每天的统计数据字段详见StatisticsDataInfo模型
+     */
+    Data?: {
+        /**
+         * 发送总数（提交条数）
+         */
+        Count: number;
+        /**
+         * 发送失败数（拆分条数）
+         */
+        FailedCostCount: number;
+        /**
+         * 国际/地区标识码
+         */
+        BrevityCode: string;
+        /**
+         * 发送总数（拆分条数）
+         */
+        CostCount: number;
+        /**
+         * 发送时间
+         */
+        SendDate: string;
+        /**
+         * 发送失败数（提交条数）
+         */
+        FailedCount: number;
+        /**
+         * 发送成功率
+         */
+        SuccessRate: number;
+        /**
+         * 发送成功数（提交条数）
+         */
+        SuccessCount: number;
+        /**
+         * 状态未知数（提交条数）
+         */
+        UnknownCount: number;
+        /**
+         * 发送成功数（拆分条数）
+         */
+        SuccessCostCount: number;
+        /**
+         * 状态未知数（拆分条数）
+         */
+        UnknownCostCount: number;
+        /**
+         * UserId
+         */
+        UserId: string;
+        /**
+         * 提交失败数（提交条数）
+         */
+        SubmitFailedCount: number;
+        /**
+         * 提交失败数（拆分条数）
+         */
+        SubmitFailedCostCount: number;
+    }[];
+}
+/**
+ * GetUSMSSignatureQualification - 获取短信签名资质申请记录列表
+ */
+export interface GetUSMSSignatureQualificationRequest {
+    /**
+     * 页索引
+     */
+    Page: number;
+    /**
+     * 每页个数
+     */
+    NumPerPage: number;
+    /**
+     * 排序字段，QualificationId/CreateTime
+     */
+    OrderBy: string;
+    /**
+     * 排序类型: desc、asc
+     */
+    OrderType: string;
+    /**
+     * 签名资质属性: 0-自用，1-他用
+     */
+    QualificationAttr?: number;
+    /**
+     * 签名资质状态: 0-草稿 1-审核中 2-审核通过 3-审核未通过 4-人工禁用
+     */
+    Status?: number;
+    /**
+     * 项目ID列表
+     */
+    InAccountIds?: string[];
+}
+/**
+ * GetUSMSSignatureQualification - 获取短信签名资质申请记录列表
+ */
+export interface GetUSMSSignatureQualificationResponse {
+    /**
+     * 签名资质总个数
+     */
+    Total?: number;
+    /**
+     * 签名资质结果集合
+     */
+    Data?: {
+        /**
+         * 资质Id
+         */
+        QualificationId?: string;
+        /**
+         * 项目Id
+         */
+        AccountId?: number;
+        /**
+         * 资质名称
+         */
+        Name?: string;
+        /**
+         * 资质属性: 0-自用 1-他用
+         */
+        Attr?: number;
+        /**
+         * 公司名称
+         */
+        CompanyName?: string;
+        /**
+         * 负责人姓名
+         */
+        ManagerName?: string;
+        /**
+         * 经办人姓名
+         */
+        HandlerName?: string;
+        /**
+         * 状态:0-草稿 1-审核中 2-审核通过 3-审核未通过 4-人工禁用
+         */
+        Status?: number;
+        /**
+         * 审核未通过错误码
+         */
+        ErrCode?: number;
+        /**
+         * 审核未通过错误原因
+         */
+        ErrDesc?: string;
+        /**
+         * 创建时间戳
+         */
+        CreateTime?: number;
+        /**
+         * 修改时间戳
+         */
+        ModifyTime?: number;
+        /**
+         * 审核开始时间戳
+         */
+        ReviewStartTime?: number;
+        /**
+         * 审核完成时间戳
+         */
+        ReviewEndTime?: number;
+    }[];
+}
+/**
+ * GetUSMSTemplateSendStatistics - 获取模板发送统计数据
+ */
+export interface GetUSMSTemplateSendStatisticsRequest {
+    /**
+     * 页编号，从0开始
+     */
+    Page: number;
+    /**
+     * 每页记录个数
+     */
+    NumPerPage: number;
+    /**
+     * 排序字段，如BrevityCode表示按照BrevityCode排列，配合OrderType使用。目前支持SendDate、BrevityCode
+     */
+    OrderBy: string;
+    /**
+     * 排序方式，asc-正序 desc-倒序
+     */
+    OrderType: string;
+    /**
+     * 开始日期，格式为YYYY-MM-DD
+     */
+    StartDate: string;
+    /**
+     * 结束日期，格式为YYYY-MM-DD
+     */
+    EndDate: string;
+    /**
+     * 国内标记，0-国际短信 1-国内短信
+     */
+    Domestic: number;
+    /**
+     * 国际简码，如CN表示中国，当需要查询多个国家时，使用-分割，如CN-ID。
+     */
+    BrevityCode?: string;
+    /**
+     * 短信模板ID
+     */
+    TemplateId?: string;
+}
+/**
+ * GetUSMSTemplateSendStatistics - 获取模板发送统计数据
+ */
+export interface GetUSMSTemplateSendStatisticsResponse {
+    /**
+     * 返回记录数
+     */
+    Total: number;
+    /**
+     * 符合查询条件的发送数据统计求和集，具体字段信息见StatisticsData模型
+     */
+    StatisticsData: {
+        /**
+         * 状态未知数（提交条数）
+         */
+        UnknownCount: number;
+        /**
+         * 发送成功数（提交条数）
+         */
+        SuccessCount: number;
+        /**
+         * 发送总数（拆分条数）
+         */
+        SendCostCount: number;
+        /**
+         * 发送失败数（提交条数）
+         */
+        FailCount: number;
+        /**
+         * 发送总数（提交条数）
+         */
+        SendCount: number;
+        /**
+         * 发送成功数（拆分条数）
+         */
+        SuccessCostCount: number;
+        /**
+         * 发送失败数（拆分条数）
+         */
+        FailCostCount: number;
+        /**
+         * 状态未知数（拆分条数）
+         */
+        UnknownCostCount: number;
+        /**
+         * 提交失败数（提交条数）
+         */
+        SubmitFailCount: number;
+        /**
+         * 提交失败数（拆分条数）
+         */
+        SubmitFailCostCount: number;
+    };
+    /**
+     * 以天为统计维度的发送数据统计集合，每天的统计数据字段详见TemplateStatisticsDataInfo模型
+     */
+    Data?: {
+        /**
+         * 发送时间
+         */
+        SendDate: string;
+        /**
+         * 国际/地区标识码
+         */
+        BrevityCode: string;
+        /**
+         * 短信模板ID
+         */
+        TemplateId: string;
+        /**
+         * 发送总数（提交条数）
+         */
+        Count: number;
+        /**
+         * 发送总数（拆分条数）
+         */
+        CostCount: number;
+        /**
+         * 发送成功数（提交条数）
+         */
+        SuccessCount: number;
+        /**
+         * 发送成功数（拆分条数）
+         */
+        SuccessCostCount: number;
+        /**
+         * 发送失败数（提交条数）
+         */
+        FailedCount: number;
+        /**
+         * 发送失败数（拆分条数）
+         */
+        FailedCostCount: number;
+        /**
+         * 状态未知数（提交条数）
+         */
+        UnknownCount: number;
+        /**
+         * 状态未知数（拆分条数）
+         */
+        UnknownCostCount: number;
+        /**
+         * 提交失败数（提交条数）
+         */
+        SubmitFailedCount: number;
+        /**
+         * 提交失败数（拆分条数）
+         */
+        SubmitFailedCostCount: number;
+    }[];
+}
+/**
  * QueryUSMSSignature - 调用接口QueryUSMSSignature查询短信签名申请状态
  */
 export interface QueryUSMSSignatureRequest {
@@ -274,21 +873,136 @@ export interface QueryUSMSSignatureResponse {
      */
     Data: {
         /**
-         * 短信签名ID
+         * 签名ID
          */
         SigId: string;
         /**
-         * 短信签名内容
+         * 签名内容
          */
         SigContent: string;
         /**
-         * 签名状态，0-待审核 1-审核中 2-审核通过 3-审核未通过 4-被禁用
+         * 签名状态。0-待审核 1-审核中 2-审核通过 3-审核未通过 4-被禁用
          */
         Status: number;
         /**
-         * 短信签名未通过审核原因
+         * 签名审核失败原因
          */
         ErrDesc: string;
+    };
+}
+/**
+ * QueryUSMSSignatureQualification - 获取短信签名资质申请记录详情
+ */
+export interface QueryUSMSSignatureQualificationRequest {
+    /**
+     * 签名资质Id
+     */
+    QualificationId: string;
+}
+/**
+ * QueryUSMSSignatureQualification - 获取短信签名资质申请记录详情
+ */
+export interface QueryUSMSSignatureQualificationResponse {
+    /**
+     * 签名资质详细信息
+     */
+    Data: {
+        /**
+         * 资质Id
+         */
+        QualificationId?: string;
+        /**
+         * 资质名称
+         */
+        Name?: string;
+        /**
+         * 资质属性：0-自用，1-他用
+         */
+        Attr?: number;
+        /**
+         * 公司名称
+         */
+        CompanyName?: string;
+        /**
+         * 统一社会信用代码
+         */
+        CompanyCreditCode?: string;
+        /**
+         * 公司证件文件链接
+         */
+        CompanyCertificateFile?: string;
+        /**
+         * 负责人姓名
+         */
+        ManagerName?: string;
+        /**
+         * 负责人手机号
+         */
+        ManagerPhone?: string;
+        /**
+         * 负责人证件号码
+         */
+        ManagerIDNumber?: string;
+        /**
+         * 经办人姓名
+         */
+        HandlerName?: string;
+        /**
+         * 经办人手机号
+         */
+        HandlerPhone?: string;
+        /**
+         * 经办人证件号码
+         */
+        HandlerIDNumber?: string;
+        /**
+         * 经办人身份证人像面图片链接
+         */
+        HandlerIDCardFrontImage?: string;
+        /**
+         * 经办人身份证国徽面图片链接
+         */
+        HandlerIDCardBackImage?: string;
+        /**
+         * 经办人手持身份证图片链接
+         */
+        HandlerHandHeldImage?: string;
+        /**
+         * 工作现场照片链接
+         */
+        CompanyWorkScenePhotos?: string;
+        /**
+         * 授权委托书文件链接
+         */
+        PowerOfAttorney?: string;
+        /**
+         * 状态:0-草稿 1-审核中 2-审核通过 3-审核未通过 4-人工禁用
+         */
+        Status?: number;
+        /**
+         * 审核未通过错误码
+         */
+        ErrCode?: number;
+        /**
+         * 审核未通过错误原因
+         */
+        ErrDesc?: string;
+        /**
+         * 创建时间戳
+         */
+        CreateTime?: number;
+        /**
+         * 修改时间戳
+         */
+        ModifyTime?: number;
+        /**
+         * 审核开始时间戳
+         */
+        ReviewStartTime?: number;
+        /**
+         * 审核完成时间戳
+         */
+        ReviewEndTime?: number;
     };
 }
 /**
@@ -427,13 +1141,13 @@ export interface SendUSMSMessageRequest {
      */
     PhoneNumbers: string[];
     /**
-     * 短信签名内容，请到[USMS控制台](https://console.ucloud.cn/usms)的签名管理页面查看；使用的短信签名必须是已申请并且通过审核；
-     */
-    SigContent: string;
-    /**
      * 模板ID（也即短信模板申请时的工单ID），请到[USMS控制台](https://console.ucloud.cn/usms)的模板管理页面查看；使用的短信模板必须是已申请并通过审核；
      */
     TemplateId: string;
+    /**
+     * 短信签名内容，请到[USMS控制台](https://console.ucloud.cn/usms)的签名管理页面查看；使用的短信签名必须是已申请并且通过审核；（注：国内短信为必选参数、国际短信为可选参数）
+     */
+    SigContent?: string;
     /**
      * 模板可变参数，以数组的方式填写，举例，TemplateParams.0，TemplateParams.1，... 若模板中无可变参数，则该项可不填写；若模板中有可变参数，则该项为必填项，参数个数需与变量个数保持一致，否则无法发送；
      */
@@ -500,11 +1214,97 @@ export interface UpdateUSMSSignatureRequest {
      * 短信签名授权委托文件URL，若未更改授权委托文件，则该处填写已上传的授权委托文件的URL链接，否则使用ProxyFile参数
      */
     ProxyDoc?: string;
+    /**
+     * 短信签名对应的场景说明
+     */
+    SceneDesc?: string;
 }
 /**
  * UpdateUSMSSignature - 调用接口UpdateUSMSSignature修改未通过审核的短信签名，并重新提交审核
  */
 export interface UpdateUSMSSignatureResponse {
+}
+/**
+ * UpdateUSMSSignatureQualification - 修改短信签名资质申请记录
+ */
+export interface UpdateUSMSSignatureQualificationRequest {
+    /**
+     * 资质Id
+     */
+    QualificationId: string;
+    /**
+     * 状态：0-草稿，1-提交审核
+     */
+    Status: number;
+    /**
+     * 资质名称
+     */
+    Name?: string;
+    /**
+     * 资质属性，0-自用 1-他用
+     */
+    Attr?: number;
+    /**
+     * 公司名称，长度限制100
+     */
+    CompanyName?: string;
+    /**
+     * 公司统一社会信用代码
+     */
+    CompanyCreditCode?: string;
+    /**
+     * 公司证件文件FileId
+     */
+    CompanyCertificateFileId?: string;
+    /**
+     * 公司工作现场照片FileId
+     */
+    CompanyWorkScenePhotosFileId?: string;
+    /**
+     * 经办人姓名
+     */
+    HandlerName?: string;
+    /**
+     * 经办人手机号
+     */
+    HandlerPhone?: string;
+    /**
+     * 经办人身份证号码
+     */
+    HandlerIDNumber?: string;
+    /**
+     * 经办人身份证人像面图片FileId
+     */
+    HandlerIDCardFrontImageFileId?: string;
+    /**
+     * 经办人身份证国徽面图片FileId
+     */
+    HandlerIDCardBackImageFileId?: string;
+    /**
+     * 经办人手持身份证图片FileId
+     */
+    HandlerHandHeldImageFileId?: string;
+    /**
+     * 法人姓名
+     */
+    ManagerName?: string;
+    /**
+     * 法人手机号
+     */
+    ManagerPhone?: string;
+    /**
+     * 法人身份证号码
+     */
+    ManagerIDNumber?: string;
+}
+/**
+ * UpdateUSMSSignatureQualification - 修改短信签名资质申请记录
+ */
+export interface UpdateUSMSSignatureQualificationResponse {
+    /**
+     * 资质Id
+     */
+    QualificationId?: string;
 }
 /**
  * UpdateUSMSTemplate - 调用接口UpdateUSMSTemplate修改未通过审核的短信模板，并重新提交审核
@@ -535,4 +1335,34 @@ export interface UpdateUSMSTemplateRequest {
  * UpdateUSMSTemplate - 调用接口UpdateUSMSTemplate修改未通过审核的短信模板，并重新提交审核
  */
 export interface UpdateUSMSTemplateResponse {
+}
+/**
+ * UploadUSMSFile - 上传文件
+ */
+export interface UploadUSMSFileRequest {
+    /**
+     * 文件名称，携带文件后缀
+     */
+    FileName: string;
+    /**
+     * 文件内容，base64编码
+     */
+    FileContent: string;
+    /**
+     * 文件来源，0-签名资质
+     */
+    Source: number;
+    /**
+     * 文件类型，mime格式
+     */
+    FileType?: string;
+}
+/**
+ * UploadUSMSFile - 上传文件
+ */
+export interface UploadUSMSFileResponse {
+    /**
+     * 文件FileId
+     */
+    FileId: string;
 }
