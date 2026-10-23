@@ -228,16 +228,16 @@ export default class UAIModelverseClient extends Client {
   }
 
   /**
-   * ListUMInferAPIKey - 列表查询apikey
+   * ListUMInferAPIKeyV2 - 获取modelverse apikey，密钥掩码返回
    *
-   * See also: https://docs.ucloud.cn/api/uai-modelverse-api/list_um_infer_api_key
+   * See also: https://docs.ucloud.cn/api/uai-modelverse-api/list_um_infer_api_key_v2
    */
-  listUMInferAPIKey(
-    request?: ListUMInferAPIKeyRequest
-  ): Promise<ListUMInferAPIKeyResponse> {
-    const args = { Action: 'ListUMInferAPIKey', ...(request || {}) };
+  listUMInferAPIKeyV2(
+    request?: ListUMInferAPIKeyV2Request
+  ): Promise<ListUMInferAPIKeyV2Response> {
+    const args = { Action: 'ListUMInferAPIKeyV2', ...(request || {}) };
     return this.invoke(new Request(args)).then(
-      (resp) => resp.toObject() as ListUMInferAPIKeyResponse
+      (resp) => resp.toObject() as ListUMInferAPIKeyV2Response
     );
   }
 
@@ -419,7 +419,7 @@ export interface CreateUMInferAPIKeyResponse {
      */
     CreateTime?: number;
     /**
-     * 密钥值
+     * 密钥值，前四后四，中间*掩码展示
      */
     Key?: string;
     /**
@@ -2457,35 +2457,51 @@ export interface ListUFSquareModelFiltersAuthResponse {
 }
 
 /**
- * ListUMInferAPIKey - 列表查询apikey
+ * ListUMInferAPIKeyV2 - 获取modelverse apikey，密钥掩码返回
  */
-export interface ListUMInferAPIKeyRequest {
+export interface ListUMInferAPIKeyV2Request {
   /**
-   * 列表起始位置偏移量，默认为0
+   * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
    */
-  Offset?: number;
+  Zone: string;
   /**
-   * 返回数据长度，默认为20，最大100
+   * 按 API Key 资源 ID 精确过滤；为空不限制
+   */
+  KeyId?: string;
+  /**
+   * 从 0 开始的页号，默认 0；不是记录偏移量
+   */
+  Offset?: string;
+  /**
+   * 每页条数；0 表示不限制条数
    */
   Limit?: number;
   /**
-   * 是否modelverse可用 0: 启用 1: 禁用
+   * 默认 false，排除已删除记录；true 包含已删除记录
    */
-  ModelverseDisabled?: number;
+  AllStatus?: number;
   /**
-   * 是否沙盒可用 0: 启用 1: 禁用(astraflow 沙盒控制未上线，暂时无效)
+   * 不传不限制；0 启用，1 禁用
    */
-  SandBoxDisabled?: number;
+  SandBoxDisabled?: string;
+  /**
+   * true 按创建时间升序，false 降序
+   */
+  SortByCreateTimeAsc?: boolean;
+  /**
+   * true 按更新时间升序，false 降序；优先于创建时间排序
+   */
+  SortByUpdateTimeAsc?: boolean;
 }
 
 /**
- * ListUMInferAPIKey - 列表查询apikey
+ * ListUMInferAPIKeyV2 - 获取modelverse apikey，密钥掩码返回
  */
-export interface ListUMInferAPIKeyResponse {
+export interface ListUMInferAPIKeyV2Response {
   /**
-   * apikey
+   * data
    */
-  Data: {
+  Data?: {
     /**
      * ip白名单，换行分割的多组ip。支持IPv4和网段,输入后回车生效,最多100个, 示例: ﻿ 192.168.1.1 192.168.1.10-192.168.1.100 192.168.1.10/24
      */
@@ -2531,7 +2547,7 @@ export interface ListUMInferAPIKeyResponse {
      */
     CreateTime?: number;
     /**
-     * 密钥值
+     * 密钥值，前四后四，中间*掩码展示
      */
     Key?: string;
     /**
@@ -2571,6 +2587,14 @@ export interface ListUMInferAPIKeyResponse {
      */
     GrantedModels?: string[];
   }[];
+  /**
+   * 时间戳
+   */
+  Timestamp?: number;
+  /**
+   * 数据量
+   */
+  TotalCount?: number;
 }
 
 /**
