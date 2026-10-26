@@ -153,6 +153,20 @@ export default class ULogServiceClient extends Client {
   }
 
   /**
+   * DescribeULogServiceLogSet - 获取日志集信息
+   *
+   * See also: https://docs.ucloud.cn/api/ulogservice-api/describe_u_log_service_log_set
+   */
+  describeULogServiceLogSet(
+    request?: DescribeULogServiceLogSetRequest
+  ): Promise<DescribeULogServiceLogSetResponse> {
+    const args = { Action: 'DescribeULogServiceLogSet', ...(request || {}) };
+    return this.invoke(new Request(args)).then(
+      (resp) => resp.toObject() as DescribeULogServiceLogSetResponse
+    );
+  }
+
+  /**
    * DescribeULogServiceMachineGroup - 查询日志采集机器组
    *
    * See also: https://docs.ucloud.cn/api/ulogservice-api/describe_u_log_service_machine_group
@@ -166,6 +180,20 @@ export default class ULogServiceClient extends Client {
     };
     return this.invoke(new Request(args)).then(
       (resp) => resp.toObject() as DescribeULogServiceMachineGroupResponse
+    );
+  }
+
+  /**
+   * DescribeULogServiceTopic - 获取ULogService主题详情
+   *
+   * See also: https://docs.ucloud.cn/api/ulogservice-api/describe_u_log_service_topic
+   */
+  describeULogServiceTopic(
+    request?: DescribeULogServiceTopicRequest
+  ): Promise<DescribeULogServiceTopicResponse> {
+    const args = { Action: 'DescribeULogServiceTopic', ...(request || {}) };
+    return this.invoke(new Request(args)).then(
+      (resp) => resp.toObject() as DescribeULogServiceTopicResponse
     );
   }
 
@@ -566,6 +594,59 @@ export interface DeleteULogServiceTopicRequest {
 export interface DeleteULogServiceTopicResponse {}
 
 /**
+ * DescribeULogServiceLogSet - 获取日志集信息
+ */
+export interface DescribeULogServiceLogSetRequest {
+  /**
+   * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
+   */
+  Zone: string;
+  /**
+   * 日志集ID
+   */
+  LogSetId: string;
+}
+
+/**
+ * DescribeULogServiceLogSet - 获取日志集信息
+ */
+export interface DescribeULogServiceLogSetResponse {
+  /**
+   * 日志集总数
+   */
+  TotalCount: number;
+  /**
+   * 日志集信息
+   */
+  LogSetInfo: {
+    /**
+     * 日志集下主题数量
+     */
+    TopicCount?: number;
+    /**
+     * 日志集ID
+     */
+    LogSetId?: string;
+    /**
+     * 日志集备注
+     */
+    LogSetRemark?: string;
+    /**
+     * 日志集名称
+     */
+    LogSetName?: string;
+    /**
+     * 创建时间
+     */
+    CreateTime?: number;
+    /**
+     * 更新时间
+     */
+    UpdateTime?: number;
+  };
+}
+
+/**
  * DescribeULogServiceMachineGroup - 查询日志采集机器组
  */
 export interface DescribeULogServiceMachineGroupRequest {
@@ -636,6 +717,51 @@ export interface DescribeULogServiceMachineGroupResponse {
      * 机器组Ip，数组类型
      */
     Ips?: string;
+  };
+}
+
+/**
+ * DescribeULogServiceTopic - 获取ULogService主题详情
+ */
+export interface DescribeULogServiceTopicRequest {
+  /**
+   * 主题Id
+   */
+  TopicId: string;
+}
+
+/**
+ * DescribeULogServiceTopic - 获取ULogService主题详情
+ */
+export interface DescribeULogServiceTopicResponse {
+  /**
+   * 主题详情
+   */
+  Data: {
+    /**
+     * 主题名称
+     */
+    TopicName?: string;
+    /**
+     * 主题ID
+     */
+    TopicId?: string;
+    /**
+     * 分区数量，固定是2
+     */
+    TopicShardNum?: number;
+    /**
+     * 保存时间 1~730 天
+     */
+    ReserveAge?: number;
+    /**
+     * 是否保留：0 - NORMAL, 1 - RESERVED
+     */
+    IsReserved?: number;
+    /**
+     * 日志主题状态
+     */
+    State?: string;
   };
 }
 
@@ -936,9 +1062,9 @@ export interface ListULogServiceTopicResponse {
      */
     IsReserved?: number;
     /**
-     * 主题描述
+     * 日志主题状态
      */
-    TopicDesc?: string;
+    State?: string;
   }[];
   /**
    * 主题总数
