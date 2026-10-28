@@ -95,10 +95,6 @@ export interface CreateSandboxSiteRequest {
      */
     Name: string;
     /**
-     * 密钥
-     */
-    APIKey: string;
-    /**
      * 密钥ID
      */
     KeyID: string;
@@ -356,10 +352,6 @@ export interface UpdateSandboxSiteRequest {
      * 更新站点空间名称
      */
     Name?: string;
-    /**
-     * 更新站点空间API Key
-     */
-    APIKey?: string;
     /**
      * 更新站点空间Key ID（需要和APIKey一起传）
      */
