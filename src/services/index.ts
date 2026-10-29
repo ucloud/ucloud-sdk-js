@@ -14,6 +14,7 @@ const UBillClient = require('./ubill').default;
 const UCDNClient = require('./ucdn').default;
 const UClickhouseClient = require('./uclickhouse').default;
 const UDBClient = require('./udb').default;
+const UDBPostgreSQLClient = require('./udb_postgresql').default;
 const UDDBClient = require('./uddb').default;
 const UDiskClient = require('./udisk').default;
 const UDNSClient = require('./udns').default;
@@ -132,6 +133,13 @@ export class Client extends BaseClient {
 
   udb() {
     return new UDBClient({
+      config: this.config,
+      credential: this.credential,
+    });
+  }
+
+  udb_postgresql() {
+    return new UDBPostgreSQLClient({
       config: this.config,
       credential: this.credential,
     });

@@ -18,6 +18,7 @@ export declare class Client extends BaseClient {
     ucdn(): any;
     uclickhouse(): any;
     udb(): any;
+    udb_postgresql(): any;
     uddb(): any;
     udisk(): any;
     udns(): any;
