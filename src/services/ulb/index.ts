@@ -4575,6 +4575,42 @@ export interface UpdateLoadBalancerAttributeRequest {
      * （应用型专用）上传访问日志到bucket所需的token
      */
     US3TokenId?: string;
+    /**
+     * （应用型专用）上传访问日志的目标；us3,elasticsearch,logstash,kafka,uls
+     */
+    Destination?: string;
+    /**
+     * （应用型专用）是否开启自定义日志功能
+     */
+    EnableCustomLog?: boolean;
+    /**
+     * （应用型专用）日志参数列表
+     */
+    Params?: string[];
+    /**
+     * （应用型专用）日志内容格式，space,json;
+     */
+    ContentType?: string;
+    /**
+     * （应用型专用）是否开启日志聚合功能
+     */
+    EnableAggregate?: boolean;
+    /**
+     * （应用型专用）日志聚合频率
+     */
+    Frequency?: number;
+    /**
+     * （应用型专用）日志上传目标地址；仅对elasticsearch,logstash,kafka生效，最多支持五个
+     */
+    DestinationAddrs?: string;
+    /**
+     * （应用型专用）kafka topic；仅对kafka生效
+     */
+    Topic?: string;
+    /**
+     * （应用型专用）uls topic；仅对上传目标为uls生效
+     */
+    ULSTopic?: string;
   };
 }
 
