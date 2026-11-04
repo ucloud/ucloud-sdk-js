@@ -877,6 +877,18 @@ export interface DescribeBucketResponse {
          * 是否存在自定义域名。0不存在，1存在，2错误
          */
         HasUserDomain?: number;
+        /**
+         * 标准存储量,单位Byte
+         */
+        Storage?: number;
+        /**
+         * 低频存储量,单位Byte
+         */
+        IaStorage?: number;
+        /**
+         * 归档存储量,单位Byte
+         */
+        AcStorage?: number;
     }[];
 }
 /**
