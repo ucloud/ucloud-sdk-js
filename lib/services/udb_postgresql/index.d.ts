@@ -309,9 +309,39 @@ export interface CreateUPgSQLInstanceRequest {
      */
     VPCID: string;
     /**
+     * 高可用实例的备库可用区
+     */
+    BackupZone?: string;
+    /**
      * UDB实例模式类型, 可选值如下: "Normal": 普通版UDB实例 "HA": 高可用版UDB实例 默认是"Normal"
      */
     InstanceMode?: string;
+    /**
+     *
+     */
+    Labels?: {
+        /**
+         * 用户资源标签的键值
+         */
+        Key?: string;
+        /**
+         * 用户资源标签的键名
+         */
+        Value?: string;
+    }[];
+    /**
+     *
+     */
+    SecGroupId?: {
+        /**
+         * 安全组id
+         */
+        Id?: string;
+        /**
+         * 安全组优先级
+         */
+        Priority?: number;
+    }[];
 }
 /**
  * CreateUPgSQLInstance - 创建PG云数据库
