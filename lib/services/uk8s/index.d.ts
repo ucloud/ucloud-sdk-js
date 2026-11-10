@@ -1287,6 +1287,18 @@ export interface CreateUK8SClusterV2Request {
      */
     MasterImageId?: string;
     /**
+     * Pod是否使用独立子网
+     */
+    DedicatedPodSubnet?: boolean;
+    /**
+     * Pod独立子网模式下的子网Id
+     */
+    PodSubnetId?: string;
+    /**
+     * Pod独立子网模式下使用的安全组，如不配置则使用防火墙模式
+     */
+    PodSubnetSecGroup?: string;
+    /**
      * master lb 类型默认ulb，可选ulb nlb
      */
     LbClass?: string;
