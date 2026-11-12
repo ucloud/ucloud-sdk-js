@@ -136,20 +136,6 @@ export default class UDiskClient extends Client {
   }
 
   /**
-   * DescribeRecycleUDisk - 拉取回收站中云硬盘列表
-   *
-   * See also: https://docs.ucloud.cn/api/udisk-api/describe_recycle_udisk
-   */
-  describeRecycleUDisk(
-    request?: DescribeRecycleUDiskRequest
-  ): Promise<DescribeRecycleUDiskResponse> {
-    const args = { Action: 'DescribeRecycleUDisk', ...(request || {}) };
-    return this.invoke(new Request(args)).then(
-      (resp) => resp.toObject() as DescribeRecycleUDiskResponse
-    );
-  }
-
-  /**
    * DescribeUDisk - 获取UDisk实例
    *
    * See also: https://docs.ucloud.cn/api/udisk-api/describe_udisk
@@ -206,6 +192,20 @@ export default class UDiskClient extends Client {
   }
 
   /**
+   * DetachDeleteUDisk - 卸载删除某个已经挂载在指定UHost实例上的UDisk
+   *
+   * See also: https://docs.ucloud.cn/api/udisk-api/detach_delete_udisk
+   */
+  detachDeleteUDisk(
+    request?: DetachDeleteUDiskRequest
+  ): Promise<DetachDeleteUDiskResponse> {
+    const args = { Action: 'DetachDeleteUDisk', ...(request || {}) };
+    return this.invoke(new Request(args)).then(
+      (resp) => resp.toObject() as DetachDeleteUDiskResponse
+    );
+  }
+
+  /**
    * DetachUDisk - 卸载某个已经挂载在指定UHost实例上的UDisk
    *
    * See also: https://docs.ucloud.cn/api/udisk-api/detach_udisk
@@ -214,18 +214,6 @@ export default class UDiskClient extends Client {
     const args = { Action: 'DetachUDisk', ...(request || {}) };
     return this.invoke(new Request(args)).then(
       (resp) => resp.toObject() as DetachUDiskResponse
-    );
-  }
-
-  /**
-   * RecoverUDisk - 从回收站中恢复云硬盘
-   *
-   * See also: https://docs.ucloud.cn/api/udisk-api/recover_udisk
-   */
-  recoverUDisk(request?: RecoverUDiskRequest): Promise<RecoverUDiskResponse> {
-    const args = { Action: 'RecoverUDisk', ...(request || {}) };
-    return this.invoke(new Request(args)).then(
-      (resp) => resp.toObject() as RecoverUDiskResponse
     );
   }
 
@@ -285,7 +273,7 @@ export default class UDiskClient extends Client {
  */
 export interface AttachUDiskRequest {
   /**
-   * 可用区。参见 [可用区列表](../summary/regionlist.html)
+   * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
    */
   Zone?: string;
   /**
@@ -301,9 +289,17 @@ export interface AttachUDiskRequest {
    */
   MultiAttach?: string;
   /**
-   * Host实例ID
+   * Host实例ID。
    */
   HostId?: string;
+  /**
+   * 是否允许跨pod挂载（Yes：允许跨pod挂载，No：不允许跨pod挂载，不填默认No）
+   */
+  EnableCrossPodAttach?: string;
+  /**
+   * 用户标签
+   */
+  Lable?: string;
 }
 
 /**
@@ -377,6 +373,26 @@ export interface CloneUDiskRequest {
    */
   HostId?: string;
   /**
+   * 新克隆UDisk的大小,单位:GB。指定Size须大于等于源盘Size，小于源盘Size或者不指定该参数均按源盘Size克隆新盘。普通数据盘：范围[1~8000]；SSD数据盘、经济型SSD数据盘：范围[1~8000]；RSSD数据盘、经济型RSSD数据盘：范围[1~32000]；高效数据盘：范围[1~32000]
+   */
+  Size?: number;
+  /**
+   * 快照服务备份策略。普通云盘，SSD云盘，RSSD云盘套餐选择：“Base”：基础版，“ Ultimate”：旗舰版，“ Custom”：自定义备份链，默认采用基础版套餐开通；ESSD云盘，ERSSD云盘套餐：“Lite”：精简版，默认采用精简版套餐开通。
+   */
+  BackupMode?: string;
+  /**
+   * BackupMode为Custom时，进行设置, 以12小时秒级为基础进行倍数扩增，如12、24、36、48
+   */
+  Journal?: number;
+  /**
+   * BackupMode为Custom时，进行设置, 以24小时级为基础进行倍数扩增，如24、48、72、96
+   */
+  Hour?: number;
+  /**
+   * BackupMode为Custom时，进行设置, 以5天级为基础进行倍数扩增，如5、10、15、20、25、30
+   */
+  Day?: number;
+  /**
    * 使用的代金券id
    */
   CouponId?: string;
@@ -409,7 +425,7 @@ export interface CloneUDiskSnapshotRequest {
    */
   SourceId: string;
   /**
-   * 购买UDisk大小,单位:GB,范围[1~8000]。(UDisk大小设定对本地盘快照有效，对云盘快照无效)
+   * 新克隆UDisk的大小,单位:GB。指定Size须大于等于源盘Size，小于源盘Size或者不指定该参数均按源盘Size克隆新盘。普通数据盘：范围[1~8000]；SSD数据盘、经济型SSD数据盘：范围[1~8000]；RSSD数据盘、经济型RSSD数据盘：范围[1~32000]；高效数据盘：范围[1~32000]。
    */
   Size?: number;
   /**
@@ -444,6 +460,22 @@ export interface CloneUDiskSnapshotRequest {
    * Host实例ID。克隆出的云盘可直接挂载到该主机上。
    */
   HostId?: string;
+  /**
+   * 快照服务备份策略。普通云盘，SSD云盘，RSSD云盘套餐选择：“Base”：基础版，“ Ultimate”：旗舰版，“ Custom”：自定义备份链，默认采用基础版套餐开通；ESSD云盘，ERSSD云盘套餐：“Lite”：精简版，默认采用精简版套餐开通
+   */
+  BackupMode?: string;
+  /**
+   * BackupMode为Custom时，进行设置, 以12小时秒级为基础进行倍数扩增，如12、24、36、48
+   */
+  Journal?: number;
+  /**
+   * BackupMode为Custom时，进行设置, 以24小时级为基础进行倍数扩增，如24、48、72、96
+   */
+  Hour?: number;
+  /**
+   * BackupMode为Custom时，进行设置, 以5天级为基础进行倍数扩增，如5、10、15、20、25、30
+   */
+  Day?: number;
   /**
    * 使用的代金券id
    */
@@ -501,7 +533,7 @@ export interface CloneUDiskUDataArkRequest {
    */
   SnapshotService?: string;
   /**
-   * 购买UDisk大小,单位:GB,范围[1~8000]。(UDisk大小设定对本地盘备份有效，对云盘备份无效)
+   * 新克隆UDisk的大小,单位:GB。指定Size须大于等于源盘Size，小于源盘Size或者不指定该参数均按源盘Size克隆新盘。普通数据盘：范围[1~8000]；SSD数据盘：范围[1~8000]；RSSD数据盘：范围[1~32000]；高效数据盘：范围[1~32000]。
    */
   Size?: number;
   /**
@@ -516,6 +548,22 @@ export interface CloneUDiskUDataArkRequest {
    * Host实例ID。克隆出的云盘可直接挂载到该主机上。
    */
   HostId?: string;
+  /**
+   * 快照服务备份策略。默认采用基础版套餐开通，“Base”：基础版，“ Ultimate”：旗舰版，“ Custom”：自定义备份链
+   */
+  BackupMode?: string;
+  /**
+   * BackupMode为Custom时，进行设置, 以12小时秒级为基础进行倍数扩增，如12、24、36、48
+   */
+  Journal?: number;
+  /**
+   * BackupMode为Custom时，进行设置, 以24小时级为基础进行倍数扩增，如24、48、72、96
+   */
+  Hour?: number;
+  /**
+   * BackupMode为Custom时，进行设置, 以5天级为基础进行倍数扩增，如5、10、15、20、25、30
+   */
+  Day?: number;
   /**
    * 使用的代金券id
    */
@@ -541,7 +589,7 @@ export interface CreateAttachUDiskRequest {
    */
   Zone: string;
   /**
-   * 购买UDisk大小,单位:GB,普通数据盘：范围[1~8000]；SSD数据盘：范围[1~8000]；RSSD数据盘：范围[1~32000]；高效数据盘：范围[1~32000]。
+   * 购买UDisk大小,单位:GB,普通数据盘：范围[1~8000]；SSD数据盘、经济型SSD数据盘：范围[1~8000]；RSSD数据盘、经济型RSSD数据盘：范围[1~32000]；高效数据盘：范围[1~32000]。
    */
   Size: number;
   /**
@@ -573,7 +621,7 @@ export interface CreateAttachUDiskRequest {
    */
   Tag?: string;
   /**
-   * UDisk 类型: DataDisk（普通数据盘），SSDDataDisk（SSD数据盘），RSSDDataDisk（RSSD数据盘），EfficiencyDataDisk（高效数据盘），默认值（DataDisk）
+   * UDisk 类型: DataDisk（普通数据盘），SSDDataDisk（SSD数据盘），ESSDDataDisk（经济型SSD数据盘），RSSDDataDisk（RSSD数据盘），ERSSDDataDisk（经济型 RSSD数据盘），EfficiencyDataDisk（高效数据盘），默认值（DataDisk）
    */
   DiskType?: string;
   /**
@@ -592,6 +640,22 @@ export interface CreateAttachUDiskRequest {
    * Host实例ID。当创建云盘类型为RSSDDataDisk时，根据传入的HostId，创建与虚机在同一PodId下的云盘。
    */
   HostId?: string;
+  /**
+   * 快照服务备份策略。普通云盘，SSD云盘，RSSD云盘套餐选择：“Base”：基础版，“ Ultimate”：旗舰版，“ Custom”：自定义备份链，默认采用基础版套餐开通；ESSD云盘，ERSSD云盘套餐：“Lite”：精简版，默认采用精简版套餐开通。
+   */
+  BackupMode?: string;
+  /**
+   * BackupMode为Custom时，进行设置, 以12小时秒级为基础进行倍数扩增，如12、24、36、48
+   */
+  Journal?: number;
+  /**
+   * BackupMode为Custom时，进行设置, 以24小时级为基础进行倍数扩增，如24、48、72、96
+   */
+  Hour?: number;
+  /**
+   * BackupMode为Custom时，进行设置, 以5天级为基础进行倍数扩增，如5、10、15、20、25、30
+   */
+  Day?: number;
   /**
    * 使用的代金券id
    */
@@ -629,7 +693,7 @@ export interface CreateUDiskRequest {
    */
   Zone: string;
   /**
-   * 购买UDisk大小,单位:GB,普通数据盘：范围[1~8000]；SSD数据盘：范围[1~8000]；RSSD数据盘：范围[1~32000]；高效数据盘：范围[1~32000]。
+   * 购买UDisk大小,单位:GB,普通数据盘：范围[1~8000]；SSD数据盘、经济型SSD数据盘：范围[1~8000]；RSSD数据盘、经济型RSSD数据盘：范围[1~32000]；高效数据盘：范围[1~32000]。
    */
   Size: number;
   /**
@@ -657,7 +721,7 @@ export interface CreateUDiskRequest {
    */
   Tag?: string;
   /**
-   * UDisk 类型: DataDisk（普通数据盘），SSDDataDisk（SSD数据盘），RSSDDataDisk（RSSD数据盘），EfficiencyDataDisk（高效数据盘），默认值（DataDisk）
+   * UDisk 类型: DataDisk（普通数据盘），SSDDataDisk（SSD数据盘），ESSDDataDisk（经济型SSD数据盘），RSSDDataDisk（RSSD数据盘），ERSSDDataDisk（经济型 RSSD数据盘），EfficiencyDataDisk（高效数据盘），默认值（DataDisk）
    */
   DiskType?: string;
   /**
@@ -672,6 +736,26 @@ export interface CreateUDiskRequest {
    * RDMA集群id。DiskType为RSSDDataDisk可填，指定云盘创建到对应的RDMA集群。
    */
   RdmaClusterId?: string;
+  /**
+   * 快照服务备份策略。普通云盘，SSD云盘，RSSD云盘套餐选择：“Base”：基础版，“ Ultimate”：旗舰版，“ Custom”：自定义备份链，默认采用基础版套餐开通；ESSD云盘，ERSSD云盘套餐：“Lite”：精简版，默认采用精简版套餐开通。
+   */
+  BackupMode?: string;
+  /**
+   * BackupMode为Custom时，进行设置, 以12小时秒级为基础进行倍数扩增，如12、24、36、48
+   */
+  Journal?: number;
+  /**
+   * BackupMode为Custom时，进行设置, 以24小时级为基础进行倍数扩增，如24、48、72、96
+   */
+  Hour?: number;
+  /**
+   * BackupMode为Custom时，进行设置, 以5天级为基础进行倍数扩增，如5、10、15、20、25、30
+   */
+  Day?: number;
+  /**
+   * 用户标签
+   */
+  Labels?: string;
   /**
    * 使用的代金券id
    */
@@ -693,7 +777,7 @@ export interface CreateUDiskResponse {
  */
 export interface CreateUDiskSnapshotRequest {
   /**
-   * 可用区。参见 [可用区列表](../summary/regionlist.html)
+   * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
    */
   Zone: string;
   /**
@@ -771,71 +855,6 @@ export interface DeleteUDiskSnapshotRequest {
 export interface DeleteUDiskSnapshotResponse {}
 
 /**
- * DescribeRecycleUDisk - 拉取回收站中云硬盘列表
- */
-export interface DescribeRecycleUDiskRequest {
-  /**
-   * 可用区。参见 [可用区列表](../summary/regionlist.html)
-   */
-  Zone: string;
-  /**
-   * 返回数据长度, 默认为20
-   */
-  Limit?: number;
-  /**
-   * 数据偏移量, 默认为0
-   */
-  Offset?: number;
-}
-
-/**
- * DescribeRecycleUDisk - 拉取回收站中云硬盘列表
- */
-export interface DescribeRecycleUDiskResponse {
-  /**
-   * 磁盘数量
-   */
-  TotalCount: number;
-  /**
-   * 回收站磁盘列表
-   */
-  DataSet?: {
-    /**
-     * 磁盘id
-     */
-    UDiskId: string;
-    /**
-     * 创建时间
-     */
-    CreateTime: number;
-    /**
-     * 过期时间
-     */
-    ExpiredTime: number;
-    /**
-     * 销毁倒计时
-     */
-    CountdownTime: number;
-    /**
-     * 磁盘名称
-     */
-    Name: string;
-    /**
-     * 磁盘容量
-     */
-    Size: number;
-    /**
-     * 业务组
-     */
-    Tag?: string;
-    /**
-     * 可用区
-     */
-    Zone: string;
-  }[];
-}
-
-/**
  * DescribeUDisk - 获取UDisk实例
  */
 export interface DescribeUDiskRequest {
@@ -856,7 +875,7 @@ export interface DescribeUDiskRequest {
    */
   Limit?: number;
   /**
-   * ProtocolVersion字段为1时，需结合IsBoot确定具体磁盘类型:普通数据盘：DiskType:"CLOUD_NORMAL",IsBoot:"False"；普通系统盘：DiskType:"CLOUD_NORMAL",IsBoot:"True"；SSD数据盘：DiskType:"CLOUD_SSD",IsBoot:"False"；SSD系统盘：DiskType:"CLOUD_SSD",IsBoot:"True"；RSSD数据盘：DiskType:"CLOUD_RSSD",IsBoot:"False"；RSSD系统盘：DiskType:"CLOUD_RSSD",IsBoot:"True"；高效数据盘：DiskType:"CLOUD_EFFICIENCY",IsBoot:"False"；高效系统盘：DiskType:"CLOUD_EFFICIENCY",IsBoot:"True"；为空拉取所有。ProtocolVersion字段为0或没有该字段时，可设为以下几个值:普通数据盘：DataDisk；普通系统盘：SystemDisk；SSD数据盘：SSDDataDisk；SSD系统盘：SSDSystemDisk；RSSD数据盘：RSSDDataDisk；RSSD系统盘：RSSDSystemDisk：高效数据盘：EfficiencyDataDisk；高效系统盘：EfficiencySystemDisk；为空拉取所有。
+   * ProtocolVersion字段为1时，需结合IsBoot确定具体磁盘类型:普通数据盘：DiskType:"CLOUD_NORMAL",IsBoot:"False"；普通系统盘：DiskType:"CLOUD_NORMAL",IsBoot:"True"；SSD数据盘：DiskType:"CLOUD_SSD",IsBoot:"False"；SSD系统盘：DiskType:"CLOUD_SSD",IsBoot:"True"；经济型SSD数据盘：DiskType:"CLOUD_ESSD",IsBoot:"False"；经济型SSD系统盘：DiskType:"CLOUD_ESSD",IsBoot:"True"；RSSD数据盘：DiskType:"CLOUD_RSSD",IsBoot:"False"；RSSD系统盘：DiskType:"CLOUD_RSSD",IsBoot:"True"；经济型RSSD数据盘：DiskType:"CLOUD_ERSSD",IsBoot:"False"；经济型RSSD系统盘：DiskType:"CLOUD_ERSSD",IsBoot:"True"；高效数据盘：DiskType:"CLOUD_EFFICIENCY",IsBoot:"False"；高效系统盘：DiskType:"CLOUD_EFFICIENCY",IsBoot:"True"；为空拉取所有。ProtocolVersion字段为0或没有该字段时，可设为以下几个值:普通数据盘：DataDisk；普通系统盘：SystemDisk；SSD数据盘：SSDDataDisk；SSD系统盘：SSDSystemDisk；经济型SSD数据盘：ESSDDataDisk；经济型SSD系统盘：ESSDSystemDisk；RSSD数据盘：RSSDDataDisk；RSSD系统盘：RSSDSystemDisk；经济型RSSD数据盘：ERSSDDataDisk；经济型RSSD系统盘：ERSSDSystemDisk；高效数据盘：EfficiencyDataDisk；高效系统盘：EfficiencySystemDisk；为空拉取所有。
    */
   DiskType?: string;
   /**
@@ -895,6 +914,18 @@ export interface DescribeUDiskRequest {
    * 宿主产品类型，可筛选挂载在该类型宿主上的云盘。可选值：uhost, uphost。为空拉取所有。（当HostIdForAttachment字段不为空时，该字段可以不填，若HostIdForAttachment与该字段宿主类型冲突，则以HostIdForAttachment字段为准。）
    */
   HostProduct?: string;
+  /**
+   * 云盘状态。All(所有状态)，Available(可用)，Attaching(挂载中)，InUse(已挂载)， Detaching(卸载中)， Initializating(分配中)，Failed(创建失败)，Cloning(克隆中)，Restoring(恢复中)，RestoreFailed(恢复失败)。默认值：All
+   */
+  Status?: string;
+  /**
+   * 业务组名称
+   */
+  Tag?: string;
+  /**
+   * 云盘实例名称
+   */
+  UDiskName?: string;
 }
 
 /**
@@ -922,7 +953,7 @@ export interface DescribeUDiskResponse {
      */
     Size?: number;
     /**
-     * 状态:Available(可用),Attaching(挂载中), InUse(已挂载), Detaching(卸载中), Initializating(分配中), Failed(创建失败),Cloning(克隆中),Restoring(恢复中),RestoreFailed(恢复失败),
+     * 状态:Available(可用),Attaching(挂载中), InUse(已挂载), Detaching(卸载中), Initializating(分配中), Failed(创建失败),Cloning(克隆中),Restoring(恢复中),RestoreFailed(恢复失败)
      */
     Status?: string;
     /**
@@ -990,7 +1021,7 @@ export interface DescribeUDiskResponse {
      */
     SnapshotLimit?: number;
     /**
-     * 请求中的ProtocolVersion字段为1时，需结合IsBoot确定具体磁盘类型:普通数据盘：DiskType:"CLOUD_NORMAL",IsBoot:"False"； 普通系统盘：DiskType:"CLOUD_NORMAL",IsBoot:"True"；SSD数据盘：DiskType:"CLOUD_SSD",IsBoot:"False"；SSD系统盘：DiskType:"CLOUD_SSD",IsBoot:"True"；RSSD数据盘：DiskType:"CLOUD_RSSD",IsBoot:"False"；RSSD系统盘：DiskType:"CLOUD_RSSD",IsBoot:"True"；高效数据盘：DiskType:"CLOUD_EFFICIENCY",IsBoot:"False"；高效系统盘：DiskType:"CLOUD_EFFICIENCY",IsBoot:"True"。请求中的ProtocolVersion字段为0或没有该字段时，云硬盘类型参照如下:普通数据盘：DataDisk；普通系统盘：SystemDisk；SSD数据盘：SSDDataDisk；SSD系统盘：SSDSystemDisk；RSSD数据盘：RSSDDataDisk；RSSD系统盘：RSSDSystemDisk；高效数据盘：EfficiencyDataDisk；高效系统盘：EfficiencySystemDisk。
+     * 请求中的ProtocolVersion字段为1时，需结合IsBoot确定具体磁盘类型:普通数据盘：DiskType:"CLOUD_NORMAL",IsBoot:"False"； 普通系统盘：DiskType:"CLOUD_NORMAL",IsBoot:"True"；SSD数据盘：DiskType:"CLOUD_SSD",IsBoot:"False"；SSD系统盘：DiskType:"CLOUD_SSD",IsBoot:"True"；经济型SSD数据盘：DiskType:"CLOUD_ESSD",IsBoot:"False"；经济型SSD系统盘：DiskType:"CLOUD_ESSD",IsBoot:"True"；RSSD数据盘：DiskType:"CLOUD_RSSD",IsBoot:"False"；RSSD系统盘：DiskType:"CLOUD_RSSD",IsBoot:"True"；经济型RSSD数据盘：DiskType:"CLOUD_ERSSD",IsBoot:"False"；经济型RSSD系统盘：DiskType:"CLOUD_ERSSD",IsBoot:"True"；高效数据盘：DiskType:"CLOUD_EFFICIENCY",IsBoot:"False"；高效系统盘：DiskType:"CLOUD_EFFICIENCY",IsBoot:"True"。请求中的ProtocolVersion字段为0或没有该字段时，云硬盘类型参照如下:普通数据盘：DataDisk；普通系统盘：SystemDisk；SSD数据盘：SSDDataDisk；SSD系统盘：SSDSystemDisk；经济型SSD数据盘：ESSDDataDisk；经济型SSD系统盘：ESSDSystemDisk；RSSD数据盘：RSSDDataDisk；RSSD系统盘：RSSDSystemDisk；经济型RSSD数据盘：ERSSDDataDisk；经济型RSSD系统盘：ERSSDSystemDisk；高效数据盘：EfficiencyDataDisk；高效系统盘：EfficiencySystemDisk。
      */
     DiskType?: string;
     /**
@@ -1034,7 +1065,7 @@ export interface DescribeUDiskResponse {
      */
     BackupMode?: string;
     /**
-     * RDMA集群id，仅RSSD返回该值；其他类型云盘返回""。当云盘的此值与快杰云主机的RdmaClusterId相同时，RSSD可以挂载到这台云主机。
+     * RDMA集群id，仅RSSD、ERSSD返回该值；其他类型云盘返回""。当云盘的此值与快杰云主机的RdmaClusterId相同时，该云盘可以挂载到这台云主机
      */
     RdmaClusterId?: string;
   }[];
@@ -1053,7 +1084,7 @@ export interface DescribeUDiskPriceRequest {
    */
   Zone: string;
   /**
-   * 购买UDisk大小,单位:GB,普通数据盘：范围[1~8000]；SSD数据盘：范围[1~8000]；普通系统盘：范围[1~8000]；SSD系统盘：范围[1~4000]；RSSD数据盘：范围[1~32000]；RSSD系统盘：范围[1~4000]；高效数据盘：范围[1~32000]；高效系统盘：范围[1~500]。
+   * 购买UDisk大小,单位:GB,普通数据盘：范围[1~8000]；SSD数据盘、经济型SSD数据盘：范围[1~8000]；普通系统盘：范围[1~8000]；SSD系统盘、经济型SSD系统盘：范围[1~4000]；RSSD数据盘、经济型RSSD数据盘：范围[1~32000]；RSSD系统盘、经济型RSSD系统盘：范围[1~4000]；高效数据盘：范围[1~32000]；高效系统盘：范围[1~500]。
    */
   Size: number;
   /**
@@ -1073,7 +1104,7 @@ export interface DescribeUDiskPriceRequest {
    */
   SnapshotService?: string;
   /**
-   * UDisk 类型: DataDisk（普通数据盘），SSDDataDisk（SSD数据盘），RSSDDataDisk(RSSD数据盘)，EfficiencyDataDisk（高效数据盘），SystemDisk（普通系统盘），SSDSystemDisk（SSD系统盘），RSSDSystemDisk(RSSD系统盘)，EfficiencySystemDisk（高效系统盘），默认值（DataDisk）
+   * UDisk 类型: DataDisk（普通数据盘），SSDDataDisk（SSD数据盘），ESSDDataDisk（经济型SSD数据盘），RSSDDataDisk(RSSD数据盘)，ERSSDDataDisk(经济型RSSD数据盘)，EfficiencyDataDisk（高效数据盘），SystemDisk（普通系统盘），SSDSystemDisk（SSD系统盘），ESSDSystemDisk（经济型SSD系统盘），RSSDSystemDisk(RSSD系统盘)，ERSSDSystemDisk(经济型RSSD系统盘)，EfficiencySystemDisk（高效系统盘），默认值（DataDisk）
    */
   DiskType?: string;
   /**
@@ -1084,6 +1115,22 @@ export interface DescribeUDiskPriceRequest {
    * 云主机机型（V2.0），枚举值["N", "C", "G", "O", "OM"]。参考[[api:uhost-api:uhost_type|云主机机型说明]]。
    */
   MachineType?: string;
+  /**
+   * 快照服务备份策略。普通云盘，SSD云盘，RSSD云盘套餐选择：“Base”：基础版，“ Ultimate”：旗舰版，“ Custom”：自定义备份链，默认采用基础版套餐开通；ESSD云盘，ERSSD云盘套餐：“Lite”：精简版，默认采用精简版套餐开通。
+   */
+  BackupMode?: string;
+  /**
+   * BackupMode为Custom时，进行设置, 以12小时秒级为基础进行倍数扩增，如12、24、36、48
+   */
+  Journal?: number;
+  /**
+   * BackupMode为Custom时，进行设置, 以24小时级为基础进行倍数扩增，如24、48、72、96
+   */
+  Hour?: number;
+  /**
+   * BackupMode为Custom时，进行设置, 以5天级为基础进行倍数扩增，如5、10、15、20、25、30
+   */
+  Day?: number;
 }
 
 /**
@@ -1188,7 +1235,7 @@ export interface DescribeUDiskSnapshotResponse {
      */
     DiskType: number;
     /**
-     * 过期时间
+     * 【已废弃】过期时间
      */
     ExpiredTime?: number;
     /**
@@ -1208,23 +1255,23 @@ export interface DescribeUDiskSnapshotResponse {
      */
     UHostId?: string;
     /**
-     * 是否是加密盘快照，是:"Yes", 否:"No"
+     * 【已废弃】是否是加密盘快照，是:"Yes", 否:"No"
      */
     UKmsMode?: string;
     /**
-     * 该快照的cmk id
+     * 【已废弃】该快照的cmk id
      */
     CmkId?: string;
     /**
-     * 该快照的密文密钥
+     * 【已废弃】该快照的密文密钥
      */
     DataKey?: string;
     /**
-     * 该快照cmk的状态, Enabled(正常)，Disabled(失效)，Deleted(删除)，NoCmkId(非加密盘)
+     * 【已废弃】该快照cmk的状态, Enabled(正常)，Disabled(失效)，Deleted(删除)，NoCmkId(非加密盘)
      */
     CmkIdStatus?: string;
     /**
-     * cmk id 别名
+     * 【已废弃】cmk id 别名
      */
     CmkIdAlias?: string;
   }[];
@@ -1243,7 +1290,7 @@ export interface DescribeUDiskUpgradePriceRequest {
    */
   Zone: string;
   /**
-   * 购买UDisk大小,单位:GB,普通数据盘：范围[1~8000]；SSD数据盘：范围[1~8000]；普通系统盘：范围[1~8000]；SSD系统盘：范围[1~4000]；RSSD数据盘：范围[1~32000]；RSSD系统盘：范围[1~4000]；高效数据盘：范围[1~32000]；高效系统盘：范围[1~500]。
+   * 购买UDisk大小,单位:GB,普通数据盘：范围[1~8000]；SSD数据盘、经济型SSD数据盘：范围[1~8000]；普通系统盘：范围[1~8000]；SSD系统盘、经济型SSD系统盘：范围[1~4000]；RSSD数据盘、经济型RSSD数据盘：范围[1~32000]；RSSD系统盘、经济型RSSD系统盘：范围[1~4000]；高效数据盘：范围[1~32000]；高效系统盘：范围[1~500]。
    */
   Size: number;
   /**
@@ -1266,6 +1313,22 @@ export interface DescribeUDiskUpgradePriceRequest {
    * 【已废弃】云主机机型（V2.0），枚举值["N", "C", "G", "O", "OM"]。参考[[api:uhost-api:uhost_type|云主机机型说明]]。
    */
   MachineType?: string;
+  /**
+   * 快照服务备份策略。普通云盘，SSD云盘，RSSD云盘套餐选择：“Base”：基础版，“ Ultimate”：旗舰版，“ Custom”：自定义备份链，默认采用基础版套餐开通；ESSD云盘，ERSSD云盘套餐：“Lite”：精简版，默认采用精简版套餐开通。
+   */
+  BackupMode?: string;
+  /**
+   * BackupMode为Custom时，进行设置, 以12小时秒级为基础进行倍数扩增，如12、24、36、48
+   */
+  Journal?: number;
+  /**
+   * BackupMode为Custom时，进行设置, 以24小时级为基础进行倍数扩增，如24、48、72、96
+   */
+  Hour?: number;
+  /**
+   * BackupMode为Custom时，进行设置, 以5天级为基础进行倍数扩增，如5、10、15、20、25、30
+   */
+  Day?: number;
 }
 
 /**
@@ -1280,6 +1343,50 @@ export interface DescribeUDiskUpgradePriceResponse {
    * 用户折后价 (对应计费CustomPrice)
    */
   OriginalPrice?: number;
+}
+
+/**
+ * DetachDeleteUDisk - 卸载删除某个已经挂载在指定UHost实例上的UDisk
+ */
+export interface DetachDeleteUDiskRequest {
+  /**
+   * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
+   */
+  Zone?: string;
+  /**
+   * 需要卸载的UDisk实例ID
+   */
+  UDiskId: string;
+  /**
+   * UHost实例ID。【UHostId和HostId必须选填一个，本字段即将废弃，建议使用HostId】
+   */
+  UHostId?: string;
+  /**
+   * Host实例ID
+   */
+  HostId?: string;
+  /**
+   * 是否删除快照服务。Yes：删除，No：不删除，默认值：Yes。
+   */
+  DeleteSnapshotService?: string;
+}
+
+/**
+ * DetachDeleteUDisk - 卸载删除某个已经挂载在指定UHost实例上的UDisk
+ */
+export interface DetachDeleteUDiskResponse {
+  /**
+   * 卸载的UHost实例ID。【即将废弃，建议使用HostId】
+   */
+  UHostId?: string;
+  /**
+   * 卸载的Host实例ID
+   */
+  HostId?: string;
+  /**
+   * 卸载删除的UDisk实例ID
+   */
+  UDiskId?: string;
 }
 
 /**
@@ -1323,33 +1430,6 @@ export interface DetachUDiskResponse {
 }
 
 /**
- * RecoverUDisk - 从回收站中恢复云硬盘
- */
-export interface RecoverUDiskRequest {
-  /**
-   * 可用区。参见 [可用区列表](../summary/regionlist.html)
-   */
-  Zone: string;
-  /**
-   * 云硬盘资源ID
-   */
-  UDiskId: string;
-  /**
-   * Year , Month, Dynamic 默认: Dynamic
-   */
-  ChargeType?: string;
-  /**
-   * 购买时长 默认: 1
-   */
-  Quantity?: number;
-}
-
-/**
- * RecoverUDisk - 从回收站中恢复云硬盘
- */
-export interface RecoverUDiskResponse {}
-
-/**
  * RenameUDisk - 重命名UDisk
  */
 export interface RenameUDiskRequest {
@@ -1377,7 +1457,7 @@ export interface RenameUDiskResponse {}
  */
 export interface ResizeUDiskRequest {
   /**
-   * 可用区。参见 [可用区列表](../summary/regionlist.html)
+   * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
    */
   Zone: string;
   /**
@@ -1385,7 +1465,7 @@ export interface ResizeUDiskRequest {
    */
   UDiskId: string;
   /**
-   * 调整后大小, 单位:GB,普通数据盘：范围[1~8000]；SSD数据盘：范围[1~8000]；RSSD数据盘：范围[1~32000]。
+   * 调整后大小, 单位:GB,普通数据盘：范围[1~8000]；SSD数据盘、经济型SSD数据盘：范围[1~8000]；RSSD数据盘、经济型RSSD数据盘：范围[1~32000]；高效数据盘：范围[1~32000]。
    */
   Size: number;
   /**

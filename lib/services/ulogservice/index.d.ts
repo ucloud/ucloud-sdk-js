@@ -922,7 +922,7 @@ export interface QueryULogServiceLogResponse {
         /**
          * 日志内容
          */
-        Contents: {
+        Contents?: {
             /**
              * 日志标识ID
              */
@@ -943,7 +943,7 @@ export interface QueryULogServiceLogResponse {
              * JSON格式的日志内容
              */
             LogJson: string;
-        };
+        }[];
         /**
          * 滚动检索Id Deprecated
          */
