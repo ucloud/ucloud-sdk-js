@@ -438,6 +438,10 @@ export interface CreateBucketRequest {
      * Bucket所属业务组，默认为default
      */
     Tag?: string;
+    /**
+     * bucket的可用区
+     */
+    FakeRegion?: string;
 }
 /**
  * CreateBucket - 创建Bucket
@@ -550,6 +554,10 @@ export interface CreateUFileTokenRequest {
      * 令牌白名单，支持ipv4，ipv6格式。
      */
     WhiteIPList?: string[];
+    /**
+     * bucket的可用区
+     */
+    FakeRegion?: string;
 }
 /**
  * CreateUFileToken - 创建US3令牌
@@ -781,6 +789,10 @@ export interface DeleteUFileTokenRequest {
      * 令牌ID
      */
     TokenId: string;
+    /**
+     * bucket的可用区
+     */
+    FakeRegion?: string;
 }
 /**
  * DeleteUFileToken - 删除令牌
@@ -803,6 +815,10 @@ export interface DescribeBucketRequest {
      * 获取所有Bucket列表的限制数目，默认为20
      */
     Limit?: number;
+    /**
+     * bucket可用区
+     */
+    FakeRegion?: string;
 }
 /**
  * DescribeBucket - 获取Bucket的描述信息
@@ -1266,6 +1282,10 @@ export interface DescribeUFileTokenRequest {
      * 0表示显示部分token信息；不传递和其他情况表示显示全部token信息
      */
     Display?: number;
+    /**
+     * bucket的可用区
+     */
+    FakeRegion?: string;
 }
 /**
  * DescribeUFileToken - 获取令牌信息
@@ -1428,6 +1448,10 @@ export interface GetProjectRegionQuotaRequest {
      * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
      */
     Zone?: string;
+    /**
+     * bucket可用区
+     */
+    FakeRegion?: string;
 }
 /**
  * GetProjectRegionQuota - 获取项目地域配额
@@ -1462,6 +1486,10 @@ export interface GetUFileDailyBillRequest {
      * 空间名称。此字段不为空，返回此Bucket日账单,否则，返回这个项目的日账单
      */
     BucketName?: string;
+    /**
+     * bucket的可用区
+     */
+    FakeRegion?: string;
 }
 /**
  * GetUFileDailyBill - 获取bucket每日账单
@@ -1599,6 +1627,10 @@ export interface GetUFileDailyReportRequest {
      * 空间名称。此字段不为空，返回此Bucket日使用量；否则，返回这个项目的日使用量
      */
     BucketName?: string;
+    /**
+     * bucket可用区
+     */
+    FakeRegion?: string;
 }
 /**
  * GetUFileDailyReport - 查看日消费报表
@@ -1724,6 +1756,10 @@ export interface GetUFileMonthlyBillRequest {
      * 空间名称。此字段不为空，返回此Bucket日账单,否则，返回这个项目的日账单
      */
     BucketName?: string;
+    /**
+     * bucket可用区
+     */
+    FakeRegion?: string;
 }
 /**
  * GetUFileMonthlyBill - 获取bucket月度账单
@@ -1994,13 +2030,17 @@ export interface GetUFileQuotaPriceResponse {
  */
 export interface GetUFileReportRequest {
     /**
-     * 查询开始时间
+     * 查询开始时间，单位 s
      */
     StartTime: number;
     /**
-     * 查询结束时间
+     * 查询结束时间, 单位 s
      */
     EndTime: number;
+    /**
+     * bucket的可用区
+     */
+    FakeRegion?: string;
 }
 /**
  * GetUFileReport - 查看配额使用报表
@@ -2092,6 +2132,10 @@ export interface SetProjectRegionQuotaRequest {
      * 配额数目(单位是Byte)
      */
     QuotaLimit: number;
+    /**
+     * bucket的可用区
+     */
+    FakeRegion?: string;
 }
 /**
  * SetProjectRegionQuota - 设置项目地域配额
@@ -2355,7 +2399,7 @@ export interface UpdateUFileTokenRequest {
      */
     TokenName?: string;
     /**
-     * 令牌允许执行的操作，[ TOKEN_ALLOW_NONE , TOKEN_ALLOW_READ , TOKEN_ALLOW_WRITE , TOKEN_ALLOW_DELETE , TOKEN_ALLOW_LIST, TOKEN_ALLOW_IOP , TOKEN_ALLOW_DP ]
+     * 令牌允许执行的操作，[ TOKEN_ALLOW_NONE , TOKEN_ALLOW_READ , TOKEN_ALLOW_WRITE , TOKEN_ALLOW_DELETE , TOKEN_ALLOW_LIST, TOKEN_ALLOW_IOP , TOKEN_ALLOW_DP ，TOKEN_DENY_UPDATE]
      */
     AllowedOps?: string[];
     /**
@@ -2370,6 +2414,18 @@ export interface UpdateUFileTokenRequest {
      * 令牌的超时时间点（时间戳）;注意：过期时间不能超过 4102416000
      */
     ExpireTime?: number;
+    /**
+     * 令牌黑名单，支持ipv4，ipv6格式。
+     */
+    BlackIPList?: string[];
+    /**
+     * 令牌黑名单，支持ipv4，ipv6格式。
+     */
+    WhiteIPList?: string[];
+    /**
+     * bucket的可用区
+     */
+    FakeRegion?: string;
 }
 /**
  * UpdateUFileToken - 更新令牌的操作权限，可操作key的前缀，可操作bucket和令牌超时时间点
