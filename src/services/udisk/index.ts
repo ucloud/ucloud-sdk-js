@@ -817,13 +817,17 @@ export interface CreateUDiskSnapshotResponse {
  */
 export interface DeleteUDiskRequest {
   /**
-   * 可用区。参见 [可用区列表](../summary/regionlist.html)
+   * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
    */
   Zone: string;
   /**
    * 要删除的UDisk的Id
    */
   UDiskId: string;
+  /**
+   * 是否删除快照服务。Yes：删除，No：不删除，默认值：Yes。
+   */
+  DeleteSnapshotService?: string;
 }
 
 /**
@@ -836,7 +840,7 @@ export interface DeleteUDiskResponse {}
  */
 export interface DeleteUDiskSnapshotRequest {
   /**
-   * 可用区。参见 [可用区列表](../summary/regionlist.html)
+   * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
    */
   Zone: string;
   /**
@@ -847,6 +851,10 @@ export interface DeleteUDiskSnapshotRequest {
    * UDisk Id,删除该盘所创建出来的所有快照(填写后不能填写SnapshotId)
    */
   UDiskId?: string;
+  /**
+   * 是否是绑定整机镜像的快照，0：不绑定，1：绑定
+   */
+  BindImage?: number;
 }
 
 /**
@@ -1255,6 +1263,10 @@ export interface DescribeUDiskSnapshotResponse {
      */
     UHostId?: string;
     /**
+     * 绑定镜像ID
+     */
+    ImageId?: string;
+    /**
      * 【已废弃】是否是加密盘快照，是:"Yes", 否:"No"
      */
     UKmsMode?: string;
@@ -1394,7 +1406,7 @@ export interface DetachDeleteUDiskResponse {
  */
 export interface DetachUDiskRequest {
   /**
-   * 可用区。参见 [可用区列表](../summary/regionlist.html)
+   * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
    */
   Zone?: string;
   /**
@@ -1434,7 +1446,7 @@ export interface DetachUDiskResponse {
  */
 export interface RenameUDiskRequest {
   /**
-   * 可用区。参见 [可用区列表](../summary/regionlist.html)
+   * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
    */
   Zone: string;
   /**
@@ -1488,7 +1500,7 @@ export interface ResizeUDiskResponse {}
  */
 export interface RestoreUDiskRequest {
   /**
-   * 可用区。参见 [可用区列表](../summary/regionlist.html)
+   * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
    */
   Zone: string;
   /**
