@@ -10,6 +10,12 @@ export default class UAIModelverseClient extends Client {
         credential: CredentialOptions;
     });
     /**
+     * BatchCreateUMInferAPIKey - 批量创建api key
+     *
+     * See also: https://docs.ucloud.cn/api/uai-modelverse-api/batch_create_um_infer_api_key
+     */
+    batchCreateUMInferAPIKey(request?: BatchCreateUMInferAPIKeyRequest): Promise<BatchCreateUMInferAPIKeyResponse>;
+    /**
      * CreateUMInferAPIKey - 创建apikey
      *
      * See also: https://docs.ucloud.cn/api/uai-modelverse-api/create_um_infer_api_key
@@ -135,6 +141,137 @@ export default class UAIModelverseClient extends Client {
      * See also: https://docs.ucloud.cn/api/uai-modelverse-api/update_um_infer_api_key
      */
     updateUMInferAPIKey(request?: UpdateUMInferAPIKeyRequest): Promise<UpdateUMInferAPIKeyResponse>;
+}
+/**
+ * BatchCreateUMInferAPIKey - 批量创建api key
+ */
+export interface BatchCreateUMInferAPIKeyRequest {
+    /**
+     * 可用区。参见 [可用区列表](https://docs.ucloud.cn/api/summary/regionlist)
+     */
+    Zone: string;
+    /**
+     * 名称前缀
+     */
+    Prefix: string;
+    /**
+     * 开始序号
+     */
+    Start: number;
+    /**
+     * 创建个数
+     */
+    Count: number;
+    /**
+     * 是否modelverse可用 0: 启用 1: 禁用
+     */
+    ModelverseDisabled?: number;
+    /**
+     * 是否沙盒可用 0: 启用 1: 禁用(astraflow 沙盒控制未上线，暂时无效)
+     */
+    SandBoxDisabled?: number;
+    /**
+     * 日限额，单位随用户所在渠道。126渠道单位为美元
+     */
+    DailyLimitAmount?: string;
+    /**
+     * 月限额，单位随用户所在渠道。126渠道单位为美元
+     */
+    MonthlyLimitAmount?: string;
+    /**
+     * 全部模型访问开关，开启不受 GrantedModels 参数控制，关闭只能访问 GrantedModels 中添加模型
+     */
+    GrantAllModels?: boolean;
+    /**
+     * 授权模型，内容为数组格式。当 GrantAllModels 为false时 当前key只可访问数组中模型。例：["deepseek-ai/DeepSeek-V3.2-Think"]
+     */
+    GrantedModels?: string;
+    /**
+     * ip白名单，换行分割的多组ip。支持IPv4和网段,输入后回车生效,最多100个, 示例: ﻿ 192.168.1.1 192.168.1.10-192.168.1.100 192.168.1.10/24
+     */
+    IPWhitelist?: string;
+    /**
+     * 是否开启推理日志
+     */
+    InferenceLogEnabled?: number;
+    /**
+     * 总限额，单位随用户所在渠道。126渠道单位为美元
+     */
+    TotalLimitAmount?: string;
+    /**
+     * 过期时间（秒级 Unix 时间戳）。缺省 = -1 永不过期；必须为 -1 或未来时间，且 ≤ 253402300799（9999-12-31 23:59:59 UTC）
+     */
+    ExpireTime?: number;
+    /**
+     * 访问模式：whitelist（默认）/ blacklist
+     */
+    ModelAccessMode?: string;
+    /**
+     * 黑名单模型，仅 blacklist 模式生效，["deepseek-ai/DeepSeek-V3.2-Think"，"gemini-4-neon"]
+     */
+    DeniedModels?: string;
+    /**
+     * ip黑名单，换行分割的多组ip。支持IPv4和网段,输入后回车生效,最多100个, 示例: ﻿ 192.168.1.1 192.168.1.10-192.168.1.100 192.168.1.10/24
+     */
+    IPBlacklist?: string;
+    /**
+     * 日配额告警阈值 0~100（百分比）
+     */
+    DailyQuotaAlertThreshold?: number;
+    /**
+     * 月配额告警阈值 0~100
+     */
+    MonthlyQuotaAlertThreshold?: number;
+    /**
+     * 总配额告警阈值 0~100
+     */
+    TotalQuotaAlertThreshold?: number;
+    /**
+     * []string；告警渠道：email / sms / phone（去重、转小写）。任一阈值 >0 时必填
+     */
+    QuotaAlertChannels?: string;
+    /**
+     * 渠道含 email 时必填且需合法邮箱
+     */
+    QuotaAlertEmail?: string;
+    /**
+     * 渠道含 sms/phone 时必填
+     */
+    QuotaAlertPhone?: string;
+    /**
+     * 启用 email 渠道时必填，需先调验证码接口获取，服务端校验并一次性消费
+     */
+    QuotaAlertEmailVerificationToken?: string;
+    /**
+     * 启用 sms/phone 渠道时必填，同上
+     */
+    QuotaAlertPhoneVerificationToken?: string;
+}
+/**
+ * BatchCreateUMInferAPIKey - 批量创建api key
+ */
+export interface BatchCreateUMInferAPIKeyResponse {
+    /**
+     * 创建的key列表
+     */
+    Data?: {
+        /**
+         * KeyId
+         */
+        KeyId?: string;
+        /**
+         * 名称
+         */
+        Name?: string;
+        /**
+         * 密钥
+         */
+        APIKey?: string;
+        /**
+         * 是否成功
+         */
+        Success?: boolean;
+    }[];
 }
 /**
  * CreateUMInferAPIKey - 创建apikey
@@ -281,6 +418,14 @@ export interface CreateUMInferAPIKeyResponse {
          * 授权的模型，英文逗号分隔，all表示所有模型都有权限
          */
         GrantedModels?: string[];
+        /**
+         * key的创建者用户名
+         */
+        CreatorUserName?: string;
+        /**
+         * key是否属于调用改接口的用户
+         */
+        IsOwner?: number;
     };
     /**
      * 总条数
@@ -2379,6 +2524,14 @@ export interface ListUMInferAPIKeyV2Response {
          * 授权的模型，英文逗号分隔，all表示所有模型都有权限
          */
         GrantedModels?: string[];
+        /**
+         * key的创建者用户名
+         */
+        CreatorUserName?: string;
+        /**
+         * key是否属于调用改接口的用户
+         */
+        IsOwner?: number;
     }[];
     /**
      * 时间戳

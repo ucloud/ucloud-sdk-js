@@ -1138,6 +1138,58 @@ export interface CreateUHostInstanceRequest {
    */
   UHostFamily?: string;
   /**
+   * 安全加固（VendorShellScript）。True 为开启，False 为未开启，默认 False。
+   */
+  SecurityReinforce?: boolean;
+  /**
+   * 辅助 IP（UNI）自动配置。True 为开启，False 为未开启，默认 False。
+   */
+  AutoConfigUni?: boolean;
+  /**
+   * 主机监控（Ubolt Agent）。True 为安装/开启，False 为未开启，默认 False。
+   */
+  UboltAgent?: boolean;
+  /**
+   * 是否安装 GPU/CUDA 驱动。True 为安装，False 为不安装，默认 False。开启后可配合驱动相关参数使用。
+   */
+  InstallGpuDriver?: boolean;
+  /**
+   * GPU 驱动安装包标识/名称。当 InstallGpuDriver 为 True 时可填写。
+   */
+  GpuDriverConfigId?: string;
+  /**
+   * GPU 驱动安装包标识/名称。当 InstallGpuDriver 为 True 时可填写。
+   */
+  DriverInstaller?: string;
+  /**
+   * GPU 驱动版本。当 InstallGpuDriver 为 True 时可填写。
+   */
+  DriverVersion?: string;
+  /**
+   * CUDA 安装包标识/名称。当 InstallGpuDriver 为 True 时可填写。
+   */
+  CUDAInstaller?: string;
+  /**
+   * CUDA 版本。当 InstallGpuDriver 为 True 时可填写。
+   */
+  CUDAVersion?: string;
+  /**
+   * cuDNN 安装包标识/名称。当 InstallGpuDriver 为 True 时可填写。
+   */
+  CUDNNInstaller?: string;
+  /**
+   * cuDNN 版本。当 InstallGpuDriver 为 True 时可填写。
+   */
+  CUDNNVersion?: string;
+  /**
+   * GPU 驱动脚本模板变量（对应模板中的 OSName）。用于驱动安装脚本按操作系统匹配安装逻辑。
+   */
+  OSName?: string;
+  /**
+   * 是否强制要求 Metadata Token。True 表示创建时写入并强制要求镜像支持 MetadataToken（NewCloudinitFeature >= 2）；未传则按默认策略处理
+   */
+  RequireMetadataToken?: boolean;
+  /**
    * 主机代金券ID。请通过DescribeCoupon接口查询，或登录用户中心查看
    */
   CouponId?: string;
